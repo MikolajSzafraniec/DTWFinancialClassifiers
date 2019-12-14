@@ -5,9 +5,6 @@ necPack <- function() {
 }
 source("R/PackageLoading.R")
 
-# Ustawienie ścieżki, w której zawarty jest odpowiedni plik z funkcjami R
-#setwd("C:/Dane/Dokumenty/Studia/Praca magisterska/Projekt R DTW/R_DTW_Project/R")
-
 # Wywołanie pliku zawierającego funkcje ładujące szeregi czasowe różnego rodzaju
 # (dzienne GPW, dzienne Forex, tickowe GPW, tickowe Forex)
 source("R/FunctionsDataReadingAndPreprocessing.R")

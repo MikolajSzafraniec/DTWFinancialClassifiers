@@ -32,4 +32,12 @@ asSubsequence <- function(ts, subsequenceLenght){
   res
 }
 
-a <- new("ShapeDescriptorParams")
+###########################################################################################
+###  Funkcja przekształcająca podsekwencje zawarte w obiekcie klasy SubsequenceSeries   ###
+###      w ich deskryptory kształtu zgodnie z podanymi parametrami. Funkcja zwraca      ###
+###                       obiekt klasy ShapeDescriptorsSeries                           ###
+###########################################################################################
+
+asShapeDescriptors <- function(SubsequenceSeriesObject, ShapeDescriptorParamsObject){
+  
+}

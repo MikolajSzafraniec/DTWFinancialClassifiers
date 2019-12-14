@@ -89,7 +89,7 @@ setClass(
     
     # Test czy typ deksryptora ma jedną z dwóch odpowiednich wartości
     if(!(object@Type %in% c("simple", "compound"))){
-      return("Type of shape descriptors must be one of \"simple\", \"compound\"")
+      return("Type of shape descriptors must be one of: - \"simple\"\n- \"compound\"")
     }
     
     descriptorLenght <- length(object@Descriptors)

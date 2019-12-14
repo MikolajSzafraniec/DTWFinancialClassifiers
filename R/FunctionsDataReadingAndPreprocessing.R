@@ -1,16 +1,3 @@
-# Załadowanie niezbędnych pakietów
-necessaryPackages <- c("timeSeries", "lubridate", "stringr", "dplyr", "Rcpp", "dtw", "R.utils")
-whichNotInstalled <- which(!(necessaryPackages %in% installed.packages()))
-
-if(length(whichNotInstalled) > 0)
-  lapply(necessaryPackages[whichNotInstalled], install.packages, character.only =T)
-
-whichNotLoaded <- which(!(necessaryPackages %in% loadedNamespaces()))
-
-if(length(whichNotLoaded) > 0)
-  lapply(necessaryPackages[whichNotLoaded], require, character.only = T)
-
-
 # Funkcja ładująca dane z wybranego folderu i przetwarzająca je na podstawie wybranego
 # parametru - GPW dzienne, GPW tickowe, Forex dzienne lub Forex tickowe
 

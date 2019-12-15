@@ -41,3 +41,4 @@ asSubsequence <- function(ts, subsequenceLenght){
 asShapeDescriptors <- function(SubsequenceSeriesObject, ShapeDescriptorParamsObject){
   
 }
+

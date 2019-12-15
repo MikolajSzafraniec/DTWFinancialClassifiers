@@ -11,8 +11,9 @@ public:
   static int ComputeShapeDescriptorLength(int subsequenceLength, List shapeDescriptorParams,
                                           std::string descriptorType){
     int res;
+    char switchCondition = descriptorType[0];
     
-    switch(descriptorType[0]){
+    switch(switchCondition){
     case 'R':
       res = subsequenceLength;
       break;
@@ -75,15 +76,16 @@ private:
   static NumericVector PickDescriptor(NumericVector subsequence, List shapeDescriptorParams,
                                               std::string descriptorType){
     NumericVector result;
+    char switchCondition = descriptorType[0];
     
-    switch(descriptorType[0]){
+    switch(switchCondition){
     case 'R':
       result = ShapeDescriptors::RawSubsequence(subsequence);
       break;
     case 'P': {
       List AddParams = shapeDescriptorParams["Additional_params"];
       int PAAWindow = AddParams["PAAWindow"];  
-      result = ShapeDescriptors::PAADescriptor(subsequence, PAAWindow); 
+      result = ShapeDescriptors::PAADescriptor(subsequence, PAAWindow);
       }
       break;
     case 'd':

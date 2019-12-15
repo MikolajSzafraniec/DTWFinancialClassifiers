@@ -8,7 +8,7 @@ using namespace Rcpp;
 class ShapeDescriptorsComputation{
 
 public:
-  static int ComputeShapeDescriptorLength(int subsequenceLength, S4 shapeDescriptorParams,
+  static int ComputeShapeDescriptorLength(int subsequenceLength, List shapeDescriptorParams,
                                           std::string descriptorType){
     int res;
     
@@ -17,7 +17,7 @@ public:
       res = subsequenceLength;
       break;
     case 'P':{
-      List AddParams = shapeDescriptorParams.slot("Additional_params");
+      List AddParams = shapeDescriptorParams["Additional_params"];
       int PAAWindow = AddParams["PAAWindow"];
       res = subsequenceLength - PAAWindow + 1;
         }
@@ -26,7 +26,7 @@ public:
       res = subsequenceLength;
       break;
     case 's':{
-      List AddParams = shapeDescriptorParams.slot("Additional_params");
+      List AddParams = shapeDescriptorParams["Additional_params"];
       int slopeWindow = AddParams["slopeWindow"];
       res = subsequenceLength - slopeWindow + 1;
         }
@@ -39,7 +39,7 @@ public:
     return res;
   }
   
-  static NumericMatrix ComputeShapeDescriptors(NumericMatrix subsequences, S4 shapeDescriptorParams,
+  static NumericMatrix ComputeShapeDescriptors(NumericMatrix subsequences, List shapeDescriptorParams,
                                                std::string descriptorType){
     int inputNcol = subsequences.ncol();
     int outputNrow = subsequences.nrow();
@@ -72,7 +72,7 @@ public:
   
 private:
   
-  static NumericVector PickDescriptor(NumericVector subsequence, S4 shapeDescriptorParams,
+  static NumericVector PickDescriptor(NumericVector subsequence, List shapeDescriptorParams,
                                               std::string descriptorType){
     NumericVector result;
     
@@ -81,7 +81,7 @@ private:
       result = ShapeDescriptors::RawSubsequence(subsequence);
       break;
     case 'P': {
-      List AddParams = shapeDescriptorParams.slot("Additional_params");
+      List AddParams = shapeDescriptorParams["Additional_params"];
       int PAAWindow = AddParams["PAAWindow"];  
       result = ShapeDescriptors::PAADescriptor(subsequence, PAAWindow); 
       }
@@ -90,7 +90,7 @@ private:
       result = ShapeDescriptors::derivativeDescriptor(subsequence);
       break;
     case 's': {
-      List AddParams = shapeDescriptorParams.slot("Additional_params");
+      List AddParams = shapeDescriptorParams["Additional_params"];
       int slopeWindow = AddParams["slopeWindow"];
       result = ShapeDescriptors::slopeDescriptor(subsequence, slopeWindow);
       }

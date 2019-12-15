@@ -46,20 +46,20 @@ NumericMatrix subsequencesMatrix(NumericVector values, int subsequenceWidth){
 
 // Funkcja przekształcająca macierz podsekwencji w macierz deskryptorów kształtu
 //[[Rcpp::export]]
-NumericMatrix asShapeDescriptorCpp(NumericMatrix subsequenceSeries, S4 shapeDescriptorParams){
+NumericMatrix asShapeDescriptorCpp(NumericMatrix subsequenceSeries, List shapeDescriptorParams){
 
-  std::string shapeDescriptorType = shapeDescriptorParams.slot("Type");
+  std::string shapeDescriptorType = shapeDescriptorParams["Type"];
+  std::vector<std::string> Descriptors = shapeDescriptorParams["Descriptors"];
   
   if(shapeDescriptorType.compare("simple") == 0){
     NumericMatrix res = ShapeDescriptorsComputation::ComputeShapeDescriptors(subsequenceSeries, shapeDescriptorParams,
-                                                                             shapeDescriptorParams.slot("Descriptors"));
+                                                                             Descriptors[0]);
     return res;
   }
   
   int inputNcol = subsequenceSeries.ncol();
   int inputNrow = subsequenceSeries.nrow();
   
-  std::vector<std::string> Descriptors = shapeDescriptorParams.slot("Descriptors");
   int nDesc = Descriptors.size();
   IntegerVector partialLengths(nDesc);
   
@@ -74,7 +74,7 @@ NumericMatrix asShapeDescriptorCpp(NumericMatrix subsequenceSeries, S4 shapeDesc
   colBegins.insert(colBegins.end(), partialCumsum.begin(), partialCumsum.end() - 1);
   
   int outputNcol = Rcpp::sum(partialLengths);
-  List AddParams = shapeDescriptorParams.slot("Additional_params");
+  List AddParams = shapeDescriptorParams["Additional_params"];
   NumericVector Weights = AddParams["Weights"];
   NumericMatrix res(inputNrow, outputNcol);
   int currentRowBegin = 0;

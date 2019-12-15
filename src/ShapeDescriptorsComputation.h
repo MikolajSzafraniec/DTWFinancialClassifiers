@@ -42,8 +42,7 @@ public:
   static NumericMatrix ComputeShapeDescriptors(NumericMatrix subsequences, S4 shapeDescriptorParams,
                                                std::string descriptorType){
     int inputNcol = subsequences.ncol();
-    int inputNrow = subsequences.nrow();
-    int outputNrow = inputNrow;
+    int outputNrow = subsequences.nrow();
     int outputNcol = ComputeShapeDescriptorLength(inputNcol, shapeDescriptorParams, descriptorType);
     
     NumericMatrix res(outputNrow, outputNcol);
@@ -63,8 +62,8 @@ public:
     int currentOutputRow, currentOutputCol;
     
     for(int i = 0; i < inputNrow; i++){
+      currentOutputRow = i + RowBegin;
       for(int j = 0; j < inputNcol; j++){
-        currentOutputRow = i + RowBegin;
         currentOutputCol = j + ColBegin;
         (*output)(currentOutputRow, currentOutputCol) = (*input)(i, j) * Weight;
       }

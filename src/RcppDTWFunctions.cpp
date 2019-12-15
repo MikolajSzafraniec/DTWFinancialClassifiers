@@ -46,7 +46,7 @@ NumericMatrix subsequencesMatrix(NumericVector values, int subsequenceWidth){
 
 // Funkcja przekształcająca macierz podsekwencji w macierz deskryptorów kształtu
 //[[Rcpp::export]]
-NumericMatrix asShapeDescriptor(NumericMatrix subsequenceSeries, S4 shapeDescriptorParams){
+NumericMatrix asShapeDescriptorCpp(NumericMatrix subsequenceSeries, S4 shapeDescriptorParams){
 
   std::string shapeDescriptorType = shapeDescriptorParams.slot("Type");
   
@@ -79,9 +79,10 @@ NumericMatrix asShapeDescriptor(NumericMatrix subsequenceSeries, S4 shapeDescrip
   NumericMatrix res(inputNrow, outputNcol);
   int currentRowBegin = 0;
   int currentColBegin;
+  double currentWeight;
   
   for(int i = 0; i < nDesc; i++){
-    double currentWeight = Weights[i];
+    currentWeight = Weights[i];
     currentColBegin = colBegins[i];
     
     NumericMatrix partialRes = ShapeDescriptorsComputation::ComputeShapeDescriptors(subsequenceSeries,

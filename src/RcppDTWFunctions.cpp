@@ -44,19 +44,20 @@ NumericMatrix subsequencesMatrix(NumericVector values, int subsequenceWidth){
   
 }
 
-
 // Funkcja przekształcająca macierz podsekwencji w macierz deskryptorów kształtu
 //[[Rcpp::export]]
 NumericMatrix asShapeDescriptor(NumericMatrix subsequenceSeries, S4 shapeDescriptorParams){
-  int inputNcol = subsequenceSeries.ncol();
-  int inputNrow = subsequenceSeries.nrow();
+
   std::string shapeDescriptorType = shapeDescriptorParams.slot("Type");
   
-  if(shapeDescriptorType.compare("simple")){
+  if(shapeDescriptorType.compare("simple") == 0){
     NumericMatrix res = ShapeDescriptorsComputation::ComputeShapeDescriptors(subsequenceSeries, shapeDescriptorParams,
                                                                              shapeDescriptorParams.slot("Descriptors"));
     return res;
   }
+  
+  int inputNcol = subsequenceSeries.ncol();
+  int inputNrow = subsequenceSeries.nrow();
   
   std::vector<std::string> Descriptors = shapeDescriptorParams.slot("Descriptors");
   int nDesc = Descriptors.size();
@@ -70,33 +71,27 @@ NumericMatrix asShapeDescriptor(NumericMatrix subsequenceSeries, S4 shapeDescrip
   std::vector<int> partialCumsum(nDesc);
   std::partial_sum(partialLengths.begin(), partialLengths.end(), partialCumsum.begin());
   std::vector<int> colBegins {0};
-  colBegins.insert(colBegins.end(), partialCumsum.begin() + 1, partialCumsum.begin() - 1);
-  std::vector<int> colEnds(nDesc);
-  std::copy(partialCumsum.begin(), partialCumsum.end(), colEnds.begin());
-  std::for_each(colEnds.begin(), colEnds.end(), [](double& d){d-= 1;});
+  colBegins.insert(colBegins.end(), partialCumsum.begin(), partialCumsum.end() - 1);
   
   int outputNcol = Rcpp::sum(partialLengths);
   List AddParams = shapeDescriptorParams.slot("Additional_params");
   NumericVector Weights = AddParams["Weights"];
-  //NumericMatrix res(inputNrow, outputNcol);
-  NumericMatrix *res;
-  res = new NumericMatrix(inputNrow, outputNcol);
+  NumericMatrix res(inputNrow, outputNcol);
+  int currentRowBegin = 0;
+  int currentColBegin;
   
   for(int i = 0; i < nDesc; i++){
     double currentWeight = Weights[i];
+    currentColBegin = colBegins[i];
     
-    (*res)(1, _) = 
-      ShapeDescriptorsComputation::ComputeShapeDescriptors(subsequenceSeries, shapeDescriptorParams,
-                                                           Descriptors[i]);
-    
+    NumericMatrix partialRes = ShapeDescriptorsComputation::ComputeShapeDescriptors(subsequenceSeries,
+                                                                                    shapeDescriptorParams,
+                                                                                    Descriptors[i]);
+    ShapeDescriptorsComputation::MatrixPartialCopy(&partialRes, &res, currentWeight, currentRowBegin,
+                                                   currentColBegin);
   }
-}
-
-
-
-//[[Rcpp::export]]
-std::vector<int> testCumsum(std::vector<int> input){
-  std::vector<int> res(input.size());
-  std::partial_sum(input.begin(), input.end(), res.begin());
+  
   return res;
+   
 }
+

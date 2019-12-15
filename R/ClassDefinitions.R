@@ -19,7 +19,7 @@ setClass(
     }
     
     # Test czy wszystkie wymiary szeregu czasowego są danymi numerycznymi
-    tsClasses <- lapply(object@Subsequences, "class")
+    tsClasses <- lapply(object@Subsequences, "mode")
     if(!all(tsClasses == "numeric")){
       return("Co najmniej jeden z wymiarów szeregu czasowego zawiera dane w formacie
              nienumerycznym")
@@ -52,7 +52,7 @@ setClass(
     }
     
     # Test czy wszystkie wymiary szeregu czasowego są danymi numerycznymi
-    tsClasses <- lapply(object@shapeDescriptors, "class")
+    tsClasses <- lapply(object@shapeDescriptors, "mode")
     if(!all(tsClasses == "numeric")){
       return("Co najmniej jeden z wymiarów szeregu czasowego zawiera dane w formacie
              nienumerycznym")

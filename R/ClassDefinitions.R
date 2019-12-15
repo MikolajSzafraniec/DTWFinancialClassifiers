@@ -100,6 +100,12 @@ setClass(
       return("Length of descriptors vector not matched to them type")
     }
     
+    # Test czy wartości deskryptorów kształtu są unikatowe
+    descriptorsUniqueLength <- length(unique(object@Descriptors))
+    if(descriptorLenght != descriptorsUniqueLength){
+      return("Vector of descriptors should contain unique values")
+    }
+    
     # Dopuszczalne wartości deskryptorów
     AcceptableDescriptors <- c("RawSubsequence", "PAADescriptor", "derivativeDescriptor",
       "slopeDescriptor")

@@ -32,8 +32,12 @@ FXDayAgg <- FXDailyParse(FX_day$USDRUB)
 GPWPattern <- load_financial_data("Data/PatternSeries/",
                                   data_type = "GPW_t", include_all = T)
 
-GPWTickAgg <- GPWTickAggregateAndFillNA(GPW_tick$CCC, GPWPattern$WIG$Date)
+GPWTimePattern <- parsePatternGPWTickTime(GPWPattern$WIG, delta = dminutes(0.5),
+                                         playOffTime = dminutes(15), roundingUnit = "minute")
+
+GPWTickAgg <- GPWTickAggregateAndFillNA(GPW_tick$CCC, GPWTimePattern)
 
 # GPW day przykładowy agregat
 GPWDayAgg <- GPWDailyParse(GPW_day$TATRY)
 
+head(GPWTickAgg)

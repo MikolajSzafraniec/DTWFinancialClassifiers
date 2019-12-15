@@ -468,8 +468,9 @@ R.version.string
 subsequencesMatrix(1:2, 1)
 
 
-a <- asSubsequence(FXDayAgg, 5)
+a <- asSubsequence(FXDayAgg$USDZAR, 5)
 SDP <- new("ShapeDescriptorParams", Type = "compound", 
-           Descriptors = c("RawSubsequence","derivativeDescriptor"), Additional_params = list(Weights = c(1, 1)))
+           Descriptors = c("RawSubsequence","slopeDescriptor"), Additional_params = list(Weights = c(1, 100),
+                                                                                       slopeWindow = 3L))
 b <- asShapeDescriptor(a@Subsequences$closePrice, SDP)
 b

@@ -1,7 +1,10 @@
 #include <Rcpp.h>
 #include "SubsequenceFiller.h"
-#include "ShapeDescriptors.h"
 #include "ShapeDescriptorsComputation.h"
+#ifndef ShapeDescriptors
+#define ShapeDescriptors
+#endif 
+
 using namespace Rcpp;
 //[[Rcpp::plugins("cpp11")]]
 
@@ -41,6 +44,7 @@ NumericMatrix subsequencesMatrix(NumericVector values, int subsequenceWidth){
   
 }
 
+
 // Funkcja przekształcająca macierz podsekwencji w macierz deskryptorów kształtu
 //[[Rcpp::export]]
 NumericMatrix asShapeDescriptor(NumericMatrix subsequenceSeries, S4 shapeDescriptorParams){
@@ -63,4 +67,36 @@ NumericMatrix asShapeDescriptor(NumericMatrix subsequenceSeries, S4 shapeDescrip
                                                                                   Descriptors[i]);
   }
   
+  std::vector<int> partialCumsum(nDesc);
+  std::partial_sum(partialLengths.begin(), partialLengths.end(), partialCumsum.begin());
+  std::vector<int> colBegins {0};
+  colBegins.insert(colBegins.end(), partialCumsum.begin() + 1, partialCumsum.begin() - 1);
+  std::vector<int> colEnds(nDesc);
+  std::copy(partialCumsum.begin(), partialCumsum.end(), colEnds.begin());
+  std::for_each(colEnds.begin(), colEnds.end(), [](double& d){d-= 1;});
+  
+  int outputNcol = Rcpp::sum(partialLengths);
+  List AddParams = shapeDescriptorParams.slot("Additional_params");
+  NumericVector Weights = AddParams["Weights"];
+  //NumericMatrix res(inputNrow, outputNcol);
+  NumericMatrix *res;
+  res = new NumericMatrix(inputNrow, outputNcol);
+  
+  for(int i = 0; i < nDesc; i++){
+    double currentWeight = Weights[i];
+    
+    (*res)(1, _) = 
+      ShapeDescriptorsComputation::ComputeShapeDescriptors(subsequenceSeries, shapeDescriptorParams,
+                                                           Descriptors[i]);
+    
+  }
+}
+
+
+
+//[[Rcpp::export]]
+std::vector<int> testCumsum(std::vector<int> input){
+  std::vector<int> res(input.size());
+  std::partial_sum(input.begin(), input.end(), res.begin());
+  return res;
 }

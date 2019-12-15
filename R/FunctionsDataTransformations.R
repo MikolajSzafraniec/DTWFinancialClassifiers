@@ -16,14 +16,14 @@ source("R/ClassDefinitions.R")
 ###                     przekształcone w listę podsekwencji                             ###
 ###########################################################################################
 
-asSubsequence <- function(ts, subsequenceLenght){
+asSubsequence <- function(ts, subsequenceWidth){
   tsDim <- ncol(ts@.Data)
   tsNames <- colnames(ts@.Data)
   subsequencesList <- vector(mode = "list", length = tsDim)
   names(subsequencesList) <- tsNames
   
   for(i in 1:tsDim){
-    subsequencesList[[i]] <- subsequencesMatrix(ts@.Data[,i], subsequenceLenght)
+    subsequencesList[[i]] <- subsequencesMatrix(ts@.Data[,i], subsequenceWidth)
   }
   
   res <- new("SubsequenceSeries",
@@ -39,6 +39,38 @@ asSubsequence <- function(ts, subsequenceLenght){
 ###########################################################################################
 
 asShapeDescriptors <- function(SubsequenceSeriesObject, ShapeDescriptorParamsObject){
+  tsDim <- length(SubsequenceSeriesObject@Subsequences) 
+  tsNames <- names(SubsequenceSeriesObject@Subsequences)
+  shapeDescriptors <- vector(mode = "list", length = tsDim)
+  names(shapeDescriptors) <- tsNames
   
+  for(i in 1:tsDim){
+    shapeDescriptors[[i]] <- asShapeDescriptorCpp(SubsequenceSeriesObject@Subsequences[[i]],
+                                                  ShapeDescriptorParamsObject)
+  }
+  
+  res <- new("ShapeDescriptorsSeries",
+             Time = SubsequenceSeriesObject@Time,
+             shapeDescriptors = shapeDescriptors)
+  return(res)
+}
+
+sub <- asSubsequence(FXDayAgg, 10)
+SDP1 <- new("ShapeDescriptorParams", Type = "compound", 
+           Descriptors = c("RawSubsequence","slopeDescriptor", "PAADescriptor", "derivativeDescriptor"), 
+           Additional_params = list(Weights = c(1, 1, 1, 1),
+                                    slopeWindow = 2L, PAAWindow = 2L))
+SDP2 <- new("ShapeDescriptorParams", Descriptors = "slopeDescriptor", Additional_params = 
+              list(slopeWindow = 4L, Weights = 1, PAAWindow = 1L))
+SDP1 <- new("ShapeDescriptorParams", Type = "compound", 
+            Descriptors = c("slopeDescriptor", "PAADescriptor", "derivativeDescriptor"), 
+            Additional_params = list(Weights = c(1, 1, 1),
+                                     slopeWindow = 2L, PAAWindow = 2L))
+
+
+shapeDesc <- asShapeDescriptors(sub, SDP1)
+a <- NULL
+for(i in 1:100){
+  a <- asShapeDescriptors(sub, SDP1)
 }
 

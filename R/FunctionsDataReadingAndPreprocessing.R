@@ -17,6 +17,7 @@ load_financial_data <- function(folder_path, data_type = c("GPW_daily", "GPW_tic
   
   d_type <- match.arg(data_type)
   files_name <- list.files(getwd())
+
   fin_inst_names <- str_extract(files_name, pattern = "[^\\.]+")
   
   # Parametr wskazujący, czy w pierwszym wierszu pliku znajdują się nazwy kolumn
@@ -205,19 +206,19 @@ FXTickAggregateAndFillNA <- function(FXTickData, delta = dminutes(5),
 # source(GPW_hours.R)
 
 GPWTickAggregateAndFillNA <- function(GPWTickData, patternDatesToAgg,
-                                     funAggBy = c(function(x){
-                                       x[length(x)]
-                                     },
-                                     function(x){
-                                       sum(x)
-                                     }), argMethods = c("ie", "z"),
-                                     argInterp = c("before")){
+                                      funAggBy = c(function(x){
+                                        x[length(x)]
+                                      },
+                                      function(x){
+                                        sum(x)
+                                      }), argMethods = c("ie", "z"),
+                                      argInterp = c("before")){
   
   minTime <- min(GPWTickData$Date)
   maxTime <-max(GPWTickData$Date)
   timeFilter <- (patternDatesToAgg > minTime) & (patternDatesToAgg < maxTime)
   patternDatesToAgg <- as.timeDate(patternDatesToAgg[timeFilter], FinCenter = "London")
-  dfTimeParsed <- data.frame(time = patternDatesToAgg + dminutes(60))
+  dfTimeParsed <- data.frame(time = patternDatesToAgg)
   colnames(dfTimeParsed) <- "timestamp"
   
   timeSeriesToAggregate <- timeSeries(data = cbind(GPWTickData$Close,
@@ -235,10 +236,9 @@ GPWTickAggregateAndFillNA <- function(GPWTickData, patternDatesToAgg,
   
   colnames(dfTimeSeriesAfterAggregate)[1] <- "timestamp"
   
-  
   fullDFWithNa <- full_join(dfTimeParsed, dfTimeSeriesAfterAggregate,
                             by = "timestamp")
-
+  
   fullTimeSeriesWithNa <- timeSeries(data = fullDFWithNa[,c(2,3)],
                                      charvec = fullDFWithNa$timestamp)
   
@@ -250,7 +250,6 @@ GPWTickAggregateAndFillNA <- function(GPWTickData, patternDatesToAgg,
   
   fullTimeSeriesNaOmitted
 }
-
 ######################################################################################
 ###   Funkcja wyciągająca niezbędne zmienne z danych typu GPW_day i zamieniająca   ###
 ###                        je w szereg czasowych (klasa timeSeries)                ###  
@@ -258,8 +257,10 @@ GPWTickAggregateAndFillNA <- function(GPWTickData, patternDatesToAgg,
 
 GPWDailyParse <- function(GPWDailyData){
   
-  results <- timeSeries(data = cbind(closePrice = GPWDailyData$Close,
-                                     Volume = GPWDailyData$Volume),
+  GPWDailyData <- GPWDailyData %>%
+    dplyr::rename(closePrice = Close)
+  
+  results <- timeSeries(data = GPWDailyData[,c("closePrice", "Volume")],
                         charvec = GPWDailyData$Date)
   return(results) 
 }
@@ -272,9 +273,11 @@ GPWDailyParse <- function(GPWDailyData){
 
 FXDailyParse <- function(FXDailyData){
   
-  results <- timeSeries(data = cbind(closePrice = FXDailyData$Close,
-                                     Variability = (FXDailyData$Close - FXDailyData$Open) / 
-                                       (FXDailyData$High - FXDailyData$Low)),
+  FXDailyData <- FXDailyData %>%
+    mutate(Variability = (Close - Open) / (High - Low)) %>%
+    dplyr::rename(closePrice = Close)
+  
+  results <- timeSeries(data = FXDailyData[,c("closePrice", "Variability")],
                         charvec = FXDailyData$Date)
   return(results) 
 }
@@ -287,7 +290,6 @@ FXDailyParse <- function(FXDailyData){
 
 # patternPath <- "C:/Dane/Dokumenty/Studia/Praca magisterska/Dane/PatternSeries"
 # patternGPWTickData <- load_financial_data(patternPath, data_type = "GPW_t", include_all = T)
-
 parsePatternGPWTickTime <- function(patternGPWData, delta = dminutes(1), 
                                     playOffTime = dminutes(15), roundingUnit = "minute"){
   
@@ -300,16 +302,19 @@ parsePatternGPWTickTime <- function(patternGPWData, delta = dminutes(1),
                                  args = list(by = list(daysToAgg),
                                              FUN = c(function(x) {min(x)},
                                                      function(x) {max(x)})))
+  
   originTSAggDF <- data.frame(Date = time(originTSAgg),
                               hourStart = originTSAgg$TS.1,
-                              hourEnd = originTSAgg$TS.2)
+                              hourEnd = originTSAgg$TS.2,
+                              stringsAsFactors = F)
+  
   colnames(originTSAggDF) <- c("Date", "hourStart", "hourEnd")
   
   dayHourList <- apply(originTSAggDF, MARGIN = 1, FUN = function(x, playOffTime, roundingUnit,
                                                                  delta){
     
-    hourStartParsed <- strptime(x[2], format = "%H%M%S")
-    hourEndParsed <- strptime(x[3], format = "%H%M%S")
+    hourStartParsed <- strptime(x[2], format = "%H%M%S", tz = "GMT")
+    hourEndParsed <- strptime(x[3], format = "%H%M%S", tz = "GMT")
     hourEndParsedPleyOffIncluded <- hourEndParsed - playOffTime
     
     if(hourEndParsedPleyOffIncluded <= hourStartParsed)
@@ -320,18 +325,20 @@ parsePatternGPWTickTime <- function(patternGPWData, delta = dminutes(1),
     
     dailySeq <- seq(from = hourStartRound, to = hourEndRound,
                     by = delta)
-    dailySeqFormat <- strftime(dailySeq, format = "%H:%M:%S")
+    dailySeqFormat <- strftime(dailySeq, format = "%H:%M:%S", tz = "GMT")
     lenSeq <- length(dailySeqFormat)
     
-    dayRep <- rep(x[1], times = lenSeq)
+    dayRep <- rep(strftime(x[1], "%Y-%m-%d", tz = "GMT"), times = lenSeq)
     
     timePasted <- paste(dayRep, dailySeqFormat, sep = " ")
-    timeResult <- strptime(timePasted, format = "%Y-%m-%d %H:%M:%S")
+    timeResult <- strptime(timePasted, format = "%Y-%m-%d %H:%M:%S", tz = "GMT")
     
     return(timeResult)
     
   }, playOffTime = playOffTime, roundingUnit = roundingUnit, delta = delta)
   
   res <- do.call(c, dayHourList)
+  res <- with_tz(res, tzone = "GMT")
   res
 }
+

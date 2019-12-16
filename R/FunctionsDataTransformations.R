@@ -39,15 +39,9 @@ asSubsequence <- function(ts, subsequenceWidth){
 ###########################################################################################
 
 asShapeDescriptors <- function(SubsequenceSeriesObject, ShapeDescriptorParamsObject){
-  tsDim <- length(SubsequenceSeriesObject@Subsequences) 
-  tsNames <- names(SubsequenceSeriesObject@Subsequences)
-  shapeDescriptors <- vector(mode = "list", length = tsDim)
-  names(shapeDescriptors) <- tsNames
-  
-  for(i in 1:tsDim){
-    shapeDescriptors[[i]] <- asShapeDescriptorCpp(SubsequenceSeriesObject@Subsequences[[i]],
-                                                  ShapeDescriptorParamsObject)
-  }
+
+  shapeDescriptors <- lapply(SubsequenceSeriesObject@Subsequences, asShapeDescriptorCpp,
+                            shapeDescriptorParams = ShapeDescriptorParamsObject)
   
   res <- new("ShapeDescriptorsSeries",
              Time = SubsequenceSeriesObject@Time,
@@ -55,22 +49,13 @@ asShapeDescriptors <- function(SubsequenceSeriesObject, ShapeDescriptorParamsObj
   return(res)
 }
 
-sub <- asSubsequence(FXDayAgg, 10)
+sub <- asSubsequence(FXDayAgg, 20)
 SDP1 <- new("ShapeDescriptorParams", Type = "compound", 
            Descriptors = c("RawSubsequence","slopeDescriptor", "PAADescriptor", "derivativeDescriptor"), 
            Additional_params = list(Weights = c(1, 1, 1, 1),
-                                    slopeWindow = 2L, PAAWindow = 2L))
+                                    slopeWindow = 5L, PAAWindow = 5L))
 SDP2 <- new("ShapeDescriptorParams", Descriptors = "slopeDescriptor", Additional_params = 
-              list(slopeWindow = 4L, Weights = 1, PAAWindow = 1L))
-SDP1 <- new("ShapeDescriptorParams", Type = "compound", 
-            Descriptors = c("slopeDescriptor", "PAADescriptor", "derivativeDescriptor"), 
-            Additional_params = list(Weights = c(1, 1, 1),
-                                     slopeWindow = 2L, PAAWindow = 2L))
+              list(slopeWindow = 4L))
 
-
-shapeDesc <- asShapeDescriptors(sub, SDP1)
-a <- NULL
-for(i in 1:100){
-  a <- asShapeDescriptors(sub, SDP1)
-}
-
+microbenchmark::microbenchmark(asShapeDescriptors(sub, SDP1),
+                               asShapeDescriptors(sub, SDP2))

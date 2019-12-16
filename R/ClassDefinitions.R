@@ -81,19 +81,11 @@ setClass(
   prototype = list(
     Type = "simple",
     Descriptors = "RawSubsequence",
-    Additional_params = list(Weights = 1, PAAWindow = 1, slopeWindow = 1)
+    Additional_params = list(Weights = NULL, PAAWindow = NULL, slopeWindow = NULL)
   ),
   
   # Walidacja poprawności
   validity = function(object){
-    
-    # Test czy parametry dodatkowe nie mają wartości NULL (nie zawsze są one potrzebne,
-    # ale w momencie kiedy nie są zdefiniowane funkcje napisane w C++ mogą wyrzucać dziwne błędy)
-    if(is.null(object@Additional_params$Weights) | is.null(object@Additional_params$PAAWindow) |
-       is.null(object@Additional_params$slopeWindow)){
-      return("All slots of Additional_params list (Weights, PAAWindow, slopeWindow)
-             must be defined")
-    }
     
     # Test czy typ deksryptora ma jedną z dwóch odpowiednich wartości
     if(!(object@Type %in% c("simple", "compound"))){

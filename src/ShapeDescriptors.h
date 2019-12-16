@@ -52,8 +52,8 @@ public:
     int lastIndex = subLength - slopeWindow;
     NumericVector res(lastIndex + 1);
     NumericVector regresors(slopeWindow);
-    for(int i = 1; i <= slopeWindow; i++)
-      regresors[i] = i;
+    for(int i = 0; i < slopeWindow; i++)
+      regresors[i] = i+1;
     
     for(int i = 0; i <= lastIndex; i++){
       Rcpp::Range currentRange = seq(i, i+slopeWindow-1);

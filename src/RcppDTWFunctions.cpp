@@ -1,4 +1,5 @@
 #include <Rcpp.h>
+#include <memory.h>
 #include "SubsequenceFiller.h"
 #include "ShapeDescriptorsComputation.h"
 #ifndef ShapeDescriptors
@@ -18,28 +19,29 @@ NumericMatrix subsequencesMatrix(NumericVector values, int subsequenceWidth){
   int tsLength = values.length();
   NumericMatrix res(tsLength, subseqenceLength);
   
-  SubsequenceFiller SubFill = SubsequenceFiller(&res, &values, tsLength,
-                                                subsequenceWidth, subseqenceLength);
+  auto SubFill = new SubsequenceFiller(&res, &values, tsLength, 
+                                       subsequenceWidth, subseqenceLength);
   
   for(int i = 0; i < tsLength; i++){
     
     if(((i - subsequenceWidth) < 0) && ((i + subsequenceWidth) >= tsLength)){
     
-      SubFill.ShortLeftShortRightFiller(i);
+      (*SubFill).ShortLeftShortRightFiller(i);
       
     }else if((i - subsequenceWidth) < 0){
       
-      SubFill.ShortLeftFiller(i);
+      (*SubFill).ShortLeftFiller(i);
     
     }else if((i + subsequenceWidth) >= tsLength){
     
-      SubFill.ShortRightFiller(i);
+      (*SubFill).ShortRightFiller(i);
      
     }else{
-      SubFill.OpenEndedFiller(i);
+      (*SubFill).OpenEndedFiller(i);
     }  
   }
   
+  delete SubFill;
   return res;
   
 }
@@ -81,16 +83,23 @@ NumericMatrix asShapeDescriptorCpp(NumericMatrix subsequenceSeries, S4 shapeDesc
   int currentColBegin;
   double currentWeight;
   
+  NumericMatrix *partialRes;
+  
   for(int i = 0; i < nDesc; i++){
     currentWeight = Weights[i];
     currentColBegin = colBegins[i];
     
-    NumericMatrix partialRes = ShapeDescriptorsComputation::ComputeShapeDescriptors(subsequenceSeries,
-                                                                                    shapeDescriptorParams,
-                                                                                    Descriptors[i]);
-    ShapeDescriptorsComputation::MatrixPartialCopy(&partialRes, &res, currentWeight, currentRowBegin,
+    partialRes = new NumericMatrix;
+    *partialRes = ShapeDescriptorsComputation::ComputeShapeDescriptors(subsequenceSeries, 
+                                                                       shapeDescriptorParams, 
+                                                                       Descriptors[i]);
+    
+    ShapeDescriptorsComputation::MatrixPartialCopy(partialRes, &res, currentWeight, currentRowBegin,
                                                    currentColBegin);
+    
+    delete partialRes;
   }
+   
   
   return res;
    

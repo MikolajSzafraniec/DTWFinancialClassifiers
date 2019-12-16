@@ -23,7 +23,7 @@ GPW_day <- load_financial_data("Data/GPW day",
                               data_type = "GPW_d", include_all = T)
 
 # FX tick przykładowy agregat
-FXtickAgg <- FXTickAggregateAndFillNA(FXTickData = FX_tick$`AUDJPY-2019-01`, delta = dminutes(0.5))
+FXtickAgg <- FXTickAggregateAndFillNA(FXTickData = FX_tick$`AUDJPY-2019-01`, delta = dminutes(0.25))
 
 # FX day przykładowy agregat
 FXDayAgg <- FXDailyParse(FX_day$USDRUB)

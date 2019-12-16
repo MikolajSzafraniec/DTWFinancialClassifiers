@@ -49,7 +49,7 @@ asShapeDescriptors <- function(SubsequenceSeriesObject, ShapeDescriptorParamsObj
   return(res)
 }
 
-sub <- asSubsequence(FXDayAgg, 20)
+sub <- asSubsequence(FXtickAgg, 3)
 SDP1 <- new("ShapeDescriptorParams", Type = "compound", 
            Descriptors = c("RawSubsequence","slopeDescriptor", "PAADescriptor", "derivativeDescriptor"), 
            Additional_params = list(Weights = c(1, 1, 1, 1),
@@ -58,4 +58,11 @@ SDP2 <- new("ShapeDescriptorParams", Descriptors = "slopeDescriptor", Additional
               list(slopeWindow = 4L))
 
 microbenchmark::microbenchmark(asShapeDescriptors(sub, SDP1),
-                               asShapeDescriptors(sub, SDP2))
+                               asShapeDescriptors(sub, SDP2),
+                               times = 100L)
+
+
+microbenchmark::microbenchmark(asSubsequence(FXtickAgg, 1),
+                               asSubsequence(FXtickAgg, 3),
+                               asSubsequence(FXtickAgg, 10))
+

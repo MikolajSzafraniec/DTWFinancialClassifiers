@@ -15,13 +15,12 @@ public:
   int subsequenceLength;
   
   SubsequenceFiller(NumericMatrix *RM, NumericVector *val, int tsL,
-                    int subW, int subL){
-    ResultMatrix = RM;
-    values = val;
-    tsLength = tsL;
-    subsequenceWidth = subW;
-    subsequenceLength = subL;
+                    int subW, int subL)
+    : ResultMatrix(RM), values(val), tsLength(tsL), subsequenceWidth(subW), subsequenceLength(subL)  
+  {
   }
+  
+  ~SubsequenceFiller() = default;
   
   void ShortLeftShortRightFiller(int numIter){
     

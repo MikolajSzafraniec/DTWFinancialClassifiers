@@ -1,6 +1,6 @@
 # Załadowanie niezbędnych pakietów
 necPack <- function() {
-  c("timeSeries", "lubridate", "stringr", "dplyr", "Rcpp", "dtw")
+  c("timeSeries", "lubridate", "stringr", "dplyr", "Rcpp", "dtw", "RcppArmadillo")
 }
 
 source("R/PackageLoading.R")
@@ -66,3 +66,9 @@ microbenchmark::microbenchmark(asSubsequence(FXtickAgg, 1),
                                asSubsequence(FXtickAgg, 3),
                                asSubsequence(FXtickAgg, 10))
 
+
+RcppMultiply(1:10, 1:5)
+ArmadilloMultiply(1:10, 1:5)
+
+microbenchmark::microbenchmark(RcppMultiply(1:1000, 1:1000),
+                               ArmadilloMultiply(1:1000, 1:1000))

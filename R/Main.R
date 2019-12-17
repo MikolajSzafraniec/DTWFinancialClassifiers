@@ -1,7 +1,7 @@
 # Instalacja / Załadowanie niezbędnych pakietów
 
 necPack <- function() {
-  c("timeSeries", "lubridate", "stringr", "dplyr", "Rcpp", "dtw", "R.utils")
+  c("timeSeries", "lubridate", "stringr", "dplyr", "Rcpp", "dtw", "R.utils", "RcppArmadillo")
 }
 source("R/PackageLoading.R")
 

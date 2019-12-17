@@ -1,13 +1,12 @@
-#include <Rcpp.h>
-#include <memory.h>
+#include <RcppArmadillo.h>
 #include "SubsequenceFiller.h"
 #include "ShapeDescriptorsComputation.h"
 #ifndef ShapeDescriptors
 #define ShapeDescriptors
 #endif 
-
 using namespace Rcpp;
 //[[Rcpp::plugins("cpp11")]]
+//[[Rcpp::depends(RcppArmadillo)]]
 
 //Funkcja pomocnicza do asSubsequence
 //[[Rcpp::export]]
@@ -102,6 +101,44 @@ NumericMatrix asShapeDescriptorCpp(NumericMatrix subsequenceSeries, S4 shapeDesc
    
   
   return res;
-   
 }
 
+/*
+double dist(NumericVector x, NumericVector y){
+  int xlen = x.size();
+  int ylen = y.size();
+  
+  
+}
+*/
+//[[Rcpp::export]]
+NumericMatrix RcppDist(NumericMatrix x, NumericMatrix y){
+  int xlen = x.size();
+  int ylen = y.size();
+  
+  NumericMatrix res(xlen, ylen);
+  
+  for(int i = 0; i < xlen; i++){
+    for(int j = 0; j < ylen; j++){
+      res(i, j) = x[i] * y[j];
+    }
+  }
+  
+  return res;
+}
+
+//[[Rcpp::export]]
+arma::mat ArmadilloDist(arma::vec x, arma::vec y){
+  int xlen = x.size();
+  int ylen = y.size();
+  
+  arma::mat res(xlen, ylen);
+  
+  for(int i = 0; i < xlen; i++){
+    for(int j = 0; j < ylen; j++){
+      res(i, j) = x[i] * y[j];
+    }
+  }
+  
+  return res;
+}

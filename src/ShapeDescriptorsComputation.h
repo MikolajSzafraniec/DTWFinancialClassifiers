@@ -73,31 +73,34 @@ public:
   
 private:
   
+  typedef NumericVector (*descriptor) (NumericVector, List);
+  
   static NumericVector PickDescriptor(NumericVector subsequence, S4 shapeDescriptorParams,
                                               std::string descriptorType){
     NumericVector result;
+    descriptor desc;
+    
     char switchCondition = descriptorType[0];
+    List AddParams = shapeDescriptorParams.slot("Additional_params");
     
     switch(switchCondition){
     case 'R':
-      result = ShapeDescriptors::RawSubsequence(subsequence);
+      desc = ShapeDescriptors::RawSubsequence;
       break;
-    case 'P': {
-      List AddParams = shapeDescriptorParams.slot("Additional_params");
-      int PAAWindow = AddParams["PAAWindow"];  
-      result = ShapeDescriptors::PAADescriptor(subsequence, PAAWindow); 
-      }
+    case 'P': 
+      desc = ShapeDescriptors::PAADescriptor; 
       break;
     case 'd':
-      result = ShapeDescriptors::derivativeDescriptor(subsequence);
+      desc = ShapeDescriptors::derivativeDescriptor;
       break;
-    case 's': {
-      List AddParams = shapeDescriptorParams.slot("Additional_params");
-      int slopeWindow = AddParams["slopeWindow"];
-      result = ShapeDescriptors::slopeDescriptor(subsequence, slopeWindow);
-      }
+    case 's': 
+      desc = ShapeDescriptors::slopeDescriptor;
       break;
+    default:
+      desc = ShapeDescriptors::RawSubsequence;
     }
+    
+    result = desc(subsequence, AddParams);
     return result;
   }
   

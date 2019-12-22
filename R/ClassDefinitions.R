@@ -87,6 +87,13 @@ setClass(
   # Walidacja poprawności
   validity = function(object){
     
+    # Test czy typ deskryptora jest wektorem jednoelementowym
+    typeLenght <- length(object@Type)
+    
+    if(typeLenght != 1){
+      return("Type of shape descriptor must be one-element vector with value equal to either \"simple\" or \"compound\"")
+    }
+    
     # Test czy typ deksryptora ma jedną z dwóch odpowiednich wartości
     if(!(object@Type %in% c("simple", "compound"))){
       return("Type of shape descriptors must be one of: - \"simple\"\n- \"compound\"")

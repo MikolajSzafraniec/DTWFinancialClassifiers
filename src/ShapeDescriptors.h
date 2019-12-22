@@ -7,11 +7,12 @@ using namespace Rcpp;
 class ShapeDescriptors{
 public:
   
-  static NumericVector RawSubsequence(NumericVector subsequence){
+  static NumericVector RawSubsequence(NumericVector subsequence, List params){
     return subsequence;
   } 
     
-  static NumericVector PAADescriptor(NumericVector subsequence, int PAAWindow){
+  static NumericVector PAADescriptor(NumericVector subsequence, List params){
+    int PAAWindow = params["PAAWindow"];
     int subLength = subsequence.length();
     
     if(subLength < PAAWindow)
@@ -28,7 +29,7 @@ public:
     return res;
   }
   
-  static NumericVector derivativeDescriptor(NumericVector subsequence){
+  static NumericVector derivativeDescriptor(NumericVector subsequence, List params){
     int subLenght = subsequence.length();
     NumericVector res(subLenght);
     int lastInd = subLenght - 1;
@@ -43,7 +44,8 @@ public:
     return res;
   }
   
-  static NumericVector slopeDescriptor(NumericVector subsequence, int slopeWindow){
+  static NumericVector slopeDescriptor(NumericVector subsequence, List params){
+    int slopeWindow = params["slopeWindow"];
     int subLength = subsequence.length();
     
     if(subLength < slopeWindow)

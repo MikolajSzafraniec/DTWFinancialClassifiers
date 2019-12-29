@@ -474,3 +474,23 @@ SDP <- new("ShapeDescriptorParams", Type = "compound",
                                                                                        slopeWindow = 3L))
 b <- asShapeDescriptor(a@Subsequences$closePrice, SDP)
 b
+
+
+
+Rcpp::sourceCpp("src/RcppDTWFunctions.cpp")
+require(dtt)
+
+tsTest <- rnorm(1000)
+
+DCT(tsTest)
+DCTVectorized(tsTest)
+dtt(tsTest, type = "dct")
+
+microbenchmark::microbenchmark(DCT(tsTest),
+                               DCTVectorized(tsTest),
+                               dtt(tsTest, type = "dct"))
+
+a <- rnorm(100)
+b <- rnorm(100)
+dtt(cbind(a, b))
+dtt(a)

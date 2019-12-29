@@ -49,12 +49,14 @@ asShapeDescriptors <- function(SubsequenceSeriesObject, ShapeDescriptorParamsObj
   return(res)
 }
 
-sub <- asSubsequence(FXDayAgg, 3)
-SDP1 <- new("ShapeDescriptorParams", Type = "compound", 
-           Descriptors = c("RawSubsequence","slopeDescriptor", "PAADescriptor", "derivativeDescriptor"), 
-           Additional_params = list(Weights = c(1, 1, 1, 1),
-                                    slopeWindow = 5L, PAAWindow = 5L))
-SDP2 <- new("ShapeDescriptorParams", Descriptors = "slopeDescriptor", Additional_params = 
-              list(slopeWindow = 4L))
+###########################################################################################
+###         Funkcja przekształcająca szereg czasowy w jego wybraną transformatę         ###
+###                                      trygonometryczną.                              ###
+###########################################################################################
 
-descs <- asShapeDescriptors(sub, SDP1)
+trigonometricTransform <- function(inputTS, transformType = c("Sinus", "Cosinus", "Hilbert")){
+  transformType <- match.arg(transformType)
+  res <- trigonometicTransformCpp(inputTS, transformType)
+  return(res)
+}
+

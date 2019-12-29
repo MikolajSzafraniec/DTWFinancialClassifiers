@@ -1,6 +1,7 @@
 #include <RcppArmadillo.h>
 #include "SubsequenceFiller.h"
 #include "ShapeDescriptorsComputation.h"
+#include "TrigonometricTransforms.h"
 #ifndef ShapeDescriptors
 #define ShapeDescriptors
 #endif 
@@ -99,6 +100,39 @@ NumericMatrix asShapeDescriptorCpp(NumericMatrix subsequenceSeries, S4 shapeDesc
     delete partialRes;
   }
    
-  
   return res;
 }
+
+/* Funkcja przekształcająca szereg czasowy w jego wybraną transformatę trygonometryczną.
+ * WYbrana może zostać transformata kosinusowa, sinusowa oraz Hilberta.
+ */
+
+// Definicja wskaźnika na funkcję
+typedef NumericVector (*trTransform) (NumericVector);
+
+//[[Rcpp::export]]
+NumericVector trigonometicTransformCpp(NumericVector input, std::string transformType){
+  
+  trTransform fun;
+  char switchCondition = transformType[0];
+  
+  switch(switchCondition){
+  case('C'):
+    fun = TrigonometricTransforms::DCT;
+    break;
+  case('S'):
+    fun = TrigonometricTransforms::DST;
+    break;
+  case('H'):
+    fun = TrigonometricTransforms::DHT;
+    break;
+  default:
+    fun = TrigonometricTransforms::DCT;
+  }
+  
+  NumericVector res = fun(input);
+  return res;
+}
+
+
+

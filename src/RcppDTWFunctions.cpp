@@ -1,13 +1,15 @@
-#include <RcppArmadillo.h>
+#include <Rcpp.h>
 #include "SubsequenceFiller.h"
 #include "ShapeDescriptorsComputation.h"
 #include "TrigonometricTransforms.h"
+#ifndef Enums
+#define Enums
+#endif
 #ifndef ShapeDescriptors
 #define ShapeDescriptors
-#endif 
+#endif
 using namespace Rcpp;
 //[[Rcpp::plugins("cpp11")]]
-//[[Rcpp::depends(RcppArmadillo)]]
 
 //Funkcja pomocnicza do asSubsequence
 //[[Rcpp::export]]
@@ -114,16 +116,17 @@ typedef NumericVector (*trTransform) (NumericVector);
 NumericVector trigonometicTransformCpp(NumericVector input, std::string transformType){
   
   trTransform fun;
-  char switchCondition = transformType[0];
+  TrigonometricTransformTypes switchCondition =
+    TrigonometricTransformTypeMap()[transformType];
   
   switch(switchCondition){
-  case('C'):
+  case(COSINUS):
     fun = TrigonometricTransforms::DCT;
     break;
-  case('S'):
+  case(SINUS):
     fun = TrigonometricTransforms::DST;
     break;
-  case('H'):
+  case(HILBERT):
     fun = TrigonometricTransforms::DHT;
     break;
   default:

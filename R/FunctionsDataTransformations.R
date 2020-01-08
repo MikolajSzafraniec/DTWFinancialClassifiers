@@ -39,9 +39,9 @@ asSubsequence <- function(ts, subsequenceWidth){
 ###########################################################################################
 
 asShapeDescriptors <- function(SubsequenceSeriesObject, ShapeDescriptorParamsObject){
-
+  
   shapeDescriptors <- lapply(SubsequenceSeriesObject@Subsequences, asShapeDescriptorCpp,
-                            shapeDescriptorParams = ShapeDescriptorParamsObject)
+                             shapeDescriptorParams = ShapeDescriptorParamsObject)
   
   res <- new("ShapeDescriptorsSeries",
              Time = SubsequenceSeriesObject@Time,
@@ -54,7 +54,7 @@ asShapeDescriptors <- function(SubsequenceSeriesObject, ShapeDescriptorParamsObj
 ###                                      trygonometryczną.                              ###
 ###########################################################################################
 
-trigonometricTransform <- function(inputTS, transformType = c("Sinus", "Cosinus", "Hilbert")){
+trigonometricTransform <- function(inputTS, transformType = c("sinus", "cosinus", "hilbert")){
   transformType <- match.arg(transformType)
   res <- trigonometicTransformCpp(inputTS, transformType)
   return(res)

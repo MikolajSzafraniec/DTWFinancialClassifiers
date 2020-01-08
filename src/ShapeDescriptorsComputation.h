@@ -1,4 +1,5 @@
 #include <Rcpp.h>
+#include "Enums.h"
 #include "ShapeDescriptors.h"
 using namespace Rcpp;
 //[[Rcpp::plugins("cpp11")]]
@@ -11,22 +12,23 @@ public:
   static int ComputeShapeDescriptorLength(int subsequenceLength, S4 shapeDescriptorParams,
                                           std::string descriptorType){
     int res;
-    char switchCondition = descriptorType[0];
+    ShapeDescriptorTypes switchCondition =
+      ShapeDescriptorTypeMap()[descriptorType];
     
     switch(switchCondition){
-    case 'R':
+    case RAWSUBSEQUENCE:
       res = subsequenceLength;
       break;
-    case 'P':{
+    case PAADESCRIPTOR:{
       List AddParams = shapeDescriptorParams.slot("Additional_params");
       int PAAWindow = AddParams["PAAWindow"];
       res = subsequenceLength - PAAWindow + 1;
         }
       break;
-    case 'd':
+    case DERIVATIVEDESCRIPTOR:
       res = subsequenceLength;
       break;
-    case 's':{
+    case SLOPEDESCRIPTOR:{
       List AddParams = shapeDescriptorParams.slot("Additional_params");
       int slopeWindow = AddParams["slopeWindow"];
       res = subsequenceLength - slopeWindow + 1;
@@ -80,20 +82,22 @@ private:
     NumericVector result;
     descriptor desc;
     
-    char switchCondition = descriptorType[0];
+    ShapeDescriptorTypes switchCondition = 
+      ShapeDescriptorTypeMap()[descriptorType];
+    
     List AddParams = shapeDescriptorParams.slot("Additional_params");
     
     switch(switchCondition){
-    case 'R':
+    case RAWSUBSEQUENCE:
       desc = ShapeDescriptors::RawSubsequence;
       break;
-    case 'P': 
+    case PAADESCRIPTOR: 
       desc = ShapeDescriptors::PAADescriptor; 
       break;
-    case 'd':
+    case DERIVATIVEDESCRIPTOR:
       desc = ShapeDescriptors::derivativeDescriptor;
       break;
-    case 's': 
+    case SLOPEDESCRIPTOR: 
       desc = ShapeDescriptors::slopeDescriptor;
       break;
     default:

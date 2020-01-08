@@ -24,7 +24,7 @@ setClass(
       return("Co najmniej jeden z wymiarów szeregu czasowego zawiera dane w formacie
              nienumerycznym")
     }
-      
+    
     return(TRUE)
   }
 )
@@ -59,7 +59,7 @@ setClass(
     }
     
     return(TRUE)
-    }
+  }
 )
 
 ######################### Klasa ShapeDescriptorParams ###########################
@@ -115,7 +115,7 @@ setClass(
     
     # Dopuszczalne wartości deskryptorów
     AcceptableDescriptors <- c("RawSubsequence", "PAADescriptor", "derivativeDescriptor",
-      "slopeDescriptor")
+                               "slopeDescriptor")
     
     # Test czt wszystkie zadeklarowane typy deskryptorów mają odpowiednią wartość
     if(!all(object@Descriptors %in% AcceptableDescriptors)){
@@ -127,7 +127,7 @@ setClass(
     # Testy czy zadeklarowano odpowiednie wartosci okien w przypadku deskryptorów
     # typu ,,Slope" i "PAA"
     if("PAADescriptor" %in% object@Descriptors && 
-         !is.integer(object@Additional_params$PAAWindow)){
+       !is.integer(object@Additional_params$PAAWindow)){
       return("You must define PAAWindow as positive, integer value")
     }
     

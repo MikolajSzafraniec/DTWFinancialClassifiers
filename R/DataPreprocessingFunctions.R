@@ -1,11 +1,11 @@
 # Załadowanie niezbędnych pakietów
 necPack <- function() {
-  c("timeSeries", "lubridate", "stringr", "dplyr", "Rcpp", "dtw", "RcppArmadillo")
+  c("timeSeries", "lubridate", "stringr", "dplyr", "Rcpp", "dtw")
 }
 
 source("R/PackageLoading.R")
 # Załadowanie funkcji pakietu Rcpp
-Rcpp::sourceCpp("src/RcppDTWFunctions.cpp")
+Rcpp::sourceCpp("src/RcppPreprocessingFunctions.cpp")
 
 # Załadowanie definicji klas
 source("R/ClassDefinitions.R")

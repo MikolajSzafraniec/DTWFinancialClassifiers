@@ -496,3 +496,96 @@ a <- rnorm(100)
 b <- rnorm(100)
 dtt(cbind(a, b))
 dtt(a)
+
+
+
+
+
+cumulativeDistMatrix <- function(inputMatrix){
+  
+  inputNrow <- nrow(inputMatrix)
+  inputNcol <- ncol(inputMatrix)
+  
+  res <- matrix(0, ncol = inputNcol, nrow = inputNrow)
+  res[1, 1] <- inputMatrix[1,1]
+  
+  for(i in 2:inputNrow)
+    res[i, 1] <- res[i-1,1] + inputMatrix[i, 1]
+  
+  for(i in 2:inputNcol)
+    res[1, i] <- res[1,i-1] + inputMatrix[1, i]
+  
+  for(i in 2:inputNrow){
+    for(j in 2:inputNcol){
+      inputDist <- inputMatrix[i, j]
+      res[i, j] <- inputDist + min(res[i-1, j-1], res[i-1, j], res[i, j-1])
+    }
+  }
+  
+  return(res)
+}
+
+getWarpingPath <- function(cumDistMatrix){
+  ncolDist <- ncol(cumDistMatrix)
+  nrowDist <- nrow(cumDistMatrix)
+  
+  warpingPath <- c(1, 1)
+  
+  i <- 1
+  j <- 1
+  
+  while(i < nrowDist & j < ncolDist){
+    
+    if(i == nrowDist)
+      j <- j+ 1
+    if(j == ncolDist)
+      i <- i+1
+    
+    minDist <- min(cumDistMatrix[i+1,j+1],cumDistMatrix[i+1,j],cumDistMatrix[i,j+1])
+    
+    if(cumDistMatrix[i+1,j+1] == minDist){
+      i <- i+1
+      j <- j+1
+    }else if(cumDistMatrix[i+1,j] == minDist){
+      i <- i+1
+    }else{
+      j <- j+1
+    }
+    
+    warpingPath <- rbind(warpingPath, c(i, j))
+  }
+  
+  return(warpingPath)
+}
+
+a <- c(1, 1, 2, 3, 2, 0)
+b <- c(0, 1, 1, 2, 3, 2, 1)
+
+abDist <- proxy::dist(a, b)
+abCumDist <- cumulativeDistMatrix(abDist)
+abCumDist
+warpingPath <- getWarpingPath(abCumDist)
+
+dtwPckg <- dtw::dtw(a, b, step.pattern = dtw::symmetric1)
+dtwPckgWarpingPath <- cbind(dtwPckg$index2, dtwPckg$index1)
+
+warpingPathToMatrix <- function(warpingPath){
+  
+  maxWP <- max(warpingPath)
+  lenWP <- length(warpingPath)
+  
+  res <- matrix(0, ncol = maxWP, nrow = lenWP)
+  
+  for(i in 1:lenWP)
+    res[i, warpingPath[i]] <- 1
+  
+  return(res)
+}
+
+
+wp1Mat <- warpingPathToMatrix(warpingPath = warpingPath[,1])
+wp2Mat <- warpingPathToMatrix(warpingPath = warpingPath[,2])
+awp <- wp1Mat %*% a
+bwp <- wp2Mat %*% b
+sum(sqrt((awp - bwp)^2))
+

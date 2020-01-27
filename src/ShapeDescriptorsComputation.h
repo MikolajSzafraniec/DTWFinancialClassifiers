@@ -57,7 +57,7 @@ public:
     return res;
   }
   
-  static void MatrixPartialCopy(NumericMatrix *input, NumericMatrix *output, int Weight,
+  static void MatrixPartialCopy(NumericMatrix *input, NumericMatrix *output, double Weight,
                                 int RowBegin, int ColBegin){
     
     int inputNrow = (*input).nrow();

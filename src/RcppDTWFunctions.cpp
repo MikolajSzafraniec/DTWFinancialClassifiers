@@ -1,141 +1,75 @@
 #include <Rcpp.h>
-#include "SubsequenceFiller.h"
-#include "ShapeDescriptorsComputation.h"
-#include "TrigonometricTransforms.h"
-#ifndef Enums
-#define Enums
-#endif
-#ifndef ShapeDescriptors
-#define ShapeDescriptors
-#endif
 using namespace Rcpp;
-//[[Rcpp::plugins("cpp11")]]
-
-//Funkcja pomocnicza do asSubsequence
-//[[Rcpp::export]]
-NumericMatrix subsequencesMatrix(NumericVector values, int subsequenceWidth){
-  if(subsequenceWidth < 0)
-    stop("Szerokosc okna musi byc liczba nieujemna");
-  
-  int subseqenceLength = (2*subsequenceWidth) + 1;
-  int tsLength = values.length();
-  NumericMatrix res(tsLength, subseqenceLength);
-  
-  auto SubFill = new SubsequenceFiller(&res, &values, tsLength, 
-                                       subsequenceWidth, subseqenceLength);
-  
-  for(int i = 0; i < tsLength; i++){
-    
-    if(((i - subsequenceWidth) < 0) && ((i + subsequenceWidth) >= tsLength)){
-    
-      (*SubFill).ShortLeftShortRightFiller(i);
-      
-    }else if((i - subsequenceWidth) < 0){
-      
-      (*SubFill).ShortLeftFiller(i);
-    
-    }else if((i + subsequenceWidth) >= tsLength){
-    
-      (*SubFill).ShortRightFiller(i);
-     
-    }else{
-      (*SubFill).OpenEndedFiller(i);
-    }  
-  }
-  
-  delete SubFill;
-  return res;
-  
-}
-
-// Funkcja przekształcająca macierz podsekwencji w macierz deskryptorów kształtu
-//[[Rcpp::export]]
-NumericMatrix asShapeDescriptorCpp(NumericMatrix subsequenceSeries, S4 shapeDescriptorParams){
-
-  std::string shapeDescriptorType = shapeDescriptorParams.slot("Type");
-  
-  if(shapeDescriptorType.compare("simple") == 0){
-    NumericMatrix res = ShapeDescriptorsComputation::ComputeShapeDescriptors(subsequenceSeries, shapeDescriptorParams,
-                                                                             shapeDescriptorParams.slot("Descriptors"));
-    return res;
-  }
-  
-  int inputNcol = subsequenceSeries.ncol();
-  int inputNrow = subsequenceSeries.nrow();
-  
-  std::vector<std::string> Descriptors = shapeDescriptorParams.slot("Descriptors");
-  int nDesc = Descriptors.size();
-  IntegerVector partialLengths(nDesc);
-  
-  for(int i = 0; i < nDesc; i++){
-    partialLengths[i] = ShapeDescriptorsComputation::ComputeShapeDescriptorLength(inputNcol, shapeDescriptorParams,
-                                                                                  Descriptors[i]);
-  }
-  
-  std::vector<int> partialCumsum(nDesc);
-  std::partial_sum(partialLengths.begin(), partialLengths.end(), partialCumsum.begin());
-  std::vector<int> colBegins {0};
-  colBegins.insert(colBegins.end(), partialCumsum.begin(), partialCumsum.end() - 1);
-  
-  int outputNcol = Rcpp::sum(partialLengths);
-  List AddParams = shapeDescriptorParams.slot("Additional_params");
-  NumericVector Weights = AddParams["Weights"];
-  NumericMatrix res(inputNrow, outputNcol);
-  int currentRowBegin = 0;
-  int currentColBegin;
-  double currentWeight;
-  
-  NumericMatrix *partialRes;
-  
-  for(int i = 0; i < nDesc; i++){
-    currentWeight = Weights[i];
-    currentColBegin = colBegins[i];
-    
-    partialRes = new NumericMatrix;
-    *partialRes = ShapeDescriptorsComputation::ComputeShapeDescriptors(subsequenceSeries, 
-                                                                       shapeDescriptorParams, 
-                                                                       Descriptors[i]);
-    
-    ShapeDescriptorsComputation::MatrixPartialCopy(partialRes, &res, currentWeight, currentRowBegin,
-                                                   currentColBegin);
-    
-    delete partialRes;
-  }
-   
-  return res;
-}
-
-/* Funkcja przekształcająca szereg czasowy w jego wybraną transformatę trygonometryczną.
- * WYbrana może zostać transformata kosinusowa, sinusowa oraz Hilberta.
- */
-
-// Definicja wskaźnika na funkcję
-typedef NumericVector (*trTransform) (NumericVector);
 
 //[[Rcpp::export]]
-NumericVector trigonometicTransformCpp(NumericVector input, std::string transformType){
+double RcppDist(NumericVector x, NumericVector y){
+  int x_len = x.length();
+  int y_len = y.length();
   
-  trTransform fun;
-  TrigonometricTransformTypes switchCondition =
-    TrigonometricTransformTypeMap()[transformType];
+  if(x_len != y_len)
+    stop("Lengths of both vectors must match");
   
-  switch(switchCondition){
-  case(COSINUS):
-    fun = TrigonometricTransforms::DCT;
-    break;
-  case(SINUS):
-    fun = TrigonometricTransforms::DST;
-    break;
-  case(HILBERT):
-    fun = TrigonometricTransforms::DHT;
-    break;
-  default:
-    fun = TrigonometricTransforms::DCT;
+  double res = 0;
+  
+  for(int i = 0; i < x_len; i++){
+    res += pow((x[i] - y[i]), 2);
   }
   
-  NumericVector res = fun(input);
-  return res;
+  return pow(res, 0.5);
 }
+
+//[[Rcpp::export]]
+NumericMatrix RcppDistanceTwoMatrices(NumericMatrix x, NumericMatrix y){
+  int x_ncol = x.ncol();
+  int y_ncol = y.ncol();
+  
+  if(x_ncol != y_ncol)
+    stop("Number of columns in both matrices must match");
+  
+  int x_nrow = x.nrow();
+  int y_nrow = y.nrow();
+  
+  NumericMatrix res(x_nrow, y_nrow);
+  
+  for(int i = 0; i < x_nrow; i++){
+    for(int j = 0; j <= i; j++){
+      res(i,j) = RcppDist(x(i, _), y(j, _));
+    }
+  }
+  
+  return(res);
+}
+
+class MyClass{
+public:
+  MyClass(double x_, double y_):
+    x(x_), y(y_) {}
+  double get_x() { return x;}
+  double get_y() { return y;}
+  void set_x(double value) {x = value;}
+  
+private:
+  double x;
+  double y;
+};
+
+RCPP_MODULE(mod_myclass){
+  class_<MyClass>("MyClass")
+  .constructor<double, double>()
+  .property("x", &MyClass::get_x, &MyClass::set_x)
+  .property("y", &MyClass::get_y)
+  ;
+}
+
+RCPP_EXPOSED_CLASS(MyClass);
+
+//[[Rcpp::export]]
+MyClass newMyClass(double x, double y){
+  return(MyClass(x, y));
+}
+
+
+
 
 
 

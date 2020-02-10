@@ -1,83 +1,68 @@
-######################## Klasa SubsequenceSeries ##########################
+######################### Class ShapeDescriptorParams ###########################
 
-###########################################################################
-###            Klasa zawierająca podsekwencje szeregu czasowego         ###
-###                       o dowolnej liczbie wymiarów                   ###
-###########################################################################
+#################################################################################
+###        Class which contains params of trigonometric transformations       ###
+###                              of time series                               ###
+#################################################################################
+
 setClass(
-  # Nazwy klasy
-  "SubsequenceSeries",
-    # Sloty
-  slots = c(Time = "timeDate",
-            Subsequences = "list"),
+  # Name of the class
+  "TrigonometricTransformParams",
   
+  # Slots
+  slots = c(DimToApplyTransform = "integer",
+            TransformType = "character"),
+  
+  # Default values
+  prototype = list(
+    DimToApplyTransform = c(1L),
+    TransformType = "cosinus"
+  ),
+  
+  # Checking validity of class member
   validity = function(object){
     
-    # Test czy klasa obiektu zawierającego daty jest prawidłowa
-    if(class(object@Time) != "timeDate"){
-      reurn("Nieprawidłowa klasa obiektu zawierającego daty")
+    DTAT <- object@DimToApplyTransform
+    
+    # Check if there is at least one dimension chosen to apply the transform
+    if(length(DTAT) < 1){
+      return("Transform must be applied to at least one dimension!")
     }
     
-    # Test czy wszystkie wymiary szeregu czasowego są danymi numerycznymi
-    tsClasses <- lapply(object@Subsequences, "mode")
-    if(!all(tsClasses == "numeric")){
-      return("Co najmniej jeden z wymiarów szeregu czasowego zawiera dane w formacie
-             nienumerycznym")
+    # Check if all dimensions are positive integers
+    if(any(DTAT < 1)){
+      return("Each dimension number must be positive integer!")
     }
     
-    return(TRUE)
+    TT <- object@TransformType
+    
+    # Check if there is only one type of transformation entered
+    if(length(TT) != 1){
+      return("There must be only one type of transformation entered")
+    }
+    
+    # Check if the transformation type is one of the proper ones
+    ProperTransformTypes <- c("sinus", "cosinus", "hilbert")
+    if(!(TT %in% ProperTransformTypes)){
+      return("Transform type must be one of below: \"sinus\", \"cosinus\", \"hilbert\")
+    }
   }
 )
 
-######################## Klasa ShapeDescriptorsSeries ##########################
-
 #################################################################################
-###            Klasa zawierająca shapeDescriptory szeregu czasowego.          ###
-###       Jest bliźniaczo podobna do SubsequenceSeries, osobno zdefiniowana   ###
-###                            żeby był jakiś porządek                        ###
-#################################################################################
-setClass(
-  # Nazwy klasy
-  "ShapeDescriptorsSeries",
-  
-  # Sloty
-  slots = c(Time = "timeDate",
-            shapeDescriptors = "list"),
-  
-  validity = function(object){
-    
-    # Test czy klasa obiektu zawierającego daty jest prawidłowa
-    if(class(object@Time) != "timeDate"){
-      reurn("Nieprawidłowa klasa obiektu zawierającego daty")
-    }
-    
-    # Test czy wszystkie wymiary szeregu czasowego są danymi numerycznymi
-    tsClasses <- lapply(object@shapeDescriptors, "mode")
-    if(!all(tsClasses == "numeric")){
-      return("Co najmniej jeden z wymiarów szeregu czasowego zawiera dane w formacie
-             nienumerycznym")
-    }
-    
-    return(TRUE)
-  }
-)
-
-######################### Klasa ShapeDescriptorParams ###########################
-
-#################################################################################
-###           Klasa zawierająca parametry deskryptorów kształtu               ###
+###              Class which contains params of shape descriptors             ###
 #################################################################################
 
 setClass(
-  # Nazwa klasy
+  # Name of the class
   "ShapeDescriptorParams",
   
-  # Sloty
+  # Slots
   slots = c(Type = "character",
             Descriptors = "character",
             Additional_params = "list"),
   
-  # Wartości domyślne
+  # Default values
   prototype = list(
     Type = "simple",
     Descriptors = "RawSubsequence",

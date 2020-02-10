@@ -18,5 +18,5 @@ checkRequired <- function(necessaryPackages){
 
 necessaryPackages <- necPack()
 
-checkInstalled(necessaryPackages, cranMirror)
+checkInstalled(necessaryPackages)
 checkRequired(necessaryPackages)

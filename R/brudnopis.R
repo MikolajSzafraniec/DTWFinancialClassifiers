@@ -589,3 +589,18 @@ awp <- wp1Mat %*% a
 bwp <- wp2Mat %*% b
 sum(sqrt((awp - bwp)^2))
 
+### Budowanie własnego pakietu z funkcjami Rcpp
+setwd("packages")
+list.files("../src")
+
+install.packages("gtools")
+
+Rcpp.package.skeleton(name = "MyRcppFunctions",
+                      cpp_files = paste0("../src/", list.files("../src"))[-2])
+setwd("MyRcppFunctions")
+compileAttributes(verbose = T)
+setwd("..")
+library(tools)
+package_native_routine_registration_skeleton("MyRcppFunctions",
+                                             "MyRcppFunctions/src/init.c",,F)
+txt

@@ -44,7 +44,7 @@ setClass(
     # Check if the transformation type is one of the proper ones
     ProperTransformTypes <- c("sinus", "cosinus", "hilbert")
     if(!(TT %in% ProperTransformTypes)){
-      return("Transform type must be one of below: \"sinus\", \"cosinus\", \"hilbert\")
+      return("Transform type must be one of below: \"sinus\", \"cosinus\", \"hilbert\"")
     }
   }
 )

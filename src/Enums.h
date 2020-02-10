@@ -1,57 +1,75 @@
 /*
- * Skrypt zawierający struktury typu enum wykorzystywane w kodzie Rcpp
+ * This file contains all enum classes and functions which allow us to convert
+ * string values to those enums
  */
-
-#include <map>
-#include <string>
-#include <Rcpp.h>
 using namespace Rcpp;
-//[[Rcpp::plugins("cpp11")]]
 
-/*
- * Typy transformat trygonometrycznych
- */
+namespace Enums{
 
-enum TrigonometricTransformTypes
-{
-  SINUS = 0,
-  COSINUS = 1,
-  HILBERT = 2
-};
+  /*
+   * Types of trigonometric transforms
+   */
 
-struct TrigonometricTransformTypeMap : public std::map<std::string, TrigonometricTransformTypes>
-{
-  TrigonometricTransformTypeMap()
+  enum TrigonometricTransformTypes
   {
-    this->operator[]("sinus") = SINUS;
-    this->operator[]("cosinus") = COSINUS;
-    this->operator[]("hilbert") = HILBERT;
+    SINUS = 0,
+    COSINUS = 1,
+    HILBERT = 2
   };
   
-  ~TrigonometricTransformTypeMap() {}
-};
-
-/*
- * Typy deskryptorów kształtu
- */
-
-enum ShapeDescriptorTypes
-{
-  RAWSUBSEQUENCE = 0, 
-  PAADESCRIPTOR = 1, 
-  DERIVATIVEDESCRIPTOR = 2,
-  SLOPEDESCRIPTOR = 3
-};
-
-struct ShapeDescriptorTypeMap : public std::map<std::string, ShapeDescriptorTypes>
-{
-  ShapeDescriptorTypeMap()
+  struct TrigonometricTransformTypeMap : public std::map<std::string, TrigonometricTransformTypes>
   {
-    this->operator[]("RawSubsequence") = RAWSUBSEQUENCE;
-    this->operator[]("PAADescriptor") = PAADESCRIPTOR;
-    this->operator[]("derivativeDescriptor") = DERIVATIVEDESCRIPTOR;
-    this->operator[]("slopeDescriptor") = SLOPEDESCRIPTOR;
+    TrigonometricTransformTypeMap()
+    {
+      this->operator[]("sinus") = SINUS;
+      this->operator[]("cosinus") = COSINUS;
+      this->operator[]("hilbert") = HILBERT;
+    };
+    
+    ~TrigonometricTransformTypeMap() {}
+  };
+
+  /*
+   * Types of shape descriptors
+   */
+
+  enum ShapeDescriptorTypes
+  {
+    RAWSUBSEQUENCE = 0, 
+    PAADESCRIPTOR = 1, 
+    DERIVATIVEDESCRIPTOR = 2,
+    SLOPEDESCRIPTOR = 3
+  };
+
+  struct ShapeDescriptorTypeMap : public std::map<std::string, ShapeDescriptorTypes>
+  {
+    ShapeDescriptorTypeMap()
+    {
+      this->operator[]("RawSubsequence") = RAWSUBSEQUENCE;
+      this->operator[]("PAADescriptor") = PAADESCRIPTOR;
+      this->operator[]("derivativeDescriptor") = DERIVATIVEDESCRIPTOR;
+      this->operator[]("slopeDescriptor") = SLOPEDESCRIPTOR;
+    };
+    
+    ~ShapeDescriptorTypeMap() {}
   };
   
-  ~ShapeDescriptorTypeMap() {}
-};
+  /*
+   * Types of multidimensional DTW (dependent / independent)
+   */
+  
+  enum MultidimensionalDTWTypes
+  {
+    DEPENDENT = 0,
+    INDEPENDENT = 1
+  };
+  
+  struct MultidimensionalDTWTypeMap : public std::map<std::string, MultidimensionalDTWTypes>
+  {
+    MultidimensionalDTWTypeMap()
+    {
+      this->operator[]("Dependent") = DEPENDENT;
+      this->operator[]("Independent") = INDEPENDENT;
+    }
+  };
+}

@@ -8,5 +8,5 @@ Maintainer: Mikołaj Szafraniec <methodos77@gmail.com>
 Description: Financial series classification using various type of DTW algorithm
 License: GPL (>= 2)
 Imports: Rcpp (>= 0.12.7)
-LinkingTo: Rcpp, RcppArmadillo
-SystemRequirements: C++11
+LinkingTo: Rcpp
+SystemRequirements: C++11, GNU make

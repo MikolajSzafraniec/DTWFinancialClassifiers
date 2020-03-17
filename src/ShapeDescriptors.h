@@ -18,7 +18,7 @@ namespace SD
       int subLength = subsequence.length();
       
       if(subLength < PAAWindow)
-        stop("Szerokosc okna nie moze byc wieksza od dlugosci podsekwencji");
+        stop("Window can not be wider than the lenght of the subsequence");
       
       int lastIndex = subLength - PAAWindow;
       NumericVector res(lastIndex + 1);
@@ -51,7 +51,7 @@ namespace SD
       int subLength = subsequence.length();
       
       if(subLength < slopeWindow)
-        stop("Szerokosc okna nie moze byc wieksza od dlugosci podsekwencji");
+        stop("Window can not be wider than the lenght of the subsequence");
       
       int lastIndex = subLength - slopeWindow;
       NumericVector res(lastIndex + 1);
@@ -78,7 +78,7 @@ namespace SD
       int y_len = y.length();
       
       if(x_len != y_len)
-        stop("Blad: wektory o roznej dlugosci");
+        stop("Error: vectors of different lenghts");
       
       double x_mean = mean(x);
       double y_mean = mean(y);

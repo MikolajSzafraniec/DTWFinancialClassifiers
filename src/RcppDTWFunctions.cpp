@@ -1,7 +1,9 @@
 #include <Rcpp.h>
+#include <math.h>
 #include "SubsequenceFiller.h"
 #include "ShapeDescriptorsComputation.h"
 #include "TrigonometricTransforms.h"
+#include "Iterators.h"
 #ifndef Enums
 #define Enums
 #endif
@@ -13,10 +15,11 @@ using namespace SD;
 using namespace SDComputation;
 using namespace TTR;
 using namespace SFiller;
+using namespace Iterators;
 
 //[[Rcpp::plugins("cpp11")]]
 
-//Funkcja pomocnicza do asSubsequence
+// Function auxiliary to asSubsequence function
 //[[Rcpp::export]]
 NumericMatrix subsequencesMatrix(NumericVector values, int subsequenceWidth){
   if(subsequenceWidth < 0)

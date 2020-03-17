@@ -1,7 +1,7 @@
 ######################### Class ShapeDescriptorParams ###########################
 
 #################################################################################
-###        Class which contains params of trigonometric transformations       ###
+###        Class which stores params of trigonometric transformations         ###
 ###                              of time series                               ###
 #################################################################################
 
@@ -50,7 +50,7 @@ setClass(
 )
 
 #################################################################################
-###              Class which contains params of shape descriptors             ###
+###              Class which stores params of shape descriptors               ###
 #################################################################################
 
 setClass(

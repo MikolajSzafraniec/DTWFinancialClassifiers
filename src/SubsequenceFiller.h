@@ -1,8 +1,5 @@
 using namespace Rcpp;
 
-// Klasa przechowująca dane dotyczące modyfikowanego szeregu i wynikowych podsekwencji
-// z wbudowanymi metodami do ich uzupełniania
-
 /*
  * Class which contains pointers to data and parameteres of modyfing series and
  * expected results. This class includes also methods which handle with filling

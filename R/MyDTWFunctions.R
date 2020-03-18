@@ -9,6 +9,5 @@ Rcpp::sourceCpp("src/RcppDTWFunctions.cpp")
 subsequencesMatrix(1:10)
 subsequencesMatrix(1:10, 2)
 
-iterator_test(2, 10, 10, 2)
-length_iterator_test(100, 100, 5, 10)
+subsequencesMatrixCpp(1:2, 0)
 

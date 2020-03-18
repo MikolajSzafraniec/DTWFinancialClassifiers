@@ -1,4 +1,5 @@
 #include <math.h>
+#include "MyEnums.h"
 using namespace Rcpp;
 
 /*
@@ -74,4 +75,35 @@ namespace TTR
   private:
     TrigonometricTransforms() {}
   };
+
+  /* Funkcja przekształcająca szereg czasowy w jego wybraną transformatę trygonometryczną.
+   * WYbrana może zostać transformata kosinusowa, sinusowa oraz Hilberta.
+   */
+
+  // Function pointer definition
+  typedef NumericVector (*trTransform) (NumericVector);
+  
+  NumericVector trigonometicTransform(NumericVector input, std::string transformType){
+    
+    trTransform fun;
+    TrigonometricTransformTypes switchCondition =
+      TrigonometricTransformTypeMap()[transformType];
+    
+    switch(switchCondition){
+    case(COSINUS):
+      fun = TrigonometricTransforms::DCT;
+      break;
+    case(SINUS):
+      fun = TrigonometricTransforms::DST;
+      break;
+    case(HILBERT):
+      fun = TrigonometricTransforms::DHT;
+      break;
+    default:
+      fun = TrigonometricTransforms::DCT;
+    }
+    
+    NumericVector res = fun(input);
+    return res;
+  }
 }

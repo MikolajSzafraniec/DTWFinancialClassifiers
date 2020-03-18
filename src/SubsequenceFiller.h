@@ -88,4 +88,38 @@ namespace SFiller
       (*ResultMatrix)(numIter, _) = clone(proceedingRow);
     }
   };
+
+  NumericMatrix subsequencesMatrix(NumericVector values, int subsequenceWidth){
+    if(subsequenceWidth < 0)
+      stop("Window width have to be positive, integer number.");
+    
+    int subseqenceLength = (2*subsequenceWidth) + 1;
+    int tsLength = values.length();
+    NumericMatrix res(tsLength, subseqenceLength);
+    
+    auto SubFill = new SubsequenceFiller(&res, &values, tsLength, 
+                                         subsequenceWidth, subseqenceLength);
+    
+    for(int i = 0; i < tsLength; i++){
+      
+      if(((i - subsequenceWidth) < 0) && ((i + subsequenceWidth) >= tsLength)){
+        
+        (*SubFill).ShortLeftShortRightFiller(i);
+        
+      }else if((i - subsequenceWidth) < 0){
+        
+        (*SubFill).ShortLeftFiller(i);
+        
+      }else if((i + subsequenceWidth) >= tsLength){
+        
+        (*SubFill).ShortRightFiller(i);
+        
+      }else{
+        (*SubFill).OpenEndedFiller(i);
+      }  
+    }
+    
+    delete SubFill;
+    return res;
+  }
 }

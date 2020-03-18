@@ -1,7 +1,8 @@
-#include "Enums.h"
 #include "ShapeDescriptors.h"
+#ifndef MyEnums
+#define MyEnums
+#endif
 using namespace Rcpp;
-using namespace Enums;
 using namespace SD;
 
 // Klasa zawierająca metody obliczające macierz deskryptorów na podstawie zestawu przekazanych
@@ -118,4 +119,59 @@ namespace SDComputation
     
     ShapeDescriptorsComputation() {}
   };
+
+  NumericMatrix asShapeDescriptor(NumericMatrix subsequenceSeries, S4 shapeDescriptorParams){
+    
+    std::string shapeDescriptorType = shapeDescriptorParams.slot("Type");
+    
+    if(shapeDescriptorType.compare("simple") == 0){
+      NumericMatrix res = ShapeDescriptorsComputation::ComputeShapeDescriptors(subsequenceSeries, shapeDescriptorParams,
+                                                                               shapeDescriptorParams.slot("Descriptors"));
+      return res;
+    }
+    
+    int inputNcol = subsequenceSeries.ncol();
+    int inputNrow = subsequenceSeries.nrow();
+    
+    std::vector<std::string> Descriptors = shapeDescriptorParams.slot("Descriptors");
+    int nDesc = Descriptors.size();
+    IntegerVector partialLengths(nDesc);
+    
+    for(int i = 0; i < nDesc; i++){
+      partialLengths[i] = ShapeDescriptorsComputation::ComputeShapeDescriptorLength(inputNcol, shapeDescriptorParams,
+                                                                                    Descriptors[i]);
+    }
+    
+    std::vector<int> partialCumsum(nDesc);
+    std::partial_sum(partialLengths.begin(), partialLengths.end(), partialCumsum.begin());
+    std::vector<int> colBegins {0};
+    colBegins.insert(colBegins.end(), partialCumsum.begin(), partialCumsum.end() - 1);
+    
+    int outputNcol = Rcpp::sum(partialLengths);
+    List AddParams = shapeDescriptorParams.slot("Additional_params");
+    NumericVector Weights = AddParams["Weights"];
+    NumericMatrix res(inputNrow, outputNcol);
+    int currentRowBegin = 0;
+    int currentColBegin;
+    double currentWeight;
+    
+    NumericMatrix *partialRes;
+    
+    for(int i = 0; i < nDesc; i++){
+      currentWeight = Weights[i];
+      currentColBegin = colBegins[i];
+      
+      partialRes = new NumericMatrix;
+      *partialRes = ShapeDescriptorsComputation::ComputeShapeDescriptors(subsequenceSeries, 
+                                                                         shapeDescriptorParams, 
+                                                                         Descriptors[i]);
+      
+      ShapeDescriptorsComputation::MatrixPartialCopy(partialRes, &res, currentWeight, currentRowBegin,
+                                                     currentColBegin);
+      
+      delete partialRes;
+    }
+    
+    return res;
+  }
 }

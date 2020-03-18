@@ -4,8 +4,6 @@
  */
 using namespace Rcpp;
 
-namespace Enums{
-
   /*
    * Types of trigonometric transforms
    */
@@ -72,4 +70,21 @@ namespace Enums{
       this->operator[]("Independent") = INDEPENDENT;
     }
   };
-}
+  
+  /*
+   * Types of time series normalization methods
+   */
+  
+  enum TSNormalizationMethods{
+    ZSCORE = 0,
+    UNITARIZATION = 1
+  };
+  
+  struct TSNormalizationMethodMap : public std::map<std::string, TSNormalizationMethods>
+  {
+    TSNormalizationMethodMap()
+    {
+      this->operator[]("Zscore") = ZSCORE;
+      this->operator[]("Unitarization") = UNITARIZATION;
+    }
+  };

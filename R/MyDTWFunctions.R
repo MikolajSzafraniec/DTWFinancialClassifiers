@@ -11,10 +11,15 @@ subsequencesMatrix(1:10, 2)
 
 subsequencesMatrixCpp(1:2, 0)
 
-testMatrix <- matrix(1:20, ncol = 2)
-SDParams = new("ShapeDescriptorParams")
+testMatrix <- matrix(1:100, ncol = 2)
+SDParams = new("ShapeDescriptorParams", "Type" = "compound",
+               "Descriptors" = c("slopeDescriptor", "RawSubsequence"),
+               "Additional_params" = list(slopeWindow = 2L, Weights = c(1, 1)))
 normType = "Unitarization"
 tTrParams = new("TrigonometricTransformParams")
 
 tsTransformationCpp(timeSeries = testMatrix, shapeDescriptorParams = SDParams, 
-                    subsequenceWidth = 2, normalizationType = normType, tTrParams)
+                    subsequenceWidth = 3, normalizationType = normType, tTrParams)
+
+microbenchmark::microbenchmark(tsTransformationCpp(timeSeries = testMatrix, shapeDescriptorParams = SDParams, 
+                                                   subsequenceWidth = 3, normalizationType = normType, tTrParams))

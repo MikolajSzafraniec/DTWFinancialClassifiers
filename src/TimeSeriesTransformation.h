@@ -101,10 +101,12 @@ namespace TSTransformation{
     // Transforming each dimension to subsequence matrix and then to shape descriptors series
     std::vector<NumericMatrix> shapeDescriptorSeries;
     NumericMatrix tempSubsequences;
+    NumericMatrix tempShapeDescriptors;
     
     for(int i = 0; i < seriesDim; i++){
       tempSubsequences = subsequencesMatrix(timeSeries(_, i), subsequenceWidth);
-      shapeDescriptorSeries.push_back(tempSubsequences);
+      tempShapeDescriptors = asShapeDescriptor(tempSubsequences, shapeDescriptorParams);
+      shapeDescriptorSeries.push_back(tempShapeDescriptors);
     }
     
     TransformedTS res = {

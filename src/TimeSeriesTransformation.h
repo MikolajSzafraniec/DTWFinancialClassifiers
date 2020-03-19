@@ -68,4 +68,50 @@ namespace TSTransformation{
     
     return fun(input);
   }
+  
+  TransformedTS TsTransformation(NumericMatrix timeSeries, S4 shapeDescriptorParams,
+                                 int subsequenceWidth, std::string normalizationType,
+                                 Rcpp::Nullable<S4> trigonometricTransformParams = R_NilValue){
+    
+    IntegerVector dimsToTrigonometricTransform;
+    
+    // Adding trigonometric transforms of chosen dimensions if required
+    if(trigonometricTransformParams.isNotNull()){
+      
+      S4 ttP(trigonometricTransformParams);
+      
+      dimsToTrigonometricTransform = ttP.slot("DimToApplyTransform");
+      std::string transformType = ttP.slot("TransformType");
+      
+      for(int i = 0; i < dimsToTrigonometricTransform.size(); i++){
+        int currentDim = dimsToTrigonometricTransform[i];
+        timeSeries = cbind(timeSeries,
+                           trigonometicTransform(timeSeries(_, currentDim), transformType));
+      }
+    }
+    
+    int seriesDim = timeSeries.ncol();
+    
+    // Normalization of each dimension apparently
+    for(int i = 0; i < seriesDim; i++){
+      NumericMatrix::Column currentCol = timeSeries(_, i);
+      currentCol = TSNormalization(currentCol, normalizationType);
+    }
+    
+    // Transforming each dimension to subsequence matrix and then to shape descriptors series
+    std::vector<NumericMatrix> shapeDescriptorSeries;
+    NumericMatrix tempSubsequences;
+    
+    for(int i = 0; i < seriesDim; i++){
+      tempSubsequences = subsequencesMatrix(timeSeries(_, i), subsequenceWidth);
+      shapeDescriptorSeries.push_back(tempSubsequences);
+    }
+    
+    TransformedTS res = {
+      timeSeries,
+      shapeDescriptorSeries
+    };
+    
+    return res;
+  }
 }

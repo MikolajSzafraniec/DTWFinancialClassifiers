@@ -52,3 +52,20 @@ NumericVector trigonometicTransformCpp(NumericVector input, std::string transfor
 NumericVector TSNormalizationCpp(NumericVector input, std::string normType){
   return TSNormalization(input, normType);
 }
+
+//[[Rcpp::export]]
+List tsTransformationCpp(NumericMatrix timeSeries, S4 shapeDescriptorParams,
+                         int subsequenceWidth, std::string normalizationType,
+                         Rcpp::Nullable<S4> trigonometricTransformParams = R_NilValue){
+  
+  TransformedTS tempRes = TsTransformation(timeSeries, shapeDescriptorParams,
+                                           subsequenceWidth, normalizationType,
+                                           trigonometricTransformParams);
+  
+  List res = List::create(
+    tempRes.normalizedSeries,
+    tempRes.shapeDescriptorsSeries
+  );
+  
+  return res;
+}

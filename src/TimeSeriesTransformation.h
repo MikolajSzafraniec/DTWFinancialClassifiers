@@ -84,7 +84,7 @@ namespace TSTransformation{
       std::string transformType = ttP.slot("TransformType");
       
       for(int i = 0; i < dimsToTrigonometricTransform.size(); i++){
-        int currentDim = dimsToTrigonometricTransform[i];
+        int currentDim = dimsToTrigonometricTransform[i]-1;
         timeSeries = cbind(timeSeries,
                            trigonometicTransform(timeSeries(_, currentDim), transformType));
       }

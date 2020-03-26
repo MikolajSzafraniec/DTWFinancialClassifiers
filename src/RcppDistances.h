@@ -1,6 +1,10 @@
 #include <Rcpp.h>
-#include "MyEnums.h"
+#include "TimeSeriesTransformation.h"
+#ifndef MyEnums
+#define MyEnums
+#endif
 using namespace Rcpp;
+using namespace TSTransformation;
 
 namespace RcppDist{
   
@@ -150,5 +154,54 @@ namespace RcppDist{
     return res;
   }
 
-  
+  /*
+   * Calculation of distance matrices for both raw and transformed to shaped
+   * descriptors time series. Calculation can be conducted in the way characteristic
+   * to both dependent and independent multidimensional DTW
+   */
+  DistMatrices CalculateDistMatrices(TransformedTS transformedTSReference,
+                                     TransformedTS transformedTSTest,
+                                     MultidimensionalDTWTypes distanceType){
+    
+    std::vector<NumericMatrix> RawSeriesDistMatrices;
+    std::vector<NumericMatrix> ShapeDescriptorDistMatrices;
+    DistMatrices res;
+    
+    if(distanceType == DEPENDENT){
+      RawSeriesDistMatrices.push_back(
+        DistanceMatrixCppDependent(transformedTSReference.normalizedSeries,
+                                   transformedTSTest.normalizedSeries));
+      ShapeDescriptorDistMatrices.push_back(
+        DistanceMatrixCppDependent(transformedTSReference.shapeDescriptorsSeries,
+                                   transformedTSTest.shapeDescriptorsSeries)
+      );
+      
+    }else{
+      
+      int rawSeriesDimRef = transformedTSReference.normalizedSeries.ncol();
+      int rawSeriesDimTest = transformedTSTest.normalizedSeries.ncol();
+      
+      if(rawSeriesDimRef != rawSeriesDimTest)
+        stop("Dimension of both series must match");
+      
+      for(int i = 0; i < rawSeriesDimRef; i++){
+        
+        RawSeriesDistMatrices.push_back(
+          DistanceMatrixCpp(transformedTSReference.normalizedSeries(_, i),
+                            transformedTSTest.normalizedSeries(_, i))
+        );
+        
+        ShapeDescriptorDistMatrices.push_back(
+          DistanceMatrixCpp(transformedTSReference.shapeDescriptorsSeries[i],
+                            transformedTSTest.shapeDescriptorsSeries[i])
+        );
+      }
+    }
+    
+    res.RawSeriesDistMatrices = RawSeriesDistMatrices;
+    res.ShapeDesciptorDistMatrices = ShapeDescriptorDistMatrices;
+    res.DistanceType = distanceType;
+    
+    return res;
+  }
 }

@@ -23,4 +23,20 @@ tTrParams = new("TrigonometricTransformParams",
 trRes <- tsTransformationCpp(timeSeries = testMatrix, shapeDescriptorParams = SDParams, 
                     subsequenceWidth = 0, normalizationType = normType, tTrParams)
 
-plot(trRes[[1]][,3], type = "l")
+tsRef <- matrix(1:10, ncol = 2)
+tsTest <- matrix(2:11, ncol = 2)
+tsTest[,2] <- rnorm(5)
+
+distTestRes <- RcppDistancesTest(timeSeriesRef = tsRef, timeSeriesTest = tsTest, 
+                                 shapeDescriptorParams = SDParams, subsequenceWidth = 1, 
+                                 normalizationType = normType, distanceType = "Independent")
+
+z_norm <- function(x){
+  (x-min(x)) / (max(x) - min(x))
+}
+
+proxy::dist(z_norm(tsRef[,1]), z_norm(tsTest[,1]))
+microbenchmark::microbenchmark(proxy::dist(z_norm(tsRef[,1]), z_norm(tsTest[,1])),
+                               RcppDistancesTest(timeSeriesRef = tsRef, timeSeriesTest = tsTest, 
+                                                 shapeDescriptorParams = SDParams, subsequenceWidth = 1, 
+                                                 normalizationType = normType, distanceType = "Independent"))

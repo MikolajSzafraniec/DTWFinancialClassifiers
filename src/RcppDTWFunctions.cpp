@@ -1,7 +1,10 @@
 #include <Rcpp.h>
 #include <math.h>
 #include "Iterators.h"
-#include "TimeSeriesTransformation.h"
+#include "RcppDistances.h"
+#ifndef TimeSeriesTransformation
+#define TimeSeriesTransformation
+#endif
 #ifndef MyEnums
 #define MyEnums
 #endif
@@ -24,6 +27,7 @@ using namespace TTR;
 using namespace SFiller;
 using namespace Iterators;
 using namespace TSTransformation;
+using namespace RcppDist;
 
 //[[Rcpp::plugins("cpp11")]]
 
@@ -65,6 +69,37 @@ List tsTransformationCpp(NumericMatrix timeSeries, S4 shapeDescriptorParams,
   List res = List::create(
     tempRes.normalizedSeries,
     tempRes.shapeDescriptorsSeries
+  );
+  
+  return res;
+}
+
+//[[Rcpp::export]]
+List RcppDistancesTest(NumericMatrix timeSeriesRef, NumericMatrix timeSeriesTest,
+                       S4 shapeDescriptorParams, int subsequenceWidth, std::string normalizationType,
+                       Rcpp::Nullable<S4> trigonometricTransformParams = R_NilValue,
+                       std::string distanceType = "Dependent"){
+  
+  TransformedTS tempResRefSeries = TsTransformation(timeSeriesRef, shapeDescriptorParams,
+                                                    subsequenceWidth, normalizationType,
+                                                    trigonometricTransformParams);
+  
+  MultidimensionalDTWTypes distT = 
+    MultidimensionalDTWTypeMap()[distanceType];
+  
+  TransformedTS tempResTestSeries = TsTransformation(timeSeriesTest, shapeDescriptorParams,
+                                                    subsequenceWidth, normalizationType,
+                                                    trigonometricTransformParams);
+  
+  
+  
+  DistMatrices distMatrices = CalculateDistMatrices(tempResRefSeries,
+                                                    tempResTestSeries,
+                                                    distT);
+  
+  List res = List::create(
+    distMatrices.RawSeriesDistMatrices,
+    distMatrices.ShapeDesciptorDistMatrices
   );
   
   return res;

@@ -56,14 +56,19 @@ microbenchmark::microbenchmark(dtw:::globalCostMatrix(tst_matrix)$costMatrix,
 unclass(dtw::symmetric1)
 unclass(dtw::asymmetricP05)
 
-a <- rnorm(10)
-b <- rnorm(10)
+a <- sample(1:10, 10)
+b <- sample(1:10, 10)
 distMat <- proxy::dist(a, b)
 
-dtw_R <- dtw::dtw(distMat, keep.internals = T, step.pattern = dtw::symmetric1)
+dtw_R <- dtw::dtw(a,b, keep.internals = T, step.pattern = dtw::symmetric1)
 my_dtw <- SimpleDTWTest(distMat)
+my_dtw
 dtw_R$index1
 dtw_R$index2
+all(my_dtw$wpP == dtw_R$index1) & all(my_dtw$wpQ == dtw_R$index2)
+
+
+AccumulatedCostMatrixCppTest(distMat)
 
 microbenchmark::microbenchmark(dtw::dtw(distMat, keep.internals = F, step.pattern = dtw::symmetric1),
                                SimpleDTWTest(distMat))

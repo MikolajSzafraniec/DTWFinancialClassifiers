@@ -115,7 +115,7 @@ namespace CppDTW{
     
     warpingPoints.push_back({i+1, j+1});
     
-    while((i > 0) & (j > 0)){
+    while((i > 0) | (j > 0)){
       
       if(i == 0){
         j--;
@@ -129,13 +129,13 @@ namespace CppDTW{
           accCostMatrix(i, j - 1)
         });
         
-        if(accCostMatrix(i-1, j) == min_val){
+        if(accCostMatrix(i-1, j-1) == min_val){
           i--;
+          j--;
         }else if(accCostMatrix(i, j-1) == min_val){
           j--;
         }else{
           i--;
-          j--;
         }
       }
       

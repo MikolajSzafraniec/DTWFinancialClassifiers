@@ -1,7 +1,7 @@
 #include <Rcpp.h>
 #include <math.h>
 #include "Iterators.h"
-#include "RcppDistances.h"
+#include "CppDTWFunctions.h"
 #ifndef TimeSeriesTransformation
 #define TimeSeriesTransformation
 #endif
@@ -20,6 +20,9 @@
 #ifndef SubsequenceFiller
 #define SubsequenceFiller
 #endif
+#ifndef RcppDistances
+#define RcppDistances
+#endif
 using namespace Rcpp;
 using namespace SD;
 using namespace SDComputation;
@@ -28,6 +31,7 @@ using namespace SFiller;
 using namespace Iterators;
 using namespace TSTransformation;
 using namespace RcppDist;
+using namespace CppDTW;
 
 //[[Rcpp::plugins("cpp11")]]
 
@@ -101,6 +105,26 @@ List RcppDistancesTest(NumericMatrix timeSeriesRef, NumericMatrix timeSeriesTest
     distMatrices.RawSeriesDistMatrices,
     distMatrices.ShapeDesciptorDistMatrices
   );
+  
+  return res;
+}
+
+//[[Rcpp::export]]
+NumericMatrix AccumulatedCostMatrixCppTest(NumericMatrix x){
+  return AccumulatedCostMatrix(x);
+}
+
+//[[Rcpp::export]]
+List SimpleDTWTest(NumericMatrix x){
+  SimpleDTWResults dtwRes = DTWRcppV2(x);
+  
+  List res = List::create(
+    dtwRes.Distance,
+    dtwRes.WarpingPathP,
+    dtwRes.WarpingPathQ
+  );
+  
+  res.names() = CharacterVector({"Dist", "wpP", "wpQ"});
   
   return res;
 }

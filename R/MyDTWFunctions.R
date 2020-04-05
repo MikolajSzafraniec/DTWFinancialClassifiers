@@ -40,3 +40,30 @@ microbenchmark::microbenchmark(proxy::dist(z_norm(tsRef[,1]), z_norm(tsTest[,1])
                                RcppDistancesTest(timeSeriesRef = tsRef, timeSeriesTest = tsTest, 
                                                  shapeDescriptorParams = SDParams, subsequenceWidth = 1, 
                                                  normalizationType = normType, distanceType = "Independent"))
+
+
+tst_matrix <- matrix(rnorm(1:100), nrow = 10, ncol = 10)
+AccumulatedCostMatrixCppTest(tst_matrix)
+dtw_tsts <- dtw::dtw(tst_matrix, keep.internals = T, step.pattern = dtw::symmetric1)
+dtw_tsts$costMatrix
+
+dtw::dtw
+?dtw:::globalCostMatrix
+dtw:::globalCostMatrix(tst_matrix)$costMatrix
+microbenchmark::microbenchmark(dtw:::globalCostMatrix(tst_matrix)$costMatrix,
+                               AccumulatedCostMatrixCppTest(tst_matrix))
+
+unclass(dtw::symmetric1)
+unclass(dtw::asymmetricP05)
+
+a <- rnorm(10)
+b <- rnorm(10)
+distMat <- proxy::dist(a, b)
+
+dtw_R <- dtw::dtw(distMat, keep.internals = T, step.pattern = dtw::symmetric1)
+my_dtw <- SimpleDTWTest(distMat)
+dtw_R$index1
+dtw_R$index2
+
+microbenchmark::microbenchmark(dtw::dtw(distMat, keep.internals = F, step.pattern = dtw::symmetric1),
+                               SimpleDTWTest(distMat))

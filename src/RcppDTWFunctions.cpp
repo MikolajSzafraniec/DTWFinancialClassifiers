@@ -128,3 +128,10 @@ List SimpleDTWTest(NumericMatrix x){
   
   return res;
 }
+
+//[[Rcpp::export]]
+double distanceFromWarpingPathsTest(NumericMatrix distMatrix,
+                                    IntegerVector path1,
+                                    IntegerVector path2){
+  return CalcDistanceFromWarpingPaths(distMatrix, path1, path2);
+}

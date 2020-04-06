@@ -67,8 +67,17 @@ dtw_R$index1
 dtw_R$index2
 all(my_dtw$wpP == dtw_R$index1) & all(my_dtw$wpQ == dtw_R$index2)
 
+distanceFromWarpingPathsTest(distMatrix = distMat,
+                             my_dtw$wpP,
+                             my_dtw$wpQ)
 
-AccumulatedCostMatrixCppTest(distMat)
+sum(distMat[cbind(dtw_R$index1,
+              dtw_R$index2)])
+
+a <- rnorm(100)
+b <- rnorm(100)
+
+distMat <- proxy::dist(a, b)
 
 microbenchmark::microbenchmark(dtw::dtw(distMat, keep.internals = F, step.pattern = dtw::symmetric1),
                                SimpleDTWTest(distMat))

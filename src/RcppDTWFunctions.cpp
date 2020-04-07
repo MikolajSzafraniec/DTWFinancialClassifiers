@@ -135,3 +135,45 @@ double distanceFromWarpingPathsTest(NumericMatrix distMatrix,
                                     IntegerVector path2){
   return CalcDistanceFromWarpingPaths(distMatrix, path1, path2);
 }
+
+//[[Rcpp::export]]
+List ComplexDTWResultsTest(ListOf<NumericMatrix> RawSeriesDistMat,
+                           ListOf<NumericMatrix> ShapeDescriptorMatrix,
+                           std::string DistanceType = "Dependent"){
+  
+  std::vector<NumericMatrix> rawSeries;
+  std::vector<NumericMatrix> shapeSeries;
+  
+  int n_series = RawSeriesDistMat.size();
+  
+  for(int i = 0; i < n_series; i++){
+    rawSeries.push_back(RawSeriesDistMat[i]);
+    shapeSeries.push_back(ShapeDescriptorMatrix[i]);
+  }
+  
+  MultidimensionalDTWTypes distType = 
+    MultidimensionalDTWTypeMap()[DistanceType];
+  
+  DistMatrices input;
+  input.RawSeriesDistMatrices = rawSeries;
+  input.ShapeDesciptorDistMatrices = shapeSeries;
+  input.DistanceType = distType;
+  
+  DTWResults resCpp = ComplexDTWRcpp(input);
+  
+  List rRes;
+  
+  rRes.push_back(resCpp.RawSeriesDistance, "RawSeriesDistance");
+  rRes.push_back(resCpp.ShapeDescriptorsDistance, "ShapeDescriptorsDistance");
+  int warpPathSize = resCpp.WarpingPathsP.size();
+  
+  for(int i = 0; i < warpPathSize; i++){
+    std::string tempName = "WarpingPaths_" + std::to_string(i);
+    rRes.push_back(Rcpp::cbind(
+      resCpp.WarpingPathsP[i],
+      resCpp.WarpingPathsQ[i]
+    ), tempName);
+  }
+  
+  return rRes;
+}

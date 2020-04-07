@@ -18,8 +18,8 @@ namespace CppDTW{
   struct DTWResults{
     double RawSeriesDistance;
     double ShapeDescriptorsDistance;
-    std::vector<IntegerVector> warpingPathsP;
-    std::vector<IntegerVector> warpingPathQ;
+    std::vector<IntegerVector> WarpingPathsP;
+    std::vector<IntegerVector> WarpingPathsQ;
   };
 
   NumericMatrix AccumulatedCostMatrix(NumericMatrix distMatrix){
@@ -126,6 +126,64 @@ namespace CppDTW{
     }
     
     double res = Rcpp::sum(distances);
+    
+    return res;
+  }
+  
+  DTWResults ComplexDTWRcpp(DistMatrices inputDistances){
+    
+    int rawSeries_len = inputDistances.RawSeriesDistMatrices.size();
+    int shapeDesc_len = inputDistances.ShapeDesciptorDistMatrices.size();
+    
+    if(rawSeries_len != shapeDesc_len)
+      stop("There has to be the same number of distance matrices for both raw and shapeDescriptor series");
+    
+    std::vector<SimpleDTWResults> shapeDescDTWResults;
+    
+    for(int i = 0; i < shapeDesc_len; i++){
+      shapeDescDTWResults.push_back(
+        DTWRcpp(inputDistances.ShapeDesciptorDistMatrices[i])
+      );
+    }
+    
+    double rawSeriesDistance = 0;
+    double shapeDescDistance = 0;
+    std::vector<IntegerVector> warpingPathsP;
+    std::vector<IntegerVector> warpingPathsQ;
+    
+    if(inputDistances.DistanceType == DEPENDENT){
+      
+      shapeDescDistance = shapeDescDTWResults[0].Distance;
+      rawSeriesDistance = CalcDistanceFromWarpingPaths(
+        inputDistances.RawSeriesDistMatrices[0],
+        shapeDescDTWResults[0].WarpingPathP,
+        shapeDescDTWResults[0].WarpingPathQ
+      );
+      
+      warpingPathsP.push_back(shapeDescDTWResults[0].WarpingPathP);
+      warpingPathsQ.push_back(shapeDescDTWResults[0].WarpingPathQ);
+      
+    }else{
+      
+      for(int i = 0; i < shapeDesc_len; i++){
+        shapeDescDistance += shapeDescDTWResults[i].Distance;
+        rawSeriesDistance += CalcDistanceFromWarpingPaths(
+          inputDistances.RawSeriesDistMatrices[i],
+          shapeDescDTWResults[i].WarpingPathP,
+          shapeDescDTWResults[i].WarpingPathQ
+        );
+        
+        warpingPathsP.push_back(shapeDescDTWResults[i].WarpingPathP);
+        warpingPathsQ.push_back(shapeDescDTWResults[i].WarpingPathQ);
+      }
+    }
+    
+    DTWResults res;
+    
+    res.RawSeriesDistance = rawSeriesDistance;
+    res.ShapeDescriptorsDistance = shapeDescDistance;
+    res.WarpingPathsP = warpingPathsP;
+    res.WarpingPathsQ = warpingPathsQ;
     
     return res;
   }

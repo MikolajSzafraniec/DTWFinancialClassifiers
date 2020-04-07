@@ -50,66 +50,8 @@ namespace CppDTW{
     return res;
   }
   
+  
   SimpleDTWResults DTWRcpp(NumericMatrix distMatrix){
-    
-    NumericMatrix accCostMatrix = AccumulatedCostMatrix(distMatrix);
-    std::vector<IntegerVector> warpingPoints;
-    
-    int n_row = distMatrix.nrow();
-    int n_col = distMatrix.ncol();
-    
-    int i = 0;
-    int j = 0;
-    
-    warpingPoints.push_back({i+1, j+1});
-    
-    while(i < (n_row-1) && j < (n_col-1)){
-      
-      if(i == (n_row-1)){
-        j++;
-      }else if(j == (n_col-1)){
-        i++;
-      }else{
-        
-        double min_val = std::min({
-          distMatrix(i + 1, j + 1),
-          distMatrix(i + 1, j),
-          distMatrix(j + 1, i)
-        });
-        
-        if(distMatrix(i, j+1) == min_val){
-          j++;
-        }else if(distMatrix(i+1, j) == min_val){
-          i++;
-        }else{
-          i++;
-          j++;
-        }
-      }
-      
-      warpingPoints.push_back({i+1, j+1});
-    }
-    
-    int warpingLength = warpingPoints.size();
-    IntegerVector warpingPathP(warpingLength);
-    IntegerVector warpingPathQ(warpingLength);
-    
-    for(int i = 0; i < warpingLength; i++){
-      warpingPathP(i) = warpingPoints[i](0);
-      warpingPathQ(i) = warpingPoints[i](1);
-    }
-    
-    SimpleDTWResults res;
-    
-    res.Distance = accCostMatrix(n_row-1, n_col-1);
-    res.WarpingPathP = warpingPathP;
-    res.WarpingPathQ = warpingPathQ;
-    
-    return res;
-  }
-  
-  
-  SimpleDTWResults DTWRcppV2(NumericMatrix distMatrix){
     
     NumericMatrix accCostMatrix = AccumulatedCostMatrix(distMatrix);
     std::vector<IntegerVector> warpingPoints;

@@ -116,7 +116,7 @@ NumericMatrix AccumulatedCostMatrixCppTest(NumericMatrix x){
 
 //[[Rcpp::export]]
 List SimpleDTWTest(NumericMatrix x){
-  SimpleDTWResults dtwRes = DTWRcppV2(x);
+  SimpleDTWResults dtwRes = DTWRcpp(x);
   
   List res = List::create(
     dtwRes.Distance,

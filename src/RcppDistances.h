@@ -63,7 +63,7 @@ namespace RcppDist{
 
   /*
    * Distance matrix between two matrices - it denotes two series transformed to
-   * them shape descriptors series
+   * their shape descriptors series
    */
   NumericMatrix DistanceMatrixCpp(NumericMatrix x, NumericMatrix y){
     

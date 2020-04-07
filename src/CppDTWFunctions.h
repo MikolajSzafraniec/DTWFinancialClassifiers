@@ -18,8 +18,8 @@ namespace CppDTW{
   struct DTWResults{
     double RawSeriesDistance;
     double ShapeDescriptorsDistance;
-    IntegerVector warpingPathP;
-    IntegerVector warpingPathQ;
+    std::vector<IntegerVector> warpingPathsP;
+    std::vector<IntegerVector> warpingPathQ;
   };
 
   NumericMatrix AccumulatedCostMatrix(NumericMatrix distMatrix){

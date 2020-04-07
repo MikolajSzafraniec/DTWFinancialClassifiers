@@ -24,12 +24,13 @@ trRes <- tsTransformationCpp(timeSeries = testMatrix, shapeDescriptorParams = SD
                     subsequenceWidth = 0, normalizationType = normType, tTrParams)
 
 tsRef <- matrix(1:10, ncol = 2)
-tsTest <- matrix(2:11, ncol = 2)
-tsTest[,2] <- rnorm(5)
+tsTestt <- matrix(2:11, ncol = 2)
+tsTestt[,2] <- rnorm(5)
+tsRef[,2] <- runif(5)
 
-distTestRes <- RcppDistancesTest(timeSeriesRef = tsRef, timeSeriesTest = tsTest, 
+distTestRes <- RcppDistancesTest(timeSeriesRef = tsRef, timeSeriesTest = tsTestt, 
                                  shapeDescriptorParams = SDParams, subsequenceWidth = 1, 
-                                 normalizationType = normType, distanceType = "Independent")
+                                 normalizationType = normType, distanceType = "Dependent")
 
 z_norm <- function(x){
   (x-min(x)) / (max(x) - min(x))
@@ -81,3 +82,21 @@ distMat <- proxy::dist(a, b)
 
 microbenchmark::microbenchmark(dtw::dtw(distMat, keep.internals = F, step.pattern = dtw::symmetric1),
                                SimpleDTWTest(distMat))
+
+
+ts1 <- rnorm(1:10)
+ts2 <- rnorm(1:10)
+
+distMat <- proxy::dist(ts1, ts2)
+
+RdtwRes <- dtw::dtw(distMat, step.pattern = dtw::symmetric1, keep.internals = T)
+cppInput1 <- list(distMat)
+cppInput2 <- list(distMat)
+cppDTWRes <- ComplexDTWResultsTest(cppInput1, cppInput2, "Dependent")
+
+RdtwRes$distance
+RdtwRes$index1
+RdtwRes$index2
+
+microbenchmark::microbenchmark(dtw::dtw(distMat, step.pattern = dtw::symmetric1, keep.internals = F),
+                               ComplexDTWResultsTest(cppInput1, cppInput2, "Dependent"))

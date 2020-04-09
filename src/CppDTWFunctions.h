@@ -21,6 +21,21 @@ namespace CppDTW{
     std::vector<IntegerVector> WarpingPathsP;
     std::vector<IntegerVector> WarpingPathsQ;
   };
+  
+  void CopyDTWResults(DTWResults *r1, DTWResults *r2){
+    
+    int warpPathLength = r2->WarpingPathsP.size();
+    
+    r1->RawSeriesDistance = r2->RawSeriesDistance;
+    r1->ShapeDescriptorsDistance = r2->ShapeDescriptorsDistance;
+    r1->WarpingPathsP = std::vector<IntegerVector>();
+    r1->WarpingPathsQ = std::vector<IntegerVector>();
+    
+    for(int i = 0; i < warpPathLength; i++){
+      r1->WarpingPathsP.push_back(r2->WarpingPathsP[i]);
+      r1->WarpingPathsQ.push_back(r2->WarpingPathsQ[i]);
+    }
+  }
 
   NumericMatrix AccumulatedCostMatrix(NumericMatrix distMatrix){
     

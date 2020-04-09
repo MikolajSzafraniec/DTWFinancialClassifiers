@@ -6,97 +6,22 @@ necPack <- function() {
 source("R/PackageLoading.R")
 # Załadowanie funkcji pakietu Rcpp
 Rcpp::sourceCpp("src/RcppDTWFunctions.cpp")
-subsequencesMatrix(1:10)
-subsequencesMatrix(1:10, 2)
+testClone()
 
-subsequencesMatrixCpp(1:2, 0)
+series1 <- matrix(rnorm(10), ncol = 1)
+series2 <- matrix(rnorm(100), ncol = 1)
 
-testMatrix <- matrix(1:100, ncol = 2)
-testMatrix[,1] <- cos(seq(from = 0, to = pi, length.out = 50)*25)
 
-SDParams = new("ShapeDescriptorParams", "Type" = "simple",
-               "Descriptors" = "RawSubsequence")
-normType = "Unitarization"
-tTrParams = new("TrigonometricTransformParams",
-                DimToApplyTransform = c(1L, 2L))
-
-trRes <- tsTransformationCpp(timeSeries = testMatrix, shapeDescriptorParams = SDParams, 
-                    subsequenceWidth = 0, normalizationType = normType, tTrParams)
-
-tsRef <- matrix(1:10, ncol = 2)
-tsTestt <- matrix(2:11, ncol = 2)
-tsTestt[,2] <- rnorm(5)
-tsRef[,2] <- runif(5)
-
-distTestRes <- RcppDistancesTest(timeSeriesRef = tsRef, timeSeriesTest = tsTestt, 
-                                 shapeDescriptorParams = SDParams, subsequenceWidth = 1, 
-                                 normalizationType = normType, distanceType = "Dependent")
-
-z_norm <- function(x){
-  (x-min(x)) / (max(x) - min(x))
+knnRes <- kNNShapeDTWCpp(referenceSeries = series1,
+                         testSeries = series2, 
+                         forecastHorizon = 5, 
+                         subsequenceWidth = 2, 
+                         subsequenceBreaks = 1, 
+                         shapeDescriptorParams = SDP)
+knnRes
+z_normalize <- function(x){
+  (x - min(x)) / (max(x) - min(x))
 }
 
-proxy::dist(z_norm(tsRef[,1]), z_norm(tsTest[,1]))
-microbenchmark::microbenchmark(proxy::dist(z_norm(tsRef[,1]), z_norm(tsTest[,1])),
-                               RcppDistancesTest(timeSeriesRef = tsRef, timeSeriesTest = tsTest, 
-                                                 shapeDescriptorParams = SDParams, subsequenceWidth = 1, 
-                                                 normalizationType = normType, distanceType = "Independent"))
-
-
-tst_matrix <- matrix(rnorm(1:100), nrow = 10, ncol = 10)
-AccumulatedCostMatrixCppTest(tst_matrix)
-dtw_tsts <- dtw::dtw(tst_matrix, keep.internals = T, step.pattern = dtw::symmetric1)
-dtw_tsts$costMatrix
-
-dtw::dtw
-?dtw:::globalCostMatrix
-dtw:::globalCostMatrix(tst_matrix)$costMatrix
-microbenchmark::microbenchmark(dtw:::globalCostMatrix(tst_matrix)$costMatrix,
-                               AccumulatedCostMatrixCppTest(tst_matrix))
-
-unclass(dtw::symmetric1)
-unclass(dtw::asymmetricP05)
-
-a <- sample(1:10, 10)
-b <- sample(1:10, 10)
-distMat <- proxy::dist(a, b)
-
-dtw_R <- dtw::dtw(a,b, keep.internals = T, step.pattern = dtw::symmetric1)
-my_dtw <- SimpleDTWTest(distMat)
-my_dtw
-dtw_R$index1
-dtw_R$index2
-all(my_dtw$wpP == dtw_R$index1) & all(my_dtw$wpQ == dtw_R$index2)
-
-distanceFromWarpingPathsTest(distMatrix = distMat,
-                             my_dtw$wpP,
-                             my_dtw$wpQ)
-
-sum(distMat[cbind(dtw_R$index1,
-              dtw_R$index2)])
-
-a <- rnorm(100)
-b <- rnorm(100)
-
-distMat <- proxy::dist(a, b)
-
-microbenchmark::microbenchmark(dtw::dtw(distMat, keep.internals = F, step.pattern = dtw::symmetric1),
-                               SimpleDTWTest(distMat))
-
-
-ts1 <- rnorm(1:10)
-ts2 <- rnorm(1:10)
-
-distMat <- proxy::dist(ts1, ts2)
-
-RdtwRes <- dtw::dtw(distMat, step.pattern = dtw::symmetric1, keep.internals = T)
-cppInput1 <- list(distMat)
-cppInput2 <- list(distMat)
-cppDTWRes <- ComplexDTWResultsTest(cppInput1, cppInput2, "Dependent")
-
-RdtwRes$distance
-RdtwRes$index1
-RdtwRes$index2
-
-microbenchmark::microbenchmark(dtw::dtw(distMat, step.pattern = dtw::symmetric1, keep.internals = F),
-                               ComplexDTWResultsTest(cppInput1, cppInput2, "Dependent"))
+dtw::dtw(z_normalize(series1[,1]), z_normalize(series2[,1][36:45]), step.pattern = dtw::symmetric1)$distance
+dtw::dtw(z_normalize(series1[,1]), z_normalize(series2[,1][36:45]), step.pattern = dtw::symmetric1)$index2

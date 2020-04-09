@@ -91,10 +91,11 @@ namespace TSTransformation{
     }
     
     int seriesDim = timeSeries.ncol();
+    NumericMatrix timeSeriesCopy = Rcpp::clone(timeSeries);
     
     // Normalization of each dimension apparently
     for(int i = 0; i < seriesDim; i++){
-      NumericMatrix::Column currentCol = timeSeries(_, i);
+      NumericMatrix::Column currentCol = timeSeriesCopy(_, i);
       currentCol = TSNormalization(currentCol, normalizationType);
     }
     
@@ -104,13 +105,13 @@ namespace TSTransformation{
     NumericMatrix tempShapeDescriptors;
     
     for(int i = 0; i < seriesDim; i++){
-      tempSubsequences = subsequencesMatrix(timeSeries(_, i), subsequenceWidth);
+      tempSubsequences = subsequencesMatrix(timeSeriesCopy(_, i), subsequenceWidth);
       tempShapeDescriptors = asShapeDescriptor(tempSubsequences, shapeDescriptorParams);
       shapeDescriptorSeries.push_back(tempShapeDescriptors);
     }
     
     TransformedTS res = {
-      timeSeries,
+      timeSeriesCopy,
       shapeDescriptorSeries
     };
     

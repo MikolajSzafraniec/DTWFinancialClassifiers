@@ -1,0 +1,13 @@
+Package: RcppShapeDTW
+Type: Package
+Title: Implementation of shapeDTW algorithm in C++
+Version: 1.0
+Date: 2020-04-12
+Author: Mikolaj Szafraniec
+Maintainer: Mikolaj Szafrniaec <mikolaj.szafraniec.upds@gmail.com>
+Description: This package contains functions which allow to conduct simple kNN
+  classification of the time series based on one of the varieties of DTW algorithm
+  called 'shapeDTW'.
+License: GPL (>= 2)
+Imports: Rcpp (>= 1.0.3)
+LinkingTo: Rcpp

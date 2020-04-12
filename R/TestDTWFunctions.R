@@ -25,3 +25,6 @@ z_normalize <- function(x){
 
 dtw::dtw(z_normalize(series1[,1]), z_normalize(series2[,1][36:45]), step.pattern = dtw::symmetric1)$distance
 dtw::dtw(z_normalize(series1[,1]), z_normalize(series2[,1][36:45]), step.pattern = dtw::symmetric1)$index2
+
+
+require(Rcpp)

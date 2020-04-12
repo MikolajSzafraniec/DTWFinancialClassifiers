@@ -5,51 +5,51 @@
 
 using namespace Rcpp;
 
-// subsequencesMatrixCpp
-NumericMatrix subsequencesMatrixCpp(NumericVector values, int subsequenceWidth);
-RcppExport SEXP _RcppShapeDTW_subsequencesMatrixCpp(SEXP valuesSEXP, SEXP subsequenceWidthSEXP) {
+// RcppsubsequencesMatrix
+NumericMatrix RcppsubsequencesMatrix(NumericVector values, int subsequenceWidth);
+RcppExport SEXP _RcppShapeDTW_RcppsubsequencesMatrix(SEXP valuesSEXP, SEXP subsequenceWidthSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type values(valuesSEXP);
     Rcpp::traits::input_parameter< int >::type subsequenceWidth(subsequenceWidthSEXP);
-    rcpp_result_gen = Rcpp::wrap(subsequencesMatrixCpp(values, subsequenceWidth));
+    rcpp_result_gen = Rcpp::wrap(RcppsubsequencesMatrix(values, subsequenceWidth));
     return rcpp_result_gen;
 END_RCPP
 }
-// asShapeDescriptorCpp
-NumericMatrix asShapeDescriptorCpp(NumericMatrix subsequenceSeries, S4 shapeDescriptorParams);
-RcppExport SEXP _RcppShapeDTW_asShapeDescriptorCpp(SEXP subsequenceSeriesSEXP, SEXP shapeDescriptorParamsSEXP) {
+// RcppasShapeDescriptor
+NumericMatrix RcppasShapeDescriptor(NumericMatrix subsequenceSeries, S4 shapeDescriptorParams);
+RcppExport SEXP _RcppShapeDTW_RcppasShapeDescriptor(SEXP subsequenceSeriesSEXP, SEXP shapeDescriptorParamsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericMatrix >::type subsequenceSeries(subsequenceSeriesSEXP);
     Rcpp::traits::input_parameter< S4 >::type shapeDescriptorParams(shapeDescriptorParamsSEXP);
-    rcpp_result_gen = Rcpp::wrap(asShapeDescriptorCpp(subsequenceSeries, shapeDescriptorParams));
+    rcpp_result_gen = Rcpp::wrap(RcppasShapeDescriptor(subsequenceSeries, shapeDescriptorParams));
     return rcpp_result_gen;
 END_RCPP
 }
-// trigonometicTransformCpp
-NumericVector trigonometicTransformCpp(NumericVector input, std::string transformType);
-RcppExport SEXP _RcppShapeDTW_trigonometicTransformCpp(SEXP inputSEXP, SEXP transformTypeSEXP) {
+// RcpptrigonometicTransform
+NumericVector RcpptrigonometicTransform(NumericVector input, std::string transformType);
+RcppExport SEXP _RcppShapeDTW_RcpptrigonometicTransform(SEXP inputSEXP, SEXP transformTypeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type input(inputSEXP);
     Rcpp::traits::input_parameter< std::string >::type transformType(transformTypeSEXP);
-    rcpp_result_gen = Rcpp::wrap(trigonometicTransformCpp(input, transformType));
+    rcpp_result_gen = Rcpp::wrap(RcpptrigonometicTransform(input, transformType));
     return rcpp_result_gen;
 END_RCPP
 }
-// TSNormalizationCpp
-NumericVector TSNormalizationCpp(NumericVector input, std::string normType);
-RcppExport SEXP _RcppShapeDTW_TSNormalizationCpp(SEXP inputSEXP, SEXP normTypeSEXP) {
+// RcppTSNormalization
+NumericVector RcppTSNormalization(NumericVector input, std::string normType);
+RcppExport SEXP _RcppShapeDTW_RcppTSNormalization(SEXP inputSEXP, SEXP normTypeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type input(inputSEXP);
     Rcpp::traits::input_parameter< std::string >::type normType(normTypeSEXP);
-    rcpp_result_gen = Rcpp::wrap(TSNormalizationCpp(input, normType));
+    rcpp_result_gen = Rcpp::wrap(RcppTSNormalization(input, normType));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -152,22 +152,12 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpp_hello_world
-List rcpp_hello_world();
-RcppExport SEXP _RcppShapeDTW_rcpp_hello_world() {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    rcpp_result_gen = Rcpp::wrap(rcpp_hello_world());
-    return rcpp_result_gen;
-END_RCPP
-}
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_RcppShapeDTW_subsequencesMatrixCpp", (DL_FUNC) &_RcppShapeDTW_subsequencesMatrixCpp, 2},
-    {"_RcppShapeDTW_asShapeDescriptorCpp", (DL_FUNC) &_RcppShapeDTW_asShapeDescriptorCpp, 2},
-    {"_RcppShapeDTW_trigonometicTransformCpp", (DL_FUNC) &_RcppShapeDTW_trigonometicTransformCpp, 2},
-    {"_RcppShapeDTW_TSNormalizationCpp", (DL_FUNC) &_RcppShapeDTW_TSNormalizationCpp, 2},
+    {"_RcppShapeDTW_RcppsubsequencesMatrix", (DL_FUNC) &_RcppShapeDTW_RcppsubsequencesMatrix, 2},
+    {"_RcppShapeDTW_RcppasShapeDescriptor", (DL_FUNC) &_RcppShapeDTW_RcppasShapeDescriptor, 2},
+    {"_RcppShapeDTW_RcpptrigonometicTransform", (DL_FUNC) &_RcppShapeDTW_RcpptrigonometicTransform, 2},
+    {"_RcppShapeDTW_RcppTSNormalization", (DL_FUNC) &_RcppShapeDTW_RcppTSNormalization, 2},
     {"_RcppShapeDTW_RcpptsTransformation", (DL_FUNC) &_RcppShapeDTW_RcpptsTransformation, 5},
     {"_RcppShapeDTW_RcppDistanceMatrices", (DL_FUNC) &_RcppShapeDTW_RcppDistanceMatrices, 7},
     {"_RcppShapeDTW_RcppAccumulatedCostMatrix", (DL_FUNC) &_RcppShapeDTW_RcppAccumulatedCostMatrix, 1},
@@ -175,7 +165,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_RcppShapeDTW_RcppdistanceFromWarpingPaths", (DL_FUNC) &_RcppShapeDTW_RcppdistanceFromWarpingPaths, 3},
     {"_RcppShapeDTW_RcppComplexDTWResults", (DL_FUNC) &_RcppShapeDTW_RcppComplexDTWResults, 3},
     {"_RcppShapeDTW_kNNShapeDTWCpp", (DL_FUNC) &_RcppShapeDTW_kNNShapeDTWCpp, 9},
-    {"_RcppShapeDTW_rcpp_hello_world", (DL_FUNC) &_RcppShapeDTW_rcpp_hello_world, 0},
     {NULL, NULL, 0}
 };
 

@@ -162,7 +162,7 @@ RknnShapeDTWParallel <- function(refSeries,
   refSeriesIdxWithForecastHorizon <- refSeriesStart:refSeriesFrcstHorizonLastIdx
   refSeriesSubsetWithFrcstHorizon <- refSeries[refSeriesIdxWithForecastHorizon,]
   
-  testSeriesIdxWithForecastHorizon <- (dtw_res$bestSubsequenceIdx):refSeriesFrcstHorizonLastIdx
+  testSeriesIdxWithForecastHorizon <- (dtw_res$bestSubsequenceIdx):testSeriesFrctHorizonLastIdx
   testSeriesSubsetWithForecastHorizon <- nnSeries[testSeriesIdxWithForecastHorizon,]
   
   refSeriesReturn <- log(refSeries@.Data[refSeriesFrcstHorizonLastIdx,1] / 
@@ -185,6 +185,8 @@ RknnShapeDTWParallel <- function(refSeries,
     refSeriesNorm = refSeriesSubsetNorm,
     testSeriesNorm = testSeriesSubsetNorm,
     validation_results = list(
+      refSeriesLength = refSeriesLength,
+      forecastHorizon = forecastHorizon,
       refSeriesFull = refSeriesSubsetWithFrcstHorizon,
       testSeriesFull = testSeriesSubsetWithForecastHorizon,
       refSeriesFullNorm = refSeriesSubsetWithFrcstHorizonNorm,
@@ -209,16 +211,19 @@ refSeries <- FXtickAgg[100000:110000,]
 testSeries <- FXtickAgg[1:50000,]
 
 SDP <- new("ShapeDescriptorParams", Descriptors = "slopeDescriptor",
-           "Additional_params" = list("slopeWindow" = 4L))
+           "Additional_params" = list("slopeWindow" = 8L))
 
 
 test_res <- RknnShapeDTWParallel(refSeries = refSeries,
                                  testSeries = list(testSeries = refSeries), 
-                                 refSeriesStart = 5000, shapeDTWParams = SDP, includeRefSeries = F,
-                                 targetDistance = "sh", subsequenceWidth = 5, forecastHorizon = 50, 
-                                 sd_border = 3)
+                                 refSeriesStart = 5700, shapeDTWParams = SDP, includeRefSeries = F,
+                                 targetDistance = "raw", subsequenceWidth = 5, forecastHorizon = 25, 
+                                 sd_border = 2)
 
 test_res
+
+test_res$refSeries
+test_res$testSeries
 
 par(mfrow = c(2, 1))
 plot(test_res$refSeriesNorm@.Data[,1], type = "l")

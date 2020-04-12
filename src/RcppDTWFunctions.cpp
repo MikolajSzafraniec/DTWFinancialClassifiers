@@ -37,13 +37,13 @@ using namespace CppDTW;
 
 // Function auxiliary to asSubsequence function
 //[[Rcpp::export]]
-NumericMatrix subsequencesMatrixCpp(NumericVector values, int subsequenceWidth){
+NumericMatrix RcppsubsequencesMatrix(NumericVector values, int subsequenceWidth){
   return subsequencesMatrix(values, subsequenceWidth);
 }
 
 // Funkcja przekształcająca macierz podsekwencji w macierz deskryptorów kształtu
 //[[Rcpp::export]]
-NumericMatrix asShapeDescriptorCpp(NumericMatrix subsequenceSeries, S4 shapeDescriptorParams){
+NumericMatrix RcppasShapeDescriptor(NumericMatrix subsequenceSeries, S4 shapeDescriptorParams){
   return asShapeDescriptor(subsequenceSeries, shapeDescriptorParams);
 }
 
@@ -52,7 +52,7 @@ NumericMatrix asShapeDescriptorCpp(NumericMatrix subsequenceSeries, S4 shapeDesc
 */
 
 //[[Rcpp::export]]
-NumericVector trigonometicTransformCpp(NumericVector input, std::string transformType){
+NumericVector RcpptrigonometicTransform(NumericVector input, std::string transformType){
   return trigonometicTransform(input, transformType);
 }
 
@@ -62,7 +62,7 @@ NumericVector trigonometicTransformCpp(NumericVector input, std::string transfor
 */
 
 //[[Rcpp::export]]
-NumericVector TSNormalizationCpp(NumericVector input, std::string normType){
+NumericVector RcppTSNormalization(NumericVector input, std::string normType){
   return TSNormalization(input, normType);
 }
 

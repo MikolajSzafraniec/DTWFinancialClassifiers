@@ -34,9 +34,3 @@ static const R_CallMethodDef CallEntries[] = {
     {"_RcppShapeDTW_RcpptsTransformation",         (DL_FUNC) &_RcppShapeDTW_RcpptsTransformation,         5},
     {NULL, NULL, 0}
 };
-
-void R_init_RcppShapeDTW(DllInfo *dll)
-{
-    R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
-    R_useDynamicSymbols(dll, FALSE);
-}

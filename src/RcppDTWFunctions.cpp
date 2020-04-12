@@ -48,23 +48,35 @@ NumericMatrix asShapeDescriptorCpp(NumericMatrix subsequenceSeries, S4 shapeDesc
 }
 
 /* Funkcja przekształcająca szereg czasowy w jego wybraną transformatę trygonometryczną.
- * WYbrana może zostać transformata kosinusowa, sinusowa oraz Hilberta.
- */
+* WYbrana może zostać transformata kosinusowa, sinusowa oraz Hilberta.
+*/
 
 //[[Rcpp::export]]
 NumericVector trigonometicTransformCpp(NumericVector input, std::string transformType){
   return trigonometicTransform(input, transformType);
 }
 
+/*
+* Function to normalize time series with usage of Unitarization method
+* or Z-score normalization (x-mean(x)) / sd(x)
+*/
+
 //[[Rcpp::export]]
 NumericVector TSNormalizationCpp(NumericVector input, std::string normType){
   return TSNormalization(input, normType);
 }
 
+/*
+* This function conducts normalization of multidimensional time series and transforms
+* each dimension to the matrix of its shape descriptors. There is possiblity to add
+* trigonometric transform of chosen dimensions before transformation. It will be
+* transformed to the shape descriptors as well.
+*/
+
 //[[Rcpp::export]]
-List tsTransformationCpp(NumericMatrix timeSeries, S4 shapeDescriptorParams,
-                         int subsequenceWidth, std::string normalizationType,
-                         Rcpp::Nullable<S4> trigonometricTransformParams = R_NilValue){
+List RcpptsTransformation(NumericMatrix timeSeries, S4 shapeDescriptorParams,
+                          int subsequenceWidth, std::string normalizationType,
+                          Rcpp::Nullable<S4> trigonometricTransformParams = R_NilValue){
   
   TransformedTS tempRes = TsTransformation(timeSeries, shapeDescriptorParams,
                                            subsequenceWidth, normalizationType,
@@ -78,11 +90,16 @@ List tsTransformationCpp(NumericMatrix timeSeries, S4 shapeDescriptorParams,
   return res;
 }
 
+/*
+ * This function generate distance matrices between raw series and series transformed
+ * to their shape descriptors.
+ */
+
 //[[Rcpp::export]]
-List RcppDistancesTest(NumericMatrix timeSeriesRef, NumericMatrix timeSeriesTest,
-                       S4 shapeDescriptorParams, int subsequenceWidth, std::string normalizationType,
-                       Rcpp::Nullable<S4> trigonometricTransformParams = R_NilValue,
-                       std::string distanceType = "Dependent"){
+List RcppDistanceMatrices(NumericMatrix timeSeriesRef, NumericMatrix timeSeriesTest,
+                          S4 shapeDescriptorParams, int subsequenceWidth, std::string normalizationType, 
+                          Rcpp::Nullable<S4> trigonometricTransformParams = R_NilValue, 
+                          std::string distanceType = "Dependent"){
   
   TransformedTS tempResRefSeries = TsTransformation(timeSeriesRef, shapeDescriptorParams,
                                                     subsequenceWidth, normalizationType,
@@ -92,8 +109,8 @@ List RcppDistancesTest(NumericMatrix timeSeriesRef, NumericMatrix timeSeriesTest
     MultidimensionalDTWTypeMap()[distanceType];
   
   TransformedTS tempResTestSeries = TsTransformation(timeSeriesTest, shapeDescriptorParams,
-                                                    subsequenceWidth, normalizationType,
-                                                    trigonometricTransformParams);
+                                                     subsequenceWidth, normalizationType,
+                                                     trigonometricTransformParams);
   
   
   
@@ -109,13 +126,23 @@ List RcppDistancesTest(NumericMatrix timeSeriesRef, NumericMatrix timeSeriesTest
   return res;
 }
 
+/*
+ * This function transforms distance matrix to the accumulated cost matrix
+ * used by the DTW algorithm.
+ */
+
 //[[Rcpp::export]]
-NumericMatrix AccumulatedCostMatrixCppTest(NumericMatrix x){
+NumericMatrix RcppAccumulatedCostMatrix(NumericMatrix x){
   return AccumulatedCostMatrix(x);
 }
 
+/*
+ * This function returns DTW results (distance and warping paths)
+ * calculated based on the singular distance matrix
+ */
+
 //[[Rcpp::export]]
-List SimpleDTWTest(NumericMatrix x){
+List RcppSimpleDTW(NumericMatrix x){
   SimpleDTWResults dtwRes = DTWRcpp(x);
   
   List res = List::create(
@@ -129,15 +156,27 @@ List SimpleDTWTest(NumericMatrix x){
   return res;
 }
 
+/*
+ * This function calculate distance betweem time series based on the given distance
+ * matrix and warping paths calculated with DTW algorithm. It is useful to calculate
+ * distance between raw time series based on the warping paths determinated by shape
+ * descriptors of these series. 
+ */
+
 //[[Rcpp::export]]
-double distanceFromWarpingPathsTest(NumericMatrix distMatrix,
+double RcppdistanceFromWarpingPaths(NumericMatrix distMatrix,
                                     IntegerVector path1,
                                     IntegerVector path2){
   return CalcDistanceFromWarpingPaths(distMatrix, path1, path2);
 }
 
+/*
+ * This function return results of the complex DTW algorithm applied to the
+ * raw series and their shape descriptors.
+ */
+
 //[[Rcpp::export]]
-List ComplexDTWResultsTest(ListOf<NumericMatrix> RawSeriesDistMat,
+List RcppComplexDTWResults(ListOf<NumericMatrix> RawSeriesDistMat,
                            ListOf<NumericMatrix> ShapeDescriptorMatrix,
                            std::string DistanceType = "Dependent"){
   
@@ -170,8 +209,8 @@ List ComplexDTWResultsTest(ListOf<NumericMatrix> RawSeriesDistMat,
   for(int i = 0; i < warpPathSize; i++){
     std::string tempName = "WarpingPaths_" + std::to_string(i);
     rRes.push_back(Rcpp::cbind(
-      resCpp.WarpingPathsP[i],
-      resCpp.WarpingPathsQ[i]
+        resCpp.WarpingPathsP[i],
+                            resCpp.WarpingPathsQ[i]
     ), tempName);
   }
   
@@ -179,11 +218,11 @@ List ComplexDTWResultsTest(ListOf<NumericMatrix> RawSeriesDistMat,
 }
 
 /*
- * General workflow for the shape DTW kNN algorithm implemented in the Rcpp.
- * It takes two matrices as the input which represents two multidimensional
- * time series - reference series and test series - and find nearest neighbour
- * for the reference series among the several subsequences of the test series.
- */
+* General workflow for the shape DTW kNN algorithm implemented in the Rcpp.
+* It takes two matrices as the input which represents two multidimensional
+* time series - reference series and test series - and find nearest neighbour
+* for the reference series among the several subsequences of the test series.
+*/
 
 //[[Rcpp::export]]
 List kNNShapeDTWCpp(NumericMatrix referenceSeries,
@@ -281,7 +320,7 @@ List kNNShapeDTWCpp(NumericMatrix referenceSeries,
     std::string tempName = "WarpingPaths_" + std::to_string(i);
     rawSeriesWarpingPaths.push_back(Rcpp::cbind(
         finalResRawDist.WarpingPathsP[i],
-        finalResRawDist.WarpingPathsQ[i]
+                                     finalResRawDist.WarpingPathsQ[i]
     ), tempName);
   }
   
@@ -292,7 +331,7 @@ List kNNShapeDTWCpp(NumericMatrix referenceSeries,
     std::string tempName = "WarpingPaths_" + std::to_string(i);
     shapeDescSeriesWarpingPaths.push_back(Rcpp::cbind(
         finalResShapeDescDist.WarpingPathsP[i],
-        finalResShapeDescDist.WarpingPathsQ[i]
+                                           finalResShapeDescDist.WarpingPathsQ[i]
     ), tempName);
   }
   
@@ -312,38 +351,4 @@ List kNNShapeDTWCpp(NumericMatrix referenceSeries,
   );
   
   return res;
-}
-
-//[[Rcpp::export]]
-List testClone(){
-  DTWResults res1;
-  DTWResults res2;
-  
-  IntegerVector x = IntegerVector::create(1, 2);
-  
-  res1.RawSeriesDistance = 1;
-  res1.ShapeDescriptorsDistance = 1;
-  res1.WarpingPathsP.push_back(x);
-  res1.WarpingPathsQ.push_back(x);
-  
-  CopyDTWResults(&res2, &res1);
-  
-  IntegerVector y = IntegerVector::create(10, 20);
-  res1.WarpingPathsQ = std::vector<IntegerVector>();
-  res1.WarpingPathsQ.push_back(y);
-  
-  return List::create(
-    _["res1"] = List::create(
-      Named("RSD") = res1.RawSeriesDistance,
-      Named("SDD") = res1.ShapeDescriptorsDistance,
-      Named("WPP") = res1.WarpingPathsP[0],
-      Named("WPQ") = res1.WarpingPathsQ[0]
-    ),
-    _["res2"] = List::create(
-      Named("RSD") = res2.RawSeriesDistance,
-      Named("SDD") = res2.ShapeDescriptorsDistance,
-      Named("WPP") = res2.WarpingPathsP[0],
-      Named("WPQ") = res2.WarpingPathsQ[0]
-    )
-  );
 }

@@ -190,3 +190,5 @@ results_set <- parLapply(cl = cl, X = testSeries, fun = RknnShapeDTW,
                 distanceType = distanceType, subsequenceBreaks = subsequenceBreaks, 
                 normalizationType = normalizationType)
 
+
+?Rcpp.package.skeleton

@@ -3,6 +3,11 @@ necPack <- function() {
   c("timeSeries", "lubridate", "stringr", "dplyr", "Rcpp", "dtw", "inline")
 }
 
+require(furrr)
+require(purrr)
+require(future)
+require(RcppShapeDTW)
+
 source("R/PackageLoading.R")
 # Załadowanie funkcji pakietu Rcpp
 Rcpp::sourceCpp("src/RcppDTWFunctions.cpp")

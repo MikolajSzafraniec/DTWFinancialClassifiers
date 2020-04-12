@@ -1,9 +1,30 @@
+# Function to conduct normalization through unitarization
 Unitarization <- function(x){
   (x - min(x)) / (max(x) - min(x))
 }
 
+# Function to conduct normalization through z-score
 Zscore <- function(x){
   (x - mean(x)) / sd(x)
+}
+
+# Function to validate scale of the growth / fall of prices based on
+# the standard deviation of returns
+score_return <- function(ts, r, sd_border = 1){
+  
+  ts_returns <- timeSeries::returns(ts, trim = T, methods = "continuous")
+  ts_returns <- ts_returns[is.finite(ts_returns) & !is.na(ts_returns)]
+  sd_returns <- sd(ts_returns)
+  
+  # Breaks for the labels fall / flat movement / growth
+  breaks <- c(-Inf, -(sd_returns*sd_border), (sd_returns*sd_border), Inf)
+  r_class <- cut(r, breaks = breaks, labels = c("Fall", "Flat_move", "Growth"))
+  
+  res <- list(
+    r_class = r_class,
+    ts_sd = sd_returns
+  )
+  return(res)
 }
 
 
@@ -31,15 +52,15 @@ RknnShapeDTW <- function(refSeries,
   refSeriesSubset <- window(refSeries, start = refSeriesStartTime, end = refSeriesEndTime)
   testSeriesSubset <- window(testSeries, start = -Inf, end = testSeriesEndTime)
   
-  res <- kNNShapeDTWCpp(referenceSeries = refSeriesSubset@.Data, 
-                        testSeries = testSeriesSubset@.Data, 
-                        forecastHorizon = forecastHorizon, 
-                        subsequenceWidth = subsequenceWidth, 
-                        subsequenceBreaks = subsequenceBreaks, 
-                        shapeDescriptorParams = shapeDTWParams, 
-                        normalizationType = normalizationType, 
-                        distanceType = distanceType, 
-                        ttParams = trigonometricTP)
+  res <- RcppShapeDTW::kNNShapeDTWCpp(referenceSeries = refSeriesSubset@.Data, 
+                                      testSeries = testSeriesSubset@.Data, 
+                                      forecastHorizon = forecastHorizon, 
+                                      subsequenceWidth = subsequenceWidth, 
+                                      subsequenceBreaks = subsequenceBreaks, 
+                                      shapeDescriptorParams = shapeDTWParams, 
+                                      normalizationType = normalizationType, 
+                                      distanceType = distanceType, 
+                                      ttParams = trigonometricTP)
   
   return(res)
 }
@@ -56,19 +77,21 @@ RknnShapeDTWParallel <- function(refSeries,
                                  subsequenceWidth = 4,
                                  trigonometricTP = NULL,
                                  subsequenceBreaks = 10,
-                                 includeRefSeries = TRUE){
+                                 includeRefSeries = TRUE,
+                                 sd_border = 1){
   
   targetDistance <- match.arg(targetDistance)
   distanceType <- match.arg(distanceType)
   normalizationType <- match.arg(normalizationType)
   
   tsListLen <- length(testSeries)
-  
+
   if(includeRefSeries){
     testSeries[[tsListLen+1]] <- refSeries
     names(testSeries)[tsListLen+1] <- "refSeries"
   }
   
+  message("Changing plan to multiprocess")
   future::plan(future::sequential)
   future::plan(future::multiprocess)
   
@@ -85,27 +108,31 @@ RknnShapeDTWParallel <- function(refSeries,
                   normalizationType = normalizationType)
   )
   
+  message("Switching plan back to sequential")
   future::plan(future::sequential)
   
   apply_at <- ifelse(targetDistance == "raw", 
                      "RawSeriesDistanceResults",
                      "ShapeDescriptorsDistanceResults")
   
-  distances <- map_at(.x = results_set, .at = apply_at, .f = function(x, td){
+  distances <- map_depth(.x = results_set, .depth = 1, .f = function(x, td, apply_at){
     
     if(targetDistance == "raw"){
-      return(x$RawDistance)
+      return(x[[apply_at]]$RawDistance)
     }else{
-      return(x$ShapeDescriptorsDistance)
+      return(x[[apply_at]]$ShapeDescriptorsDistance)
     }
     
-  }, td = targetDistance)
+  }, td = targetDistance, apply_at = apply_at)
   
   which_dist_min <- which.min(distances)
   
-  dtw_res <- ifelse(targetDistance == "raw",
-                    results_set[[which_dist_min]]$RawSeriesDistanceResults,
-                    results_set[[which_dist_min]]$ShapeDescriptorsDistanceResults)
+  dtw_res <- NULL
+  if(targetDistance == "raw"){
+    dtw_res <- results_set[[which_dist_min]]$RawSeriesDistanceResults
+  }else{
+    dtw_res <- results_set[[which_dist_min]]$ShapeDescriptorsDistanceResults
+  }
   
   res_name <- names(testSeries)[which_dist_min]
   
@@ -113,18 +140,63 @@ RknnShapeDTWParallel <- function(refSeries,
                          Unitarization,
                          Zscore)
   
-  refSeriesIdx <- refSeriesStart:(refSeriesStart+refSeriesLength-1)
-  refSeriesSubset <- refSeries@.Data[refSeriesIdx,]
-  refSeriesSubset <- apply(refSeriesSubset, 2, fun_to_apply)
+  nnSeries <- testSeries[[which_dist_min]]
   
-  testSeriesIdx <- dtw_res$bestSubsequenceIdx:(bestSubsequenceIdx+refSeriesLength-1)
-  testSeriesSubset <- testSeries[[which_dist_min]]@.Data[testSeriesIdx,]
-  testSeriesSubset <- apply(testSeriesSubset, 2, fun_to_apply)
+  # Defining last indicies of time series subsets
+  refSeriesLastIdx <- refSeriesStart+refSeriesLength-1
+  testSeriesLastIdx <- dtw_res$bestSubsequenceIdx+refSeriesLength-1
+  
+  refSeriesFrcstHorizonLastIdx <- refSeriesStart+refSeriesLength+forecastHorizon-1
+  testSeriesFrctHorizonLastIdx <- dtw_res$bestSubsequenceIdx+refSeriesLength+forecastHorizon-1
+  
+  # Retrieving subseries from original series
+  refSeriesIdx <- refSeriesStart:refSeriesLastIdx
+  #refSeriesSubset <- refSeries@.Data[refSeriesIdx,]
+  refSeriesSubset <- refSeries[refSeriesIdx,]
+  
+  testSeriesIdx <- (dtw_res$bestSubsequenceIdx):(testSeriesLastIdx)
+  #testSeriesSubset <- nnSeries@.Data[testSeriesIdx,]
+  testSeriesSubset <- nnSeries[testSeriesIdx,]
+  
+  # Retrieving validation results
+  refSeriesIdxWithForecastHorizon <- refSeriesStart:refSeriesFrcstHorizonLastIdx
+  refSeriesSubsetWithFrcstHorizon <- refSeries[refSeriesIdxWithForecastHorizon,]
+  
+  testSeriesIdxWithForecastHorizon <- (dtw_res$bestSubsequenceIdx):refSeriesFrcstHorizonLastIdx
+  testSeriesSubsetWithForecastHorizon <- nnSeries[testSeriesIdxWithForecastHorizon,]
+  
+  refSeriesReturn <- log(refSeries@.Data[refSeriesFrcstHorizonLastIdx,1] / 
+                           refSeries@.Data[refSeriesLastIdx,1])
+  testSeriesReturn <- log(nnSeries@.Data[testSeriesFrctHorizonLastIdx,1]/
+                           nnSeries@.Data[testSeriesLastIdx,1])
+  
+  refValResults <- score_return(ts = refSeriesSubset[,1], r = refSeriesReturn, sd_border = sd_border)
+  testValResults <- score_return(ts = testSeriesSubset[,1], r = testSeriesReturn, sd_border = sd_border)
+  
+  refSeriesSubsetNorm <- apply(refSeriesSubset, 2, fun_to_apply)
+  testSeriesSubsetNorm <- apply(testSeriesSubset, 2, fun_to_apply)
+  refSeriesSubsetWithFrcstHorizonNorm <- apply(refSeriesSubsetWithFrcstHorizon, 2, fun_to_apply)
+  testSeriesSubsetWithForecastHorizonNorm <- apply(testSeriesSubsetWithForecastHorizon, 2, fun_to_apply)
   
   final_results <- list(
     dtw_results = dtw_res,
     refSeries = refSeriesSubset,
-    testSeries = testSeriesSubset
+    testSeries = testSeriesSubset,
+    refSeriesNorm = refSeriesSubsetNorm,
+    testSeriesNorm = testSeriesSubsetNorm,
+    validation_results = list(
+      refSeriesFull = refSeriesSubsetWithFrcstHorizon,
+      testSeriesFull = testSeriesSubsetWithForecastHorizon,
+      refSeriesFullNorm = refSeriesSubsetWithFrcstHorizonNorm,
+      testSeriesFullNorm = testSeriesSubsetWithForecastHorizonNorm,
+      refSeriesReturn = refSeriesReturn,
+      testSeriesReturn = testSeriesReturn,
+      refReturnClass = refValResults$r_class,
+      testReturnClass = testValResults$r_class,
+      refTsSD = refValResults$ts_sd,
+      testTsSD = testValResults$ts_sd,
+      kNNSuccess = ifelse(refValResults$r_class==testValResults$r_class, 1, 0)
+    )
   )
   
   class(final_results) <- "DTWResults"
@@ -132,63 +204,33 @@ RknnShapeDTWParallel <- function(refSeries,
   return(final_results)
 }
 
-daty <- seq.Date(from = as.Date("2000-01-01"), by = "day", length.out = 1000)
-data1 <- matrix(cumsum(rnorm(2000, 0, 1)), ncol = 2)
-data2 <- matrix(cumsum(rnorm(2000, 0, 1)), ncol = 2)
 
-tsTest_1 <- timeSeries(data = data1, charvec = daty)
-tsTest_2 <- timeSeries(data = data2, charvec = daty)
+refSeries <- FXtickAgg[100000:110000,]
+testSeries <- FXtickAgg[1:50000,]
 
-testRes <- RknnShapeDTWParallel(refSeries = tsTest_1, testSeries = list(tsTest = tsTest_2), 
-                                refSeriesStart = 500, shapeDTWParams = SDP)
-
-f1 <- function(x, y){x + y}
-future_pmap(.l = list(x = 1, y = c(1, 2)), ~f1(..1, ..2))
+SDP <- new("ShapeDescriptorParams", Descriptors = "slopeDescriptor",
+           "Additional_params" = list("slopeWindow" = 4L))
 
 
+test_res <- RknnShapeDTWParallel(refSeries = refSeries,
+                                 testSeries = list(testSeries = refSeries), 
+                                 refSeriesStart = 5000, shapeDTWParams = SDP, includeRefSeries = F,
+                                 targetDistance = "sh", subsequenceWidth = 5, forecastHorizon = 50, 
+                                 sd_border = 3)
 
-results_set <- future_pmap(
-  list(refSeries = list(refSeries),
-       testSeries = testSeries,
-       n = names(testSeries)),
-  ~RknnShapeDTW(refSeries = ..1, testSeries = ..2, 
-                testSeriesName = ..3, refSeriesStart = refSeriesStart, 
-                shapeDTWParams = shapeDTWParams, 
-                refSeriesLength = refSeriesLength, forecastHorizon = forecastHorizon, 
-                subsequenceWidth = subsequenceWidth, trigonometricTP = trigonometricTP, 
-                distanceType = distanceType, subsequenceBreaks = subsequenceBreaks, 
-                normalizationType = normalizationType)
-)
+test_res
 
-require(parallel)
-n_cores <- parallel::detectCores()
-cl <- makeCluster(n_cores)
+par(mfrow = c(2, 1))
+plot(test_res$refSeriesNorm@.Data[,1], type = "l")
+lines(test_res$testSeriesNorm@.Data[,1], col = "red")
 
-clusterCall(cl = cl, fun = function(x){
-  require(Rcpp)
-  Rcpp::sourceCpp("src/RcppDTWFunctions.cpp")
-})
-clusterExport(cl = cl, varlist = c("refSeriesStart", #Integer index of ts
-                                   "shapeDTWParams",
-                                   "targetDistance",
-                                   "distanceType",
-                                   "normalizationType",
-                                   "refSeriesLength",
-                                   "forecastHorizon",
-                                   "subsequenceWidth",
-                                   "trigonometricTP",
-                                   "subsequenceBreaks",
-                                   "includeRefSeries",
-                                   "RknnShapeDTW"))
-
-results_set <- parLapply(cl = cl, X = testSeries, fun = RknnShapeDTW, 
-                refSeries = refSeries,
-                refSeriesStart = refSeriesStart, 
-                shapeDTWParams = shapeDTWParams, 
-                refSeriesLength = refSeriesLength, forecastHorizon = forecastHorizon, 
-                subsequenceWidth = subsequenceWidth, trigonometricTP = trigonometricTP, 
-                distanceType = distanceType, subsequenceBreaks = subsequenceBreaks, 
-                normalizationType = normalizationType)
+plot(test_res$refSeriesNorm@.Data[,2], type = "l")
+lines(test_res$testSeriesNorm@.Data[,2], col = "red")
 
 
-?Rcpp.package.skeleton
+par(mfrow = c(2, 1))
+plot(test_res$validation_results$refSeriesFullNorm@.Data[,1], type = "l")
+lines(test_res$validation_results$testSeriesFullNorm@.Data[,1], col = "red")
+
+plot(test_res$validation_results$refSeriesFullNorm@.Data[,2], type = "l")
+lines(test_res$validation_results$testSeriesFullNorm@.Data[,2], col = "red")

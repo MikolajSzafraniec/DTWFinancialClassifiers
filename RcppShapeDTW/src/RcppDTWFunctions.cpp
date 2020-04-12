@@ -91,9 +91,9 @@ List RcpptsTransformation(NumericMatrix timeSeries, S4 shapeDescriptorParams,
 }
 
 /*
- * This function generate distance matrices between raw series and series transformed
- * to their shape descriptors.
- */
+* This function generate distance matrices between raw series and series transformed
+* to their shape descriptors.
+*/
 
 //[[Rcpp::export]]
 List RcppDistanceMatrices(NumericMatrix timeSeriesRef, NumericMatrix timeSeriesTest,
@@ -127,9 +127,9 @@ List RcppDistanceMatrices(NumericMatrix timeSeriesRef, NumericMatrix timeSeriesT
 }
 
 /*
- * This function transforms distance matrix to the accumulated cost matrix
- * used by the DTW algorithm.
- */
+* This function transforms distance matrix to the accumulated cost matrix
+* used by the DTW algorithm.
+*/
 
 //[[Rcpp::export]]
 NumericMatrix RcppAccumulatedCostMatrix(NumericMatrix x){
@@ -137,9 +137,9 @@ NumericMatrix RcppAccumulatedCostMatrix(NumericMatrix x){
 }
 
 /*
- * This function returns DTW results (distance and warping paths)
- * calculated based on the singular distance matrix
- */
+* This function returns DTW results (distance and warping paths)
+* calculated based on the singular distance matrix
+*/
 
 //[[Rcpp::export]]
 List RcppSimpleDTW(NumericMatrix x){
@@ -157,11 +157,11 @@ List RcppSimpleDTW(NumericMatrix x){
 }
 
 /*
- * This function calculate distance betweem time series based on the given distance
- * matrix and warping paths calculated with DTW algorithm. It is useful to calculate
- * distance between raw time series based on the warping paths determinated by shape
- * descriptors of these series. 
- */
+* This function calculate distance betweem time series based on the given distance
+* matrix and warping paths calculated with DTW algorithm. It is useful to calculate
+* distance between raw time series based on the warping paths determinated by shape
+* descriptors of these series. 
+*/
 
 //[[Rcpp::export]]
 double RcppdistanceFromWarpingPaths(NumericMatrix distMatrix,
@@ -171,9 +171,9 @@ double RcppdistanceFromWarpingPaths(NumericMatrix distMatrix,
 }
 
 /*
- * This function return results of the complex DTW algorithm applied to the
- * raw series and their shape descriptors.
- */
+* This function return results of the complex DTW algorithm applied to the
+* raw series and their shape descriptors.
+*/
 
 //[[Rcpp::export]]
 List RcppComplexDTWResults(ListOf<NumericMatrix> RawSeriesDistMat,

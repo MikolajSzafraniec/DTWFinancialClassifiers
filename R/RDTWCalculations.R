@@ -179,12 +179,14 @@ RknnShapeDTWParallel <- function(refSeries,
   testSeriesSubsetWithForecastHorizonNorm <- apply(testSeriesSubsetWithForecastHorizon, 2, fun_to_apply)
   
   final_results <- list(
+    nn_name = res_name,
     dtw_results = dtw_res,
     refSeries = refSeriesSubset,
     testSeries = testSeriesSubset,
     refSeriesNorm = refSeriesSubsetNorm,
     testSeriesNorm = testSeriesSubsetNorm,
     validation_results = list(
+      distanceType = distanceType,
       refSeriesLength = refSeriesLength,
       forecastHorizon = forecastHorizon,
       refSeriesFull = refSeriesSubsetWithFrcstHorizon,
@@ -206,36 +208,104 @@ RknnShapeDTWParallel <- function(refSeries,
   return(final_results)
 }
 
+# This function adding warping paths lines to the plot
+add_matching_lines <- function(plotToUpdate, warpingMatrix, tsRef, tsTest, col = "red"){
+  
+  warpingPathLength <- nrow(warpingMatrix)
+  
+  for(i in 1:warpingPathLength){
+    x <- warpingMatrix[i,1]
+    xend <- warpingMatrix[i,2]
+    y <- tsRef[x]
+    yend <- tsTest[xend]
+    
+    plotToUpdate <- plotToUpdate + 
+      geom_segment(x = x, y = y, xend = xend, yend = yend, col = col)
+  }
+  
+  return(plotToUpdate)
+}
 
-refSeries <- FXtickAgg[100000:110000,]
-testSeries <- FXtickAgg[1:50000,]
+plot.DTWResults <- function(dtwResults, lift = 1, includeFrcstPart = FALSE, wpCol = "red",
+                            add_wp = T){
+  
+  n_dim <- ncol(test_res$refSeries)
+  dim_names <- names(test_res$refSeries)
+  data_list <- vector(mode = "list", length = n_dim)
+  names(data_list) <- dim_names
+  
+  for(i in 1:n_dim){
+    
+    df_names <- c("N", "refSeries", "testSeries")
+    
+    if(includeFrcstPart){
+      data_list[[i]] <- data.frame(1:nrow(test_res$validation_results$refSeriesFullNorm@.Data),
+                                   test_res$validation_results$refSeriesFullNorm@.Data[,i] + lift,
+                                   test_res$validation_results$testSeriesFullNorm@.Data[,i])
+      colnames(data_list[[i]]) <- df_names
+    }else{
+      data_list[[i]] <- data.frame(1:nrow(test_res$refSeriesNorm@.Data),
+                                   test_res$refSeriesNorm@.Data[,i] + lift,
+                                   test_res$testSeriesNorm@.Data[,i])
+      colnames(data_list[[i]]) <- df_names
+    }
+  }
+  
+  data_list_pivoted <- purrr::map(.x = data_list, .f = function(df){
+    df <- df %>%
+      tidyr::pivot_longer(cols = c("refSeries", "testSeries"), names_to = "ts",
+                          values_to = "val")
+    return(df)
+  })
+  
+  plot_list <- purrr::imap(.x = data_list_pivoted, .f = function(df, df_name){
+    pl <- ggplot(data = df, aes(x = N, y = val ,colour = ts)) +
+      geom_line(size = 0.8) +
+      ggplot2::ggtitle(df_name)
+  })
+  
+  if(add_wp){
+    wp <- test_res$dtw_results$WarpingPaths
+    n_wp <- length(wp)
+    
+    # In case when the Trigonometric transform was added to the DTW algorithm
+    if(n_wp > n_dim)
+      wp <- wp[1:n_dim]
+    
+    plot_list <- purrr::pmap(list(pl = plot_list, df = data_list, 
+                                wp = wp), 
+                           .f = function(pl, df, wp, col){
+                             
+                             pl <- add_matching_lines(plotToUpdate = pl, 
+                                                       warpingMatrix = wp, 
+                                                       tsRef = df$refSeries, 
+                                                       tsTest = df$testSeries, 
+                                                       col = col)
+                             
+                             return(pl) 
+                           }, col = wpCol)
+  }
+  
+  if(includeFrcstPart){
+    plot_list <- purrr::pmap(list(pl = plot_list, df = data_list, 
+                                     refSeriesLength = test_res$validation_results$refSeriesLength), 
+                                .f = function(pl, df, refSeriesLength){
+                                  pl <- pl +
+                                    geom_vline(xintercept = refSeriesLength,
+                                               linetype = "dotted",
+                                               color = "blue",
+                                               size = 1.5) +
+                                    geom_hline(yintercept = df$refSeries[refSeriesLength],
+                                               linetype = "dashed",
+                                               color = "red") +
+                                    geom_hline(yintercept = df$testSeries[refSeriesLength],
+                                               linetype = "dashed",
+                                               color = "blue")
+                                  return(pl)
+                                })
+  }
+  
+  grid.arrange(grobs = plot_list, nrow = n_dim)
+}
 
-SDP <- new("ShapeDescriptorParams", Descriptors = "slopeDescriptor",
-           "Additional_params" = list("slopeWindow" = 8L))
 
-
-test_res <- RknnShapeDTWParallel(refSeries = refSeries,
-                                 testSeries = list(testSeries = refSeries), 
-                                 refSeriesStart = 5700, shapeDTWParams = SDP, includeRefSeries = F,
-                                 targetDistance = "raw", subsequenceWidth = 5, forecastHorizon = 25, 
-                                 sd_border = 2)
-
-test_res
-
-test_res$refSeries
-test_res$testSeries
-
-par(mfrow = c(2, 1))
-plot(test_res$refSeriesNorm@.Data[,1], type = "l")
-lines(test_res$testSeriesNorm@.Data[,1], col = "red")
-
-plot(test_res$refSeriesNorm@.Data[,2], type = "l")
-lines(test_res$testSeriesNorm@.Data[,2], col = "red")
-
-
-par(mfrow = c(2, 1))
-plot(test_res$validation_results$refSeriesFullNorm@.Data[,1], type = "l")
-lines(test_res$validation_results$testSeriesFullNorm@.Data[,1], col = "red")
-
-plot(test_res$validation_results$refSeriesFullNorm@.Data[,2], type = "l")
-lines(test_res$validation_results$testSeriesFullNorm@.Data[,2], col = "red")

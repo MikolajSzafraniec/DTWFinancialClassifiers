@@ -1,0 +1,198 @@
+INFO  [2020-04-14 18:49:19] Processing data for part of reference series beggining with index: 1000
+
+INFO  [2020-04-14 18:49:19] Changing plan to multiprocess
+
+INFO  [2020-04-14 18:50:29] Proceeding test series: 'AUDJPY-2020-01', ref series index: 1000
+
+INFO  [2020-04-14 18:50:29] Proceeding test series: 'AUDNZD-2020-01', ref series index: 1000
+
+INFO  [2020-04-14 18:50:31] Proceeding test series: 'AUDUSD-2020-01', ref series index: 1000
+
+INFO  [2020-04-14 18:50:31] Proceeding test series: 'CADJPY-2020-01', ref series index: 1000
+
+INFO  [2020-04-14 18:50:31] Proceeding test series: 'CHFJPY-2020-01', ref series index: 1000
+
+INFO  [2020-04-14 18:50:31] Proceeding test series: 'EURCHF-2020-01', ref series index: 1000
+
+INFO  [2020-04-14 18:50:31] Switching plan back to sequential
+
+INFO  [2020-04-14 18:50:31] Processing data for part of reference series beggining with index: 1010
+
+INFO  [2020-04-14 18:50:31] Changing plan to multiprocess
+
+INFO  [2020-04-14 18:51:58] Proceeding test series: 'AUDJPY-2020-01', ref series index: 1010
+
+INFO  [2020-04-14 18:51:58] Proceeding test series: 'AUDNZD-2020-01', ref series index: 1010
+
+INFO  [2020-04-14 18:51:58] Proceeding test series: 'AUDUSD-2020-01', ref series index: 1010
+
+INFO  [2020-04-14 18:51:58] Proceeding test series: 'CADJPY-2020-01', ref series index: 1010
+
+INFO  [2020-04-14 18:51:58] Proceeding test series: 'CHFJPY-2020-01', ref series index: 1010
+
+INFO  [2020-04-14 18:51:58] Proceeding test series: 'EURCHF-2020-01', ref series index: 1010
+
+INFO  [2020-04-14 18:51:58] Switching plan back to sequential
+
+INFO  [2020-04-14 18:51:58] Processing data for part of reference series beggining with index: 1020
+
+INFO  [2020-04-14 18:51:58] Changing plan to multiprocess
+
+INFO  [2020-04-14 18:53:20] Proceeding test series: 'AUDJPY-2020-01', ref series index: 1020
+
+INFO  [2020-04-14 18:53:20] Proceeding test series: 'AUDNZD-2020-01', ref series index: 1020
+
+INFO  [2020-04-14 18:53:27] Proceeding test series: 'AUDUSD-2020-01', ref series index: 1020
+
+INFO  [2020-04-14 18:53:27] Proceeding test series: 'CADJPY-2020-01', ref series index: 1020
+
+INFO  [2020-04-14 18:53:27] Proceeding test series: 'CHFJPY-2020-01', ref series index: 1020
+
+INFO  [2020-04-14 18:53:27] Proceeding test series: 'EURCHF-2020-01', ref series index: 1020
+
+INFO  [2020-04-14 18:53:27] Switching plan back to sequential
+
+INFO  [2020-04-14 18:53:27] Processing data for part of reference series beggining with index: 1030
+
+INFO  [2020-04-14 18:53:27] Changing plan to multiprocess
+
+INFO  [2020-04-14 18:54:48] Proceeding test series: 'AUDJPY-2020-01', ref series index: 1030
+
+INFO  [2020-04-14 18:54:48] Proceeding test series: 'AUDNZD-2020-01', ref series index: 1030
+
+INFO  [2020-04-14 18:54:55] Proceeding test series: 'AUDUSD-2020-01', ref series index: 1030
+
+INFO  [2020-04-14 18:54:55] Proceeding test series: 'CADJPY-2020-01', ref series index: 1030
+
+INFO  [2020-04-14 18:54:55] Proceeding test series: 'CHFJPY-2020-01', ref series index: 1030
+
+INFO  [2020-04-14 18:54:55] Proceeding test series: 'EURCHF-2020-01', ref series index: 1030
+
+INFO  [2020-04-14 18:54:55] Switching plan back to sequential
+
+INFO  [2020-04-14 18:54:55] Processing data for part of reference series beggining with index: 1040
+
+INFO  [2020-04-14 18:54:55] Changing plan to multiprocess
+
+INFO  [2020-04-14 18:56:15] Proceeding test series: 'AUDJPY-2020-01', ref series index: 1040
+
+INFO  [2020-04-14 18:56:15] Proceeding test series: 'AUDNZD-2020-01', ref series index: 1040
+
+INFO  [2020-04-14 18:56:16] Proceeding test series: 'AUDUSD-2020-01', ref series index: 1040
+
+INFO  [2020-04-14 18:56:16] Proceeding test series: 'CADJPY-2020-01', ref series index: 1040
+
+INFO  [2020-04-14 18:56:16] Proceeding test series: 'CHFJPY-2020-01', ref series index: 1040
+
+INFO  [2020-04-14 18:56:16] Proceeding test series: 'EURCHF-2020-01', ref series index: 1040
+
+INFO  [2020-04-14 18:56:16] Switching plan back to sequential
+
+INFO  [2020-04-14 18:56:16] Processing data for part of reference series beggining with index: 1050
+
+INFO  [2020-04-14 18:56:16] Changing plan to multiprocess
+
+INFO  [2020-04-14 18:58:00] Proceeding test series: 'AUDJPY-2020-01', ref series index: 1050
+
+INFO  [2020-04-14 18:58:00] Proceeding test series: 'AUDNZD-2020-01', ref series index: 1050
+
+INFO  [2020-04-14 18:58:05] Proceeding test series: 'AUDUSD-2020-01', ref series index: 1050
+
+INFO  [2020-04-14 18:58:05] Proceeding test series: 'CADJPY-2020-01', ref series index: 1050
+
+INFO  [2020-04-14 18:58:05] Proceeding test series: 'CHFJPY-2020-01', ref series index: 1050
+
+INFO  [2020-04-14 18:58:05] Proceeding test series: 'EURCHF-2020-01', ref series index: 1050
+
+INFO  [2020-04-14 18:58:05] Switching plan back to sequential
+
+INFO  [2020-04-14 18:58:05] Processing data for part of reference series beggining with index: 1060
+
+INFO  [2020-04-14 18:58:05] Changing plan to multiprocess
+
+INFO  [2020-04-14 18:59:50] Proceeding test series: 'AUDJPY-2020-01', ref series index: 1060
+
+INFO  [2020-04-14 18:59:50] Proceeding test series: 'AUDNZD-2020-01', ref series index: 1060
+
+INFO  [2020-04-14 18:59:50] Proceeding test series: 'AUDUSD-2020-01', ref series index: 1060
+
+INFO  [2020-04-14 18:59:50] Proceeding test series: 'CADJPY-2020-01', ref series index: 1060
+
+INFO  [2020-04-14 18:59:50] Proceeding test series: 'CHFJPY-2020-01', ref series index: 1060
+
+INFO  [2020-04-14 18:59:50] Proceeding test series: 'EURCHF-2020-01', ref series index: 1060
+
+INFO  [2020-04-14 18:59:50] Switching plan back to sequential
+
+INFO  [2020-04-14 18:59:50] Processing data for part of reference series beggining with index: 1070
+
+INFO  [2020-04-14 18:59:50] Changing plan to multiprocess
+
+INFO  [2020-04-14 19:01:15] Proceeding test series: 'AUDJPY-2020-01', ref series index: 1070
+
+INFO  [2020-04-14 19:01:15] Proceeding test series: 'AUDNZD-2020-01', ref series index: 1070
+
+INFO  [2020-04-14 19:01:23] Proceeding test series: 'AUDUSD-2020-01', ref series index: 1070
+
+INFO  [2020-04-14 19:01:23] Proceeding test series: 'CADJPY-2020-01', ref series index: 1070
+
+INFO  [2020-04-14 19:01:23] Proceeding test series: 'CHFJPY-2020-01', ref series index: 1070
+
+INFO  [2020-04-14 19:01:23] Proceeding test series: 'EURCHF-2020-01', ref series index: 1070
+
+INFO  [2020-04-14 19:01:23] Switching plan back to sequential
+
+INFO  [2020-04-14 19:01:23] Processing data for part of reference series beggining with index: 1080
+
+INFO  [2020-04-14 19:01:23] Changing plan to multiprocess
+
+INFO  [2020-04-14 19:02:45] Proceeding test series: 'AUDJPY-2020-01', ref series index: 1080
+
+INFO  [2020-04-14 19:02:45] Proceeding test series: 'AUDNZD-2020-01', ref series index: 1080
+
+INFO  [2020-04-14 19:02:47] Proceeding test series: 'AUDUSD-2020-01', ref series index: 1080
+
+INFO  [2020-04-14 19:02:47] Proceeding test series: 'CADJPY-2020-01', ref series index: 1080
+
+INFO  [2020-04-14 19:02:47] Proceeding test series: 'CHFJPY-2020-01', ref series index: 1080
+
+INFO  [2020-04-14 19:02:47] Proceeding test series: 'EURCHF-2020-01', ref series index: 1080
+
+INFO  [2020-04-14 19:02:47] Switching plan back to sequential
+
+INFO  [2020-04-14 19:02:47] Processing data for part of reference series beggining with index: 1090
+
+INFO  [2020-04-14 19:02:47] Changing plan to multiprocess
+
+INFO  [2020-04-14 19:04:07] Proceeding test series: 'AUDJPY-2020-01', ref series index: 1090
+
+INFO  [2020-04-14 19:04:07] Proceeding test series: 'AUDNZD-2020-01', ref series index: 1090
+
+INFO  [2020-04-14 19:04:08] Proceeding test series: 'AUDUSD-2020-01', ref series index: 1090
+
+INFO  [2020-04-14 19:04:08] Proceeding test series: 'CADJPY-2020-01', ref series index: 1090
+
+INFO  [2020-04-14 19:04:08] Proceeding test series: 'CHFJPY-2020-01', ref series index: 1090
+
+INFO  [2020-04-14 19:04:08] Proceeding test series: 'EURCHF-2020-01', ref series index: 1090
+
+INFO  [2020-04-14 19:04:08] Switching plan back to sequential
+
+INFO  [2020-04-14 19:04:08] Processing data for part of reference series beggining with index: 1100
+
+INFO  [2020-04-14 19:04:08] Changing plan to multiprocess
+
+INFO  [2020-04-14 19:05:25] Proceeding test series: 'AUDJPY-2020-01', ref series index: 1100
+
+INFO  [2020-04-14 19:05:25] Proceeding test series: 'AUDNZD-2020-01', ref series index: 1100
+
+INFO  [2020-04-14 19:05:27] Proceeding test series: 'AUDUSD-2020-01', ref series index: 1100
+
+INFO  [2020-04-14 19:05:27] Proceeding test series: 'CADJPY-2020-01', ref series index: 1100
+
+INFO  [2020-04-14 19:05:27] Proceeding test series: 'CHFJPY-2020-01', ref series index: 1100
+
+INFO  [2020-04-14 19:05:27] Proceeding test series: 'EURCHF-2020-01', ref series index: 1100
+
+INFO  [2020-04-14 19:05:27] Switching plan back to sequential
+

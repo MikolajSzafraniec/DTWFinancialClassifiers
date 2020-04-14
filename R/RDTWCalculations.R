@@ -47,7 +47,7 @@ RknnShapeDTW <- function(refSeries,
   
   refSeriesStartTime <- time(refSeries)[refSeriesStart]
   refSeriesEndTime <- time(refSeries)[refSeriesStart + refSeriesLength - 1]
-  testSeriesEndTime <- time(refSeries)[refSeriesStart - 1]
+  testSeriesEndTime <- time(refSeries)[refSeriesStart]
   
   refSeriesSubset <- window(refSeries, start = refSeriesStartTime, end = refSeriesEndTime)
   testSeriesSubset <- window(testSeries, start = -Inf, end = testSeriesEndTime)
@@ -229,8 +229,8 @@ add_matching_lines <- function(plotToUpdate, warpingMatrix, tsRef, tsTest, col =
 plot.DTWResults <- function(dtwResults, lift = 1, includeFrcstPart = FALSE, wpCol = "red",
                             add_wp = T){
   
-  n_dim <- ncol(test_res$refSeries)
-  dim_names <- names(test_res$refSeries)
+  n_dim <- ncol(dtwResults$refSeries)
+  dim_names <- names(dtwResults$refSeries)
   data_list <- vector(mode = "list", length = n_dim)
   names(data_list) <- dim_names
   
@@ -239,14 +239,14 @@ plot.DTWResults <- function(dtwResults, lift = 1, includeFrcstPart = FALSE, wpCo
     df_names <- c("N", "refSeries", "testSeries")
     
     if(includeFrcstPart){
-      data_list[[i]] <- data.frame(1:nrow(test_res$validation_results$refSeriesFullNorm@.Data),
-                                   test_res$validation_results$refSeriesFullNorm@.Data[,i] + lift,
-                                   test_res$validation_results$testSeriesFullNorm@.Data[,i])
+      data_list[[i]] <- data.frame(1:nrow(dtwResults$validation_results$refSeriesFullNorm@.Data),
+                                   dtwResults$validation_results$refSeriesFullNorm@.Data[,i] + lift,
+                                   dtwResults$validation_results$testSeriesFullNorm@.Data[,i])
       colnames(data_list[[i]]) <- df_names
     }else{
-      data_list[[i]] <- data.frame(1:nrow(test_res$refSeriesNorm@.Data),
-                                   test_res$refSeriesNorm@.Data[,i] + lift,
-                                   test_res$testSeriesNorm@.Data[,i])
+      data_list[[i]] <- data.frame(1:nrow(dtwResults$refSeriesNorm@.Data),
+                                   dtwResults$refSeriesNorm@.Data[,i] + lift,
+                                   dtwResults$testSeriesNorm@.Data[,i])
       colnames(data_list[[i]]) <- df_names
     }
   }
@@ -265,7 +265,7 @@ plot.DTWResults <- function(dtwResults, lift = 1, includeFrcstPart = FALSE, wpCo
   })
   
   if(add_wp){
-    wp <- test_res$dtw_results$WarpingPaths
+    wp <- dtwResults$dtw_results$WarpingPaths
     n_wp <- length(wp)
     
     # In case when the Trigonometric transform was added to the DTW algorithm
@@ -288,7 +288,7 @@ plot.DTWResults <- function(dtwResults, lift = 1, includeFrcstPart = FALSE, wpCo
   
   if(includeFrcstPart){
     plot_list <- purrr::pmap(list(pl = plot_list, df = data_list, 
-                                     refSeriesLength = test_res$validation_results$refSeriesLength), 
+                                     refSeriesLength = dtwResults$validation_results$refSeriesLength), 
                                 .f = function(pl, df, refSeriesLength){
                                   pl <- pl +
                                     geom_vline(xintercept = refSeriesLength,
@@ -308,4 +308,116 @@ plot.DTWResults <- function(dtwResults, lift = 1, includeFrcstPart = FALSE, wpCo
   grid.arrange(grobs = plot_list, nrow = n_dim)
 }
 
+get_current_timestamp <- function(format = "%Y_%m_%d_%H_%M_%S", tz = ""){
+  ts <- strftime(Sys.time(), format = format, tz = tz)
+  ts
+}
+
+
+# This function runs 1NN shape DTW for multiple starting points of reference
+# series and write results to the data frame
+RunMultipleShapeDTWkNN <- function(refSeries,
+                                   testSeries,
+                                   indicesVector,
+                                   shapeDTWParams,
+                                   logPath = "Logs",
+                                   targetDistance = c("raw", "shapeDesc"),
+                                   distanceType = c("Dependent", "Independent"),
+                                   normalizationType = c("Unitarization", "Zscore"),
+                                   refSeriesLength = 100,
+                                   forecastHorizon = 20,
+                                   subsequenceWidth = 4,
+                                   trigonometricTP = NULL,
+                                   subsequenceBreaks = 10,
+                                   includeRefSeries = TRUE,
+                                   sd_border = 1,
+                                   loggingThreshold = "DEBUG"){
+  
+  # Matching arguments with multiple possible values
+  targetDistance <- match.arg(targetDistance)
+  distanceType <- match.arg(distanceType)
+  normalizationType <- match.arg(normalizationType)
+  
+  firstIndex <- indicesVector[1]
+  refSeriesTimeBeggining <- time(refSeries)[firstIndex]
+  
+  availableRecords <- purrr::map_lgl(.x = testSeries, function(ts, timeBegin, recordBorder){
+    
+    ar <- nrow(window(ts, start = -Inf, end = timeBegin))
+    res <- ifelse(ar < recordBorder, F, T)
+    return(res)
+    
+  }, timeBegin = refSeriesTimeBeggining, recordBorder = refSeriesLength + forecastHorizon)
+  
+  # Filtering set of test series
+  testSeries <- testSeries[availableRecords]
+  
+  # Testing if reference series should really be included too
+  if(includeRefSeries){
+    refSeriesAvailabilty <- nrow(window(refSeries, start = -Inf, end = refSeriesTimeBeggining))
+    if(refSeriesAvailabilty < (refSeriesLength + forecastHorizon))
+      includeRefSeries <- FALSE
+  }
+  
+  time_stamp <- get_current_timestamp()
+  log_file <- log4r::file_appender(file = paste0(logPath, "/run_", time_stamp, ".log"))
+  current_logger <- log4r::logger(threshold = loggingThreshold,
+                                  appenders = list(log_file, 
+                                                   log4r::console_appender()))
+  
+  #future::plan(future::sequential)
+  #future::plan(future::multiprocess)
+  
+  tryCatch(
+    withCallingHandlers(
+      res <- purrr::map_dfr(.x = indicesVector, .f = function(idx){
+        message(paste0("Processing data for part of reference series beggining with index: ", idx))
+        
+        kNNResults <- RknnShapeDTWParallel(refSeries = refSeries, 
+                                           testSeries = testSeries, 
+                                           refSeriesStart = idx, 
+                                           shapeDTWParams = shapeDTWParams, 
+                                           targetDistance = targetDistance, 
+                                           distanceType = distanceType, 
+                                           normalizationType = normalizationType, 
+                                           refSeriesLength = refSeriesLength, 
+                                           forecastHorizon = forecastHorizon, 
+                                           subsequenceWidth = subsequenceWidth, 
+                                           trigonometricTP = trigonometricTP, 
+                                           subsequenceBreaks = subsequenceBreaks, 
+                                           includeRefSeries = includeRefSeries, 
+                                           sd_border = sd_border)
+        
+        res <- data.frame(
+          "kNNSuccess" = kNNResults$validation_results$kNNSuccess,
+          "refReturnClass" = as.character(kNNResults$validation_results$refReturnClass),
+          "testReturnClass" = as.character(kNNResults$validation_results$testReturnClass),
+          "refSeriesReturn" = kNNResults$validation_results$refSeriesReturn,
+          "testSeriesReturn" = kNNResults$validation_results$testSeriesReturn,
+          "refTsSD" = kNNResults$validation_results$refTsSD,
+          "testTsSD" = kNNResults$validation_results$testTsSD,
+          stringsAsFactors = F
+        )
+        
+        return(res)
+      }), 
+      error = function(e){
+        log4r::error(current_logger, e)
+      }, 
+      warning = function(w){
+        log4r::warn(current_logger, w)
+      },
+      message = function(m){
+        log4r::info(current_logger, m$message)
+      }
+    ),
+    error = function(e){
+      msg <- paste0(time_stamp, "failed:\n", e)
+      stop(msg)
+    }
+  )
+  #future::plan(future::sequential)
+  
+  return(res)
+}
 

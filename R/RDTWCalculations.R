@@ -91,11 +91,12 @@ RknnShapeDTWParallel <- function(refSeries,
     names(testSeries)[tsListLen+1] <- "refSeries"
   }
   
-  message("Changing plan to multiprocess")
-  future::plan(future::sequential)
-  future::plan(future::multiprocess)
+  if(class(future::plan())[2] == "sequential"){
+    message("Changing plan to multiprocess")
+    future::plan(future::multiprocess)
+  }
   
-  results_set <- future_pmap(
+  results_set <- furrr::future_pmap(
     list(refSeries = list(refSeries),
          testSeries = testSeries,
          n = names(testSeries)),
@@ -108,8 +109,8 @@ RknnShapeDTWParallel <- function(refSeries,
                   normalizationType = normalizationType)
   )
   
-  message("Switching plan back to sequential")
-  future::plan(future::sequential)
+  #message("Switching plan back to sequential")
+  #future::plan(future::sequential)
   
   apply_at <- ifelse(targetDistance == "raw", 
                      "RawSeriesDistanceResults",
@@ -365,42 +366,54 @@ RunMultipleShapeDTWkNN <- function(refSeries,
                                   appenders = list(log_file, 
                                                    log4r::console_appender()))
   
+  #message("Switching plan to multiprocess")
   #future::plan(future::sequential)
   #future::plan(future::multiprocess)
   
   tryCatch(
     withCallingHandlers(
-      res <- purrr::map_dfr(.x = indicesVector, .f = function(idx){
-        message(paste0("Processing data for part of reference series beggining with index: ", idx))
+      {
+        if(class(future::plan())[2] == "sequential"){
+          message("Switching plan to multiprocess.")
+          future::plan(future::multiprocess)
+        }
         
-        kNNResults <- RknnShapeDTWParallel(refSeries = refSeries, 
-                                           testSeries = testSeries, 
-                                           refSeriesStart = idx, 
-                                           shapeDTWParams = shapeDTWParams, 
-                                           targetDistance = targetDistance, 
-                                           distanceType = distanceType, 
-                                           normalizationType = normalizationType, 
-                                           refSeriesLength = refSeriesLength, 
-                                           forecastHorizon = forecastHorizon, 
-                                           subsequenceWidth = subsequenceWidth, 
-                                           trigonometricTP = trigonometricTP, 
-                                           subsequenceBreaks = subsequenceBreaks, 
-                                           includeRefSeries = includeRefSeries, 
-                                           sd_border = sd_border)
+        res <- purrr::map_dfr(.x = indicesVector, .f = function(idx){
+          message(paste0("Processing data for part of reference series beggining with index: ", idx))
+          
+          kNNResults <- RknnShapeDTWParallel(refSeries = refSeries, 
+                                             testSeries = testSeries, 
+                                             refSeriesStart = idx, 
+                                             shapeDTWParams = shapeDTWParams, 
+                                             targetDistance = targetDistance, 
+                                             distanceType = distanceType, 
+                                             normalizationType = normalizationType, 
+                                             refSeriesLength = refSeriesLength, 
+                                             forecastHorizon = forecastHorizon, 
+                                             subsequenceWidth = subsequenceWidth, 
+                                             trigonometricTP = trigonometricTP, 
+                                             subsequenceBreaks = subsequenceBreaks, 
+                                             includeRefSeries = includeRefSeries, 
+                                             sd_border = sd_border)
+          
+          res <- data.frame(
+            "kNNSuccess" = kNNResults$validation_results$kNNSuccess,
+            "refReturnClass" = as.character(kNNResults$validation_results$refReturnClass),
+            "testReturnClass" = as.character(kNNResults$validation_results$testReturnClass),
+            "refSeriesReturn" = kNNResults$validation_results$refSeriesReturn,
+            "testSeriesReturn" = kNNResults$validation_results$testSeriesReturn,
+            "refTsSD" = kNNResults$validation_results$refTsSD,
+            "testTsSD" = kNNResults$validation_results$testTsSD,
+            stringsAsFactors = F
+          )
         
-        res <- data.frame(
-          "kNNSuccess" = kNNResults$validation_results$kNNSuccess,
-          "refReturnClass" = as.character(kNNResults$validation_results$refReturnClass),
-          "testReturnClass" = as.character(kNNResults$validation_results$testReturnClass),
-          "refSeriesReturn" = kNNResults$validation_results$refSeriesReturn,
-          "testSeriesReturn" = kNNResults$validation_results$testSeriesReturn,
-          "refTsSD" = kNNResults$validation_results$refTsSD,
-          "testTsSD" = kNNResults$validation_results$testTsSD,
-          stringsAsFactors = F
-        )
-        
-        return(res)
-      }), 
+          return(res)
+        })
+      
+      message("Switching plan to sequential.")
+      future::plan(future::sequential)
+      
+      }, 
       error = function(e){
         log4r::error(current_logger, e)
       }, 
@@ -416,7 +429,6 @@ RunMultipleShapeDTWkNN <- function(refSeries,
       stop(msg)
     }
   )
-  #future::plan(future::sequential)
   
   return(res)
 }

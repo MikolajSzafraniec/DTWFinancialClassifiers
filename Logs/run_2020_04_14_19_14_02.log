@@ -1,0 +1,163 @@
+WARN  [2020-04-14 19:14:06] simpleWarning: <anonymous>: ..1 may be used in an incorrect context
+
+
+WARN  [2020-04-14 19:14:06] simpleWarning: <anonymous>: ..2 may be used in an incorrect context
+
+
+WARN  [2020-04-14 19:14:06] simpleWarning: <anonymous>: ..3 may be used in an incorrect context
+
+
+INFO  [2020-04-14 19:26:14] Processing data for part of reference series beggining with index: 1000
+
+INFO  [2020-04-14 19:26:14] Proceeding test series: 'AUDJPY-2020-01', ref series index: 1000
+
+INFO  [2020-04-14 19:26:14] Proceeding test series: 'AUDNZD-2020-01', ref series index: 1000
+
+INFO  [2020-04-14 19:26:14] Proceeding test series: 'AUDUSD-2020-01', ref series index: 1000
+
+INFO  [2020-04-14 19:26:14] Proceeding test series: 'CADJPY-2020-01', ref series index: 1000
+
+INFO  [2020-04-14 19:26:14] Proceeding test series: 'CHFJPY-2020-01', ref series index: 1000
+
+INFO  [2020-04-14 19:26:14] Proceeding test series: 'EURCHF-2020-01', ref series index: 1000
+
+INFO  [2020-04-14 19:26:14] Processing data for part of reference series beggining with index: 1010
+
+INFO  [2020-04-14 19:26:14] Proceeding test series: 'AUDJPY-2020-01', ref series index: 1010
+
+INFO  [2020-04-14 19:26:14] Proceeding test series: 'AUDNZD-2020-01', ref series index: 1010
+
+INFO  [2020-04-14 19:26:14] Proceeding test series: 'AUDUSD-2020-01', ref series index: 1010
+
+INFO  [2020-04-14 19:26:14] Proceeding test series: 'CADJPY-2020-01', ref series index: 1010
+
+INFO  [2020-04-14 19:26:14] Proceeding test series: 'CHFJPY-2020-01', ref series index: 1010
+
+INFO  [2020-04-14 19:26:14] Proceeding test series: 'EURCHF-2020-01', ref series index: 1010
+
+INFO  [2020-04-14 19:26:14] Processing data for part of reference series beggining with index: 1020
+
+INFO  [2020-04-14 19:26:14] Proceeding test series: 'AUDJPY-2020-01', ref series index: 1020
+
+INFO  [2020-04-14 19:26:14] Proceeding test series: 'AUDNZD-2020-01', ref series index: 1020
+
+INFO  [2020-04-14 19:26:14] Proceeding test series: 'AUDUSD-2020-01', ref series index: 1020
+
+INFO  [2020-04-14 19:26:14] Proceeding test series: 'CADJPY-2020-01', ref series index: 1020
+
+INFO  [2020-04-14 19:26:14] Proceeding test series: 'CHFJPY-2020-01', ref series index: 1020
+
+INFO  [2020-04-14 19:26:14] Proceeding test series: 'EURCHF-2020-01', ref series index: 1020
+
+INFO  [2020-04-14 19:26:23] Processing data for part of reference series beggining with index: 1030
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'AUDJPY-2020-01', ref series index: 1030
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'AUDNZD-2020-01', ref series index: 1030
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'AUDUSD-2020-01', ref series index: 1030
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'CADJPY-2020-01', ref series index: 1030
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'CHFJPY-2020-01', ref series index: 1030
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'EURCHF-2020-01', ref series index: 1030
+
+INFO  [2020-04-14 19:26:23] Processing data for part of reference series beggining with index: 1040
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'AUDJPY-2020-01', ref series index: 1040
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'AUDNZD-2020-01', ref series index: 1040
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'AUDUSD-2020-01', ref series index: 1040
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'CADJPY-2020-01', ref series index: 1040
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'CHFJPY-2020-01', ref series index: 1040
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'EURCHF-2020-01', ref series index: 1040
+
+INFO  [2020-04-14 19:26:23] Processing data for part of reference series beggining with index: 1050
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'AUDJPY-2020-01', ref series index: 1050
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'AUDNZD-2020-01', ref series index: 1050
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'AUDUSD-2020-01', ref series index: 1050
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'CADJPY-2020-01', ref series index: 1050
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'CHFJPY-2020-01', ref series index: 1050
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'EURCHF-2020-01', ref series index: 1050
+
+INFO  [2020-04-14 19:26:23] Processing data for part of reference series beggining with index: 1060
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'AUDJPY-2020-01', ref series index: 1060
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'AUDNZD-2020-01', ref series index: 1060
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'AUDUSD-2020-01', ref series index: 1060
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'CADJPY-2020-01', ref series index: 1060
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'CHFJPY-2020-01', ref series index: 1060
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'EURCHF-2020-01', ref series index: 1060
+
+INFO  [2020-04-14 19:26:23] Processing data for part of reference series beggining with index: 1070
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'AUDJPY-2020-01', ref series index: 1070
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'AUDNZD-2020-01', ref series index: 1070
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'AUDUSD-2020-01', ref series index: 1070
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'CADJPY-2020-01', ref series index: 1070
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'CHFJPY-2020-01', ref series index: 1070
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'EURCHF-2020-01', ref series index: 1070
+
+INFO  [2020-04-14 19:26:23] Processing data for part of reference series beggining with index: 1080
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'AUDJPY-2020-01', ref series index: 1080
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'AUDNZD-2020-01', ref series index: 1080
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'AUDUSD-2020-01', ref series index: 1080
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'CADJPY-2020-01', ref series index: 1080
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'CHFJPY-2020-01', ref series index: 1080
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'EURCHF-2020-01', ref series index: 1080
+
+INFO  [2020-04-14 19:26:23] Processing data for part of reference series beggining with index: 1090
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'AUDJPY-2020-01', ref series index: 1090
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'AUDNZD-2020-01', ref series index: 1090
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'AUDUSD-2020-01', ref series index: 1090
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'CADJPY-2020-01', ref series index: 1090
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'CHFJPY-2020-01', ref series index: 1090
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'EURCHF-2020-01', ref series index: 1090
+
+INFO  [2020-04-14 19:26:23] Processing data for part of reference series beggining with index: 1100
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'AUDJPY-2020-01', ref series index: 1100
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'AUDNZD-2020-01', ref series index: 1100
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'AUDUSD-2020-01', ref series index: 1100
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'CADJPY-2020-01', ref series index: 1100
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'CHFJPY-2020-01', ref series index: 1100
+
+INFO  [2020-04-14 19:26:23] Proceeding test series: 'EURCHF-2020-01', ref series index: 1100
+

@@ -322,9 +322,9 @@ parsePatternGPWTickTime <- function(patternGPWData, delta = dminutes(1),
     
     hourStartRound <- floor_date(hourStartParsed, unit = roundingUnit)
     hourEndRound <- ceiling_date(hourEndParsedPleyOffIncluded, unit = roundingUnit)
-    
-    dailySeq <- seq(from = hourStartRound, to = hourEndRound,
+    dailySeq <- seq.POSIXt(from = hourStartRound, to = hourEndRound,
                     by = delta)
+
     dailySeqFormat <- strftime(dailySeq, format = "%H:%M:%S", tz = "GMT")
     lenSeq <- length(dailySeqFormat)
     

@@ -1,0 +1,1602 @@
+INFO  [2020-04-16 10:20:55] Processing data for part of reference series beggining with index: 50000
+
+INFO  [2020-04-16 10:23:55] Proceeding test series: 'CDPROJEKT', ref series index: 50000
+
+INFO  [2020-04-16 10:23:55] Proceeding test series: 'GRUPAAZOTY', ref series index: 50000
+
+INFO  [2020-04-16 10:23:55] Proceeding test series: 'INGBSK', ref series index: 50000
+
+INFO  [2020-04-16 10:23:55] Proceeding test series: 'MBANK', ref series index: 50000
+
+INFO  [2020-04-16 10:23:55] Proceeding test series: 'PKNORLEN', ref series index: 50000
+
+INFO  [2020-04-16 10:23:55] Proceeding test series: 'PKPCARGO', ref series index: 50000
+
+INFO  [2020-04-16 10:23:55] Proceeding test series: 'refSeries', ref series index: 50000
+
+INFO  [2020-04-16 10:23:55] Processing data for part of reference series beggining with index: 50020
+
+INFO  [2020-04-16 10:26:54] Proceeding test series: 'CDPROJEKT', ref series index: 50020
+
+INFO  [2020-04-16 10:26:54] Proceeding test series: 'GRUPAAZOTY', ref series index: 50020
+
+INFO  [2020-04-16 10:26:56] Proceeding test series: 'INGBSK', ref series index: 50020
+
+INFO  [2020-04-16 10:26:56] Proceeding test series: 'MBANK', ref series index: 50020
+
+INFO  [2020-04-16 10:26:56] Proceeding test series: 'PKNORLEN', ref series index: 50020
+
+INFO  [2020-04-16 10:26:56] Proceeding test series: 'PKPCARGO', ref series index: 50020
+
+INFO  [2020-04-16 10:26:56] Proceeding test series: 'refSeries', ref series index: 50020
+
+INFO  [2020-04-16 10:26:56] Processing data for part of reference series beggining with index: 50040
+
+INFO  [2020-04-16 10:29:53] Proceeding test series: 'CDPROJEKT', ref series index: 50040
+
+INFO  [2020-04-16 10:29:53] Proceeding test series: 'GRUPAAZOTY', ref series index: 50040
+
+INFO  [2020-04-16 10:29:56] Proceeding test series: 'INGBSK', ref series index: 50040
+
+INFO  [2020-04-16 10:29:56] Proceeding test series: 'MBANK', ref series index: 50040
+
+INFO  [2020-04-16 10:30:03] Proceeding test series: 'PKNORLEN', ref series index: 50040
+
+INFO  [2020-04-16 10:30:03] Proceeding test series: 'PKPCARGO', ref series index: 50040
+
+INFO  [2020-04-16 10:30:03] Proceeding test series: 'refSeries', ref series index: 50040
+
+INFO  [2020-04-16 10:30:03] Processing data for part of reference series beggining with index: 50060
+
+INFO  [2020-04-16 10:32:54] Proceeding test series: 'CDPROJEKT', ref series index: 50060
+
+INFO  [2020-04-16 10:32:54] Proceeding test series: 'GRUPAAZOTY', ref series index: 50060
+
+INFO  [2020-04-16 10:32:56] Proceeding test series: 'INGBSK', ref series index: 50060
+
+INFO  [2020-04-16 10:32:56] Proceeding test series: 'MBANK', ref series index: 50060
+
+INFO  [2020-04-16 10:32:59] Proceeding test series: 'PKNORLEN', ref series index: 50060
+
+INFO  [2020-04-16 10:32:59] Proceeding test series: 'PKPCARGO', ref series index: 50060
+
+INFO  [2020-04-16 10:32:59] Proceeding test series: 'refSeries', ref series index: 50060
+
+INFO  [2020-04-16 10:32:59] Processing data for part of reference series beggining with index: 50080
+
+INFO  [2020-04-16 10:35:51] Proceeding test series: 'CDPROJEKT', ref series index: 50080
+
+INFO  [2020-04-16 10:35:51] Proceeding test series: 'GRUPAAZOTY', ref series index: 50080
+
+INFO  [2020-04-16 10:35:54] Proceeding test series: 'INGBSK', ref series index: 50080
+
+INFO  [2020-04-16 10:35:54] Proceeding test series: 'MBANK', ref series index: 50080
+
+INFO  [2020-04-16 10:35:54] Proceeding test series: 'PKNORLEN', ref series index: 50080
+
+INFO  [2020-04-16 10:35:54] Proceeding test series: 'PKPCARGO', ref series index: 50080
+
+INFO  [2020-04-16 10:35:54] Proceeding test series: 'refSeries', ref series index: 50080
+
+INFO  [2020-04-16 10:35:54] Processing data for part of reference series beggining with index: 50100
+
+INFO  [2020-04-16 10:38:48] Proceeding test series: 'CDPROJEKT', ref series index: 50100
+
+INFO  [2020-04-16 10:38:48] Proceeding test series: 'GRUPAAZOTY', ref series index: 50100
+
+INFO  [2020-04-16 10:38:50] Proceeding test series: 'INGBSK', ref series index: 50100
+
+INFO  [2020-04-16 10:38:50] Proceeding test series: 'MBANK', ref series index: 50100
+
+INFO  [2020-04-16 10:38:50] Proceeding test series: 'PKNORLEN', ref series index: 50100
+
+INFO  [2020-04-16 10:38:50] Proceeding test series: 'PKPCARGO', ref series index: 50100
+
+INFO  [2020-04-16 10:38:50] Proceeding test series: 'refSeries', ref series index: 50100
+
+INFO  [2020-04-16 10:38:50] Processing data for part of reference series beggining with index: 50120
+
+INFO  [2020-04-16 10:41:43] Proceeding test series: 'CDPROJEKT', ref series index: 50120
+
+INFO  [2020-04-16 10:41:43] Proceeding test series: 'GRUPAAZOTY', ref series index: 50120
+
+INFO  [2020-04-16 10:41:44] Proceeding test series: 'INGBSK', ref series index: 50120
+
+INFO  [2020-04-16 10:41:44] Proceeding test series: 'MBANK', ref series index: 50120
+
+INFO  [2020-04-16 10:41:47] Proceeding test series: 'PKNORLEN', ref series index: 50120
+
+INFO  [2020-04-16 10:41:47] Proceeding test series: 'PKPCARGO', ref series index: 50120
+
+INFO  [2020-04-16 10:41:47] Proceeding test series: 'refSeries', ref series index: 50120
+
+INFO  [2020-04-16 10:41:47] Processing data for part of reference series beggining with index: 50140
+
+INFO  [2020-04-16 10:44:39] Proceeding test series: 'CDPROJEKT', ref series index: 50140
+
+INFO  [2020-04-16 10:44:39] Proceeding test series: 'GRUPAAZOTY', ref series index: 50140
+
+INFO  [2020-04-16 10:44:42] Proceeding test series: 'INGBSK', ref series index: 50140
+
+INFO  [2020-04-16 10:44:42] Proceeding test series: 'MBANK', ref series index: 50140
+
+INFO  [2020-04-16 10:44:43] Proceeding test series: 'PKNORLEN', ref series index: 50140
+
+INFO  [2020-04-16 10:44:43] Proceeding test series: 'PKPCARGO', ref series index: 50140
+
+INFO  [2020-04-16 10:44:43] Proceeding test series: 'refSeries', ref series index: 50140
+
+INFO  [2020-04-16 10:44:43] Processing data for part of reference series beggining with index: 50160
+
+INFO  [2020-04-16 10:47:29] Proceeding test series: 'CDPROJEKT', ref series index: 50160
+
+INFO  [2020-04-16 10:47:29] Proceeding test series: 'GRUPAAZOTY', ref series index: 50160
+
+INFO  [2020-04-16 10:47:32] Proceeding test series: 'INGBSK', ref series index: 50160
+
+INFO  [2020-04-16 10:47:32] Proceeding test series: 'MBANK', ref series index: 50160
+
+INFO  [2020-04-16 10:47:32] Proceeding test series: 'PKNORLEN', ref series index: 50160
+
+INFO  [2020-04-16 10:47:32] Proceeding test series: 'PKPCARGO', ref series index: 50160
+
+INFO  [2020-04-16 10:47:32] Proceeding test series: 'refSeries', ref series index: 50160
+
+INFO  [2020-04-16 10:47:32] Processing data for part of reference series beggining with index: 50180
+
+INFO  [2020-04-16 10:50:24] Proceeding test series: 'CDPROJEKT', ref series index: 50180
+
+INFO  [2020-04-16 10:50:24] Proceeding test series: 'GRUPAAZOTY', ref series index: 50180
+
+INFO  [2020-04-16 10:50:26] Proceeding test series: 'INGBSK', ref series index: 50180
+
+INFO  [2020-04-16 10:50:26] Proceeding test series: 'MBANK', ref series index: 50180
+
+INFO  [2020-04-16 10:50:26] Proceeding test series: 'PKNORLEN', ref series index: 50180
+
+INFO  [2020-04-16 10:50:26] Proceeding test series: 'PKPCARGO', ref series index: 50180
+
+INFO  [2020-04-16 10:50:26] Proceeding test series: 'refSeries', ref series index: 50180
+
+INFO  [2020-04-16 10:50:26] Processing data for part of reference series beggining with index: 50200
+
+INFO  [2020-04-16 10:53:32] Proceeding test series: 'CDPROJEKT', ref series index: 50200
+
+INFO  [2020-04-16 10:53:32] Proceeding test series: 'GRUPAAZOTY', ref series index: 50200
+
+INFO  [2020-04-16 10:53:35] Proceeding test series: 'INGBSK', ref series index: 50200
+
+INFO  [2020-04-16 10:53:35] Proceeding test series: 'MBANK', ref series index: 50200
+
+INFO  [2020-04-16 10:53:36] Proceeding test series: 'PKNORLEN', ref series index: 50200
+
+INFO  [2020-04-16 10:53:36] Proceeding test series: 'PKPCARGO', ref series index: 50200
+
+INFO  [2020-04-16 10:53:36] Proceeding test series: 'refSeries', ref series index: 50200
+
+INFO  [2020-04-16 10:53:36] Processing data for part of reference series beggining with index: 50220
+
+INFO  [2020-04-16 10:56:59] Proceeding test series: 'CDPROJEKT', ref series index: 50220
+
+INFO  [2020-04-16 10:56:59] Proceeding test series: 'GRUPAAZOTY', ref series index: 50220
+
+INFO  [2020-04-16 10:56:59] Proceeding test series: 'INGBSK', ref series index: 50220
+
+INFO  [2020-04-16 10:56:59] Proceeding test series: 'MBANK', ref series index: 50220
+
+INFO  [2020-04-16 10:56:59] Proceeding test series: 'PKNORLEN', ref series index: 50220
+
+INFO  [2020-04-16 10:56:59] Proceeding test series: 'PKPCARGO', ref series index: 50220
+
+INFO  [2020-04-16 10:56:59] Proceeding test series: 'refSeries', ref series index: 50220
+
+INFO  [2020-04-16 10:56:59] Processing data for part of reference series beggining with index: 50240
+
+INFO  [2020-04-16 10:59:53] Proceeding test series: 'CDPROJEKT', ref series index: 50240
+
+INFO  [2020-04-16 10:59:53] Proceeding test series: 'GRUPAAZOTY', ref series index: 50240
+
+INFO  [2020-04-16 10:59:53] Proceeding test series: 'INGBSK', ref series index: 50240
+
+INFO  [2020-04-16 10:59:53] Proceeding test series: 'MBANK', ref series index: 50240
+
+INFO  [2020-04-16 10:59:53] Proceeding test series: 'PKNORLEN', ref series index: 50240
+
+INFO  [2020-04-16 10:59:53] Proceeding test series: 'PKPCARGO', ref series index: 50240
+
+INFO  [2020-04-16 10:59:53] Proceeding test series: 'refSeries', ref series index: 50240
+
+INFO  [2020-04-16 10:59:53] Processing data for part of reference series beggining with index: 50260
+
+INFO  [2020-04-16 11:02:47] Proceeding test series: 'CDPROJEKT', ref series index: 50260
+
+INFO  [2020-04-16 11:02:47] Proceeding test series: 'GRUPAAZOTY', ref series index: 50260
+
+INFO  [2020-04-16 11:02:47] Proceeding test series: 'INGBSK', ref series index: 50260
+
+INFO  [2020-04-16 11:02:47] Proceeding test series: 'MBANK', ref series index: 50260
+
+INFO  [2020-04-16 11:02:47] Proceeding test series: 'PKNORLEN', ref series index: 50260
+
+INFO  [2020-04-16 11:02:47] Proceeding test series: 'PKPCARGO', ref series index: 50260
+
+INFO  [2020-04-16 11:02:47] Proceeding test series: 'refSeries', ref series index: 50260
+
+INFO  [2020-04-16 11:02:47] Processing data for part of reference series beggining with index: 50280
+
+INFO  [2020-04-16 11:05:40] Proceeding test series: 'CDPROJEKT', ref series index: 50280
+
+INFO  [2020-04-16 11:05:40] Proceeding test series: 'GRUPAAZOTY', ref series index: 50280
+
+INFO  [2020-04-16 11:05:41] Proceeding test series: 'INGBSK', ref series index: 50280
+
+INFO  [2020-04-16 11:05:41] Proceeding test series: 'MBANK', ref series index: 50280
+
+INFO  [2020-04-16 11:05:41] Proceeding test series: 'PKNORLEN', ref series index: 50280
+
+INFO  [2020-04-16 11:05:41] Proceeding test series: 'PKPCARGO', ref series index: 50280
+
+INFO  [2020-04-16 11:05:41] Proceeding test series: 'refSeries', ref series index: 50280
+
+INFO  [2020-04-16 11:05:41] Processing data for part of reference series beggining with index: 50300
+
+INFO  [2020-04-16 11:08:31] Proceeding test series: 'CDPROJEKT', ref series index: 50300
+
+INFO  [2020-04-16 11:08:31] Proceeding test series: 'GRUPAAZOTY', ref series index: 50300
+
+INFO  [2020-04-16 11:08:36] Proceeding test series: 'INGBSK', ref series index: 50300
+
+INFO  [2020-04-16 11:08:36] Proceeding test series: 'MBANK', ref series index: 50300
+
+INFO  [2020-04-16 11:08:36] Proceeding test series: 'PKNORLEN', ref series index: 50300
+
+INFO  [2020-04-16 11:08:36] Proceeding test series: 'PKPCARGO', ref series index: 50300
+
+INFO  [2020-04-16 11:08:36] Proceeding test series: 'refSeries', ref series index: 50300
+
+INFO  [2020-04-16 11:08:36] Processing data for part of reference series beggining with index: 50320
+
+INFO  [2020-04-16 11:11:28] Proceeding test series: 'CDPROJEKT', ref series index: 50320
+
+INFO  [2020-04-16 11:11:28] Proceeding test series: 'GRUPAAZOTY', ref series index: 50320
+
+INFO  [2020-04-16 11:11:30] Proceeding test series: 'INGBSK', ref series index: 50320
+
+INFO  [2020-04-16 11:11:30] Proceeding test series: 'MBANK', ref series index: 50320
+
+INFO  [2020-04-16 11:11:30] Proceeding test series: 'PKNORLEN', ref series index: 50320
+
+INFO  [2020-04-16 11:11:30] Proceeding test series: 'PKPCARGO', ref series index: 50320
+
+INFO  [2020-04-16 11:11:30] Proceeding test series: 'refSeries', ref series index: 50320
+
+INFO  [2020-04-16 11:11:30] Processing data for part of reference series beggining with index: 50340
+
+INFO  [2020-04-16 11:14:22] Proceeding test series: 'CDPROJEKT', ref series index: 50340
+
+INFO  [2020-04-16 11:14:22] Proceeding test series: 'GRUPAAZOTY', ref series index: 50340
+
+INFO  [2020-04-16 11:14:25] Proceeding test series: 'INGBSK', ref series index: 50340
+
+INFO  [2020-04-16 11:14:25] Proceeding test series: 'MBANK', ref series index: 50340
+
+INFO  [2020-04-16 11:14:25] Proceeding test series: 'PKNORLEN', ref series index: 50340
+
+INFO  [2020-04-16 11:14:25] Proceeding test series: 'PKPCARGO', ref series index: 50340
+
+INFO  [2020-04-16 11:14:25] Proceeding test series: 'refSeries', ref series index: 50340
+
+INFO  [2020-04-16 11:14:25] Processing data for part of reference series beggining with index: 50360
+
+INFO  [2020-04-16 11:17:18] Proceeding test series: 'CDPROJEKT', ref series index: 50360
+
+INFO  [2020-04-16 11:17:18] Proceeding test series: 'GRUPAAZOTY', ref series index: 50360
+
+INFO  [2020-04-16 11:17:18] Proceeding test series: 'INGBSK', ref series index: 50360
+
+INFO  [2020-04-16 11:17:18] Proceeding test series: 'MBANK', ref series index: 50360
+
+INFO  [2020-04-16 11:17:18] Proceeding test series: 'PKNORLEN', ref series index: 50360
+
+INFO  [2020-04-16 11:17:18] Proceeding test series: 'PKPCARGO', ref series index: 50360
+
+INFO  [2020-04-16 11:17:18] Proceeding test series: 'refSeries', ref series index: 50360
+
+INFO  [2020-04-16 11:17:18] Processing data for part of reference series beggining with index: 50380
+
+INFO  [2020-04-16 11:20:12] Proceeding test series: 'CDPROJEKT', ref series index: 50380
+
+INFO  [2020-04-16 11:20:12] Proceeding test series: 'GRUPAAZOTY', ref series index: 50380
+
+INFO  [2020-04-16 11:20:13] Proceeding test series: 'INGBSK', ref series index: 50380
+
+INFO  [2020-04-16 11:20:13] Proceeding test series: 'MBANK', ref series index: 50380
+
+INFO  [2020-04-16 11:20:13] Proceeding test series: 'PKNORLEN', ref series index: 50380
+
+INFO  [2020-04-16 11:20:13] Proceeding test series: 'PKPCARGO', ref series index: 50380
+
+INFO  [2020-04-16 11:20:13] Proceeding test series: 'refSeries', ref series index: 50380
+
+INFO  [2020-04-16 11:20:13] Processing data for part of reference series beggining with index: 50400
+
+INFO  [2020-04-16 11:23:04] Proceeding test series: 'CDPROJEKT', ref series index: 50400
+
+INFO  [2020-04-16 11:23:04] Proceeding test series: 'GRUPAAZOTY', ref series index: 50400
+
+INFO  [2020-04-16 11:23:07] Proceeding test series: 'INGBSK', ref series index: 50400
+
+INFO  [2020-04-16 11:23:07] Proceeding test series: 'MBANK', ref series index: 50400
+
+INFO  [2020-04-16 11:23:07] Proceeding test series: 'PKNORLEN', ref series index: 50400
+
+INFO  [2020-04-16 11:23:07] Proceeding test series: 'PKPCARGO', ref series index: 50400
+
+INFO  [2020-04-16 11:23:07] Proceeding test series: 'refSeries', ref series index: 50400
+
+INFO  [2020-04-16 11:23:07] Processing data for part of reference series beggining with index: 50420
+
+INFO  [2020-04-16 11:26:00] Proceeding test series: 'CDPROJEKT', ref series index: 50420
+
+INFO  [2020-04-16 11:26:00] Proceeding test series: 'GRUPAAZOTY', ref series index: 50420
+
+INFO  [2020-04-16 11:26:00] Proceeding test series: 'INGBSK', ref series index: 50420
+
+INFO  [2020-04-16 11:26:00] Proceeding test series: 'MBANK', ref series index: 50420
+
+INFO  [2020-04-16 11:26:02] Proceeding test series: 'PKNORLEN', ref series index: 50420
+
+INFO  [2020-04-16 11:26:02] Proceeding test series: 'PKPCARGO', ref series index: 50420
+
+INFO  [2020-04-16 11:26:02] Proceeding test series: 'refSeries', ref series index: 50420
+
+INFO  [2020-04-16 11:26:02] Processing data for part of reference series beggining with index: 50440
+
+INFO  [2020-04-16 11:28:54] Proceeding test series: 'CDPROJEKT', ref series index: 50440
+
+INFO  [2020-04-16 11:28:54] Proceeding test series: 'GRUPAAZOTY', ref series index: 50440
+
+INFO  [2020-04-16 11:28:56] Proceeding test series: 'INGBSK', ref series index: 50440
+
+INFO  [2020-04-16 11:28:56] Proceeding test series: 'MBANK', ref series index: 50440
+
+INFO  [2020-04-16 11:28:56] Proceeding test series: 'PKNORLEN', ref series index: 50440
+
+INFO  [2020-04-16 11:28:56] Proceeding test series: 'PKPCARGO', ref series index: 50440
+
+INFO  [2020-04-16 11:28:56] Proceeding test series: 'refSeries', ref series index: 50440
+
+INFO  [2020-04-16 11:28:56] Processing data for part of reference series beggining with index: 50460
+
+INFO  [2020-04-16 11:31:49] Proceeding test series: 'CDPROJEKT', ref series index: 50460
+
+INFO  [2020-04-16 11:31:49] Proceeding test series: 'GRUPAAZOTY', ref series index: 50460
+
+INFO  [2020-04-16 11:31:51] Proceeding test series: 'INGBSK', ref series index: 50460
+
+INFO  [2020-04-16 11:31:51] Proceeding test series: 'MBANK', ref series index: 50460
+
+INFO  [2020-04-16 11:31:51] Proceeding test series: 'PKNORLEN', ref series index: 50460
+
+INFO  [2020-04-16 11:31:51] Proceeding test series: 'PKPCARGO', ref series index: 50460
+
+INFO  [2020-04-16 11:31:51] Proceeding test series: 'refSeries', ref series index: 50460
+
+INFO  [2020-04-16 11:31:51] Processing data for part of reference series beggining with index: 50480
+
+INFO  [2020-04-16 11:34:43] Proceeding test series: 'CDPROJEKT', ref series index: 50480
+
+INFO  [2020-04-16 11:34:43] Proceeding test series: 'GRUPAAZOTY', ref series index: 50480
+
+INFO  [2020-04-16 11:34:44] Proceeding test series: 'INGBSK', ref series index: 50480
+
+INFO  [2020-04-16 11:34:44] Proceeding test series: 'MBANK', ref series index: 50480
+
+INFO  [2020-04-16 11:34:46] Proceeding test series: 'PKNORLEN', ref series index: 50480
+
+INFO  [2020-04-16 11:34:46] Proceeding test series: 'PKPCARGO', ref series index: 50480
+
+INFO  [2020-04-16 11:34:46] Proceeding test series: 'refSeries', ref series index: 50480
+
+INFO  [2020-04-16 11:34:46] Processing data for part of reference series beggining with index: 50500
+
+INFO  [2020-04-16 11:37:39] Proceeding test series: 'CDPROJEKT', ref series index: 50500
+
+INFO  [2020-04-16 11:37:39] Proceeding test series: 'GRUPAAZOTY', ref series index: 50500
+
+INFO  [2020-04-16 11:37:40] Proceeding test series: 'INGBSK', ref series index: 50500
+
+INFO  [2020-04-16 11:37:40] Proceeding test series: 'MBANK', ref series index: 50500
+
+INFO  [2020-04-16 11:37:40] Proceeding test series: 'PKNORLEN', ref series index: 50500
+
+INFO  [2020-04-16 11:37:40] Proceeding test series: 'PKPCARGO', ref series index: 50500
+
+INFO  [2020-04-16 11:37:40] Proceeding test series: 'refSeries', ref series index: 50500
+
+INFO  [2020-04-16 11:37:40] Processing data for part of reference series beggining with index: 50520
+
+INFO  [2020-04-16 11:40:52] Proceeding test series: 'CDPROJEKT', ref series index: 50520
+
+INFO  [2020-04-16 11:40:52] Proceeding test series: 'GRUPAAZOTY', ref series index: 50520
+
+INFO  [2020-04-16 11:40:55] Proceeding test series: 'INGBSK', ref series index: 50520
+
+INFO  [2020-04-16 11:40:55] Proceeding test series: 'MBANK', ref series index: 50520
+
+INFO  [2020-04-16 11:40:56] Proceeding test series: 'PKNORLEN', ref series index: 50520
+
+INFO  [2020-04-16 11:40:56] Proceeding test series: 'PKPCARGO', ref series index: 50520
+
+INFO  [2020-04-16 11:40:56] Proceeding test series: 'refSeries', ref series index: 50520
+
+INFO  [2020-04-16 11:40:56] Processing data for part of reference series beggining with index: 50540
+
+INFO  [2020-04-16 11:44:07] Proceeding test series: 'CDPROJEKT', ref series index: 50540
+
+INFO  [2020-04-16 11:44:07] Proceeding test series: 'GRUPAAZOTY', ref series index: 50540
+
+INFO  [2020-04-16 11:44:12] Proceeding test series: 'INGBSK', ref series index: 50540
+
+INFO  [2020-04-16 11:44:12] Proceeding test series: 'MBANK', ref series index: 50540
+
+INFO  [2020-04-16 11:44:15] Proceeding test series: 'PKNORLEN', ref series index: 50540
+
+INFO  [2020-04-16 11:44:15] Proceeding test series: 'PKPCARGO', ref series index: 50540
+
+INFO  [2020-04-16 11:44:15] Proceeding test series: 'refSeries', ref series index: 50540
+
+INFO  [2020-04-16 11:44:15] Processing data for part of reference series beggining with index: 50560
+
+INFO  [2020-04-16 11:47:05] Proceeding test series: 'CDPROJEKT', ref series index: 50560
+
+INFO  [2020-04-16 11:47:05] Proceeding test series: 'GRUPAAZOTY', ref series index: 50560
+
+INFO  [2020-04-16 11:47:09] Proceeding test series: 'INGBSK', ref series index: 50560
+
+INFO  [2020-04-16 11:47:09] Proceeding test series: 'MBANK', ref series index: 50560
+
+INFO  [2020-04-16 11:47:09] Proceeding test series: 'PKNORLEN', ref series index: 50560
+
+INFO  [2020-04-16 11:47:09] Proceeding test series: 'PKPCARGO', ref series index: 50560
+
+INFO  [2020-04-16 11:47:09] Proceeding test series: 'refSeries', ref series index: 50560
+
+INFO  [2020-04-16 11:47:09] Processing data for part of reference series beggining with index: 50580
+
+INFO  [2020-04-16 11:50:03] Proceeding test series: 'CDPROJEKT', ref series index: 50580
+
+INFO  [2020-04-16 11:50:03] Proceeding test series: 'GRUPAAZOTY', ref series index: 50580
+
+INFO  [2020-04-16 11:50:05] Proceeding test series: 'INGBSK', ref series index: 50580
+
+INFO  [2020-04-16 11:50:05] Proceeding test series: 'MBANK', ref series index: 50580
+
+INFO  [2020-04-16 11:50:05] Proceeding test series: 'PKNORLEN', ref series index: 50580
+
+INFO  [2020-04-16 11:50:05] Proceeding test series: 'PKPCARGO', ref series index: 50580
+
+INFO  [2020-04-16 11:50:05] Proceeding test series: 'refSeries', ref series index: 50580
+
+INFO  [2020-04-16 11:50:05] Processing data for part of reference series beggining with index: 50600
+
+INFO  [2020-04-16 11:53:09] Proceeding test series: 'CDPROJEKT', ref series index: 50600
+
+INFO  [2020-04-16 11:53:09] Proceeding test series: 'GRUPAAZOTY', ref series index: 50600
+
+INFO  [2020-04-16 11:53:11] Proceeding test series: 'INGBSK', ref series index: 50600
+
+INFO  [2020-04-16 11:53:11] Proceeding test series: 'MBANK', ref series index: 50600
+
+INFO  [2020-04-16 11:53:11] Proceeding test series: 'PKNORLEN', ref series index: 50600
+
+INFO  [2020-04-16 11:53:11] Proceeding test series: 'PKPCARGO', ref series index: 50600
+
+INFO  [2020-04-16 11:53:11] Proceeding test series: 'refSeries', ref series index: 50600
+
+INFO  [2020-04-16 11:53:11] Processing data for part of reference series beggining with index: 50620
+
+INFO  [2020-04-16 11:56:26] Proceeding test series: 'CDPROJEKT', ref series index: 50620
+
+INFO  [2020-04-16 11:56:26] Proceeding test series: 'GRUPAAZOTY', ref series index: 50620
+
+INFO  [2020-04-16 11:56:47] Proceeding test series: 'INGBSK', ref series index: 50620
+
+INFO  [2020-04-16 11:56:47] Proceeding test series: 'MBANK', ref series index: 50620
+
+INFO  [2020-04-16 11:56:47] Proceeding test series: 'PKNORLEN', ref series index: 50620
+
+INFO  [2020-04-16 11:56:47] Proceeding test series: 'PKPCARGO', ref series index: 50620
+
+INFO  [2020-04-16 11:56:47] Proceeding test series: 'refSeries', ref series index: 50620
+
+INFO  [2020-04-16 11:56:47] Processing data for part of reference series beggining with index: 50640
+
+INFO  [2020-04-16 11:59:40] Proceeding test series: 'CDPROJEKT', ref series index: 50640
+
+INFO  [2020-04-16 11:59:40] Proceeding test series: 'GRUPAAZOTY', ref series index: 50640
+
+INFO  [2020-04-16 11:59:42] Proceeding test series: 'INGBSK', ref series index: 50640
+
+INFO  [2020-04-16 11:59:42] Proceeding test series: 'MBANK', ref series index: 50640
+
+INFO  [2020-04-16 11:59:42] Proceeding test series: 'PKNORLEN', ref series index: 50640
+
+INFO  [2020-04-16 11:59:42] Proceeding test series: 'PKPCARGO', ref series index: 50640
+
+INFO  [2020-04-16 11:59:42] Proceeding test series: 'refSeries', ref series index: 50640
+
+INFO  [2020-04-16 11:59:42] Processing data for part of reference series beggining with index: 50660
+
+INFO  [2020-04-16 12:02:36] Proceeding test series: 'CDPROJEKT', ref series index: 50660
+
+INFO  [2020-04-16 12:02:36] Proceeding test series: 'GRUPAAZOTY', ref series index: 50660
+
+INFO  [2020-04-16 12:02:38] Proceeding test series: 'INGBSK', ref series index: 50660
+
+INFO  [2020-04-16 12:02:38] Proceeding test series: 'MBANK', ref series index: 50660
+
+INFO  [2020-04-16 12:02:38] Proceeding test series: 'PKNORLEN', ref series index: 50660
+
+INFO  [2020-04-16 12:02:38] Proceeding test series: 'PKPCARGO', ref series index: 50660
+
+INFO  [2020-04-16 12:02:38] Proceeding test series: 'refSeries', ref series index: 50660
+
+INFO  [2020-04-16 12:02:38] Processing data for part of reference series beggining with index: 50680
+
+INFO  [2020-04-16 12:05:33] Proceeding test series: 'CDPROJEKT', ref series index: 50680
+
+INFO  [2020-04-16 12:05:33] Proceeding test series: 'GRUPAAZOTY', ref series index: 50680
+
+INFO  [2020-04-16 12:05:34] Proceeding test series: 'INGBSK', ref series index: 50680
+
+INFO  [2020-04-16 12:05:34] Proceeding test series: 'MBANK', ref series index: 50680
+
+INFO  [2020-04-16 12:05:34] Proceeding test series: 'PKNORLEN', ref series index: 50680
+
+INFO  [2020-04-16 12:05:34] Proceeding test series: 'PKPCARGO', ref series index: 50680
+
+INFO  [2020-04-16 12:05:34] Proceeding test series: 'refSeries', ref series index: 50680
+
+INFO  [2020-04-16 12:05:34] Processing data for part of reference series beggining with index: 50700
+
+INFO  [2020-04-16 12:08:29] Proceeding test series: 'CDPROJEKT', ref series index: 50700
+
+INFO  [2020-04-16 12:08:29] Proceeding test series: 'GRUPAAZOTY', ref series index: 50700
+
+INFO  [2020-04-16 12:08:29] Proceeding test series: 'INGBSK', ref series index: 50700
+
+INFO  [2020-04-16 12:08:29] Proceeding test series: 'MBANK', ref series index: 50700
+
+INFO  [2020-04-16 12:08:29] Proceeding test series: 'PKNORLEN', ref series index: 50700
+
+INFO  [2020-04-16 12:08:29] Proceeding test series: 'PKPCARGO', ref series index: 50700
+
+INFO  [2020-04-16 12:08:29] Proceeding test series: 'refSeries', ref series index: 50700
+
+INFO  [2020-04-16 12:08:30] Processing data for part of reference series beggining with index: 50720
+
+INFO  [2020-04-16 12:11:23] Proceeding test series: 'CDPROJEKT', ref series index: 50720
+
+INFO  [2020-04-16 12:11:23] Proceeding test series: 'GRUPAAZOTY', ref series index: 50720
+
+INFO  [2020-04-16 12:11:25] Proceeding test series: 'INGBSK', ref series index: 50720
+
+INFO  [2020-04-16 12:11:25] Proceeding test series: 'MBANK', ref series index: 50720
+
+INFO  [2020-04-16 12:11:25] Proceeding test series: 'PKNORLEN', ref series index: 50720
+
+INFO  [2020-04-16 12:11:25] Proceeding test series: 'PKPCARGO', ref series index: 50720
+
+INFO  [2020-04-16 12:11:25] Proceeding test series: 'refSeries', ref series index: 50720
+
+INFO  [2020-04-16 12:11:25] Processing data for part of reference series beggining with index: 50740
+
+INFO  [2020-04-16 12:14:21] Proceeding test series: 'CDPROJEKT', ref series index: 50740
+
+INFO  [2020-04-16 12:14:21] Proceeding test series: 'GRUPAAZOTY', ref series index: 50740
+
+INFO  [2020-04-16 12:14:21] Proceeding test series: 'INGBSK', ref series index: 50740
+
+INFO  [2020-04-16 12:14:21] Proceeding test series: 'MBANK', ref series index: 50740
+
+INFO  [2020-04-16 12:14:21] Proceeding test series: 'PKNORLEN', ref series index: 50740
+
+INFO  [2020-04-16 12:14:21] Proceeding test series: 'PKPCARGO', ref series index: 50740
+
+INFO  [2020-04-16 12:14:21] Proceeding test series: 'refSeries', ref series index: 50740
+
+INFO  [2020-04-16 12:14:21] Processing data for part of reference series beggining with index: 50760
+
+INFO  [2020-04-16 12:17:17] Proceeding test series: 'CDPROJEKT', ref series index: 50760
+
+INFO  [2020-04-16 12:17:17] Proceeding test series: 'GRUPAAZOTY', ref series index: 50760
+
+INFO  [2020-04-16 12:17:17] Proceeding test series: 'INGBSK', ref series index: 50760
+
+INFO  [2020-04-16 12:17:17] Proceeding test series: 'MBANK', ref series index: 50760
+
+INFO  [2020-04-16 12:17:17] Proceeding test series: 'PKNORLEN', ref series index: 50760
+
+INFO  [2020-04-16 12:17:17] Proceeding test series: 'PKPCARGO', ref series index: 50760
+
+INFO  [2020-04-16 12:17:17] Proceeding test series: 'refSeries', ref series index: 50760
+
+INFO  [2020-04-16 12:17:17] Processing data for part of reference series beggining with index: 50780
+
+INFO  [2020-04-16 12:20:12] Proceeding test series: 'CDPROJEKT', ref series index: 50780
+
+INFO  [2020-04-16 12:20:12] Proceeding test series: 'GRUPAAZOTY', ref series index: 50780
+
+INFO  [2020-04-16 12:20:12] Proceeding test series: 'INGBSK', ref series index: 50780
+
+INFO  [2020-04-16 12:20:12] Proceeding test series: 'MBANK', ref series index: 50780
+
+INFO  [2020-04-16 12:20:12] Proceeding test series: 'PKNORLEN', ref series index: 50780
+
+INFO  [2020-04-16 12:20:12] Proceeding test series: 'PKPCARGO', ref series index: 50780
+
+INFO  [2020-04-16 12:20:12] Proceeding test series: 'refSeries', ref series index: 50780
+
+INFO  [2020-04-16 12:20:12] Processing data for part of reference series beggining with index: 50800
+
+INFO  [2020-04-16 12:23:07] Proceeding test series: 'CDPROJEKT', ref series index: 50800
+
+INFO  [2020-04-16 12:23:07] Proceeding test series: 'GRUPAAZOTY', ref series index: 50800
+
+INFO  [2020-04-16 12:23:09] Proceeding test series: 'INGBSK', ref series index: 50800
+
+INFO  [2020-04-16 12:23:09] Proceeding test series: 'MBANK', ref series index: 50800
+
+INFO  [2020-04-16 12:23:09] Proceeding test series: 'PKNORLEN', ref series index: 50800
+
+INFO  [2020-04-16 12:23:09] Proceeding test series: 'PKPCARGO', ref series index: 50800
+
+INFO  [2020-04-16 12:23:09] Proceeding test series: 'refSeries', ref series index: 50800
+
+INFO  [2020-04-16 12:23:09] Processing data for part of reference series beggining with index: 50820
+
+INFO  [2020-04-16 12:26:07] Proceeding test series: 'CDPROJEKT', ref series index: 50820
+
+INFO  [2020-04-16 12:26:07] Proceeding test series: 'GRUPAAZOTY', ref series index: 50820
+
+INFO  [2020-04-16 12:26:07] Proceeding test series: 'INGBSK', ref series index: 50820
+
+INFO  [2020-04-16 12:26:07] Proceeding test series: 'MBANK', ref series index: 50820
+
+INFO  [2020-04-16 12:26:07] Proceeding test series: 'PKNORLEN', ref series index: 50820
+
+INFO  [2020-04-16 12:26:07] Proceeding test series: 'PKPCARGO', ref series index: 50820
+
+INFO  [2020-04-16 12:26:07] Proceeding test series: 'refSeries', ref series index: 50820
+
+INFO  [2020-04-16 12:26:07] Processing data for part of reference series beggining with index: 50840
+
+INFO  [2020-04-16 12:29:05] Proceeding test series: 'CDPROJEKT', ref series index: 50840
+
+INFO  [2020-04-16 12:29:05] Proceeding test series: 'GRUPAAZOTY', ref series index: 50840
+
+INFO  [2020-04-16 12:29:05] Proceeding test series: 'INGBSK', ref series index: 50840
+
+INFO  [2020-04-16 12:29:05] Proceeding test series: 'MBANK', ref series index: 50840
+
+INFO  [2020-04-16 12:29:05] Proceeding test series: 'PKNORLEN', ref series index: 50840
+
+INFO  [2020-04-16 12:29:05] Proceeding test series: 'PKPCARGO', ref series index: 50840
+
+INFO  [2020-04-16 12:29:05] Proceeding test series: 'refSeries', ref series index: 50840
+
+INFO  [2020-04-16 12:29:05] Processing data for part of reference series beggining with index: 50860
+
+INFO  [2020-04-16 12:31:59] Proceeding test series: 'CDPROJEKT', ref series index: 50860
+
+INFO  [2020-04-16 12:31:59] Proceeding test series: 'GRUPAAZOTY', ref series index: 50860
+
+INFO  [2020-04-16 12:32:01] Proceeding test series: 'INGBSK', ref series index: 50860
+
+INFO  [2020-04-16 12:32:01] Proceeding test series: 'MBANK', ref series index: 50860
+
+INFO  [2020-04-16 12:32:01] Proceeding test series: 'PKNORLEN', ref series index: 50860
+
+INFO  [2020-04-16 12:32:01] Proceeding test series: 'PKPCARGO', ref series index: 50860
+
+INFO  [2020-04-16 12:32:01] Proceeding test series: 'refSeries', ref series index: 50860
+
+INFO  [2020-04-16 12:32:01] Processing data for part of reference series beggining with index: 50880
+
+INFO  [2020-04-16 12:34:55] Proceeding test series: 'CDPROJEKT', ref series index: 50880
+
+INFO  [2020-04-16 12:34:55] Proceeding test series: 'GRUPAAZOTY', ref series index: 50880
+
+INFO  [2020-04-16 12:34:57] Proceeding test series: 'INGBSK', ref series index: 50880
+
+INFO  [2020-04-16 12:34:57] Proceeding test series: 'MBANK', ref series index: 50880
+
+INFO  [2020-04-16 12:34:57] Proceeding test series: 'PKNORLEN', ref series index: 50880
+
+INFO  [2020-04-16 12:34:57] Proceeding test series: 'PKPCARGO', ref series index: 50880
+
+INFO  [2020-04-16 12:34:57] Proceeding test series: 'refSeries', ref series index: 50880
+
+INFO  [2020-04-16 12:34:57] Processing data for part of reference series beggining with index: 50900
+
+INFO  [2020-04-16 12:37:51] Proceeding test series: 'CDPROJEKT', ref series index: 50900
+
+INFO  [2020-04-16 12:37:51] Proceeding test series: 'GRUPAAZOTY', ref series index: 50900
+
+INFO  [2020-04-16 12:37:54] Proceeding test series: 'INGBSK', ref series index: 50900
+
+INFO  [2020-04-16 12:37:54] Proceeding test series: 'MBANK', ref series index: 50900
+
+INFO  [2020-04-16 12:37:54] Proceeding test series: 'PKNORLEN', ref series index: 50900
+
+INFO  [2020-04-16 12:37:54] Proceeding test series: 'PKPCARGO', ref series index: 50900
+
+INFO  [2020-04-16 12:37:54] Proceeding test series: 'refSeries', ref series index: 50900
+
+INFO  [2020-04-16 12:37:54] Processing data for part of reference series beggining with index: 50920
+
+INFO  [2020-04-16 12:40:48] Proceeding test series: 'CDPROJEKT', ref series index: 50920
+
+INFO  [2020-04-16 12:40:48] Proceeding test series: 'GRUPAAZOTY', ref series index: 50920
+
+INFO  [2020-04-16 12:40:50] Proceeding test series: 'INGBSK', ref series index: 50920
+
+INFO  [2020-04-16 12:40:50] Proceeding test series: 'MBANK', ref series index: 50920
+
+INFO  [2020-04-16 12:40:50] Proceeding test series: 'PKNORLEN', ref series index: 50920
+
+INFO  [2020-04-16 12:40:50] Proceeding test series: 'PKPCARGO', ref series index: 50920
+
+INFO  [2020-04-16 12:40:50] Proceeding test series: 'refSeries', ref series index: 50920
+
+INFO  [2020-04-16 12:40:50] Processing data for part of reference series beggining with index: 50940
+
+INFO  [2020-04-16 12:43:45] Proceeding test series: 'CDPROJEKT', ref series index: 50940
+
+INFO  [2020-04-16 12:43:45] Proceeding test series: 'GRUPAAZOTY', ref series index: 50940
+
+INFO  [2020-04-16 12:43:47] Proceeding test series: 'INGBSK', ref series index: 50940
+
+INFO  [2020-04-16 12:43:47] Proceeding test series: 'MBANK', ref series index: 50940
+
+INFO  [2020-04-16 12:43:47] Proceeding test series: 'PKNORLEN', ref series index: 50940
+
+INFO  [2020-04-16 12:43:47] Proceeding test series: 'PKPCARGO', ref series index: 50940
+
+INFO  [2020-04-16 12:43:47] Proceeding test series: 'refSeries', ref series index: 50940
+
+INFO  [2020-04-16 12:43:47] Processing data for part of reference series beggining with index: 50960
+
+INFO  [2020-04-16 12:46:42] Proceeding test series: 'CDPROJEKT', ref series index: 50960
+
+INFO  [2020-04-16 12:46:42] Proceeding test series: 'GRUPAAZOTY', ref series index: 50960
+
+INFO  [2020-04-16 12:46:43] Proceeding test series: 'INGBSK', ref series index: 50960
+
+INFO  [2020-04-16 12:46:43] Proceeding test series: 'MBANK', ref series index: 50960
+
+INFO  [2020-04-16 12:46:43] Proceeding test series: 'PKNORLEN', ref series index: 50960
+
+INFO  [2020-04-16 12:46:43] Proceeding test series: 'PKPCARGO', ref series index: 50960
+
+INFO  [2020-04-16 12:46:43] Proceeding test series: 'refSeries', ref series index: 50960
+
+INFO  [2020-04-16 12:46:43] Processing data for part of reference series beggining with index: 50980
+
+INFO  [2020-04-16 12:49:35] Proceeding test series: 'CDPROJEKT', ref series index: 50980
+
+INFO  [2020-04-16 12:49:35] Proceeding test series: 'GRUPAAZOTY', ref series index: 50980
+
+INFO  [2020-04-16 12:49:38] Proceeding test series: 'INGBSK', ref series index: 50980
+
+INFO  [2020-04-16 12:49:38] Proceeding test series: 'MBANK', ref series index: 50980
+
+INFO  [2020-04-16 12:49:39] Proceeding test series: 'PKNORLEN', ref series index: 50980
+
+INFO  [2020-04-16 12:49:39] Proceeding test series: 'PKPCARGO', ref series index: 50980
+
+INFO  [2020-04-16 12:49:39] Proceeding test series: 'refSeries', ref series index: 50980
+
+INFO  [2020-04-16 12:49:39] Processing data for part of reference series beggining with index: 51000
+
+INFO  [2020-04-16 12:52:39] Proceeding test series: 'CDPROJEKT', ref series index: 51000
+
+INFO  [2020-04-16 12:52:39] Proceeding test series: 'GRUPAAZOTY', ref series index: 51000
+
+INFO  [2020-04-16 12:52:39] Proceeding test series: 'INGBSK', ref series index: 51000
+
+INFO  [2020-04-16 12:52:39] Proceeding test series: 'MBANK', ref series index: 51000
+
+INFO  [2020-04-16 12:52:39] Proceeding test series: 'PKNORLEN', ref series index: 51000
+
+INFO  [2020-04-16 12:52:39] Proceeding test series: 'PKPCARGO', ref series index: 51000
+
+INFO  [2020-04-16 12:52:39] Proceeding test series: 'refSeries', ref series index: 51000
+
+INFO  [2020-04-16 12:52:39] Processing data for part of reference series beggining with index: 51020
+
+INFO  [2020-04-16 12:55:49] Proceeding test series: 'CDPROJEKT', ref series index: 51020
+
+INFO  [2020-04-16 12:55:49] Proceeding test series: 'GRUPAAZOTY', ref series index: 51020
+
+INFO  [2020-04-16 12:56:23] Proceeding test series: 'INGBSK', ref series index: 51020
+
+INFO  [2020-04-16 12:56:23] Proceeding test series: 'MBANK', ref series index: 51020
+
+INFO  [2020-04-16 12:56:25] Proceeding test series: 'PKNORLEN', ref series index: 51020
+
+INFO  [2020-04-16 12:56:25] Proceeding test series: 'PKPCARGO', ref series index: 51020
+
+INFO  [2020-04-16 12:56:25] Proceeding test series: 'refSeries', ref series index: 51020
+
+INFO  [2020-04-16 12:56:25] Processing data for part of reference series beggining with index: 51040
+
+INFO  [2020-04-16 12:59:19] Proceeding test series: 'CDPROJEKT', ref series index: 51040
+
+INFO  [2020-04-16 12:59:19] Proceeding test series: 'GRUPAAZOTY', ref series index: 51040
+
+INFO  [2020-04-16 12:59:20] Proceeding test series: 'INGBSK', ref series index: 51040
+
+INFO  [2020-04-16 12:59:20] Proceeding test series: 'MBANK', ref series index: 51040
+
+INFO  [2020-04-16 12:59:20] Proceeding test series: 'PKNORLEN', ref series index: 51040
+
+INFO  [2020-04-16 12:59:20] Proceeding test series: 'PKPCARGO', ref series index: 51040
+
+INFO  [2020-04-16 12:59:20] Proceeding test series: 'refSeries', ref series index: 51040
+
+INFO  [2020-04-16 12:59:20] Processing data for part of reference series beggining with index: 51060
+
+INFO  [2020-04-16 13:02:14] Proceeding test series: 'CDPROJEKT', ref series index: 51060
+
+INFO  [2020-04-16 13:02:14] Proceeding test series: 'GRUPAAZOTY', ref series index: 51060
+
+INFO  [2020-04-16 13:02:16] Proceeding test series: 'INGBSK', ref series index: 51060
+
+INFO  [2020-04-16 13:02:16] Proceeding test series: 'MBANK', ref series index: 51060
+
+INFO  [2020-04-16 13:02:17] Proceeding test series: 'PKNORLEN', ref series index: 51060
+
+INFO  [2020-04-16 13:02:17] Proceeding test series: 'PKPCARGO', ref series index: 51060
+
+INFO  [2020-04-16 13:02:17] Proceeding test series: 'refSeries', ref series index: 51060
+
+INFO  [2020-04-16 13:02:17] Processing data for part of reference series beggining with index: 51080
+
+INFO  [2020-04-16 13:05:13] Proceeding test series: 'CDPROJEKT', ref series index: 51080
+
+INFO  [2020-04-16 13:05:13] Proceeding test series: 'GRUPAAZOTY', ref series index: 51080
+
+INFO  [2020-04-16 13:05:14] Proceeding test series: 'INGBSK', ref series index: 51080
+
+INFO  [2020-04-16 13:05:14] Proceeding test series: 'MBANK', ref series index: 51080
+
+INFO  [2020-04-16 13:05:14] Proceeding test series: 'PKNORLEN', ref series index: 51080
+
+INFO  [2020-04-16 13:05:14] Proceeding test series: 'PKPCARGO', ref series index: 51080
+
+INFO  [2020-04-16 13:05:14] Proceeding test series: 'refSeries', ref series index: 51080
+
+INFO  [2020-04-16 13:05:14] Processing data for part of reference series beggining with index: 51100
+
+INFO  [2020-04-16 13:08:08] Proceeding test series: 'CDPROJEKT', ref series index: 51100
+
+INFO  [2020-04-16 13:08:08] Proceeding test series: 'GRUPAAZOTY', ref series index: 51100
+
+INFO  [2020-04-16 13:08:11] Proceeding test series: 'INGBSK', ref series index: 51100
+
+INFO  [2020-04-16 13:08:11] Proceeding test series: 'MBANK', ref series index: 51100
+
+INFO  [2020-04-16 13:08:11] Proceeding test series: 'PKNORLEN', ref series index: 51100
+
+INFO  [2020-04-16 13:08:11] Proceeding test series: 'PKPCARGO', ref series index: 51100
+
+INFO  [2020-04-16 13:08:11] Proceeding test series: 'refSeries', ref series index: 51100
+
+INFO  [2020-04-16 13:08:11] Processing data for part of reference series beggining with index: 51120
+
+INFO  [2020-04-16 13:11:06] Proceeding test series: 'CDPROJEKT', ref series index: 51120
+
+INFO  [2020-04-16 13:11:06] Proceeding test series: 'GRUPAAZOTY', ref series index: 51120
+
+INFO  [2020-04-16 13:11:08] Proceeding test series: 'INGBSK', ref series index: 51120
+
+INFO  [2020-04-16 13:11:08] Proceeding test series: 'MBANK', ref series index: 51120
+
+INFO  [2020-04-16 13:11:08] Proceeding test series: 'PKNORLEN', ref series index: 51120
+
+INFO  [2020-04-16 13:11:08] Proceeding test series: 'PKPCARGO', ref series index: 51120
+
+INFO  [2020-04-16 13:11:08] Proceeding test series: 'refSeries', ref series index: 51120
+
+INFO  [2020-04-16 13:11:08] Processing data for part of reference series beggining with index: 51140
+
+INFO  [2020-04-16 13:14:01] Proceeding test series: 'CDPROJEKT', ref series index: 51140
+
+INFO  [2020-04-16 13:14:01] Proceeding test series: 'GRUPAAZOTY', ref series index: 51140
+
+INFO  [2020-04-16 13:14:05] Proceeding test series: 'INGBSK', ref series index: 51140
+
+INFO  [2020-04-16 13:14:05] Proceeding test series: 'MBANK', ref series index: 51140
+
+INFO  [2020-04-16 13:14:06] Proceeding test series: 'PKNORLEN', ref series index: 51140
+
+INFO  [2020-04-16 13:14:06] Proceeding test series: 'PKPCARGO', ref series index: 51140
+
+INFO  [2020-04-16 13:14:06] Proceeding test series: 'refSeries', ref series index: 51140
+
+INFO  [2020-04-16 13:14:06] Processing data for part of reference series beggining with index: 51160
+
+INFO  [2020-04-16 13:16:59] Proceeding test series: 'CDPROJEKT', ref series index: 51160
+
+INFO  [2020-04-16 13:16:59] Proceeding test series: 'GRUPAAZOTY', ref series index: 51160
+
+INFO  [2020-04-16 13:17:03] Proceeding test series: 'INGBSK', ref series index: 51160
+
+INFO  [2020-04-16 13:17:03] Proceeding test series: 'MBANK', ref series index: 51160
+
+INFO  [2020-04-16 13:17:03] Proceeding test series: 'PKNORLEN', ref series index: 51160
+
+INFO  [2020-04-16 13:17:03] Proceeding test series: 'PKPCARGO', ref series index: 51160
+
+INFO  [2020-04-16 13:17:03] Proceeding test series: 'refSeries', ref series index: 51160
+
+INFO  [2020-04-16 13:17:03] Processing data for part of reference series beggining with index: 51180
+
+INFO  [2020-04-16 13:19:58] Proceeding test series: 'CDPROJEKT', ref series index: 51180
+
+INFO  [2020-04-16 13:19:58] Proceeding test series: 'GRUPAAZOTY', ref series index: 51180
+
+INFO  [2020-04-16 13:20:00] Proceeding test series: 'INGBSK', ref series index: 51180
+
+INFO  [2020-04-16 13:20:00] Proceeding test series: 'MBANK', ref series index: 51180
+
+INFO  [2020-04-16 13:20:00] Proceeding test series: 'PKNORLEN', ref series index: 51180
+
+INFO  [2020-04-16 13:20:00] Proceeding test series: 'PKPCARGO', ref series index: 51180
+
+INFO  [2020-04-16 13:20:00] Proceeding test series: 'refSeries', ref series index: 51180
+
+INFO  [2020-04-16 13:20:00] Processing data for part of reference series beggining with index: 51200
+
+INFO  [2020-04-16 13:22:55] Proceeding test series: 'CDPROJEKT', ref series index: 51200
+
+INFO  [2020-04-16 13:22:55] Proceeding test series: 'GRUPAAZOTY', ref series index: 51200
+
+INFO  [2020-04-16 13:22:57] Proceeding test series: 'INGBSK', ref series index: 51200
+
+INFO  [2020-04-16 13:22:57] Proceeding test series: 'MBANK', ref series index: 51200
+
+INFO  [2020-04-16 13:22:58] Proceeding test series: 'PKNORLEN', ref series index: 51200
+
+INFO  [2020-04-16 13:22:58] Proceeding test series: 'PKPCARGO', ref series index: 51200
+
+INFO  [2020-04-16 13:22:58] Proceeding test series: 'refSeries', ref series index: 51200
+
+INFO  [2020-04-16 13:22:58] Processing data for part of reference series beggining with index: 51220
+
+INFO  [2020-04-16 13:25:52] Proceeding test series: 'CDPROJEKT', ref series index: 51220
+
+INFO  [2020-04-16 13:25:52] Proceeding test series: 'GRUPAAZOTY', ref series index: 51220
+
+INFO  [2020-04-16 13:25:56] Proceeding test series: 'INGBSK', ref series index: 51220
+
+INFO  [2020-04-16 13:25:56] Proceeding test series: 'MBANK', ref series index: 51220
+
+INFO  [2020-04-16 13:25:56] Proceeding test series: 'PKNORLEN', ref series index: 51220
+
+INFO  [2020-04-16 13:25:56] Proceeding test series: 'PKPCARGO', ref series index: 51220
+
+INFO  [2020-04-16 13:25:56] Proceeding test series: 'refSeries', ref series index: 51220
+
+INFO  [2020-04-16 13:25:56] Processing data for part of reference series beggining with index: 51240
+
+INFO  [2020-04-16 13:28:53] Proceeding test series: 'CDPROJEKT', ref series index: 51240
+
+INFO  [2020-04-16 13:28:53] Proceeding test series: 'GRUPAAZOTY', ref series index: 51240
+
+INFO  [2020-04-16 13:28:53] Proceeding test series: 'INGBSK', ref series index: 51240
+
+INFO  [2020-04-16 13:28:53] Proceeding test series: 'MBANK', ref series index: 51240
+
+INFO  [2020-04-16 13:28:53] Proceeding test series: 'PKNORLEN', ref series index: 51240
+
+INFO  [2020-04-16 13:28:53] Proceeding test series: 'PKPCARGO', ref series index: 51240
+
+INFO  [2020-04-16 13:28:53] Proceeding test series: 'refSeries', ref series index: 51240
+
+INFO  [2020-04-16 13:28:53] Processing data for part of reference series beggining with index: 51260
+
+INFO  [2020-04-16 13:31:50] Proceeding test series: 'CDPROJEKT', ref series index: 51260
+
+INFO  [2020-04-16 13:31:50] Proceeding test series: 'GRUPAAZOTY', ref series index: 51260
+
+INFO  [2020-04-16 13:31:50] Proceeding test series: 'INGBSK', ref series index: 51260
+
+INFO  [2020-04-16 13:31:50] Proceeding test series: 'MBANK', ref series index: 51260
+
+INFO  [2020-04-16 13:31:50] Proceeding test series: 'PKNORLEN', ref series index: 51260
+
+INFO  [2020-04-16 13:31:50] Proceeding test series: 'PKPCARGO', ref series index: 51260
+
+INFO  [2020-04-16 13:31:50] Proceeding test series: 'refSeries', ref series index: 51260
+
+INFO  [2020-04-16 13:31:50] Processing data for part of reference series beggining with index: 51280
+
+INFO  [2020-04-16 13:34:46] Proceeding test series: 'CDPROJEKT', ref series index: 51280
+
+INFO  [2020-04-16 13:34:46] Proceeding test series: 'GRUPAAZOTY', ref series index: 51280
+
+INFO  [2020-04-16 13:34:47] Proceeding test series: 'INGBSK', ref series index: 51280
+
+INFO  [2020-04-16 13:34:47] Proceeding test series: 'MBANK', ref series index: 51280
+
+INFO  [2020-04-16 13:34:48] Proceeding test series: 'PKNORLEN', ref series index: 51280
+
+INFO  [2020-04-16 13:34:48] Proceeding test series: 'PKPCARGO', ref series index: 51280
+
+INFO  [2020-04-16 13:34:48] Proceeding test series: 'refSeries', ref series index: 51280
+
+INFO  [2020-04-16 13:34:48] Processing data for part of reference series beggining with index: 51300
+
+INFO  [2020-04-16 13:37:44] Proceeding test series: 'CDPROJEKT', ref series index: 51300
+
+INFO  [2020-04-16 13:37:44] Proceeding test series: 'GRUPAAZOTY', ref series index: 51300
+
+INFO  [2020-04-16 13:37:45] Proceeding test series: 'INGBSK', ref series index: 51300
+
+INFO  [2020-04-16 13:37:45] Proceeding test series: 'MBANK', ref series index: 51300
+
+INFO  [2020-04-16 13:37:45] Proceeding test series: 'PKNORLEN', ref series index: 51300
+
+INFO  [2020-04-16 13:37:45] Proceeding test series: 'PKPCARGO', ref series index: 51300
+
+INFO  [2020-04-16 13:37:45] Proceeding test series: 'refSeries', ref series index: 51300
+
+INFO  [2020-04-16 13:37:45] Processing data for part of reference series beggining with index: 51320
+
+INFO  [2020-04-16 13:40:41] Proceeding test series: 'CDPROJEKT', ref series index: 51320
+
+INFO  [2020-04-16 13:40:41] Proceeding test series: 'GRUPAAZOTY', ref series index: 51320
+
+INFO  [2020-04-16 13:40:42] Proceeding test series: 'INGBSK', ref series index: 51320
+
+INFO  [2020-04-16 13:40:42] Proceeding test series: 'MBANK', ref series index: 51320
+
+INFO  [2020-04-16 13:40:43] Proceeding test series: 'PKNORLEN', ref series index: 51320
+
+INFO  [2020-04-16 13:40:43] Proceeding test series: 'PKPCARGO', ref series index: 51320
+
+INFO  [2020-04-16 13:40:43] Proceeding test series: 'refSeries', ref series index: 51320
+
+INFO  [2020-04-16 13:40:43] Processing data for part of reference series beggining with index: 51340
+
+INFO  [2020-04-16 13:43:40] Proceeding test series: 'CDPROJEKT', ref series index: 51340
+
+INFO  [2020-04-16 13:43:40] Proceeding test series: 'GRUPAAZOTY', ref series index: 51340
+
+INFO  [2020-04-16 13:43:40] Proceeding test series: 'INGBSK', ref series index: 51340
+
+INFO  [2020-04-16 13:43:40] Proceeding test series: 'MBANK', ref series index: 51340
+
+INFO  [2020-04-16 13:43:40] Proceeding test series: 'PKNORLEN', ref series index: 51340
+
+INFO  [2020-04-16 13:43:40] Proceeding test series: 'PKPCARGO', ref series index: 51340
+
+INFO  [2020-04-16 13:43:40] Proceeding test series: 'refSeries', ref series index: 51340
+
+INFO  [2020-04-16 13:43:40] Processing data for part of reference series beggining with index: 51360
+
+INFO  [2020-04-16 13:46:35] Proceeding test series: 'CDPROJEKT', ref series index: 51360
+
+INFO  [2020-04-16 13:46:35] Proceeding test series: 'GRUPAAZOTY', ref series index: 51360
+
+INFO  [2020-04-16 13:46:37] Proceeding test series: 'INGBSK', ref series index: 51360
+
+INFO  [2020-04-16 13:46:37] Proceeding test series: 'MBANK', ref series index: 51360
+
+INFO  [2020-04-16 13:46:37] Proceeding test series: 'PKNORLEN', ref series index: 51360
+
+INFO  [2020-04-16 13:46:37] Proceeding test series: 'PKPCARGO', ref series index: 51360
+
+INFO  [2020-04-16 13:46:37] Proceeding test series: 'refSeries', ref series index: 51360
+
+INFO  [2020-04-16 13:46:37] Processing data for part of reference series beggining with index: 51380
+
+INFO  [2020-04-16 13:49:33] Proceeding test series: 'CDPROJEKT', ref series index: 51380
+
+INFO  [2020-04-16 13:49:33] Proceeding test series: 'GRUPAAZOTY', ref series index: 51380
+
+INFO  [2020-04-16 13:49:34] Proceeding test series: 'INGBSK', ref series index: 51380
+
+INFO  [2020-04-16 13:49:34] Proceeding test series: 'MBANK', ref series index: 51380
+
+INFO  [2020-04-16 13:49:34] Proceeding test series: 'PKNORLEN', ref series index: 51380
+
+INFO  [2020-04-16 13:49:34] Proceeding test series: 'PKPCARGO', ref series index: 51380
+
+INFO  [2020-04-16 13:49:34] Proceeding test series: 'refSeries', ref series index: 51380
+
+INFO  [2020-04-16 13:49:34] Processing data for part of reference series beggining with index: 51400
+
+INFO  [2020-04-16 13:52:32] Proceeding test series: 'CDPROJEKT', ref series index: 51400
+
+INFO  [2020-04-16 13:52:32] Proceeding test series: 'GRUPAAZOTY', ref series index: 51400
+
+INFO  [2020-04-16 13:52:33] Proceeding test series: 'INGBSK', ref series index: 51400
+
+INFO  [2020-04-16 13:52:33] Proceeding test series: 'MBANK', ref series index: 51400
+
+INFO  [2020-04-16 13:52:33] Proceeding test series: 'PKNORLEN', ref series index: 51400
+
+INFO  [2020-04-16 13:52:33] Proceeding test series: 'PKPCARGO', ref series index: 51400
+
+INFO  [2020-04-16 13:52:33] Proceeding test series: 'refSeries', ref series index: 51400
+
+INFO  [2020-04-16 13:52:33] Processing data for part of reference series beggining with index: 51420
+
+INFO  [2020-04-16 13:56:25] Proceeding test series: 'CDPROJEKT', ref series index: 51420
+
+INFO  [2020-04-16 13:56:25] Proceeding test series: 'GRUPAAZOTY', ref series index: 51420
+
+INFO  [2020-04-16 13:56:38] Proceeding test series: 'INGBSK', ref series index: 51420
+
+INFO  [2020-04-16 13:56:38] Proceeding test series: 'MBANK', ref series index: 51420
+
+INFO  [2020-04-16 13:56:53] Proceeding test series: 'PKNORLEN', ref series index: 51420
+
+INFO  [2020-04-16 13:56:53] Proceeding test series: 'PKPCARGO', ref series index: 51420
+
+INFO  [2020-04-16 13:56:53] Proceeding test series: 'refSeries', ref series index: 51420
+
+INFO  [2020-04-16 13:56:53] Processing data for part of reference series beggining with index: 51440
+
+INFO  [2020-04-16 14:00:59] Proceeding test series: 'CDPROJEKT', ref series index: 51440
+
+INFO  [2020-04-16 14:00:59] Proceeding test series: 'GRUPAAZOTY', ref series index: 51440
+
+INFO  [2020-04-16 14:00:59] Proceeding test series: 'INGBSK', ref series index: 51440
+
+INFO  [2020-04-16 14:00:59] Proceeding test series: 'MBANK', ref series index: 51440
+
+INFO  [2020-04-16 14:00:59] Proceeding test series: 'PKNORLEN', ref series index: 51440
+
+INFO  [2020-04-16 14:00:59] Proceeding test series: 'PKPCARGO', ref series index: 51440
+
+INFO  [2020-04-16 14:00:59] Proceeding test series: 'refSeries', ref series index: 51440
+
+INFO  [2020-04-16 14:00:59] Processing data for part of reference series beggining with index: 51460
+
+INFO  [2020-04-16 14:03:50] Proceeding test series: 'CDPROJEKT', ref series index: 51460
+
+INFO  [2020-04-16 14:03:50] Proceeding test series: 'GRUPAAZOTY', ref series index: 51460
+
+INFO  [2020-04-16 14:03:54] Proceeding test series: 'INGBSK', ref series index: 51460
+
+INFO  [2020-04-16 14:03:54] Proceeding test series: 'MBANK', ref series index: 51460
+
+INFO  [2020-04-16 14:03:54] Proceeding test series: 'PKNORLEN', ref series index: 51460
+
+INFO  [2020-04-16 14:03:54] Proceeding test series: 'PKPCARGO', ref series index: 51460
+
+INFO  [2020-04-16 14:03:54] Proceeding test series: 'refSeries', ref series index: 51460
+
+INFO  [2020-04-16 14:03:54] Processing data for part of reference series beggining with index: 51480
+
+INFO  [2020-04-16 14:06:52] Proceeding test series: 'CDPROJEKT', ref series index: 51480
+
+INFO  [2020-04-16 14:06:52] Proceeding test series: 'GRUPAAZOTY', ref series index: 51480
+
+INFO  [2020-04-16 14:06:53] Proceeding test series: 'INGBSK', ref series index: 51480
+
+INFO  [2020-04-16 14:06:53] Proceeding test series: 'MBANK', ref series index: 51480
+
+INFO  [2020-04-16 14:06:53] Proceeding test series: 'PKNORLEN', ref series index: 51480
+
+INFO  [2020-04-16 14:06:53] Proceeding test series: 'PKPCARGO', ref series index: 51480
+
+INFO  [2020-04-16 14:06:53] Proceeding test series: 'refSeries', ref series index: 51480
+
+INFO  [2020-04-16 14:06:53] Processing data for part of reference series beggining with index: 51500
+
+INFO  [2020-04-16 14:09:52] Proceeding test series: 'CDPROJEKT', ref series index: 51500
+
+INFO  [2020-04-16 14:09:52] Proceeding test series: 'GRUPAAZOTY', ref series index: 51500
+
+INFO  [2020-04-16 14:09:54] Proceeding test series: 'INGBSK', ref series index: 51500
+
+INFO  [2020-04-16 14:09:54] Proceeding test series: 'MBANK', ref series index: 51500
+
+INFO  [2020-04-16 14:09:54] Proceeding test series: 'PKNORLEN', ref series index: 51500
+
+INFO  [2020-04-16 14:09:54] Proceeding test series: 'PKPCARGO', ref series index: 51500
+
+INFO  [2020-04-16 14:09:54] Proceeding test series: 'refSeries', ref series index: 51500
+
+INFO  [2020-04-16 14:09:54] Processing data for part of reference series beggining with index: 51520
+
+INFO  [2020-04-16 14:12:53] Proceeding test series: 'CDPROJEKT', ref series index: 51520
+
+INFO  [2020-04-16 14:12:53] Proceeding test series: 'GRUPAAZOTY', ref series index: 51520
+
+INFO  [2020-04-16 14:12:53] Proceeding test series: 'INGBSK', ref series index: 51520
+
+INFO  [2020-04-16 14:12:53] Proceeding test series: 'MBANK', ref series index: 51520
+
+INFO  [2020-04-16 14:12:53] Proceeding test series: 'PKNORLEN', ref series index: 51520
+
+INFO  [2020-04-16 14:12:53] Proceeding test series: 'PKPCARGO', ref series index: 51520
+
+INFO  [2020-04-16 14:12:53] Proceeding test series: 'refSeries', ref series index: 51520
+
+INFO  [2020-04-16 14:12:53] Processing data for part of reference series beggining with index: 51540
+
+INFO  [2020-04-16 14:15:52] Proceeding test series: 'CDPROJEKT', ref series index: 51540
+
+INFO  [2020-04-16 14:15:52] Proceeding test series: 'GRUPAAZOTY', ref series index: 51540
+
+INFO  [2020-04-16 14:15:55] Proceeding test series: 'INGBSK', ref series index: 51540
+
+INFO  [2020-04-16 14:15:55] Proceeding test series: 'MBANK', ref series index: 51540
+
+INFO  [2020-04-16 14:15:57] Proceeding test series: 'PKNORLEN', ref series index: 51540
+
+INFO  [2020-04-16 14:15:57] Proceeding test series: 'PKPCARGO', ref series index: 51540
+
+INFO  [2020-04-16 14:15:57] Proceeding test series: 'refSeries', ref series index: 51540
+
+INFO  [2020-04-16 14:15:57] Processing data for part of reference series beggining with index: 51560
+
+INFO  [2020-04-16 14:18:54] Proceeding test series: 'CDPROJEKT', ref series index: 51560
+
+INFO  [2020-04-16 14:18:54] Proceeding test series: 'GRUPAAZOTY', ref series index: 51560
+
+INFO  [2020-04-16 14:18:56] Proceeding test series: 'INGBSK', ref series index: 51560
+
+INFO  [2020-04-16 14:18:56] Proceeding test series: 'MBANK', ref series index: 51560
+
+INFO  [2020-04-16 14:18:57] Proceeding test series: 'PKNORLEN', ref series index: 51560
+
+INFO  [2020-04-16 14:18:57] Proceeding test series: 'PKPCARGO', ref series index: 51560
+
+INFO  [2020-04-16 14:18:57] Proceeding test series: 'refSeries', ref series index: 51560
+
+INFO  [2020-04-16 14:18:57] Processing data for part of reference series beggining with index: 51580
+
+INFO  [2020-04-16 14:22:08] Proceeding test series: 'CDPROJEKT', ref series index: 51580
+
+INFO  [2020-04-16 14:22:08] Proceeding test series: 'GRUPAAZOTY', ref series index: 51580
+
+INFO  [2020-04-16 14:22:11] Proceeding test series: 'INGBSK', ref series index: 51580
+
+INFO  [2020-04-16 14:22:11] Proceeding test series: 'MBANK', ref series index: 51580
+
+INFO  [2020-04-16 14:22:11] Proceeding test series: 'PKNORLEN', ref series index: 51580
+
+INFO  [2020-04-16 14:22:11] Proceeding test series: 'PKPCARGO', ref series index: 51580
+
+INFO  [2020-04-16 14:22:11] Proceeding test series: 'refSeries', ref series index: 51580
+
+INFO  [2020-04-16 14:22:11] Processing data for part of reference series beggining with index: 51600
+
+INFO  [2020-04-16 14:25:13] Proceeding test series: 'CDPROJEKT', ref series index: 51600
+
+INFO  [2020-04-16 14:25:13] Proceeding test series: 'GRUPAAZOTY', ref series index: 51600
+
+INFO  [2020-04-16 14:25:16] Proceeding test series: 'INGBSK', ref series index: 51600
+
+INFO  [2020-04-16 14:25:16] Proceeding test series: 'MBANK', ref series index: 51600
+
+INFO  [2020-04-16 14:25:20] Proceeding test series: 'PKNORLEN', ref series index: 51600
+
+INFO  [2020-04-16 14:25:20] Proceeding test series: 'PKPCARGO', ref series index: 51600
+
+INFO  [2020-04-16 14:25:20] Proceeding test series: 'refSeries', ref series index: 51600
+
+INFO  [2020-04-16 14:25:20] Processing data for part of reference series beggining with index: 51620
+
+INFO  [2020-04-16 14:28:21] Proceeding test series: 'CDPROJEKT', ref series index: 51620
+
+INFO  [2020-04-16 14:28:21] Proceeding test series: 'GRUPAAZOTY', ref series index: 51620
+
+INFO  [2020-04-16 14:28:22] Proceeding test series: 'INGBSK', ref series index: 51620
+
+INFO  [2020-04-16 14:28:22] Proceeding test series: 'MBANK', ref series index: 51620
+
+INFO  [2020-04-16 14:28:22] Proceeding test series: 'PKNORLEN', ref series index: 51620
+
+INFO  [2020-04-16 14:28:22] Proceeding test series: 'PKPCARGO', ref series index: 51620
+
+INFO  [2020-04-16 14:28:22] Proceeding test series: 'refSeries', ref series index: 51620
+
+INFO  [2020-04-16 14:28:22] Processing data for part of reference series beggining with index: 51640
+
+INFO  [2020-04-16 14:31:23] Proceeding test series: 'CDPROJEKT', ref series index: 51640
+
+INFO  [2020-04-16 14:31:23] Proceeding test series: 'GRUPAAZOTY', ref series index: 51640
+
+INFO  [2020-04-16 14:31:24] Proceeding test series: 'INGBSK', ref series index: 51640
+
+INFO  [2020-04-16 14:31:24] Proceeding test series: 'MBANK', ref series index: 51640
+
+INFO  [2020-04-16 14:31:24] Proceeding test series: 'PKNORLEN', ref series index: 51640
+
+INFO  [2020-04-16 14:31:24] Proceeding test series: 'PKPCARGO', ref series index: 51640
+
+INFO  [2020-04-16 14:31:24] Proceeding test series: 'refSeries', ref series index: 51640
+
+INFO  [2020-04-16 14:31:24] Processing data for part of reference series beggining with index: 51660
+
+INFO  [2020-04-16 14:34:25] Proceeding test series: 'CDPROJEKT', ref series index: 51660
+
+INFO  [2020-04-16 14:34:25] Proceeding test series: 'GRUPAAZOTY', ref series index: 51660
+
+INFO  [2020-04-16 14:34:25] Proceeding test series: 'INGBSK', ref series index: 51660
+
+INFO  [2020-04-16 14:34:25] Proceeding test series: 'MBANK', ref series index: 51660
+
+INFO  [2020-04-16 14:34:25] Proceeding test series: 'PKNORLEN', ref series index: 51660
+
+INFO  [2020-04-16 14:34:25] Proceeding test series: 'PKPCARGO', ref series index: 51660
+
+INFO  [2020-04-16 14:34:25] Proceeding test series: 'refSeries', ref series index: 51660
+
+INFO  [2020-04-16 14:34:25] Processing data for part of reference series beggining with index: 51680
+
+INFO  [2020-04-16 14:37:25] Proceeding test series: 'CDPROJEKT', ref series index: 51680
+
+INFO  [2020-04-16 14:37:25] Proceeding test series: 'GRUPAAZOTY', ref series index: 51680
+
+INFO  [2020-04-16 14:37:26] Proceeding test series: 'INGBSK', ref series index: 51680
+
+INFO  [2020-04-16 14:37:26] Proceeding test series: 'MBANK', ref series index: 51680
+
+INFO  [2020-04-16 14:37:26] Proceeding test series: 'PKNORLEN', ref series index: 51680
+
+INFO  [2020-04-16 14:37:26] Proceeding test series: 'PKPCARGO', ref series index: 51680
+
+INFO  [2020-04-16 14:37:26] Proceeding test series: 'refSeries', ref series index: 51680
+
+INFO  [2020-04-16 14:37:26] Processing data for part of reference series beggining with index: 51700
+
+INFO  [2020-04-16 14:40:27] Proceeding test series: 'CDPROJEKT', ref series index: 51700
+
+INFO  [2020-04-16 14:40:27] Proceeding test series: 'GRUPAAZOTY', ref series index: 51700
+
+INFO  [2020-04-16 14:40:27] Proceeding test series: 'INGBSK', ref series index: 51700
+
+INFO  [2020-04-16 14:40:27] Proceeding test series: 'MBANK', ref series index: 51700
+
+INFO  [2020-04-16 14:40:27] Proceeding test series: 'PKNORLEN', ref series index: 51700
+
+INFO  [2020-04-16 14:40:27] Proceeding test series: 'PKPCARGO', ref series index: 51700
+
+INFO  [2020-04-16 14:40:27] Proceeding test series: 'refSeries', ref series index: 51700
+
+INFO  [2020-04-16 14:40:27] Processing data for part of reference series beggining with index: 51720
+
+INFO  [2020-04-16 14:43:36] Proceeding test series: 'CDPROJEKT', ref series index: 51720
+
+INFO  [2020-04-16 14:43:36] Proceeding test series: 'GRUPAAZOTY', ref series index: 51720
+
+INFO  [2020-04-16 14:43:38] Proceeding test series: 'INGBSK', ref series index: 51720
+
+INFO  [2020-04-16 14:43:38] Proceeding test series: 'MBANK', ref series index: 51720
+
+INFO  [2020-04-16 14:43:38] Proceeding test series: 'PKNORLEN', ref series index: 51720
+
+INFO  [2020-04-16 14:43:38] Proceeding test series: 'PKPCARGO', ref series index: 51720
+
+INFO  [2020-04-16 14:43:38] Proceeding test series: 'refSeries', ref series index: 51720
+
+INFO  [2020-04-16 14:43:38] Processing data for part of reference series beggining with index: 51740
+
+INFO  [2020-04-16 14:46:43] Proceeding test series: 'CDPROJEKT', ref series index: 51740
+
+INFO  [2020-04-16 14:46:43] Proceeding test series: 'GRUPAAZOTY', ref series index: 51740
+
+INFO  [2020-04-16 14:46:43] Proceeding test series: 'INGBSK', ref series index: 51740
+
+INFO  [2020-04-16 14:46:43] Proceeding test series: 'MBANK', ref series index: 51740
+
+INFO  [2020-04-16 14:46:43] Proceeding test series: 'PKNORLEN', ref series index: 51740
+
+INFO  [2020-04-16 14:46:43] Proceeding test series: 'PKPCARGO', ref series index: 51740
+
+INFO  [2020-04-16 14:46:43] Proceeding test series: 'refSeries', ref series index: 51740
+
+INFO  [2020-04-16 14:46:43] Processing data for part of reference series beggining with index: 51760
+
+INFO  [2020-04-16 14:49:43] Proceeding test series: 'CDPROJEKT', ref series index: 51760
+
+INFO  [2020-04-16 14:49:43] Proceeding test series: 'GRUPAAZOTY', ref series index: 51760
+
+INFO  [2020-04-16 14:49:43] Proceeding test series: 'INGBSK', ref series index: 51760
+
+INFO  [2020-04-16 14:49:43] Proceeding test series: 'MBANK', ref series index: 51760
+
+INFO  [2020-04-16 14:49:45] Proceeding test series: 'PKNORLEN', ref series index: 51760
+
+INFO  [2020-04-16 14:49:45] Proceeding test series: 'PKPCARGO', ref series index: 51760
+
+INFO  [2020-04-16 14:49:45] Proceeding test series: 'refSeries', ref series index: 51760
+
+INFO  [2020-04-16 14:49:45] Processing data for part of reference series beggining with index: 51780
+
+INFO  [2020-04-16 14:52:50] Proceeding test series: 'CDPROJEKT', ref series index: 51780
+
+INFO  [2020-04-16 14:52:50] Proceeding test series: 'GRUPAAZOTY', ref series index: 51780
+
+INFO  [2020-04-16 14:52:51] Proceeding test series: 'INGBSK', ref series index: 51780
+
+INFO  [2020-04-16 14:52:51] Proceeding test series: 'MBANK', ref series index: 51780
+
+INFO  [2020-04-16 14:52:53] Proceeding test series: 'PKNORLEN', ref series index: 51780
+
+INFO  [2020-04-16 14:52:53] Proceeding test series: 'PKPCARGO', ref series index: 51780
+
+INFO  [2020-04-16 14:52:53] Proceeding test series: 'refSeries', ref series index: 51780
+
+INFO  [2020-04-16 14:52:53] Processing data for part of reference series beggining with index: 51800
+
+INFO  [2020-04-16 14:56:23] Proceeding test series: 'CDPROJEKT', ref series index: 51800
+
+INFO  [2020-04-16 14:56:23] Proceeding test series: 'GRUPAAZOTY', ref series index: 51800
+
+INFO  [2020-04-16 14:56:42] Proceeding test series: 'INGBSK', ref series index: 51800
+
+INFO  [2020-04-16 14:56:42] Proceeding test series: 'MBANK', ref series index: 51800
+
+INFO  [2020-04-16 14:56:42] Proceeding test series: 'PKNORLEN', ref series index: 51800
+
+INFO  [2020-04-16 14:56:42] Proceeding test series: 'PKPCARGO', ref series index: 51800
+
+INFO  [2020-04-16 14:56:42] Proceeding test series: 'refSeries', ref series index: 51800
+
+INFO  [2020-04-16 14:56:42] Processing data for part of reference series beggining with index: 51820
+
+INFO  [2020-04-16 14:59:44] Proceeding test series: 'CDPROJEKT', ref series index: 51820
+
+INFO  [2020-04-16 14:59:44] Proceeding test series: 'GRUPAAZOTY', ref series index: 51820
+
+INFO  [2020-04-16 14:59:45] Proceeding test series: 'INGBSK', ref series index: 51820
+
+INFO  [2020-04-16 14:59:45] Proceeding test series: 'MBANK', ref series index: 51820
+
+INFO  [2020-04-16 14:59:45] Proceeding test series: 'PKNORLEN', ref series index: 51820
+
+INFO  [2020-04-16 14:59:45] Proceeding test series: 'PKPCARGO', ref series index: 51820
+
+INFO  [2020-04-16 14:59:45] Proceeding test series: 'refSeries', ref series index: 51820
+
+INFO  [2020-04-16 14:59:45] Processing data for part of reference series beggining with index: 51840
+
+INFO  [2020-04-16 15:02:47] Proceeding test series: 'CDPROJEKT', ref series index: 51840
+
+INFO  [2020-04-16 15:02:47] Proceeding test series: 'GRUPAAZOTY', ref series index: 51840
+
+INFO  [2020-04-16 15:02:47] Proceeding test series: 'INGBSK', ref series index: 51840
+
+INFO  [2020-04-16 15:02:47] Proceeding test series: 'MBANK', ref series index: 51840
+
+INFO  [2020-04-16 15:02:47] Proceeding test series: 'PKNORLEN', ref series index: 51840
+
+INFO  [2020-04-16 15:02:47] Proceeding test series: 'PKPCARGO', ref series index: 51840
+
+INFO  [2020-04-16 15:02:47] Proceeding test series: 'refSeries', ref series index: 51840
+
+INFO  [2020-04-16 15:02:47] Processing data for part of reference series beggining with index: 51860
+
+INFO  [2020-04-16 15:05:47] Proceeding test series: 'CDPROJEKT', ref series index: 51860
+
+INFO  [2020-04-16 15:05:47] Proceeding test series: 'GRUPAAZOTY', ref series index: 51860
+
+INFO  [2020-04-16 15:05:49] Proceeding test series: 'INGBSK', ref series index: 51860
+
+INFO  [2020-04-16 15:05:49] Proceeding test series: 'MBANK', ref series index: 51860
+
+INFO  [2020-04-16 15:05:50] Proceeding test series: 'PKNORLEN', ref series index: 51860
+
+INFO  [2020-04-16 15:05:50] Proceeding test series: 'PKPCARGO', ref series index: 51860
+
+INFO  [2020-04-16 15:05:50] Proceeding test series: 'refSeries', ref series index: 51860
+
+INFO  [2020-04-16 15:05:50] Processing data for part of reference series beggining with index: 51880
+
+INFO  [2020-04-16 15:08:52] Proceeding test series: 'CDPROJEKT', ref series index: 51880
+
+INFO  [2020-04-16 15:08:52] Proceeding test series: 'GRUPAAZOTY', ref series index: 51880
+
+INFO  [2020-04-16 15:08:53] Proceeding test series: 'INGBSK', ref series index: 51880
+
+INFO  [2020-04-16 15:08:53] Proceeding test series: 'MBANK', ref series index: 51880
+
+INFO  [2020-04-16 15:08:53] Proceeding test series: 'PKNORLEN', ref series index: 51880
+
+INFO  [2020-04-16 15:08:53] Proceeding test series: 'PKPCARGO', ref series index: 51880
+
+INFO  [2020-04-16 15:08:53] Proceeding test series: 'refSeries', ref series index: 51880
+
+INFO  [2020-04-16 15:08:53] Processing data for part of reference series beggining with index: 51900
+
+INFO  [2020-04-16 15:11:55] Proceeding test series: 'CDPROJEKT', ref series index: 51900
+
+INFO  [2020-04-16 15:11:55] Proceeding test series: 'GRUPAAZOTY', ref series index: 51900
+
+INFO  [2020-04-16 15:11:56] Proceeding test series: 'INGBSK', ref series index: 51900
+
+INFO  [2020-04-16 15:11:56] Proceeding test series: 'MBANK', ref series index: 51900
+
+INFO  [2020-04-16 15:11:56] Proceeding test series: 'PKNORLEN', ref series index: 51900
+
+INFO  [2020-04-16 15:11:56] Proceeding test series: 'PKPCARGO', ref series index: 51900
+
+INFO  [2020-04-16 15:11:56] Proceeding test series: 'refSeries', ref series index: 51900
+
+INFO  [2020-04-16 15:11:56] Processing data for part of reference series beggining with index: 51920
+
+INFO  [2020-04-16 15:14:57] Proceeding test series: 'CDPROJEKT', ref series index: 51920
+
+INFO  [2020-04-16 15:14:57] Proceeding test series: 'GRUPAAZOTY', ref series index: 51920
+
+INFO  [2020-04-16 15:14:59] Proceeding test series: 'INGBSK', ref series index: 51920
+
+INFO  [2020-04-16 15:14:59] Proceeding test series: 'MBANK', ref series index: 51920
+
+INFO  [2020-04-16 15:14:59] Proceeding test series: 'PKNORLEN', ref series index: 51920
+
+INFO  [2020-04-16 15:14:59] Proceeding test series: 'PKPCARGO', ref series index: 51920
+
+INFO  [2020-04-16 15:14:59] Proceeding test series: 'refSeries', ref series index: 51920
+
+INFO  [2020-04-16 15:14:59] Processing data for part of reference series beggining with index: 51940
+
+INFO  [2020-04-16 15:17:59] Proceeding test series: 'CDPROJEKT', ref series index: 51940
+
+INFO  [2020-04-16 15:17:59] Proceeding test series: 'GRUPAAZOTY', ref series index: 51940
+
+INFO  [2020-04-16 15:18:00] Proceeding test series: 'INGBSK', ref series index: 51940
+
+INFO  [2020-04-16 15:18:00] Proceeding test series: 'MBANK', ref series index: 51940
+
+INFO  [2020-04-16 15:18:03] Proceeding test series: 'PKNORLEN', ref series index: 51940
+
+INFO  [2020-04-16 15:18:03] Proceeding test series: 'PKPCARGO', ref series index: 51940
+
+INFO  [2020-04-16 15:18:03] Proceeding test series: 'refSeries', ref series index: 51940
+
+INFO  [2020-04-16 15:18:03] Processing data for part of reference series beggining with index: 51960
+
+INFO  [2020-04-16 15:21:04] Proceeding test series: 'CDPROJEKT', ref series index: 51960
+
+INFO  [2020-04-16 15:21:04] Proceeding test series: 'GRUPAAZOTY', ref series index: 51960
+
+INFO  [2020-04-16 15:21:05] Proceeding test series: 'INGBSK', ref series index: 51960
+
+INFO  [2020-04-16 15:21:05] Proceeding test series: 'MBANK', ref series index: 51960
+
+INFO  [2020-04-16 15:21:05] Proceeding test series: 'PKNORLEN', ref series index: 51960
+
+INFO  [2020-04-16 15:21:05] Proceeding test series: 'PKPCARGO', ref series index: 51960
+
+INFO  [2020-04-16 15:21:05] Proceeding test series: 'refSeries', ref series index: 51960
+
+INFO  [2020-04-16 15:21:05] Processing data for part of reference series beggining with index: 51980
+
+INFO  [2020-04-16 15:24:08] Proceeding test series: 'CDPROJEKT', ref series index: 51980
+
+INFO  [2020-04-16 15:24:08] Proceeding test series: 'GRUPAAZOTY', ref series index: 51980
+
+INFO  [2020-04-16 15:24:08] Proceeding test series: 'INGBSK', ref series index: 51980
+
+INFO  [2020-04-16 15:24:08] Proceeding test series: 'MBANK', ref series index: 51980
+
+INFO  [2020-04-16 15:24:08] Proceeding test series: 'PKNORLEN', ref series index: 51980
+
+INFO  [2020-04-16 15:24:08] Proceeding test series: 'PKPCARGO', ref series index: 51980
+
+INFO  [2020-04-16 15:24:08] Proceeding test series: 'refSeries', ref series index: 51980
+
+INFO  [2020-04-16 15:24:08] Switching plan to sequential.
+

@@ -22,8 +22,8 @@ namespace Iterators{
                                  int forecastHorizon,
                                  int subsequenceBreaks){
     
-    if(forecastHorizon < 1)
-      stop("Forecast horizon must be integer greater than 0");
+    if(forecastHorizon < 0)
+      stop("Forecast horizon must be integer equal to or greater than 0");
     
     if(subsequenceBreaks < 1)
       stop("Subsequence breaks must be integer greater than 0");

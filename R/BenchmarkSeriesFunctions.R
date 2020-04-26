@@ -34,3 +34,113 @@ load_benchmark_series <- function(benchmarkDataPath, dimNumbers = NULL){
   return(dataSet)
 }
 
+
+findNNBenchmarkSeries <- function(benchmarkTS,
+                                  refIndex, 
+                                  shapeDTWParams,
+                                  targetDistance = c("raw", "shape"),
+                                  distanceType = c("Dependent", "Independent"),
+                                  normalizationType = c("Unitarization", "Zscore"),
+                                  subsequenceWidth = 4,
+                                  trigonometricTP = NULL){
+  
+  message("Looking for the NN for the series: ", refIndex, "/", nrow(benchmarkTS))
+  
+  targetDistance <- match.arg(targetDistance)
+  distanceType <- match.arg(distanceType)
+  normalizationType <- match.arg(normalizationType)
+  
+  refPerson <- benchmarkTS %>%
+    dplyr::pull(personSym) %>%
+    .[refIndex]
+  
+  testSet <- benchmarkTS %>%
+    dplyr::filter(personSym != refPerson)
+  
+  referenceTibble <- benchmarkTS %>%
+    dplyr::pull(activity_record) %>%
+    .[refIndex]
+  
+  results_set <- purrr::pmap(.l = list(refTS = referenceTibble,
+                                       testTS = testSet$activity_record), 
+                             .f = function(refTS, testTS){
+                               refTS <- as.matrix(refTS)
+                               testTS <- as.matrix(testTS)
+                             
+                               res <- RcppShapeDTW::kNNShapeDTWCpp(referenceSeries = refTS, 
+                                                                   testSeries = testTS, 
+                                                                   forecastHorizon = 0, 
+                                                                   subsequenceWidth = subsequenceWidth, 
+                                                                   subsequenceBreaks = 1, 
+                                                                   shapeDescriptorParams = SDP, 
+                                                                   normalizationType = normalizationType, 
+                                                                   distanceType = distanceType)
+                               })
+  
+  apply_at <- ifelse(targetDistance == "raw", 
+                     "RawSeriesDistanceResults",
+                     "ShapeDescriptorsDistanceResults")
+  
+  distances <- map_depth(.x = results_set, .depth = 1, .f = function(x, td, apply_at){
+    
+    if(targetDistance == "raw"){
+      return(x[[apply_at]]$RawDistance)
+    }else{
+      return(x[[apply_at]]$ShapeDescriptorsDistance)
+    }
+    
+  }, td = targetDistance, apply_at = apply_at)
+  
+  which_dist_min <- which.min(distances)
+  
+  res <- testSet %>%
+    dplyr::select(activitySym, personSym, segmentSym) %>%
+    .[which_dist_min,]
+  
+  return(res)
+}
+
+benchSeriesSelfClassParallel <- function(benchmarkTS, 
+                                         shapeDTWParams,
+                                         targetDistance = c("raw", "shape"),
+                                         distanceType = c("Dependent", "Independent"),
+                                         normalizationType = c("Unitarization", "Zscore"),
+                                         subsequenceWidth = 4,
+                                         trigonometricTP = NULL){
+  
+  targetDistance = match.arg(targetDistance)
+  distanceType = match.arg(distanceType)
+  normalizationType = match.arg(normalizationType)
+  
+  indexesList <- 1:nrow(benchmarkTS)
+  
+  if(class(future::plan())[2] == "sequential"){
+    message("Switching plan to multiprocess.")
+    future::plan(future::multiprocess)
+  }
+  
+  resTS <- benchmarkTS %>%
+    dplyr::mutate(classificationResults = 
+                    {
+                      furrr::future_map_chr(.x = indexesList, 
+                                            function(ind){
+                                              class_res <- findNNBenchmarkSeries(benchmarkTS = benchmarkTS, 
+                                                                                 refIndex = ind, 
+                                                                                 shapeDTWParams = shapeDTWParams, 
+                                                                                 targetDistance = targetDistance, 
+                                                                                 distanceType = distanceType, 
+                                                                                 normalizationType = normalizationType, 
+                                                                                 subsequenceWidth = subsequenceWidth, 
+                                                                                 trigonometricTP = subsequenceWidth)
+                                              return(class_res$activitySym)
+                                            }, 
+                                            .progress = F)
+                    })
+  
+  message("Switching plan to sequential.")
+  future::plan(future::sequential)
+  
+  return(resTS)
+}
+
+

@@ -312,3 +312,43 @@ benchSeriesSelfClassParallel_general <- function(benchmarkTS,
   
   return(resTS)
 }
+
+buildParametersSetBenchmarkSeries <- function(benchmarkTS,
+                                              testSet,
+                                              shapeDTWParams,
+                                              excludeCol = "tsNum",
+                                              targetDistance = "r"){
+  dim_num <- ncol(benchmarkTS$TS[[1]])
+  dim_set <- rje::powerSet(1:dim_num)[-1]
+  
+  all_comb_df <- expand.grid(dim_set = dim_set,
+                             shapeDTWParams = shapeDTWParams,
+                             excludeCol = excludeCol,
+                             targetDistance = targetDistance,
+                             normalizationType = c("Z", "U"),
+                             distanceType = c("D", "I"), 
+                             stringsAsFactors = F)
+  
+  all_comb_df_ts <- all_comb_df %>%
+    mutate(benchmarkTS = purrr::pmap(.l = list(dim_set, 
+                                               list(benchmarkTS)), 
+                                     .f = function(dim_set, bTS){
+                                       bTS <- bTS %>%
+                                         dplyr::mutate(TS = purrr::map(TS, .f = function(x, ds){
+                                           x[,ds]
+                                         }, ds = dim_set))
+                                     }),
+           testSet = purrr::pmap(.l = list(dim_set, 
+                                           list(testSet)), 
+                                 .f = function(dim_set, bTS){
+                                   bTS <- bTS %>%
+                                     dplyr::mutate(TS = purrr::map(TS, .f = function(x, ds){
+                                       x[,ds]
+                                     }, ds = dim_set))
+                                 })) %>%
+    dplyr::select(-c("dim_set"))
+  
+  res <- purrr::transpose(all_comb_df_ts)
+  return(res)
+}
+

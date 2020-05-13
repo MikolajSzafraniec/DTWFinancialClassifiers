@@ -27,10 +27,9 @@ require(log4r)
 refSeries <- FXtickAgg[100000:110000,]
 testSeries <- FXtickAgg[1:50000,]
 
-SDP <- new("ShapeDescriptorParams", Descriptors = "slopeDescriptor",
-           "Additional_params" = list("slopeWindow" = 3L))
+SDP <- new("ShapeDescriptorParams", Descriptors = "RawSubsequence")
 
-SDP_comp <- new("ShapeDescriptorParams", Type = "compound", 
+SDP <- new("ShapeDescriptorParams", Type = "compound", 
                 Descriptors = c("PAADescriptor", "slopeDescriptor"),
                 "Additional_params" = list("slopeWindow" = 3L, "PAAWindow" = 3L,
                                            Weights = c(1, 1)))
@@ -72,11 +71,12 @@ future::plan(future::sequential)
 
 SDP_full <- new("ShapeDescriptorParams", 
                 Type = "compound",
-                Descriptors = c("derivativeDescriptor",
+                Descriptors = c("PAADescriptor",
                                 "slopeDescriptor"),
                 Additional_params = list(
                   Weights = c(1, 1),
-                  slopeWindow = 3L
+                  slopeWindow = 3L,
+                  PAAWindow = 3L
                 ))
 
 test_res <- RknnShapeDTWParallel(refSeries = FX_tick_agg$`EURUSD-2020-02`[90000:95000,],
@@ -171,3 +171,78 @@ tst_filtered <- test_res_GPW %>%
   filter(testReturnClass != "Flat_move") 
 
 table(tst_filtered$refReturnClass, tst_filtered$testReturnClass)
+
+
+benchStart <- Sys.time()
+tstResBench <- benchSeriesSelfClassParallel(benchmarkTS = benchmarkSeriestst, 
+                                            shapeDTWParams = SDP_full, 
+                                            distanceType = "I", 
+                                            normalizationType = "Z")
+benchEnd <- Sys.time()
+
+table(tstResBench$activitySym, tstResBench$classificationResults)
+
+PCAtst <- prcomp(benchmarkSeriestst$activity_record[[1]], center = T,
+                 scale. = T)
+
+benchmarkSeriesPCA <- benchmarkSeriestst %>%
+  dplyr::mutate(activity_record = purrr::map(activity_record, function(x){
+    PCAres <- prcomp(x, center = T, scale. = T)
+    as_tibble(PCAres$x[,1:30])
+  }))
+benchmarkSeriesPCA$activity_record[[1]]
+
+
+
+benchStart <- Sys.time()
+tstResBench <- benchSeriesSelfClassParallel(benchmarkTS = benchmarkSeriesPCA, 
+                                            shapeDTWParams = SDP, 
+                                            distanceType = "I", 
+                                            normalizationType = "Z", 
+                                            subsequenceWidth = 0)
+benchEnd <- Sys.time()
+benchEnd - benchStart
+
+filesPaths <- paste0("Data/BenchmarkSeries/MultivariateTS/Multivariate_arff/ArticularyWordRecognition/", 
+                    list.files(path = "Data/BenchmarkSeries/MultivariateTS/Multivariate_arff/ArticularyWordRecognition/",
+                         pattern = "[0-9]{,1}_TEST"))
+
+filesPathsTrain <- paste0("Data/BenchmarkSeries/MultivariateTS/Multivariate_arff/", 
+                          list.files(path = "Data/BenchmarkSeries/MultivariateTS/Multivariate_arff/ERing/",
+                                     pattern = "[0-9]{,1}_TRAIN"))
+
+benchmarkTS <- load_benchmark_series_MD_dataset(filesPaths = filesPaths)
+trainTS <- load_benchmark_series_MD_dataset(filesPaths = filesPathsTrain)
+
+
+
+findNNBenchmarkSeries_general(benchmarkTS = benchmarkTS, 
+                              refIndex = 1, 
+                              excludeCol = "tsNum", 
+                              shapeDTWParams = SDP, 
+                              normalizationType = "Z")
+
+
+SDP_simple <- new("ShapeDescriptorParams", Descriptors = "RawSubsequence")
+
+test_ring <- benchSeriesSelfClassParallel_general(benchmarkTS = benchmarkTS, 
+                                                  shapeDTWParams = SDP, 
+                                                  excludeCol = "tsNum",
+                                                  normalizationType = "Z",
+                                                  distanceType = "D",
+                                                  targetDistance = "r")
+
+test_ring_normal_DTW <- benchSeriesSelfClassParallel_general(benchmarkTS = benchmarkTS, 
+                                                  shapeDTWParams = SDP_simple,
+                                                  excludeCol = "tsNum",
+                                                  normalizationType = "Z", 
+                                                  subsequenceWidth = 0, 
+                                                  distanceType = "D", 
+                                                  targetDistance = "r")
+
+sum(as.integer(test_ring$ClassInd) == test_ring$classificationResults) / nrow(test_ring)
+sum(as.integer(test_ring_normal_DTW$ClassInd) == test_ring_normal_DTW$classificationResults) / nrow(test_ring_normal_DTW)
+
+
+plot(benchmarkTS$TS[[1]]$dim_3, type = "l")
+lines(benchmarkTS$TS[[2]]$dim_3, col = "red")

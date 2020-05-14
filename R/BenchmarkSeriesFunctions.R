@@ -274,7 +274,8 @@ benchSeriesSelfClassParallel_general <- function(benchmarkTS,
                                                  distanceType = c("Dependent", "Independent"),
                                                  normalizationType = c("Unitarization", "Zscore"),
                                                  subsequenceWidth = 4,
-                                                 trigonometricTP = NULL){
+                                                 trigonometricTP = NULL,
+                                                 switchToSequential = T){
   
   targetDistance = match.arg(targetDistance)
   distanceType = match.arg(distanceType)
@@ -307,8 +308,10 @@ benchSeriesSelfClassParallel_general <- function(benchmarkTS,
                             .progress = T)
     })
   
-  message("Switching plan to sequential.")
-  future::plan(future::sequential)
+  if(switchToSequential){
+    message("Switching plan to sequential.")
+    future::plan(future::sequential)
+  }
   
   return(resTS)
 }
@@ -329,6 +332,20 @@ buildParametersSetBenchmarkSeries <- function(benchmarkTS,
                              distanceType = c("D", "I"), 
                              stringsAsFactors = F)
   
+  specification <- purrr::pmap(all_comb_df, .f = function(dim_set, 
+                                                          shapeDTWParams, 
+                                                          excludeCol,
+                                                          targetDistance,
+                                                          normalizationType,
+                                                          distanceType){
+    res <- paste("dims", "_", paste(dim_set, sep = "_", collapse = "_"), ".",
+                 "norm", "_", normalizationType, ".",
+                 "dist_matrix_type", "_", distanceType, ".",
+                 "dtw_type", "_", shapeDTWParams@Type, ".",
+                 "targetDist", "_", targetDistance, sep = "")
+    return(res)
+  })
+
   all_comb_df_ts <- all_comb_df %>%
     mutate(benchmarkTS = purrr::pmap(.l = list(dim_set, 
                                                list(benchmarkTS)), 
@@ -349,6 +366,28 @@ buildParametersSetBenchmarkSeries <- function(benchmarkTS,
     dplyr::select(-c("dim_set"))
   
   res <- purrr::transpose(all_comb_df_ts)
+  names(res) <- unlist(specification)
   return(res)
 }
 
+parseAccuracyResToTableBenchmark <- function(accRes){
+  accResNames <- names(accRes)
+  accResNamesSplitted <- stringr::str_split(string = accResNames, 
+                                            pattern = "\\.", simplify = T)
+  colnames(accResNamesSplitted) <- c("Dims",
+                                     "NormalizationType",
+                                     "DistMatrixType",
+                                     "DTWType",
+                                     "targetDist")
+  accResTibble <- as_tibble(accResNamesSplitted, stringsAsFactors = F) %>%
+    mutate(accuracyRes = unlist(accRes))
+  
+  accResTibblePivoted <- accResTibble %>%
+    tidyr::pivot_wider(names_from = c("NormalizationType",
+                                      "DistMatrixType",
+                                      "DTWType",
+                                      "targetDist"), 
+                       values_from = "accuracyRes")
+  
+  return(accResTibblePivoted)
+}

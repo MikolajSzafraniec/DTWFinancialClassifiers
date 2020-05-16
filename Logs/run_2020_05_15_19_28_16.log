@@ -1,0 +1,23 @@
+INFO  [2020-05-15 19:28:16] Processing data for part of reference series beggining with index: 1
+
+INFO  [2020-05-15 19:28:20] Proceeding test series: 'a', ref series index: 1
+
+INFO  [2020-05-15 19:28:20] Proceeding test series: 'b', ref series index: 1
+
+INFO  [2020-05-15 19:28:20] Proceeding test series: 'c', ref series index: 1
+
+INFO  [2020-05-15 19:28:20] Proceeding test series: 'd', ref series index: 1
+
+INFO  [2020-05-15 19:28:20] Processing data for part of reference series beggining with index: 2
+
+INFO  [2020-05-15 19:28:24] Proceeding test series: 'a', ref series index: 2
+
+INFO  [2020-05-15 19:28:24] Proceeding test series: 'b', ref series index: 2
+
+INFO  [2020-05-15 19:28:24] Proceeding test series: 'c', ref series index: 2
+
+INFO  [2020-05-15 19:28:24] Proceeding test series: 'd', ref series index: 2
+
+ERROR [2020-05-15 19:28:24] Error: Error in .subset(x, i, j, drop = FALSE) : subscript out of bounds
+
+

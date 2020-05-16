@@ -1,0 +1,6 @@
+INFO  [2020-05-15 18:04:55] Switching plan to multiprocess.
+
+INFO  [2020-05-15 18:04:58] Processing data for part of reference series beggining with index: 1
+
+ERROR [2020-05-15 18:04:58] Error in map_depth(.x = results_set, .depth = 1, .f = function(x, td, : could not find function "map_depth"
+

@@ -1,0 +1,6 @@
+INFO  [2020-05-15 19:25:03] Processing data for part of reference series beggining with index: 1
+
+INFO  [2020-05-15 19:25:05] Proceeding test series: 'a', ref series index: 1
+
+ERROR [2020-05-15 19:25:05] Error in RcppShapeDTW::kNNShapeDTWCpp(referenceSeries = refSeriesSubset@.Data, : nie znaleziono obiektu 'testSeriesSubset'
+

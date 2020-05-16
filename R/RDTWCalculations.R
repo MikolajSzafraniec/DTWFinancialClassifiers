@@ -29,10 +29,10 @@ score_return <- function(ts, r, sd_border = 1){
 
 
 RknnShapeDTW <- function(refSeries,
-                         testSeries,
+                         learnSeries,
                          refSeriesStart, #Integer index of ts
                          shapeDTWParams,
-                         testSeriesName = "testSeries",
+                         learnSeriesName = "learnSeries",
                          distanceType = c("Dependent", "Independent"),
                          normalizationType = c("Unitarization", "Zscore"),
                          refSeriesLength = 100,
@@ -41,19 +41,19 @@ RknnShapeDTW <- function(refSeries,
                          trigonometricTP = NULL,
                          subsequenceBreaks = 10){
   
-  msg <- paste0("Proceeding test series: \'", testSeriesName, 
+  msg <- paste0("Proceeding test series: \'", learnSeriesName, 
                 "\', ref series index: ", refSeriesStart)
   message(msg)
   
   refSeriesStartTime <- time(refSeries)[refSeriesStart]
   refSeriesEndTime <- time(refSeries)[refSeriesStart + refSeriesLength - 1]
-  testSeriesEndTime <- time(refSeries)[refSeriesStart]
+  learnSeriesEndTime <- time(refSeries)[refSeriesStart]
   
   refSeriesSubset <- window(refSeries, start = refSeriesStartTime, end = refSeriesEndTime)
-  testSeriesSubset <- window(testSeries, start = -Inf, end = testSeriesEndTime)
+  learnSeriesSubset <- window(learnSeries, start = -Inf, end = learnSeriesEndTime)
   
   res <- RcppShapeDTW::kNNShapeDTWCpp(referenceSeries = refSeriesSubset@.Data, 
-                                      testSeries = testSeriesSubset@.Data, 
+                                      testSeries = learnSeriesSubset@.Data, 
                                       forecastHorizon = forecastHorizon, 
                                       subsequenceWidth = subsequenceWidth, 
                                       subsequenceBreaks = subsequenceBreaks, 
@@ -66,7 +66,7 @@ RknnShapeDTW <- function(refSeries,
 }
 
 RknnShapeDTWParallel <- function(refSeries,
-                                 testSeries, # List of time series
+                                 learnSeries, # List of time series
                                  refSeriesStart, #Integer index of ts
                                  shapeDTWParams,
                                  targetDistance = c("raw", "shapeDesc"),
@@ -84,11 +84,11 @@ RknnShapeDTWParallel <- function(refSeries,
   distanceType <- match.arg(distanceType)
   normalizationType <- match.arg(normalizationType)
   
-  tsListLen <- length(testSeries)
+  tsListLen <- length(learnSeries)
 
   if(includeRefSeries){
-    testSeries[[tsListLen+1]] <- refSeries
-    names(testSeries)[tsListLen+1] <- "refSeries"
+    learnSeries[[tsListLen+1]] <- refSeries
+    names(learnSeries)[tsListLen+1] <- "refSeries"
   }
   
   if(class(future::plan())[2] == "sequential"){
@@ -98,10 +98,10 @@ RknnShapeDTWParallel <- function(refSeries,
   
   results_set <- furrr::future_pmap(
     list(refSeries = list(refSeries),
-         testSeries = testSeries,
-         n = names(testSeries)),
-    ~RknnShapeDTW(refSeries = ..1, testSeries = ..2, 
-                  testSeriesName = ..3, refSeriesStart = refSeriesStart, 
+         learnSeries = learnSeries,
+         n = names(learnSeries)),
+    ~RknnShapeDTW(refSeries = ..1, learnSeries = ..2, 
+                  learnSeriesName = ..3, refSeriesStart = refSeriesStart, 
                   shapeDTWParams = shapeDTWParams, 
                   refSeriesLength = refSeriesLength, forecastHorizon = forecastHorizon, 
                   subsequenceWidth = subsequenceWidth, trigonometricTP = trigonometricTP, 
@@ -135,67 +135,67 @@ RknnShapeDTWParallel <- function(refSeries,
     dtw_res <- results_set[[which_dist_min]]$ShapeDescriptorsDistanceResults
   }
   
-  res_name <- names(testSeries)[which_dist_min]
+  res_name <- names(learnSeries)[which_dist_min]
   
   fun_to_apply <- ifelse(normalizationType == "Unitarization",
                          Unitarization,
                          Zscore)
   
-  nnSeries <- testSeries[[which_dist_min]]
+  nnSeries <- learnSeries[[which_dist_min]]
   
   # Defining last indicies of time series subsets
   refSeriesLastIdx <- refSeriesStart+refSeriesLength-1
-  testSeriesLastIdx <- dtw_res$bestSubsequenceIdx+refSeriesLength-1
+  learnSeriesLastIdx <- dtw_res$bestSubsequenceIdx+refSeriesLength-1
   
   refSeriesFrcstHorizonLastIdx <- refSeriesStart+refSeriesLength+forecastHorizon-1
-  testSeriesFrctHorizonLastIdx <- dtw_res$bestSubsequenceIdx+refSeriesLength+forecastHorizon-1
+  learnSeriesFrctHorizonLastIdx <- dtw_res$bestSubsequenceIdx+refSeriesLength+forecastHorizon-1
   
   # Retrieving subseries from original series
   refSeriesIdx <- refSeriesStart:refSeriesLastIdx
   #refSeriesSubset <- refSeries@.Data[refSeriesIdx,]
   refSeriesSubset <- refSeries[refSeriesIdx,]
   
-  testSeriesIdx <- (dtw_res$bestSubsequenceIdx):(testSeriesLastIdx)
-  #testSeriesSubset <- nnSeries@.Data[testSeriesIdx,]
-  testSeriesSubset <- nnSeries[testSeriesIdx,]
+  learnSeriesIdx <- (dtw_res$bestSubsequenceIdx):(learnSeriesLastIdx)
+  #learnSeriesSubset <- nnSeries@.Data[learnSeriesIdx,]
+  learnSeriesSubset <- nnSeries[learnSeriesIdx,]
   
   # Retrieving validation results
   refSeriesIdxWithForecastHorizon <- refSeriesStart:refSeriesFrcstHorizonLastIdx
   refSeriesSubsetWithFrcstHorizon <- refSeries[refSeriesIdxWithForecastHorizon,]
   
-  testSeriesIdxWithForecastHorizon <- (dtw_res$bestSubsequenceIdx):testSeriesFrctHorizonLastIdx
-  testSeriesSubsetWithForecastHorizon <- nnSeries[testSeriesIdxWithForecastHorizon,]
+  learnSeriesIdxWithForecastHorizon <- (dtw_res$bestSubsequenceIdx):learnSeriesFrctHorizonLastIdx
+  learnSeriesSubsetWithForecastHorizon <- nnSeries[learnSeriesIdxWithForecastHorizon,]
   
   refSeriesReturn <- log(refSeries@.Data[refSeriesFrcstHorizonLastIdx,1] / 
                            refSeries@.Data[refSeriesLastIdx,1])
-  testSeriesReturn <- log(nnSeries@.Data[testSeriesFrctHorizonLastIdx,1]/
-                           nnSeries@.Data[testSeriesLastIdx,1])
+  learnSeriesReturn <- log(nnSeries@.Data[learnSeriesFrctHorizonLastIdx,1]/
+                           nnSeries@.Data[learnSeriesLastIdx,1])
   
   refValResults <- score_return(ts = refSeriesSubset[,1], r = refSeriesReturn, sd_border = sd_border)
-  testValResults <- score_return(ts = testSeriesSubset[,1], r = testSeriesReturn, sd_border = sd_border)
+  testValResults <- score_return(ts = learnSeriesSubset[,1], r = learnSeriesReturn, sd_border = sd_border)
   
   refSeriesSubsetNorm <- apply(refSeriesSubset, 2, fun_to_apply)
-  testSeriesSubsetNorm <- apply(testSeriesSubset, 2, fun_to_apply)
+  learnSeriesSubsetNorm <- apply(learnSeriesSubset, 2, fun_to_apply)
   refSeriesSubsetWithFrcstHorizonNorm <- apply(refSeriesSubsetWithFrcstHorizon, 2, fun_to_apply)
-  testSeriesSubsetWithForecastHorizonNorm <- apply(testSeriesSubsetWithForecastHorizon, 2, fun_to_apply)
+  learnSeriesSubsetWithForecastHorizonNorm <- apply(learnSeriesSubsetWithForecastHorizon, 2, fun_to_apply)
   
   final_results <- list(
     nn_name = res_name,
     dtw_results = dtw_res,
     refSeries = refSeriesSubset,
-    testSeries = testSeriesSubset,
+    learnSeries = learnSeriesSubset,
     refSeriesNorm = refSeriesSubsetNorm,
-    testSeriesNorm = testSeriesSubsetNorm,
+    learnSeriesNorm = learnSeriesSubsetNorm,
     validation_results = list(
       distanceType = distanceType,
       refSeriesLength = refSeriesLength,
       forecastHorizon = forecastHorizon,
       refSeriesFull = refSeriesSubsetWithFrcstHorizon,
-      testSeriesFull = testSeriesSubsetWithForecastHorizon,
+      learnSeriesFull = learnSeriesSubsetWithForecastHorizon,
       refSeriesFullNorm = refSeriesSubsetWithFrcstHorizonNorm,
-      testSeriesFullNorm = testSeriesSubsetWithForecastHorizonNorm,
+      learnSeriesFullNorm = learnSeriesSubsetWithForecastHorizonNorm,
       refSeriesReturn = refSeriesReturn,
-      testSeriesReturn = testSeriesReturn,
+      learnSeriesReturn = learnSeriesReturn,
       refReturnClass = refValResults$r_class,
       testReturnClass = testValResults$r_class,
       refTsSD = refValResults$ts_sd,
@@ -237,24 +237,24 @@ plot.DTWResults <- function(dtwResults, lift = 1, includeFrcstPart = FALSE, wpCo
   
   for(i in 1:n_dim){
     
-    df_names <- c("N", "refSeries", "testSeries")
+    df_names <- c("N", "refSeries", "learnSeries")
     
     if(includeFrcstPart){
       data_list[[i]] <- data.frame(1:nrow(dtwResults$validation_results$refSeriesFullNorm@.Data),
                                    dtwResults$validation_results$refSeriesFullNorm@.Data[,i] + lift,
-                                   dtwResults$validation_results$testSeriesFullNorm@.Data[,i])
+                                   dtwResults$validation_results$learnSeriesFullNorm@.Data[,i])
       colnames(data_list[[i]]) <- df_names
     }else{
       data_list[[i]] <- data.frame(1:nrow(dtwResults$refSeriesNorm@.Data),
                                    dtwResults$refSeriesNorm@.Data[,i] + lift,
-                                   dtwResults$testSeriesNorm@.Data[,i])
+                                   dtwResults$learnSeriesNorm@.Data[,i])
       colnames(data_list[[i]]) <- df_names
     }
   }
   
   data_list_pivoted <- purrr::map(.x = data_list, .f = function(df){
     df <- df %>%
-      tidyr::pivot_longer(cols = c("refSeries", "testSeries"), names_to = "ts",
+      tidyr::pivot_longer(cols = c("refSeries", "learnSeries"), names_to = "ts",
                           values_to = "val")
     return(df)
   })
@@ -280,7 +280,7 @@ plot.DTWResults <- function(dtwResults, lift = 1, includeFrcstPart = FALSE, wpCo
                              pl <- add_matching_lines(plotToUpdate = pl, 
                                                        warpingMatrix = wp, 
                                                        tsRef = df$refSeries, 
-                                                       tsTest = df$testSeries, 
+                                                       tsTest = df$learnSeries, 
                                                        col = col)
                              
                              return(pl) 
@@ -299,7 +299,7 @@ plot.DTWResults <- function(dtwResults, lift = 1, includeFrcstPart = FALSE, wpCo
                                     geom_hline(yintercept = df$refSeries[refSeriesLength],
                                                linetype = "dashed",
                                                color = "red") +
-                                    geom_hline(yintercept = df$testSeries[refSeriesLength],
+                                    geom_hline(yintercept = df$learnSeries[refSeriesLength],
                                                linetype = "dashed",
                                                color = "blue")
                                   return(pl)
@@ -318,7 +318,7 @@ get_current_timestamp <- function(format = "%Y_%m_%d_%H_%M_%S", tz = ""){
 # This function runs 1NN shape DTW for multiple starting points of reference
 # series and write results to the data frame
 RunMultipleShapeDTWkNN <- function(refSeries,
-                                   testSeries,
+                                   learnSeries,
                                    indicesVector,
                                    shapeDTWParams,
                                    logPath = "Logs",
@@ -332,7 +332,8 @@ RunMultipleShapeDTWkNN <- function(refSeries,
                                    subsequenceBreaks = 10,
                                    includeRefSeries = TRUE,
                                    sd_border = 1,
-                                   loggingThreshold = "DEBUG"){
+                                   loggingThreshold = "DEBUG",
+                                   switchBackToSequential = T){
   
   # Matching arguments with multiple possible values
   targetDistance <- match.arg(targetDistance)
@@ -342,7 +343,7 @@ RunMultipleShapeDTWkNN <- function(refSeries,
   firstIndex <- indicesVector[1]
   refSeriesTimeBeggining <- time(refSeries)[firstIndex]
   
-  availableRecords <- purrr::map_lgl(.x = testSeries, function(ts, timeBegin, recordBorder){
+  availableRecords <- purrr::map_lgl(.x = learnSeries, function(ts, timeBegin, recordBorder){
     
     ar <- nrow(window(ts, start = -Inf, end = timeBegin))
     res <- ifelse(ar < recordBorder, F, T)
@@ -351,7 +352,7 @@ RunMultipleShapeDTWkNN <- function(refSeries,
   }, timeBegin = refSeriesTimeBeggining, recordBorder = refSeriesLength + forecastHorizon)
   
   # Filtering set of test series
-  testSeries <- testSeries[availableRecords]
+  learnSeries <- learnSeries[availableRecords]
   
   # Testing if reference series should really be included too
   if(includeRefSeries){
@@ -382,8 +383,8 @@ RunMultipleShapeDTWkNN <- function(refSeries,
           message(paste0("Processing data for part of reference series beggining with index: ", idx))
           
           kNNResults <- RknnShapeDTWParallel(refSeries = refSeries, 
-                                             testSeries = testSeries, 
-                                             refSeriesStart = idx, 
+                                             learnSeries = learnSeries, 
+                                             refSeriesStart = idx,
                                              shapeDTWParams = shapeDTWParams, 
                                              targetDistance = targetDistance, 
                                              distanceType = distanceType, 
@@ -401,7 +402,7 @@ RunMultipleShapeDTWkNN <- function(refSeries,
             "refReturnClass" = as.character(kNNResults$validation_results$refReturnClass),
             "testReturnClass" = as.character(kNNResults$validation_results$testReturnClass),
             "refSeriesReturn" = kNNResults$validation_results$refSeriesReturn,
-            "testSeriesReturn" = kNNResults$validation_results$testSeriesReturn,
+            "learnSeriesReturn" = kNNResults$validation_results$learnSeriesReturn,
             "refTsSD" = kNNResults$validation_results$refTsSD,
             "testTsSD" = kNNResults$validation_results$testTsSD,
             stringsAsFactors = F
@@ -410,8 +411,10 @@ RunMultipleShapeDTWkNN <- function(refSeries,
           return(res)
         })
       
-      message("Switching plan to sequential.")
-      future::plan(future::sequential)
+      if(switchBackToSequential){
+        message("Switching plan to sequential.")
+        future::plan(future::sequential)  
+      }
       
       }, 
       error = function(e){
@@ -433,3 +436,17 @@ RunMultipleShapeDTWkNN <- function(refSeries,
   return(res)
 }
 
+chooseRandomTestLearnSets <- function(ts_list,
+                                      time_border,
+                                      learn_part_length = 100,
+                                      forecast_part_length = 50,
+                                      learn_set_n = 100,
+                                      test_set_n = 100){
+  
+}
+
+
+class(max(time(FXtickAgg_Jan2020_d1min$`AUDJPY-2020-01`)))
+
+as.timeDate(as.POSIXct("2020-01-15 01:00:00", tz = "GMT"))
+timeDate("2020-01-15 01:00:00", format = "%Y-%m-%d %H:%M:%S", zone = "GMT")

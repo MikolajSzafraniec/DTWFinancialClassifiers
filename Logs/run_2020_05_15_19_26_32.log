@@ -1,0 +1,14 @@
+INFO  [2020-05-15 19:26:32] Switching plan to multiprocess.
+
+INFO  [2020-05-15 19:26:35] Processing data for part of reference series beggining with index: 1
+
+INFO  [2020-05-15 19:26:41] Proceeding test series: 'a', ref series index: 1
+
+INFO  [2020-05-15 19:26:41] Proceeding test series: 'b', ref series index: 1
+
+INFO  [2020-05-15 19:26:42] Proceeding test series: 'c', ref series index: 1
+
+INFO  [2020-05-15 19:26:42] Proceeding test series: 'd', ref series index: 1
+
+INFO  [2020-05-15 19:26:42] Switching plan to sequential.
+

@@ -1,0 +1,12 @@
+INFO  [2020-05-15 19:25:32] Processing data for part of reference series beggining with index: 1
+
+INFO  [2020-05-15 19:25:33] Proceeding test series: 'a', ref series index: 1
+
+INFO  [2020-05-15 19:25:33] Proceeding test series: 'b', ref series index: 1
+
+INFO  [2020-05-15 19:25:33] Proceeding test series: 'c', ref series index: 1
+
+INFO  [2020-05-15 19:25:33] Proceeding test series: 'd', ref series index: 1
+
+INFO  [2020-05-15 19:25:33] Switching plan to sequential.
+

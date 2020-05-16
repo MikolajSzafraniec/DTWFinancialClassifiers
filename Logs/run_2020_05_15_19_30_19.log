@@ -1,0 +1,102 @@
+INFO  [2020-05-15 19:30:19] Processing data for part of reference series beggining with index: 1
+
+INFO  [2020-05-15 19:30:24] Proceeding test series: 'a', ref series index: 1
+
+INFO  [2020-05-15 19:30:25] Proceeding test series: 'b', ref series index: 1
+
+INFO  [2020-05-15 19:30:25] Proceeding test series: 'c', ref series index: 1
+
+INFO  [2020-05-15 19:30:25] Proceeding test series: 'd', ref series index: 1
+
+INFO  [2020-05-15 19:30:26] Processing data for part of reference series beggining with index: 2
+
+INFO  [2020-05-15 19:30:32] Proceeding test series: 'a', ref series index: 2
+
+INFO  [2020-05-15 19:30:32] Proceeding test series: 'b', ref series index: 2
+
+INFO  [2020-05-15 19:30:32] Proceeding test series: 'c', ref series index: 2
+
+INFO  [2020-05-15 19:30:32] Proceeding test series: 'd', ref series index: 2
+
+INFO  [2020-05-15 19:30:32] Processing data for part of reference series beggining with index: 3
+
+INFO  [2020-05-15 19:30:36] Proceeding test series: 'a', ref series index: 3
+
+INFO  [2020-05-15 19:30:37] Proceeding test series: 'b', ref series index: 3
+
+INFO  [2020-05-15 19:30:38] Proceeding test series: 'c', ref series index: 3
+
+INFO  [2020-05-15 19:30:38] Proceeding test series: 'd', ref series index: 3
+
+INFO  [2020-05-15 19:30:38] Processing data for part of reference series beggining with index: 4
+
+INFO  [2020-05-15 19:30:43] Proceeding test series: 'a', ref series index: 4
+
+INFO  [2020-05-15 19:30:43] Proceeding test series: 'b', ref series index: 4
+
+INFO  [2020-05-15 19:30:43] Proceeding test series: 'c', ref series index: 4
+
+INFO  [2020-05-15 19:30:43] Proceeding test series: 'd', ref series index: 4
+
+INFO  [2020-05-15 19:30:43] Processing data for part of reference series beggining with index: 5
+
+INFO  [2020-05-15 19:30:48] Proceeding test series: 'a', ref series index: 5
+
+INFO  [2020-05-15 19:30:49] Proceeding test series: 'b', ref series index: 5
+
+INFO  [2020-05-15 19:30:49] Proceeding test series: 'c', ref series index: 5
+
+INFO  [2020-05-15 19:30:49] Proceeding test series: 'd', ref series index: 5
+
+INFO  [2020-05-15 19:30:49] Processing data for part of reference series beggining with index: 6
+
+INFO  [2020-05-15 19:30:53] Proceeding test series: 'a', ref series index: 6
+
+INFO  [2020-05-15 19:30:54] Proceeding test series: 'b', ref series index: 6
+
+INFO  [2020-05-15 19:30:54] Proceeding test series: 'c', ref series index: 6
+
+INFO  [2020-05-15 19:30:54] Proceeding test series: 'd', ref series index: 6
+
+INFO  [2020-05-15 19:30:55] Processing data for part of reference series beggining with index: 7
+
+INFO  [2020-05-15 19:30:59] Proceeding test series: 'a', ref series index: 7
+
+INFO  [2020-05-15 19:31:00] Proceeding test series: 'b', ref series index: 7
+
+INFO  [2020-05-15 19:31:00] Proceeding test series: 'c', ref series index: 7
+
+INFO  [2020-05-15 19:31:00] Proceeding test series: 'd', ref series index: 7
+
+INFO  [2020-05-15 19:31:00] Processing data for part of reference series beggining with index: 8
+
+INFO  [2020-05-15 19:31:05] Proceeding test series: 'a', ref series index: 8
+
+INFO  [2020-05-15 19:31:06] Proceeding test series: 'b', ref series index: 8
+
+INFO  [2020-05-15 19:31:06] Proceeding test series: 'c', ref series index: 8
+
+INFO  [2020-05-15 19:31:06] Proceeding test series: 'd', ref series index: 8
+
+INFO  [2020-05-15 19:31:06] Processing data for part of reference series beggining with index: 9
+
+INFO  [2020-05-15 19:31:10] Proceeding test series: 'a', ref series index: 9
+
+INFO  [2020-05-15 19:31:11] Proceeding test series: 'b', ref series index: 9
+
+INFO  [2020-05-15 19:31:12] Proceeding test series: 'c', ref series index: 9
+
+INFO  [2020-05-15 19:31:12] Proceeding test series: 'd', ref series index: 9
+
+INFO  [2020-05-15 19:31:12] Processing data for part of reference series beggining with index: 10
+
+INFO  [2020-05-15 19:31:17] Proceeding test series: 'a', ref series index: 10
+
+INFO  [2020-05-15 19:31:18] Proceeding test series: 'b', ref series index: 10
+
+INFO  [2020-05-15 19:31:18] Proceeding test series: 'c', ref series index: 10
+
+INFO  [2020-05-15 19:31:18] Proceeding test series: 'd', ref series index: 10
+
+INFO  [2020-05-15 19:31:18] Switching plan to sequential.
+

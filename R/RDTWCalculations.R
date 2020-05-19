@@ -443,10 +443,118 @@ chooseRandomTestLearnSets <- function(ts_list,
                                       learn_set_n = 100,
                                       test_set_n = 100){
   
+  ts_list_n <- length(ts_list)
+  
+  learning_part_to_choose <- purrr::map(ts_list, 
+                                        .f = function(x_ts){
+                                          res <- window(x_ts, start = -Inf, end = time_border)
+                                          return(res)
+                                        })
+  
+  testing_part_to_choose <- purrr::map(ts_list, 
+                                       .f = function(x_ts){
+                                         res <- window(x_ts, start = time_border, end = Inf)
+                                         return(res)
+                                       })
+  
+  learning_part_nrs <- purrr::map_dbl(learning_part_to_choose, 
+                                      .f = function(x) {nrow(x)})
+  
+  testing_part_nrs <- purrr::map_dbl(testing_part_to_choose, 
+                                     .f = function(x) {nrow(x)})
+  
+  learn_frcst_set_whole_length <- (learn_part_length + forecast_part_length - 1)
+  learning_part_max_begins <- learning_part_nrs - learn_frcst_set_whole_length
+  testing_part_max_begins <- testing_part_nrs - learn_frcst_set_whole_length
+  
+  learn_series_sample <- sample(1:ts_list_n, size = learn_set_n, replace = T)
+  test_series_sample <- sample(1:ts_list_n, size = test_set_n, replace = T)
+
+  learn_series_indexes <- purrr::imap(table(learn_series_sample),
+                                      function(n, i, max_begs){
+                                        i <- as.numeric(i)
+                                        max_beg <- max_begs[[i]]
+                                        idxs <- sample(1:max_beg, 
+                                                       size = n, 
+                                                       replace = F)
+                                        return(idxs)
+                                      }, max_begs = learning_part_max_begins)
+  
+  learn_series_indexes_tbl <- do.call(rbind, 
+                                      purrr::imap(.x = learn_series_indexes, 
+                                              .f = function(start_idx, i_ts){
+                                                i_ts <- rep(as.numeric(i_ts), times = length(start_idx))
+                                                res <- cbind(i_ts, start_idx)
+                                                return(res)
+                                              }))
+  
+  test_series_indexes <- purrr::imap(table(test_series_sample),
+                                      function(n, i, max_begs){
+                                        i <- as.numeric(i)
+                                        max_beg <- max_begs[[i]]
+                                        idxs <- sample(1:max_beg, 
+                                                       size = n, 
+                                                       replace = F)
+                                        return(idxs)
+                                      }, max_begs = learning_part_max_begins)
+  
+  test_series_indexes_tbl <- do.call(rbind, 
+                                      purrr::imap(.x = test_series_indexes, 
+                                                  .f = function(start_idx, i_ts){
+                                                    i_ts <- rep(as.numeric(i_ts), times = length(start_idx))
+                                                    res <- cbind(i_ts, start_idx)
+                                                    return(res)
+                                                  }))
+  
+  learn_series_res_list <- purrr::pmap(list(ts_ind = as.list(learn_series_indexes_tbl[,1]),
+                                            start_ind = as.list(learn_series_indexes_tbl[,2]),
+                                            ts_set = list(learning_part_to_choose)), 
+                                       .f = function(ts_ind, start_ind, ts_set, sample_len){
+                                         sample_indxs <- start_ind:(start_ind+sample_len-1)
+                                         res <- ts_set[[ts_ind]][sample_indxs,]
+                                         return(res)
+                                       }, sample_len = learn_part_length + forecast_part_length)
+  names(learn_series_res_list) <- paste(names(learning_part_to_choose)[learn_series_indexes_tbl[,1]],
+                                        learn_series_indexes_tbl[,2], sep = "_")
+  
+  test_series_res_list <- purrr::pmap(list(ts_ind = as.list(test_series_indexes_tbl[,1]),
+                                           start_ind = as.list(test_series_indexes_tbl[,2]),
+                                           ts_set = list(testing_part_to_choose)), 
+                                      .f = function(ts_ind, start_ind, ts_set, sample_len){
+                                        sample_indxs <- start_ind:(start_ind+sample_len-1)
+                                        res <- ts_set[[ts_ind]][sample_indxs,]
+                                        return(res)
+                                      }, sample_len = learn_part_length + forecast_part_length)
+  names(test_series_res_list) <- paste(names(testing_part_to_choose)[test_series_indexes_tbl[,1]],
+                                       test_series_indexes_tbl[,2], sep = "_")
+  
+  res <- list(learn_series_list = learn_series_res_list,
+              test_series_list = test_series_res_list)
+  
+  return(res)
 }
 
+FXtickAgg_Jan2020_d1min_1_dim <- purrr::map(.x = FXtickAgg_Jan2020_d1min,
+                                            function(x){
+                                              x[,1]
+                                            })
 
-class(max(time(FXtickAgg_Jan2020_d1min$`AUDJPY-2020-01`)))
+sample_first <- chooseRandomTestLearnSets(ts_list = FXtickAgg_Jan2020_d1min_1_dim, 
+                                          time_border = timeDate("2020-01-15 00:05:00", format = "%Y-%m-%d %H:%M:%S"), 
+                                          learn_part_length = 100, 
+                                          forecast_part_length = 50, 
+                                          learn_set_n = 500, 
+                                          test_set_n = 100)
 
-as.timeDate(as.POSIXct("2020-01-15 01:00:00", tz = "GMT"))
-timeDate("2020-01-15 01:00:00", format = "%Y-%m-%d %H:%M:%S", zone = "GMT")
+RunMultipleShapeDTWkNN(refSeries = sample_first$test_series_list[[3]], 
+                       learnSeries = sample_first$learn_series_list, 
+                       indicesVector = 1, 
+                       shapeDTWParams = SDP_shape, 
+                       targetDistance = "raw", 
+                       distanceType = "Dependent", 
+                       normalizationType = "Zscore", 
+                       refSeriesLength = 100, 
+                       subsequenceBreaks = 1, 
+                       forecastHorizon = 50, 
+                       includeRefSeries = F, 
+                       sd_border = 1)

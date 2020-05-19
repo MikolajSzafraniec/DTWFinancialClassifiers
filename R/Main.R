@@ -29,11 +29,6 @@ FXtickAgg_Jan2020_d1min <- furrr::future_map(.x = FX_tick_Jan2020,
 future::plan(future::sequential)
 
 
-learn_series <- list(a = FXtickAgg_Jan2020_d1min$`AUDJPY-2020-01`[1:1500,],
-                     b = FXtickAgg_Jan2020_d1min$`AUDNZD-2020-01`[1:1500,],
-                     c = FXtickAgg_Jan2020_d1min$`AUDUSD-2020-01`[1:1500,],
-                     d = FXtickAgg_Jan2020_d1min$`CADJPY-2020-01`[1:1500,])
-test_series <- FXtickAgg_Jan2020_d1min$`CHFJPY-2020-01`[2001:3150,]
 
 RunMultipleShapeDTWkNN(refSeries = test_series, 
                        learnSeries = learn_series, 

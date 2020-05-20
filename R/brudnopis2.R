@@ -246,3 +246,40 @@ sum(as.integer(test_ring_normal_DTW$ClassInd) == test_ring_normal_DTW$classifica
 
 plot(benchmarkTS$TS[[1]]$dim_3, type = "l")
 lines(benchmarkTS$TS[[2]]$dim_3, col = "red")
+
+
+
+
+
+FXtickAgg_Jan2020_d1min_1_dim <- purrr::map(.x = FXtickAgg_Jan2020_d1min,
+                                            function(x){
+                                              x[,1]
+                                            })
+
+sample_first <- chooseRandomTestLearnSets(ts_list = FXtickAgg_Jan2020_d1min_1_dim, 
+                                          time_border = timeDate("2020-01-15 00:05:00", format = "%Y-%m-%d %H:%M:%S"), 
+                                          learn_part_length = 100, 
+                                          forecast_part_length = 50, 
+                                          learn_set_n = 500, 
+                                          test_set_n = 100)
+
+RunMultipleShapeDTWkNN(refSeries = sample_first$test_series_list[[3]], 
+                       learnSeries = sample_first$learn_series_list, 
+                       indicesVector = 1, 
+                       shapeDTWParams = SDP_shape, 
+                       targetDistance = "raw", 
+                       distanceType = "Dependent", 
+                       normalizationType = "Zscore", 
+                       refSeriesLength = 100, 
+                       subsequenceBreaks = 1, 
+                       forecastHorizon = 50, 
+                       includeRefSeries = F, 
+                       sd_border = 1)
+
+input_params <- buildParamsSetFinancialSeries(ts_list = FXtickAgg_Jan2020_d1min, 
+                                   time_border = timeDate("2020-01-15 00:05:00", format = "%Y-%m-%d %H:%M:%S"),
+                                   shape_DTW_params = c(SDP, SDP_shape), 
+                                   trigonometric_transform_params = trigonometric_transform_params, 
+                                   learn_set_n = 100,
+                                   test_set_n = 10)
+

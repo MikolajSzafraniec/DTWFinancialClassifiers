@@ -545,8 +545,9 @@ buildParamsSetFinancialSeries <- function(ts_list,
   params_set <- as_tibble(expand.grid(
     dims = dims,
     dtw_types = dtw_types,
-    sdp = shape_DTW_params
-  ))
+    sdp = shape_DTW_params,
+    stringsAsFactors = F
+  ), stringsAsFactors = F)
   
   params_set_full <- params_set %>%
     dplyr::mutate(
@@ -583,11 +584,113 @@ buildParamsSetFinancialSeries <- function(ts_list,
   
   res <- list(
     params_table = params_set_full,
-    learn_test_sets = learn_test_sets
+    learn_test_sets = learn_test_sets,
+    learn_part_length = learn_part_length,
+    forecast_part_length = forecast_part_length
   )
   
   return(res)
 }
 
+runShapeDTWForDefinedParamsTable <- function(input_params,
+                                             targetDistance = c("raw", "shapeDesc"),
+                                             normalizationType = c("Unitarization", "Zscore"),
+                                             subsequenceWidth = 4,
+                                             subsequenceBreaks = 1,
+                                             includeRefSeries = FALSE,
+                                             sd_border = 1.5){
+  
+  targetDistance <- match.arg(targetDistance)
+  normalizationType <- match.arg(normalizationType)
+  
+  descr <- dplyr::pull(input_params$params_table, descr)
+  input_params_filtered <- input_params$params_table %>%
+    dplyr::select(-descr)
+  
+  if(class(future::plan())[2] == "sequential"){
+    message("Changing plan to multiprocess")
+    future::plan(future::multiprocess)
+  }
+  
+  result_tables <- purrr::pmap(c(input_params_filtered,
+                                 tab_ind = list(1:nrow(input_params_filtered)),
+                                 learn_set = list(list(input_params$learn_test_sets$learn_series_list)),
+                                 test_set = list(list(input_params$learn_test_sets$test_series_list)),
+                                 learn_part_length = list(input_params$learn_part_length),
+                                 forecast_part_length = list(input_params$forecast_part_length)),
+                               
+                               function(dtw_types,
+                                        sdp,
+                                        dimensions,
+                                        trig_tran_params,
+                                        targetDistance,
+                                        normalizationType,
+                                        subsequenceWidth,
+                                        subsequenceBreaks,
+                                        includeRefSeries,
+                                        sd_border,
+                                        learn_set,
+                                        test_set,
+                                        learn_part_length,
+                                        forecast_part_length,
+                                        tab_ind){
+                                 
+                                 msg <- paste("Calculating table number ", tab_ind, "\n", sep = "")
+                                 message(msg)
+                                 
+                                 learn_set_filtered <- purrr::map(learn_set, .f = function(x, dims){
+                                   x[,dims]
+                                 }, dims = dimensions)
+                                 
+                                 test_set_filtered <- purrr::map(test_set, .f = function(x, dims){
+                                   x[,dims]
+                                 }, dims = dimensions)
+                                 
+                                 res <- purrr::map_dfr(.x = test_set_filtered, .f = function(test_set){
+                                   
+                                   kNNResults <- RknnShapeDTWParallel(refSeries = test_set, 
+                                                                      learnSeries = learn_set_filtered, 
+                                                                      refSeriesStart = 1,
+                                                                      shapeDTWParams = sdp, 
+                                                                      targetDistance = targetDistance, 
+                                                                      distanceType = dtw_types, 
+                                                                      normalizationType = normalizationType, 
+                                                                      refSeriesLength = learn_part_length, 
+                                                                      forecastHorizon = forecast_part_length, 
+                                                                      subsequenceWidth = subsequenceWidth, 
+                                                                      trigonometricTP = trig_tran_params, 
+                                                                      subsequenceBreaks = subsequenceBreaks, 
+                                                                      includeRefSeries = includeRefSeries, 
+                                                                      sd_border = sd_border)
+                                   
+                                   res <- data.frame(
+                                     "kNNSuccess" = kNNResults$validation_results$kNNSuccess,
+                                     "refReturnClass" = as.character(kNNResults$validation_results$refReturnClass),
+                                     "testReturnClass" = as.character(kNNResults$validation_results$testReturnClass),
+                                     "refSeriesReturn" = kNNResults$validation_results$refSeriesReturn,
+                                     "learnSeriesReturn" = kNNResults$validation_results$learnSeriesReturn,
+                                     "refTsSD" = kNNResults$validation_results$refTsSD,
+                                     "testTsSD" = kNNResults$validation_results$testTsSD,
+                                     stringsAsFactors = F
+                                   )
+                                   
+                                   return(res)
+                                 })
+                               }, 
+                               sd_border = sd_border,
+                               includeRefSeries = includeRefSeries,
+                               subsequenceBreaks = subsequenceBreaks,
+                               subsequenceWidth = subsequenceWidth,
+                               normalizationType = normalizationType,
+                               targetDistance = targetDistance
+                               )
+  
+  names(result_tables) <- descr
+  message("Switching plan back to sequential")
+  future::plan(future::sequential)
+  return(result_tables)
+}
 
+res2 <- runShapeDTWForDefinedParamsTable(input_params = input_params, 
+                                         normalizationType = "Z")
 

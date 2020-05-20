@@ -40,10 +40,7 @@ RknnShapeDTW <- function(refSeries,
                          subsequenceWidth = 4,
                          trigonometricTP = NULL,
                          subsequenceBreaks = 10){
-  
-  msg <- paste0("Proceeding test series: \'", learnSeriesName, 
-                "\', ref series index: ", refSeriesStart)
-  message(msg)
+
   
   refSeriesStartTime <- time(refSeries)[refSeriesStart]
   refSeriesEndTime <- time(refSeries)[refSeriesStart + refSeriesLength - 1]
@@ -436,7 +433,7 @@ RunMultipleShapeDTWkNN <- function(refSeries,
   return(res)
 }
 
-chooseRandomTestLearnSets <- function(ts_list,
+sampleRandomTestLearnSets <- function(ts_list,
                                       time_border,
                                       learn_part_length = 100,
                                       forecast_part_length = 50,
@@ -534,27 +531,63 @@ chooseRandomTestLearnSets <- function(ts_list,
   return(res)
 }
 
-FXtickAgg_Jan2020_d1min_1_dim <- purrr::map(.x = FXtickAgg_Jan2020_d1min,
-                                            function(x){
-                                              x[,1]
-                                            })
+buildParamsSetFinancialSeries <- function(ts_list,
+                                          time_border,
+                                          shape_DTW_params,
+                                          trigonometric_transform_params,
+                                          learn_part_length = 100,
+                                          forecast_part_length = 50,
+                                          learn_set_n = 500,
+                                          test_set_n = 100){
+ 
+  dims <- list(1, c(1,2), c(1, 2, 3))
+  dtw_types = c("Dependent", "Independent")
+  params_set <- as_tibble(expand.grid(
+    dims = dims,
+    dtw_types = dtw_types,
+    sdp = shape_DTW_params
+  ))
+  
+  params_set_full <- params_set %>%
+    dplyr::mutate(
+      dimensions = ifelse(
+        purrr::map(dims, length) == 1,
+        list(1),
+        list(c(1, 2))
+      ),
+      trig_tran_params = ifelse(
+        purrr::map(dims, length) == 3,
+        list(trigonometric_transform_params),
+        list(NULL)
+      ),
+      descr = purrr::pmap_chr(., 
+                          function(dtw_types,
+                                   sdp,
+                                   dims){
+                            paste(
+                              "dtw_type_", dtw_types, ".",
+                              "shape_desc_type_", sdp@Type, ".",
+                              "dims", paste(dims, sep = "_", collapse = "_"),
+                              sep = ""
+                            )
+                          })
+    ) %>%
+    dplyr::select(-"dims")
+  
+  learn_test_sets <- sampleRandomTestLearnSets(ts_list = ts_list, 
+                                               time_border = time_border, 
+                                               learn_part_length = learn_part_length,
+                                               forecast_part_length = forecast_part_length,
+                                               learn_set_n = learn_set_n,
+                                               test_set_n = test_set_n)
+  
+  res <- list(
+    params_table = params_set_full,
+    learn_test_sets = learn_test_sets
+  )
+  
+  return(res)
+}
 
-sample_first <- chooseRandomTestLearnSets(ts_list = FXtickAgg_Jan2020_d1min_1_dim, 
-                                          time_border = timeDate("2020-01-15 00:05:00", format = "%Y-%m-%d %H:%M:%S"), 
-                                          learn_part_length = 100, 
-                                          forecast_part_length = 50, 
-                                          learn_set_n = 500, 
-                                          test_set_n = 100)
 
-RunMultipleShapeDTWkNN(refSeries = sample_first$test_series_list[[3]], 
-                       learnSeries = sample_first$learn_series_list, 
-                       indicesVector = 1, 
-                       shapeDTWParams = SDP_shape, 
-                       targetDistance = "raw", 
-                       distanceType = "Dependent", 
-                       normalizationType = "Zscore", 
-                       refSeriesLength = 100, 
-                       subsequenceBreaks = 1, 
-                       forecastHorizon = 50, 
-                       includeRefSeries = F, 
-                       sd_border = 1)
+

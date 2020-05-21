@@ -34,20 +34,19 @@ test_whole_set_libras <- buildParametersSetBenchmarkSeries(benchmarkTS = test_se
                                                     testSet = train_series_libras, 
                                                     shapeDTWParams = c(SDP_standard, SDP_shape))
 
-libras_classification_results <- do.call(what = benchSeriesSelfClassParallel_general, 
-                                         args = test_whole_set_libras)
-
 libras_classification_results <- purrr::map(test_whole_set_libras, .f = function(args_set){
   do.call(what = benchSeriesSelfClassParallel_general, 
-          args = args_set)
+          args = c(args_set, switchToSequential = F))
 })
+
+future::plan(future::sequential)
 
 libras_accuracy_results <- purrr::map(.x = libras_classification_results, .f = function(cres){
   sum(cres$ClassInd == cres$classificationResults) / nrow(cres)
 })
 
 libras_accuracy_table <- parseAccuracyResToTableBenchmark(libras_accuracy_results)
-write.csv2(libras_accuracy_table, file = "Data/Results/libras_accuracy_res.csv")
+write.csv2(libras_accuracy_table, file = "Data/Results/libras_accuracy_res_v2.csv")
 
 ### Testing ERing data set ###
 
@@ -79,4 +78,4 @@ ering_accuracy_results <- purrr::map(.x = ering_classification_results, .f = fun
 })
 
 ering_accuracy_table <- parseAccuracyResToTableBenchmark(ering_accuracy_results)
-write.csv2(ering_accuracy_table, file = "Data/Results/ering_accuracy_res.csv")
+write.csv2(ering_accuracy_table, file = "Data/Results/ering_accuracy_res_v2.csv")

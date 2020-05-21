@@ -280,6 +280,15 @@ input_params <- buildParamsSetFinancialSeries(ts_list = FXtickAgg_Jan2020_d1min,
                                    time_border = timeDate("2020-01-15 00:05:00", format = "%Y-%m-%d %H:%M:%S"),
                                    shape_DTW_params = c(SDP, SDP_shape), 
                                    trigonometric_transform_params = trigonometric_transform_params, 
-                                   learn_set_n = 100,
-                                   test_set_n = 10)
+                                   learn_set_n = 500,
+                                   test_set_n = 50)
+
+
+res2 <- runShapeDTWForDefinedParamsTable(input_params = input_params, 
+                                         normalizationType = "Z")
+
+
+classResultsToAccuracyMeasure(classification_results_list = res2, 
+                              measure = "re", 
+                              target_class = "G")
 

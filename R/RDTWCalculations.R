@@ -535,6 +535,7 @@ buildParamsSetFinancialSeries <- function(ts_list,
                                           time_border,
                                           shape_DTW_params,
                                           trigonometric_transform_params,
+                                          subsequenceWidth = 4,
                                           learn_part_length = 100,
                                           forecast_part_length = 50,
                                           learn_set_n = 500,
@@ -571,7 +572,10 @@ buildParamsSetFinancialSeries <- function(ts_list,
                               "dims", paste(dims, sep = "_", collapse = "_"),
                               sep = ""
                             )
-                          })
+                          }),
+      subsequenceWidth = ifelse(purrr::map(sdp, function(x) {x@Type}) == "simple",
+                                1,
+                                subsequenceWidth)
     ) %>%
     dplyr::select(-"dims")
   
@@ -595,7 +599,6 @@ buildParamsSetFinancialSeries <- function(ts_list,
 runShapeDTWForDefinedParamsTable <- function(input_params,
                                              targetDistance = c("raw", "shapeDesc"),
                                              normalizationType = c("Unitarization", "Zscore"),
-                                             subsequenceWidth = 4,
                                              subsequenceBreaks = 1,
                                              includeRefSeries = FALSE,
                                              sd_border = 1.5){
@@ -680,7 +683,6 @@ runShapeDTWForDefinedParamsTable <- function(input_params,
                                sd_border = sd_border,
                                includeRefSeries = includeRefSeries,
                                subsequenceBreaks = subsequenceBreaks,
-                               subsequenceWidth = subsequenceWidth,
                                normalizationType = normalizationType,
                                targetDistance = targetDistance
                                )
@@ -691,6 +693,52 @@ runShapeDTWForDefinedParamsTable <- function(input_params,
   return(result_tables)
 }
 
-res2 <- runShapeDTWForDefinedParamsTable(input_params = input_params, 
-                                         normalizationType = "Z")
-
+classResultsToAccuracyMeasure <- function(classification_results_list,
+                                          measure = c("acc", "prec", "rec"),
+                                          target_class = c("Fall", "Growth", "Flat_move")){
+  
+  measure = match.arg(measure)
+  target_class = match.arg(target_class)
+  
+  acc_res_list <- purrr::map(classification_results_list,
+                        function(crt,measure, target_class){
+                          
+                          res <- switch(
+                            measure,
+                            acc = sum(crt$refReturnClass == crt$testReturnClass) / nrow(crt),
+                            
+                            prec = 
+                            {
+                              crt_filtered <- crt %>% 
+                                dplyr::filter(testReturnClass == target_class)
+                              
+                              sum(crt_filtered$refReturnClass == crt_filtered$testReturnClass) / nrow(crt_filtered)
+                            },
+                            
+                            rec = 
+                            {
+                              crt_filtered <- crt %>% 
+                                dplyr::filter(refReturnClass == target_class)
+                              sum(crt_filtered$refReturnClass == crt_filtered$testReturnClass) / nrow(crt_filtered)
+                            }
+                          )
+                          
+                          return(res)
+                        }, measure = measure, target_class = target_class)
+  
+  accResNames <- names(acc_res_list)
+  accResNamesSplitted <- stringr::str_split(string = accResNames, 
+                                            pattern = "\\.", simplify = T)
+  
+  colnames(accResNamesSplitted) <- c("DistMatrixType", "DTWType", "Dimensions")
+  
+  accResTibble <- as_tibble(accResNamesSplitted, stringsAsFactors = F) %>%
+    mutate(accuracyRes = unlist(acc_res_list))
+  
+  accResTibblePivoted <- accResTibble %>%
+    tidyr::pivot_wider(names_from = c("DistMatrixType",
+                                      "DTWType"), 
+                       values_from = "accuracyRes")
+  
+  return(accResTibblePivoted)
+}

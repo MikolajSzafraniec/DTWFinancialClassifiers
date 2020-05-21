@@ -320,7 +320,8 @@ buildParametersSetBenchmarkSeries <- function(benchmarkTS,
                                               testSet,
                                               shapeDTWParams,
                                               excludeCol = "tsNum",
-                                              targetDistance = "r"){
+                                              targetDistance = "r",
+                                              subsequenceWidth = 4){
   dim_num <- ncol(benchmarkTS$TS[[1]])
   dim_set <- rje::powerSet(1:dim_num)[-1]
   
@@ -362,7 +363,11 @@ buildParametersSetBenchmarkSeries <- function(benchmarkTS,
                                      dplyr::mutate(TS = purrr::map(TS, .f = function(x, ds){
                                        x[,ds]
                                      }, ds = dim_set))
-                                 })) %>%
+                                 }),
+           subsequenceWidth = ifelse(
+             purrr::map(shapeDTWParams, function(x) {x@Type}) == "simple",
+             1,
+             subsequenceWidth)) %>%
     dplyr::select(-c("dim_set"))
   
   res <- purrr::transpose(all_comb_df_ts)

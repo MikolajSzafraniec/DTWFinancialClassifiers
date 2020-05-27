@@ -651,6 +651,47 @@ test_res <- RknnShapeDTWParallel(refSeries = GPW_tick_agg$CCC,
                                  refSeriesStart = 16400, shapeDTWParams = SDP_full, includeRefSeries = T,
                                  targetDistance = "s", subsequenceWidth = 5, forecastHorizon = 50, 
                                  sd_border = 2, refSeriesLength = 150, distanceType = "I")
-test_res
-plot(test_res,includeFrcstPart = F, add_wp = T, lift = 0)
-plot(test_res,includeFrcstPart = T, add_wp = F, lift = 0)
+
+
+CCC_test_set <- list(FXtickAgg_Jan2020_d5min$`EURCHF-2020-01`)
+names(CCC_test_set) <- "CCC_test"
+
+CCC_MACD <- MACD(CCC_test_set$CCC_test[,1])
+CCC_OBV <- OBV(CCC_test_set$CCC_test@.Data[,1], CCC_test_set$CCC_test@.Data[,2])
+
+CCC_test_set$CCC_test <- cbind(CCC_test_set$CCC_test,
+                               CCC_MACD[,1] / CCC_MACD[,2],
+                               CCC_OBV)
+CCC_test_set$CCC_test <- na.omit(CCC_test_set$CCC_test)
+
+
+test_CCC <- RknnShapeDTWParallel(refSeries = CCC_test_set$CCC_test, 
+                                 learnSeries = CCC_test_set, 
+                                 refSeriesStart = 5000, 
+                                 shapeDTWParams = SDP_compound, 
+                                 targetDistance = "r", 
+                                 distanceType = "D", 
+                                 normalizationType = "Z", 
+                                 refSeriesLength = 100, 
+                                 forecastHorizon = 50, 
+                                 subsequenceWidth = 5, 
+                                 trigonometricTP = NULL, 
+                                 subsequenceBreaks = 1, 
+                                 includeRefSeries = F, 
+                                 sd_border = 1.5, 
+                                 sakoeChibaWindow = NULL)
+
+future::plan(future::sequential)
+test_CCC
+plot(test_CCC,includeFrcstPart = T, add_wp = T, lift = 1)
+plot(test_CCC,includeFrcstPart = T, add_wp = F, lift = 0)
+
+ts1 <- matrix(cumsum(rnorm(100)), ncol = 1)
+ts2 <- matrix(cumsum(rnorm(100)), ncol = 1)              
+
+require(Rcpp)
+Rcpp::sourceCpp("RcppShapeDTW/src/RcppDTWFunctions.cpp")
+RcppShapeDTW::RcppSimpleDTW(proxy::dist(ts1, ts2), sakoeChibaWindow = 2)$Dist
+dtw::dtw(ts1, ts2, step.pattern = dtw::symmetric1, window.type = "sak",
+         window.size = 2)$distance              
+

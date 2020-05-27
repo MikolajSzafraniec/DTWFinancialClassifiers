@@ -14,6 +14,7 @@ require(furrr)
 require(ggplot2)
 require(gridExtra)
 require(TTR)
+require(timeSeries)
 
 # Wywołanie pliku zawierającego funkcje ładujące szeregi czasowe różnego rodzaju
 # (dzienne GPW, dzienne Forex, tickowe GPW, tickowe Forex)

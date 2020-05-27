@@ -39,7 +39,8 @@ RknnShapeDTW <- function(refSeries,
                          forecastHorizon = 20,
                          subsequenceWidth = 4,
                          trigonometricTP = NULL,
-                         subsequenceBreaks = 10){
+                         subsequenceBreaks = 10,
+                         sakoeChibaWindow = NULL){
 
   
   refSeriesStartTime <- time(refSeries)[refSeriesStart]
@@ -57,7 +58,8 @@ RknnShapeDTW <- function(refSeries,
                                       shapeDescriptorParams = shapeDTWParams, 
                                       normalizationType = normalizationType, 
                                       distanceType = distanceType, 
-                                      ttParams = trigonometricTP)
+                                      ttParams = trigonometricTP, 
+                                      sakoeChibaWindow = sakoeChibaWindow)
   
   return(res)
 }
@@ -75,7 +77,8 @@ RknnShapeDTWParallel <- function(refSeries,
                                  trigonometricTP = NULL,
                                  subsequenceBreaks = 10,
                                  includeRefSeries = TRUE,
-                                 sd_border = 1){
+                                 sd_border = 1,
+                                 sakoeChibaWindow = NULL){
   
   targetDistance <- match.arg(targetDistance)
   distanceType <- match.arg(distanceType)
@@ -103,7 +106,8 @@ RknnShapeDTWParallel <- function(refSeries,
                   refSeriesLength = refSeriesLength, forecastHorizon = forecastHorizon, 
                   subsequenceWidth = subsequenceWidth, trigonometricTP = trigonometricTP, 
                   distanceType = distanceType, subsequenceBreaks = subsequenceBreaks, 
-                  normalizationType = normalizationType)
+                  normalizationType = normalizationType,
+                  sakoeChibaWindow = sakoeChibaWindow)
   )
   
   #message("Switching plan back to sequential")
@@ -330,7 +334,8 @@ RunMultipleShapeDTWkNN <- function(refSeries,
                                    includeRefSeries = TRUE,
                                    sd_border = 1,
                                    loggingThreshold = "DEBUG",
-                                   switchBackToSequential = T){
+                                   switchBackToSequential = T,
+                                   sakoeChibaWindow = NULL){
   
   stopifnot(!is.null(names(learnSeries)))
   
@@ -394,7 +399,8 @@ RunMultipleShapeDTWkNN <- function(refSeries,
                                              trigonometricTP = trigonometricTP, 
                                              subsequenceBreaks = subsequenceBreaks, 
                                              includeRefSeries = includeRefSeries, 
-                                             sd_border = sd_border)
+                                             sd_border = sd_border,
+                                             sakoeChibaWindow = sakoeChibaWindow)
           
           res <- data.frame(
             "kNNSuccess" = kNNResults$validation_results$kNNSuccess,
@@ -603,7 +609,8 @@ runShapeDTWForDefinedParamsTable <- function(input_params,
                                              normalizationType = c("Unitarization", "Zscore"),
                                              subsequenceBreaks = 1,
                                              includeRefSeries = FALSE,
-                                             sd_border = 1.5){
+                                             sd_border = 1.5,
+                                             sakoeChibaWindow = NULL){
   
   targetDistance <- match.arg(targetDistance)
   normalizationType <- match.arg(normalizationType)
@@ -666,7 +673,8 @@ runShapeDTWForDefinedParamsTable <- function(input_params,
                                                                       trigonometricTP = trig_tran_params, 
                                                                       subsequenceBreaks = subsequenceBreaks, 
                                                                       includeRefSeries = includeRefSeries, 
-                                                                      sd_border = sd_border)
+                                                                      sd_border = sd_border,
+                                                                      sakoeChibaWindow = sakoeChibaWindow)
                                    
                                    res <- data.frame(
                                      "kNNSuccess" = kNNResults$validation_results$kNNSuccess,
@@ -686,7 +694,8 @@ runShapeDTWForDefinedParamsTable <- function(input_params,
                                includeRefSeries = includeRefSeries,
                                subsequenceBreaks = subsequenceBreaks,
                                normalizationType = normalizationType,
-                               targetDistance = targetDistance
+                               targetDistance = targetDistance,
+                               sakoeChibaWindow = sakoeChibaWindow
                                )
   
   names(result_tables) <- descr

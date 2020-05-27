@@ -630,8 +630,8 @@ plot(classResults_GPW_d5min_100_25$dtw_type_Independent.shape_desc_type_compound
 require(Rcpp)
 Rcpp::sourceCpp("src/RcppDTWFunctions.cpp")
 
-a <- cumsum(rnorm(100, 1, 1))
-b <- cumsum(rnorm(100, 1, 1))
+a <- cumsum(rnorm(10, 1, 1))
+b <- cumsum(rnorm(10, 1, 1))
 distMat <- proxy::dist(a, b)
 RcppAccumulatedCostMatrix(distMat, sakoeChibaWindow = 2)
 
@@ -640,8 +640,17 @@ DTW_res <- dtw::dtw(a, b, step.pattern = dtw::symmetric1, window.type = "sa", wi
 DTW_res$distance
 
 gcm$costMatrix[1:10,1:10]
-RcppAccumulatedCostMatrix(distMat, sakoeChibaWindow = 2)[1:10,1:10]
+RcppAccumulatedCostMatrix(distMat, sakoeChibaWindow = 1000)
 
 microbenchmark::microbenchmark(RcppAccumulatedCostMatrix(distMat, sakoeChibaWindow = 2),
                                RcppAccumulatedCostMatrix(distMat, sakoeChibaWindow = 10),
                                RcppAccumulatedCostMatrix(distMat, sakoeChibaWindow = NULL))
+
+test_res <- RknnShapeDTWParallel(refSeries = GPW_tick_agg$CCC,
+                                 testSeries = GPW_tick_agg[-1], 
+                                 refSeriesStart = 16400, shapeDTWParams = SDP_full, includeRefSeries = T,
+                                 targetDistance = "s", subsequenceWidth = 5, forecastHorizon = 50, 
+                                 sd_border = 2, refSeriesLength = 150, distanceType = "I")
+test_res
+plot(test_res,includeFrcstPart = F, add_wp = T, lift = 0)
+plot(test_res,includeFrcstPart = T, add_wp = F, lift = 0)

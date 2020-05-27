@@ -1,0 +1,1006 @@
+INFO  [2020-05-19 23:23:51] Switching plan to multiprocess.
+
+INFO  [2020-05-19 23:23:54] Processing data for part of reference series beggining with index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDJPY-2020-01_11372', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDJPY-2020-01_7274', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDJPY-2020-01_9888', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDJPY-2020-01_2303', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDJPY-2020-01_3304', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDJPY-2020-01_10340', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDJPY-2020-01_10402', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDJPY-2020-01_5088', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDJPY-2020-01_690', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDJPY-2020-01_10818', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDJPY-2020-01_10033', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDJPY-2020-01_2240', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDJPY-2020-01_6860', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDJPY-2020-01_7705', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDJPY-2020-01_2505', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDJPY-2020-01_9934', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDJPY-2020-01_6149', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDNZD-2020-01_6453', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDNZD-2020-01_790', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDNZD-2020-01_290', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDNZD-2020-01_2095', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDNZD-2020-01_7027', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDNZD-2020-01_11299', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDNZD-2020-01_12322', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDNZD-2020-01_9154', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDNZD-2020-01_2161', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDNZD-2020-01_7171', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDNZD-2020-01_514', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDNZD-2020-01_10158', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDNZD-2020-01_8532', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDNZD-2020-01_272', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDNZD-2020-01_3315', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDNZD-2020-01_4246', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDNZD-2020-01_1273', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDNZD-2020-01_6264', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDNZD-2020-01_12325', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDNZD-2020-01_1901', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDNZD-2020-01_591', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDNZD-2020-01_4935', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDNZD-2020-01_3085', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDNZD-2020-01_1182', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDUSD-2020-01_4345', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDUSD-2020-01_3322', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDUSD-2020-01_5109', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDUSD-2020-01_2114', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDUSD-2020-01_3405', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDUSD-2020-01_6851', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDUSD-2020-01_12219', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDUSD-2020-01_12476', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDUSD-2020-01_5841', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDUSD-2020-01_1951', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDUSD-2020-01_10814', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDUSD-2020-01_9823', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDUSD-2020-01_2865', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDUSD-2020-01_3262', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDUSD-2020-01_3374', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDUSD-2020-01_9359', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'AUDUSD-2020-01_6968', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CADJPY-2020-01_2448', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CADJPY-2020-01_6569', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CADJPY-2020-01_7157', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CADJPY-2020-01_5661', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CADJPY-2020-01_7418', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CADJPY-2020-01_11935', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CADJPY-2020-01_6546', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CADJPY-2020-01_7858', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CADJPY-2020-01_2731', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CADJPY-2020-01_10138', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CADJPY-2020-01_473', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CADJPY-2020-01_1782', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CADJPY-2020-01_7633', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CADJPY-2020-01_9943', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CADJPY-2020-01_2794', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CADJPY-2020-01_12471', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CADJPY-2020-01_5365', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CADJPY-2020-01_8256', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CADJPY-2020-01_9236', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CADJPY-2020-01_2912', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CADJPY-2020-01_547', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CHFJPY-2020-01_7604', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CHFJPY-2020-01_11900', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CHFJPY-2020-01_3963', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CHFJPY-2020-01_7296', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CHFJPY-2020-01_4790', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CHFJPY-2020-01_9552', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CHFJPY-2020-01_4577', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CHFJPY-2020-01_3308', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CHFJPY-2020-01_4047', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CHFJPY-2020-01_7939', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CHFJPY-2020-01_6337', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CHFJPY-2020-01_1994', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CHFJPY-2020-01_6988', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CHFJPY-2020-01_4826', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CHFJPY-2020-01_2140', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CHFJPY-2020-01_3076', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CHFJPY-2020-01_473', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CHFJPY-2020-01_5259', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CHFJPY-2020-01_743', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CHFJPY-2020-01_1980', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CHFJPY-2020-01_4385', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CHFJPY-2020-01_12164', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CHFJPY-2020-01_1412', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CHFJPY-2020-01_10506', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CHFJPY-2020-01_871', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CHFJPY-2020-01_11939', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CHFJPY-2020-01_6139', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CHFJPY-2020-01_2002', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CHFJPY-2020-01_8721', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CHFJPY-2020-01_3385', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CHFJPY-2020-01_4782', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CHFJPY-2020-01_5736', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CHFJPY-2020-01_1334', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CHFJPY-2020-01_708', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'CHFJPY-2020-01_4884', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'EURCHF-2020-01_7590', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'EURCHF-2020-01_12765', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'EURCHF-2020-01_1459', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'EURCHF-2020-01_10217', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'EURCHF-2020-01_8510', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'EURCHF-2020-01_816', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'EURCHF-2020-01_9802', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'EURCHF-2020-01_6316', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'EURCHF-2020-01_11506', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'EURCHF-2020-01_1719', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'EURCHF-2020-01_442', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'EURCHF-2020-01_3514', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'EURCHF-2020-01_7938', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'EURCHF-2020-01_6282', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'EURCHF-2020-01_12062', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'EURCHF-2020-01_5961', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'EURCHF-2020-01_124', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'EURCHF-2020-01_8383', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'EURCHF-2020-01_11512', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'EURGBP-2020-01_4448', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'EURGBP-2020-01_5906', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'EURGBP-2020-01_2756', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'EURGBP-2020-01_5749', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'EURGBP-2020-01_327', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'EURGBP-2020-01_8510', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'EURGBP-2020-01_2833', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'EURGBP-2020-01_11582', ref series index: 1
+
+INFO  [2020-05-19 23:23:58] Proceeding test series: 'EURGBP-2020-01_295', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURGBP-2020-01_4163', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURGBP-2020-01_5780', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURGBP-2020-01_9113', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURGBP-2020-01_3560', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURGBP-2020-01_5802', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURGBP-2020-01_10946', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURGBP-2020-01_2632', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURGBP-2020-01_6502', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURGBP-2020-01_1017', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURGBP-2020-01_11059', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURGBP-2020-01_8179', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURGBP-2020-01_3239', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURGBP-2020-01_872', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURJPY-2020-01_6752', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURJPY-2020-01_12143', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURJPY-2020-01_3905', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURJPY-2020-01_1859', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURJPY-2020-01_1485', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURJPY-2020-01_7763', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURJPY-2020-01_10148', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURJPY-2020-01_5779', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURJPY-2020-01_11635', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURJPY-2020-01_5073', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURJPY-2020-01_4269', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURJPY-2020-01_2284', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURJPY-2020-01_579', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURJPY-2020-01_3279', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURJPY-2020-01_7430', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURJPY-2020-01_12277', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURJPY-2020-01_130', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURJPY-2020-01_2875', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURJPY-2020-01_4240', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURJPY-2020-01_5463', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURJPY-2020-01_6787', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURJPY-2020-01_11394', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURJPY-2020-01_9743', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURJPY-2020-01_1282', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURJPY-2020-01_9323', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURJPY-2020-01_4328', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURJPY-2020-01_8652', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURJPY-2020-01_1230', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURJPY-2020-01_3776', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURJPY-2020-01_11650', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURPLN-2020-01_8830', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURPLN-2020-01_4227', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURPLN-2020-01_6586', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURPLN-2020-01_644', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURPLN-2020-01_4482', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURPLN-2020-01_9530', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURPLN-2020-01_5892', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURPLN-2020-01_10300', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURPLN-2020-01_6484', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURPLN-2020-01_6492', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURPLN-2020-01_5622', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURPLN-2020-01_1579', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURPLN-2020-01_10224', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURPLN-2020-01_32', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURPLN-2020-01_8181', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURPLN-2020-01_10578', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURPLN-2020-01_10395', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURPLN-2020-01_3383', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURPLN-2020-01_6863', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURPLN-2020-01_12619', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURPLN-2020-01_1495', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURPLN-2020-01_1563', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURPLN-2020-01_8562', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURPLN-2020-01_11937', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURPLN-2020-01_7695', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURUSD-2020-01_4940', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURUSD-2020-01_5653', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURUSD-2020-01_4016', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURUSD-2020-01_11897', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURUSD-2020-01_2699', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURUSD-2020-01_5451', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURUSD-2020-01_4420', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURUSD-2020-01_6483', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURUSD-2020-01_6925', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURUSD-2020-01_5824', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURUSD-2020-01_4655', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURUSD-2020-01_5425', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURUSD-2020-01_10461', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURUSD-2020-01_1148', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURUSD-2020-01_2839', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURUSD-2020-01_8286', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURUSD-2020-01_407', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURUSD-2020-01_12687', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURUSD-2020-01_2135', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURUSD-2020-01_10172', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURUSD-2020-01_6815', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURUSD-2020-01_3439', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURUSD-2020-01_136', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURUSD-2020-01_7875', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURUSD-2020-01_6854', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURUSD-2020-01_11539', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURUSD-2020-01_6099', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURUSD-2020-01_10866', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'EURUSD-2020-01_5057', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'GBPJPY-2020-01_1774', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'GBPJPY-2020-01_7092', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'GBPJPY-2020-01_4311', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'GBPJPY-2020-01_7000', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'GBPJPY-2020-01_7740', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'GBPJPY-2020-01_2899', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'GBPJPY-2020-01_2024', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'GBPJPY-2020-01_7963', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'GBPJPY-2020-01_3437', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'GBPJPY-2020-01_6694', ref series index: 1
+
+INFO  [2020-05-19 23:23:59] Proceeding test series: 'GBPJPY-2020-01_2879', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'GBPJPY-2020-01_12300', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'GBPJPY-2020-01_12275', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'GBPJPY-2020-01_11173', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'GBPJPY-2020-01_3561', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'GBPJPY-2020-01_12123', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'GBPJPY-2020-01_6577', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'GBPJPY-2020-01_11195', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'GBPJPY-2020-01_212', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'GBPJPY-2020-01_10125', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'GBPJPY-2020-01_9595', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'GBPJPY-2020-01_12785', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'GBPJPY-2020-01_2764', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'GBPJPY-2020-01_4845', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'GBPUSD-2020-01_10949', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'GBPUSD-2020-01_6431', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'GBPUSD-2020-01_2871', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'GBPUSD-2020-01_6603', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'GBPUSD-2020-01_3856', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'GBPUSD-2020-01_3103', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'GBPUSD-2020-01_3998', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'GBPUSD-2020-01_11934', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'GBPUSD-2020-01_4146', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'GBPUSD-2020-01_2789', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'GBPUSD-2020-01_8357', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'GBPUSD-2020-01_10489', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'GBPUSD-2020-01_3960', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'GBPUSD-2020-01_3069', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'GBPUSD-2020-01_741', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'GBPUSD-2020-01_10271', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'GBPUSD-2020-01_10268', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'GBPUSD-2020-01_9688', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'GBPUSD-2020-01_10350', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'GBPUSD-2020-01_11791', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'GBPUSD-2020-01_3066', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'GBPUSD-2020-01_1011', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'GBPUSD-2020-01_8453', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'GBPUSD-2020-01_676', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'GBPUSD-2020-01_3892', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'NZDUSD-2020-01_4603', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'NZDUSD-2020-01_4418', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'NZDUSD-2020-01_11277', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'NZDUSD-2020-01_6911', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'NZDUSD-2020-01_9972', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'NZDUSD-2020-01_10640', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'NZDUSD-2020-01_4145', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'NZDUSD-2020-01_4414', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'NZDUSD-2020-01_1610', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'NZDUSD-2020-01_3170', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'NZDUSD-2020-01_6933', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'NZDUSD-2020-01_5018', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'NZDUSD-2020-01_10290', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'NZDUSD-2020-01_862', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'NZDUSD-2020-01_4562', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'NZDUSD-2020-01_10599', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'NZDUSD-2020-01_6851', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCAD-2020-01_9889', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCAD-2020-01_9196', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCAD-2020-01_11388', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCAD-2020-01_4059', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCAD-2020-01_12618', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCAD-2020-01_1908', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCAD-2020-01_8094', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCAD-2020-01_9421', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCAD-2020-01_4134', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCAD-2020-01_1774', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCAD-2020-01_11776', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCAD-2020-01_5990', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCAD-2020-01_1194', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCAD-2020-01_11116', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCAD-2020-01_6555', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCAD-2020-01_7484', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCAD-2020-01_4966', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCAD-2020-01_2688', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCAD-2020-01_3225', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCAD-2020-01_2332', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCAD-2020-01_1751', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCAD-2020-01_1793', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCHF-2020-01_11295', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCHF-2020-01_2529', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCHF-2020-01_11726', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCHF-2020-01_4525', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCHF-2020-01_4310', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCHF-2020-01_2335', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCHF-2020-01_8748', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCHF-2020-01_8324', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCHF-2020-01_4803', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCHF-2020-01_6882', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCHF-2020-01_10242', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCHF-2020-01_7340', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCHF-2020-01_6690', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCHF-2020-01_10390', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCHF-2020-01_4170', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCHF-2020-01_1868', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCHF-2020-01_11574', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCHF-2020-01_10454', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCHF-2020-01_11020', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCHF-2020-01_11258', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCHF-2020-01_4932', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCHF-2020-01_4122', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCHF-2020-01_10147', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCHF-2020-01_4870', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCHF-2020-01_11272', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCHF-2020-01_5799', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDCHF-2020-01_9498', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDJPY-2020-01_12305', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDJPY-2020-01_3940', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDJPY-2020-01_11303', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDJPY-2020-01_11839', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDJPY-2020-01_9545', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDJPY-2020-01_9793', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDJPY-2020-01_12663', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDJPY-2020-01_10283', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDJPY-2020-01_5665', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDJPY-2020-01_11784', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDJPY-2020-01_2577', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDJPY-2020-01_9995', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDJPY-2020-01_3072', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDJPY-2020-01_10603', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDJPY-2020-01_7110', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDJPY-2020-01_12273', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDJPY-2020-01_9858', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDJPY-2020-01_11186', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDJPY-2020-01_918', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDJPY-2020-01_9007', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDJPY-2020-01_11178', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDMXN-2020-01_1668', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDMXN-2020-01_11606', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDMXN-2020-01_1338', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDMXN-2020-01_1052', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDMXN-2020-01_3225', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDMXN-2020-01_9141', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDMXN-2020-01_7609', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDMXN-2020-01_7960', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDMXN-2020-01_7580', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDMXN-2020-01_821', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDMXN-2020-01_1525', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDMXN-2020-01_3702', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDMXN-2020-01_957', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDMXN-2020-01_4939', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDMXN-2020-01_7033', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDMXN-2020-01_2380', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDMXN-2020-01_11177', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDMXN-2020-01_1873', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDMXN-2020-01_3250', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDMXN-2020-01_12314', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDMXN-2020-01_6747', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDMXN-2020-01_2433', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDMXN-2020-01_4429', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDMXN-2020-01_8278', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDMXN-2020-01_10552', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDMXN-2020-01_2587', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDMXN-2020-01_11014', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDMXN-2020-01_1606', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDMXN-2020-01_7235', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDMXN-2020-01_9072', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDMXN-2020-01_865', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDMXN-2020-01_10477', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDMXN-2020-01_589', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDMXN-2020-01_9382', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDRUB-2020-01_632', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDRUB-2020-01_4331', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDRUB-2020-01_4598', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDRUB-2020-01_1839', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDRUB-2020-01_349', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDRUB-2020-01_6058', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDRUB-2020-01_3135', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDRUB-2020-01_6649', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDRUB-2020-01_1282', ref series index: 1
+
+INFO  [2020-05-19 23:24:00] Proceeding test series: 'USDRUB-2020-01_2779', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDRUB-2020-01_292', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDRUB-2020-01_6576', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDRUB-2020-01_4029', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDRUB-2020-01_4233', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDRUB-2020-01_2142', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDRUB-2020-01_2195', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDRUB-2020-01_5121', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDRUB-2020-01_2454', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDRUB-2020-01_4525', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDRUB-2020-01_5890', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDRUB-2020-01_2272', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDRUB-2020-01_1362', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDRUB-2020-01_718', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDRUB-2020-01_3409', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDRUB-2020-01_4575', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDRUB-2020-01_1531', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDRUB-2020-01_209', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDRUB-2020-01_2930', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDRUB-2020-01_4267', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDRUB-2020-01_997', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDRUB-2020-01_5501', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDRUB-2020-01_656', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDTRY-2020-01_7791', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDTRY-2020-01_9999', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDTRY-2020-01_4138', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDTRY-2020-01_9122', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDTRY-2020-01_4405', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDTRY-2020-01_8904', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDTRY-2020-01_7809', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDTRY-2020-01_2347', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDTRY-2020-01_12239', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDTRY-2020-01_8439', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDTRY-2020-01_11616', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDTRY-2020-01_9417', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDTRY-2020-01_759', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDTRY-2020-01_3012', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDTRY-2020-01_6496', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDTRY-2020-01_9169', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDTRY-2020-01_10070', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDTRY-2020-01_6214', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDTRY-2020-01_6779', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDTRY-2020-01_9877', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDTRY-2020-01_12504', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDTRY-2020-01_9890', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDTRY-2020-01_12077', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDTRY-2020-01_7619', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDTRY-2020-01_11302', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDTRY-2020-01_3455', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDTRY-2020-01_8735', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDZAR-2020-01_7608', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDZAR-2020-01_10178', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDZAR-2020-01_1671', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDZAR-2020-01_8452', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDZAR-2020-01_11818', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDZAR-2020-01_5023', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDZAR-2020-01_5206', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDZAR-2020-01_2531', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDZAR-2020-01_4024', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDZAR-2020-01_6003', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDZAR-2020-01_8749', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDZAR-2020-01_3121', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDZAR-2020-01_6445', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDZAR-2020-01_3139', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDZAR-2020-01_4348', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDZAR-2020-01_2440', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDZAR-2020-01_2697', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDZAR-2020-01_11156', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDZAR-2020-01_11357', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDZAR-2020-01_4542', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDZAR-2020-01_12072', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDZAR-2020-01_2874', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDZAR-2020-01_9269', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDZAR-2020-01_4682', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDZAR-2020-01_5765', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDZAR-2020-01_4667', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDZAR-2020-01_2306', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDZAR-2020-01_5794', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDZAR-2020-01_6459', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDZAR-2020-01_4703', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDZAR-2020-01_9653', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Proceeding test series: 'USDZAR-2020-01_7415', ref series index: 1
+
+INFO  [2020-05-19 23:24:01] Switching plan to sequential.
+

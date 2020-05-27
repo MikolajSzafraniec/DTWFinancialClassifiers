@@ -1,0 +1,4 @@
+INFO  [2020-05-24 13:55:05] Processing data for part of reference series beggining with index: 10000
+
+ERROR [2020-05-24 13:55:05] Error in results_set[[which_dist_min]]: attempt to select less than one element in get1index
+

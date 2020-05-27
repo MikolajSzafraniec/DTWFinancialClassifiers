@@ -132,8 +132,9 @@ List RcppDistanceMatrices(NumericMatrix timeSeriesRef, NumericMatrix timeSeriesT
  */
 
 //[[Rcpp::export]]
-NumericMatrix RcppAccumulatedCostMatrix(NumericMatrix x){
-  return AccumulatedCostMatrix(x);
+NumericMatrix RcppAccumulatedCostMatrix(NumericMatrix x,
+                                        Rcpp::Nullable<int> sakoeChibaWindow = R_NilValue){
+  return AccumulatedCostMatrix(x, sakoeChibaWindow);
 }
 
 /*
@@ -142,8 +143,9 @@ NumericMatrix RcppAccumulatedCostMatrix(NumericMatrix x){
  */
 
 //[[Rcpp::export]]
-List RcppSimpleDTW(NumericMatrix x){
-  SimpleDTWResults dtwRes = DTWRcpp(x);
+List RcppSimpleDTW(NumericMatrix x,
+                   Rcpp::Nullable<int> sakoeChibaWindow = R_NilValue){
+  SimpleDTWResults dtwRes = DTWRcpp(x, sakoeChibaWindow);
   
   List res = List::create(
     dtwRes.Distance,
@@ -178,7 +180,8 @@ double RcppdistanceFromWarpingPaths(NumericMatrix distMatrix,
 //[[Rcpp::export]]
 List RcppComplexDTWResults(ListOf<NumericMatrix> RawSeriesDistMat,
                            ListOf<NumericMatrix> ShapeDescriptorMatrix,
-                           std::string DistanceType = "Dependent"){
+                           std::string DistanceType = "Dependent",
+                           Rcpp::Nullable<int> sakoeChibaWindow = R_NilValue){
   
   std::vector<NumericMatrix> rawSeries;
   std::vector<NumericMatrix> shapeSeries;
@@ -198,7 +201,8 @@ List RcppComplexDTWResults(ListOf<NumericMatrix> RawSeriesDistMat,
   input.ShapeDesciptorDistMatrices = shapeSeries;
   input.DistanceType = distType;
   
-  DTWResults resCpp = ComplexDTWRcpp(input);
+  DTWResults resCpp = ComplexDTWRcpp(input,
+                                     sakoeChibaWindow);
   
   List rRes;
   
@@ -233,7 +237,8 @@ List kNNShapeDTWCpp(NumericMatrix referenceSeries,
                     S4 shapeDescriptorParams,
                     std::string normalizationType = "Unitarization",
                     std::string distanceType = "Dependent",
-                    Rcpp::Nullable<S4> ttParams = R_NilValue){
+                    Rcpp::Nullable<S4> ttParams = R_NilValue,
+                    Rcpp::Nullable<int> sakoeChibaWindow = R_NilValue){
   
   int refSeriesLength = referenceSeries.nrow();
   int testSeriesLengt = testSeries.nrow();
@@ -290,7 +295,8 @@ List kNNShapeDTWCpp(NumericMatrix referenceSeries,
       distanceTypeEnum
     );
     
-    tempRes = ComplexDTWRcpp(tempDistMat);
+    tempRes = ComplexDTWRcpp(tempDistMat,
+                             sakoeChibaWindow);
     
     if(i == 0){
       //finalResRawDist = Rcpp::clone(tempRes);

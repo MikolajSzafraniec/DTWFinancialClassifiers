@@ -626,3 +626,22 @@ classResultsToAccuracyMeasure(classResults_GPW_d5min_100_25, "acc")
 
 plot(classResults_GPW_d5min_100_25$dtw_type_Independent.shape_desc_type_compound.dims1_2_3$refSeriesReturn,
      classResults_GPW_d5min_100_25$dtw_type_Independent.shape_desc_type_simple.dims1_2_3$learnSeriesReturn)
+
+require(Rcpp)
+Rcpp::sourceCpp("src/RcppDTWFunctions.cpp")
+
+a <- cumsum(rnorm(100, 1, 1))
+b <- cumsum(rnorm(100, 1, 1))
+distMat <- proxy::dist(a, b)
+RcppAccumulatedCostMatrix(distMat, sakoeChibaWindow = 2)
+
+RcppSimpleDTW(distMat, 4)$Dist
+DTW_res <- dtw::dtw(a, b, step.pattern = dtw::symmetric1, window.type = "sa", window.size = 4)
+DTW_res$distance
+
+gcm$costMatrix[1:10,1:10]
+RcppAccumulatedCostMatrix(distMat, sakoeChibaWindow = 2)[1:10,1:10]
+
+microbenchmark::microbenchmark(RcppAccumulatedCostMatrix(distMat, sakoeChibaWindow = 2),
+                               RcppAccumulatedCostMatrix(distMat, sakoeChibaWindow = 10),
+                               RcppAccumulatedCostMatrix(distMat, sakoeChibaWindow = NULL))

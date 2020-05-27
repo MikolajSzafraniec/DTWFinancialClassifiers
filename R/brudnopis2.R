@@ -289,6 +289,340 @@ res2 <- runShapeDTWForDefinedParamsTable(input_params = input_params,
 
 
 classResultsToAccuracyMeasure(classification_results_list = res2, 
-                              measure = "re", 
-                              target_class = "G")
+                              measure = "acc", 
+                              target_class = "Fl")
 
+classResultsToAccuracyMeasure(classResults_Jan2020_d1min_100_50_target_s,
+                              measure = "acc")
+
+classResultsToAccuracyMeasure(classResults_Jan2020_d1min_100_50,
+                              measure = "acc")
+
+
+randomSeries <- FXtickAgg_Jan2020_d1min$`AUDJPY-2020-01`[1000:1100,]
+
+normts <- RcppShapeDTW::RcppTSNormalization(randomSeries@.Data[,1], normType = "Z")
+subs <- RcppShapeDTW::RcppsubsequencesMatrix(normts, 4)
+subsSD <- RcppShapeDTW::RcppasShapeDescriptor(subs, SDP_compound)
+
+mean(subsSD[,1:7])
+sd(subsSD[,1:7])
+mean(subsSD[,8:14])
+sd(subsSD[,8:14])
+
+balloonplot(as.table(classResultsToAccuracyMeasure(classResults_Jan2020_d1min_100_50,
+                                          measure = "acc")))
+
+a <- classResultsToAccuracyMeasure(classResults_Jan2020_d1min_100_50,
+                                   measure = "acc")
+b <- as.matrix(a[,-1])
+
+
+balloonplot(b[,-1])
+chisq.test(b*100)
+
+classResultsToAccuracyMeasure(classResults_Jan2020_d1min_100_25, 
+                              measure = "p", 
+                              target_class = "Fl")
+
+table(classResults_Jan2020_d1min_100_25$dtw_type_Dependent.shape_desc_type_simple.dims1$refReturnClass)
+
+classResultsToAccuracyMeasure(classResults_Jan2020_d1min_100_100,
+                              measure = "cor")
+
+lapply(FXtickAgg_Jan2020_d5min, nrow)
+
+classResultsToAccuracyMeasure(classResults_Jan2020_d5min_100_25,
+                              measure = "cor")
+classResultsToAccuracyMeasure(classResults_Jan2020_d5min_100_50,
+                              "pr",
+                              "G")
+
+sum(sign(classResults_Jan2020_d1min_100_50$dtw_type_Dependent.shape_desc_type_simple.dims1_2_3$refSeriesReturn) ==
+      sign(classResults_Jan2020_d1min_100_50$dtw_type_Dependent.shape_desc_type_simple.dims1_2_3$learnSeriesReturn))
+
+
+classResultsToAccuracyMeasure(classResults_Jan2020_d5min_100_100,
+                              measure = "acc")
+
+classResultsToAccuracyMeasure(classResults_Jan2020_d10min_100_25,
+                              measure = "acc")
+
+sum(sign(classResults_Jan2020_d10min_100_25$dtw_type_Dependent.shape_desc_type_simple.dims1_2$refSeriesReturn) ==
+      sign(classResults_Jan2020_d10min_100_25$dtw_type_Dependent.shape_desc_type_simple.dims1_2$learnSeriesReturn))
+
+
+
+
+sum(sign(runif(1000, min = -1, max = 1)) == 1)
+
+classResultsToAccuracyMeasure(classResults_GPW_d1min_100_25,
+                              "acc")
+
+table(classResults_GPW_d1min_100_25$dtw_type_Dependent.shape_desc_type_simple.dims1$refReturnClass)
+plot(density(classResults_Jan2020_d10min_100_100$dtw_type_Dependent.shape_desc_type_simple.dims1$learnSeriesReturn))
+
+class_ind <- function(x, sds, sd_border){
+  res <- ifelse(x < sds*(-sd_border),
+                "Fall", ifelse(x > sds*sd_border, "Growth", "Flat_move"))
+  res
+}
+
+class_count(classResults_GPW_d1min_100_25$dtw_type_Dependent.shape_desc_type_simple.dims1$kNNSuccess,
+            classResults_GPW_d1min_100_25$dtw_type_Dependent.shape_desc_type_simple.dims1$refTsSD,
+            1.2)
+classResults_GPW_d1min_100_25 <- purrr::map(classResults_GPW_d1min_100_25, function(x){
+  x$refReturnClass <- class_ind(x$refSeriesReturn, x$refTsSD, 1.2)
+  x$testReturnClass <- class_ind(x$learnSeriesReturn, x$testTsSD, 1.2)
+  x$kNNSuccess <- as.integer(x$refReturnClass == x$testReturnClass)
+  x
+})
+
+
+classResultsToAccuracyMeasure(classResults_GPW_d1min_100_50, "acc", "Fl")
+
+
+CCC_test_set <- list(GPW_tick_1min$CCC[1000000:1011000,])
+names(CCC_test_set) <- "CCC_test"
+
+single_series_test_results <- RunMultipleShapeDTWkNN(refSeries = CCC_test_set$CCC_test, 
+                                                     learnSeries = CCC_test_set, 
+                                                     indicesVector = seq(from = 10000, by = 5, length.out = 100), 
+                                                     shapeDTWParams = SDP_compound, 
+                                                     targetDistance = "r", 
+                                                     distanceType = "D", 
+                                                     normalizationType = "Z", 
+                                                     refSeriesLength = 100, 
+                                                     forecastHorizon = 50, 
+                                                     subsequenceBreaks = 1, 
+                                                     includeRefSeries = F, 
+                                                     switchBackToSequential = F)
+
+nrow(FXtickAgg_Jan2020_d1min$`EURCHF-2020-01`)
+FX_test_set <- list(FXtickAgg_Jan2020_d1min$`EURCHF-2020-01`[1:11000,])
+names(FX_test_set) <- "FX_test"
+
+single_series_test_results_FX <- RunMultipleShapeDTWkNN(refSeries = FX_test_set$FX_test, 
+                                                     learnSeries = FX_test_set, 
+                                                     indicesVector = seq(from = 10000, by = 5, length.out = 100), 
+                                                     shapeDTWParams = SDP_compound, 
+                                                     targetDistance = "r", 
+                                                     distanceType = "D", 
+                                                     normalizationType = "Z", 
+                                                     refSeriesLength = 100, 
+                                                     forecastHorizon = 50, 
+                                                     subsequenceBreaks = 1, 
+                                                     includeRefSeries = F, 
+                                                     switchBackToSequential = F)
+
+MACD_fx <- MACD(FX_test_set$FX_test@.Data[,1])
+FX_test_set$FX_test <- cbind(FX_test_set$FX_test, MACD_fx[,1]/MACD_fx[,2])
+FX_test_set$FX_test <- na.omit(FX_test_set$FX_test)
+
+single_series_test_results_FX_MACD_added <- RunMultipleShapeDTWkNN(refSeries = FX_test_set$FX_test, 
+                                                        learnSeries = FX_test_set, 
+                                                        indicesVector = seq(from = 9967, by = 5, length.out = 100), 
+                                                        shapeDTWParams = SDP_compound, 
+                                                        targetDistance = "r", 
+                                                        distanceType = "D", 
+                                                        normalizationType = "Z", 
+                                                        refSeriesLength = 100, 
+                                                        forecastHorizon = 50, 
+                                                        subsequenceBreaks = 1, 
+                                                        includeRefSeries = F, 
+                                                        switchBackToSequential = F)
+
+sum(single_series_test_results_FX_MACD_added$kNNSuccess)
+sum(single_series_test_results_FX$kNNSuccess)
+table(single_series_test_results_FX_MACD_added$refReturnClass,
+      single_series_test_results_FX_MACD_added$testReturnClass)
+table(single_series_test_results_FX_MACD_added$testReturnClass)
+table(single_series_test_results_FX$refReturnClass)
+cor(single_series_test_results_FX_MACD_added$refSeriesReturn,
+    single_series_test_results_FX_MACD_added$learnSeriesReturn)
+
+plot(single_series_test_results_FX_MACD_added$refSeriesReturn[-c(90,91)],
+     single_series_test_results_FX_MACD_added$learnSeriesReturn[-c(90,91)])
+
+which.min(single_series_test_results_FX$refSeriesReturn[-91])
+
+ref_res <- sum(sign(single_series_test_results_FX_MACD_added$refSeriesReturn) == 
+                 sign(single_series_test_results_FX_MACD_added$learnSeriesReturn))
+
+saveRDS(single_series_test_results_FX_MACD_added, file = "Data/Results/RDSFiles/single_series_test_results_FX_MACD_added.rds")
+
+### GPW test for one series with OBV and MACD added to the series ###
+
+
+CCC_test_set <- list(GPW_tick_1min$CCC[1000000:1011000,])
+names(CCC_test_set) <- "CCC_test"
+
+CCC_MACD <- MACD(CCC_test_set$CCC_test[,1])
+CCC_OBV <- OBV(CCC_test_set$CCC_test@.Data[,1], CCC_test_set$CCC_test@.Data[,2])
+
+CCC_test_set$CCC_test <- cbind(CCC_test_set$CCC_test,
+                               CCC_MACD[,1] / CCC_MACD[,2],
+                               CCC_OBV)
+CCC_test_set$CCC_test <- na.omit(CCC_test_set$CCC_test)
+
+
+single_series_test_results_GPW_MACD_OBV <- RunMultipleShapeDTWkNN(refSeries = CCC_test_set$CCC_test, 
+                                                     learnSeries = CCC_test_set, 
+                                                     indicesVector = seq(from = 9967, by = 5, length.out = 100), 
+                                                     shapeDTWParams = SDP_compound, 
+                                                     targetDistance = "r", 
+                                                     distanceType = "D", 
+                                                     normalizationType = "Z", 
+                                                     refSeriesLength = 100, 
+                                                     forecastHorizon = 50, 
+                                                     subsequenceBreaks = 1, 
+                                                     includeRefSeries = F, 
+                                                     switchBackToSequential = F)
+
+GPWT_time_pattern_10min <- parsePatternGPWTickTime(GPW_pattern_series$WIG20, delta = dminutes(10),
+                                                  playOffTime = dminutes(15), roundingUnit = "minute")
+future::plan(future::multiprocess)
+GPW_tick_10min <- furrr::future_map(.x = GPW_tick, 
+                                   .f = GPWTickAggregateAndFillNA, 
+                                   patternDatesToAgg = GPWT_time_pattern_10min)
+future::plan(future::sequential)
+
+### GPW test for one 10 minutes diff series with OBV and MACD added to the series ###
+
+lapply(GPW_tick_10min, nrow)
+
+PGNIG_test_set <- list(GPW_tick_10min$PGNIG[100000:111000,])
+names(PGNIG_test_set) <- "PGNIG_test"
+
+PGNIG_MACD <- MACD(PGNIG_test_set$PGNIG_test[,1])
+PGNIG_OBV <- OBV(PGNIG_test_set$PGNIG_test@.Data[,1], PGNIG_test_set$PGNIG_test@.Data[,2])
+
+PGNIG_test_set$PGNIG_test <- cbind(PGNIG_test_set$PGNIG_test,
+                               PGNIG_MACD[,1] / PGNIG_MACD[,2],
+                               PGNIG_OBV)
+PGNIG_test_set$PGNIG_test <- na.omit(PGNIG_test_set$PGNIG_test)
+
+single_series_test_results_GPW_MACD_OBV_PGNIG <- RunMultipleShapeDTWkNN(refSeries = PGNIG_test_set$PGNIG_test, 
+                                                                  learnSeries = PGNIG_test_set, 
+                                                                  indicesVector = seq(from = 10000, by = 5, length.out = 100), 
+                                                                  shapeDTWParams = SDP_compound, 
+                                                                  targetDistance = "r", 
+                                                                  distanceType = "D", 
+                                                                  normalizationType = "Z", 
+                                                                  refSeriesLength = 100, 
+                                                                  forecastHorizon = 50, 
+                                                                  subsequenceBreaks = 1, 
+                                                                  includeRefSeries = F, 
+                                                                  switchBackToSequential = F)
+
+plot(single_series_test_results_GPW_MACD_OBV_PGNIG$refSeriesReturn,
+    single_series_test_results_GPW_MACD_OBV_PGNIG$learnSeriesReturn)
+sum(sign(single_series_test_results_GPW_MACD_OBV_PGNIG$refSeriesReturn) ==
+      sign(single_series_test_results_GPW_MACD_OBV_PGNIG$learnSeriesReturn))
+
+# FX tick 5 min with MACD and OBV
+
+nrow(FXtickAgg_Jan2020_d5min$`EURGBP-2020-01`)
+
+EURGBP_test_set <- list(FXtickAgg_Jan2020_d5min$`EURGBP-2020-01`)
+names(EURGBP_test_set) <- "EURGBP_test"
+
+EURGBP_MACD <- MACD(EURGBP_test_set$EURGBP_test[,1])
+EURGBP_OBV <- OBV(EURGBP_test_set$EURGBP_test@.Data[,1], EURGBP_test_set$EURGBP_test@.Data[,2])
+
+EURGBP_test_set$EURGBP_test <- cbind(EURGBP_test_set$EURGBP_test,
+                                     EURGBP_MACD[,1] / EURGBP_MACD[,2],
+                                     EURGBP_OBV)
+EURGBP_test_set$EURGBP_test <- na.omit(EURGBP_test_set$EURGBP_test)
+
+single_series_test_results_FX_5_min_EURGBP <- RunMultipleShapeDTWkNN(refSeries = EURGBP_test_set$EURGBP_test, 
+                                                                        learnSeries = EURGBP_test_set, 
+                                                                        indicesVector = seq(from = 5500, by = 5, length.out = 100), 
+                                                                        shapeDTWParams = SDP_compound, 
+                                                                        targetDistance = "r", 
+                                                                        distanceType = "D", 
+                                                                        normalizationType = "Z", 
+                                                                        refSeriesLength = 100, 
+                                                                        forecastHorizon = 50, 
+                                                                        subsequenceBreaks = 1, 
+                                                                        includeRefSeries = F, 
+                                                                        switchBackToSequential = F)
+
+single_series_test_results_FX_5_min_EURGBP_v2 <- RunMultipleShapeDTWkNN(refSeries = EURGBP_test_set$EURGBP_test, 
+                                                                     learnSeries = EURGBP_test_set, 
+                                                                     indicesVector = seq(from = 5500, by = 5, length.out = 100), 
+                                                                     shapeDTWParams = SDP_compound, 
+                                                                     targetDistance = "s", 
+                                                                     distanceType = "D", 
+                                                                     normalizationType = "Z", 
+                                                                     refSeriesLength = 100, 
+                                                                     forecastHorizon = 25, 
+                                                                     subsequenceBreaks = 1, 
+                                                                     includeRefSeries = F, 
+                                                                     switchBackToSequential = F)
+
+sum(single_series_test_results_FX_5_min_EURGBP_v2$kNNSuccess)
+sum(sign(single_series_test_results_FX_5_min_EURGBP_v2$refSeriesReturn) ==
+    sign(single_series_test_results_FX_5_min_EURGBP_v2$learnSeriesReturn))
+
+table(single_series_test_results_FX_5_min_EURGBP_v2$refReturnClass,
+        single_series_test_results_FX_5_min_EURGBP_v2$testReturnClass)
+
+a <- RknnShapeDTWParallel(refSeries = EURGBP_test_set$EURGBP_test, 
+                          learnSeries = EURGBP_test_set, 
+                          refSeriesStart = 5500, 
+                          shapeDTWParams = SDP_compound, 
+                          targetDistance = "s", 
+                          distanceType = "D", 
+                          normalizationType = "Z", 
+                          refSeriesLength = 100, 
+                          forecastHorizon = 25, 
+                          subsequenceWidth = 4, 
+                          trigonometricTP = NULL, 
+                          subsequenceBreaks = 1, 
+                          includeRefSeries = F, sd_border = 1)
+
+table(ifelse(abs(single_series_test_results_FX_5_min_EURGBP_v2$refSeriesReturn) > 
+             single_series_test_results_FX_5_min_EURGBP_v2$refTsSD * sd_bord, 1, 0) *
+      sign(single_series_test_results_FX_5_min_EURGBP_v2$refSeriesReturn), 
+      ifelse(abs(single_series_test_results_FX_5_min_EURGBP_v2$learnSeriesReturn) > 
+               single_series_test_results_FX_5_min_EURGBP_v2$testTsSD * sd_bord, 1, 0) *
+      sign(single_series_test_results_FX_5_min_EURGBP_v2$learnSeriesReturn))
+
+# 5 min horyzont 25, inna para walut
+
+nrow(FXtickAgg_Jan2020_d5min$`USDCAD-2020-01`)
+plot(FXtickAgg_Jan2020_d5min$`USDCAD-2020-01`, type ="l")
+
+USDCAD_test_set <- list(FXtickAgg_Jan2020_d5min$`USDCAD-2020-01`)
+names(USDCAD_test_set) <- "USDCAD_test"
+
+USDCAD_MACD <- MACD(USDCAD_test_set$USDCAD_test[,1])
+USDCAD_OBV <- OBV(USDCAD_test_set$USDCAD_test@.Data[,1], USDCAD_test_set$USDCAD_test@.Data[,2])
+
+USDCAD_test_set$USDCAD_test <- cbind(USDCAD_test_set$USDCAD_test,
+                                     USDCAD_MACD[,1] / USDCAD_MACD[,2],
+                                     USDCAD_OBV)
+USDCAD_test_set$USDCAD_test <- na.omit(USDCAD_test_set$USDCAD_test)
+
+single_series_test_results_FX_5_min_USDCAD <- RunMultipleShapeDTWkNN(refSeries = USDCAD_test_set$USDCAD_test, 
+                                                                     learnSeries = USDCAD_test_set, 
+                                                                     indicesVector = seq(from = 5500, by = 5, length.out = 100), 
+                                                                     shapeDTWParams = SDP_compound, 
+                                                                     targetDistance = "s", 
+                                                                     distanceType = "D", 
+                                                                     normalizationType = "Z", 
+                                                                     refSeriesLength = 100, 
+                                                                     forecastHorizon = 25, 
+                                                                     subsequenceBreaks = 1, 
+                                                                     includeRefSeries = F, 
+                                                                     switchBackToSequential = F)
+
+cor(abs(single_series_test_results_FX_5_min_USDCAD$refSeriesReturn),
+    abs(single_series_test_results_FX_5_min_USDCAD$learnSeriesReturn))
+
+
+classResultsToAccuracyMeasure(classResults_GPW_d5min_100_25, "acc")
+
+plot(classResults_GPW_d5min_100_25$dtw_type_Independent.shape_desc_type_compound.dims1_2_3$refSeriesReturn,
+     classResults_GPW_d5min_100_25$dtw_type_Independent.shape_desc_type_simple.dims1_2_3$learnSeriesReturn)

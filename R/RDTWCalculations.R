@@ -332,6 +332,8 @@ RunMultipleShapeDTWkNN <- function(refSeries,
                                    loggingThreshold = "DEBUG",
                                    switchBackToSequential = T){
   
+  stopifnot(!is.null(names(learnSeries)))
+  
   # Matching arguments with multiple possible values
   targetDistance <- match.arg(targetDistance)
   distanceType <- match.arg(distanceType)
@@ -493,7 +495,7 @@ sampleRandomTestLearnSets <- function(ts_list,
                                                        size = n, 
                                                        replace = F)
                                         return(idxs)
-                                      }, max_begs = learning_part_max_begins)
+                                      }, max_begs = testing_part_max_begins)
   
   test_series_indexes_tbl <- do.call(rbind, 
                                       purrr::imap(.x = test_series_indexes, 
@@ -694,7 +696,7 @@ runShapeDTWForDefinedParamsTable <- function(input_params,
 }
 
 classResultsToAccuracyMeasure <- function(classification_results_list,
-                                          measure = c("acc", "prec", "rec"),
+                                          measure = c("acc", "prec", "rec", "corr"),
                                           target_class = c("Fall", "Growth", "Flat_move")){
   
   measure = match.arg(measure)
@@ -720,7 +722,9 @@ classResultsToAccuracyMeasure <- function(classification_results_list,
                               crt_filtered <- crt %>% 
                                 dplyr::filter(refReturnClass == target_class)
                               sum(crt_filtered$refReturnClass == crt_filtered$testReturnClass) / nrow(crt_filtered)
-                            }
+                            },
+                            
+                            corr = cor(crt$refSeriesReturn, crt$learnSeriesReturn)
                           )
                           
                           return(res)

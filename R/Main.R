@@ -36,7 +36,9 @@ TTR <- new("TrigonometricTransformParams",
            DimToApplyTransform = c(1L, 2L),
            TransformType = "cosinus")
 
-
+TTR_1dim <- new("TrigonometricTransformParams",
+           DimToApplyTransform = c(1L),
+           TransformType = "cosinus")
 
 # Data loading
 FX_tick_Jan2020 <- load_financial_data("Data/FX tick/Jan2020/",
@@ -244,6 +246,8 @@ GPWT_time_pattern_5min <- parsePatternGPWTickTime(GPW_pattern_series$WIG20, delt
 
 GPWT_time_pattern_10min <- parsePatternGPWTickTime(GPW_pattern_series$WIG20, delta = dminutes(10),
                                                   playOffTime = dminutes(15), roundingUnit = "minute")
+GPWT_time_pattern_60min <- parsePatternGPWTickTime(GPW_pattern_series$WIG20, delta = dminutes(60),
+                                                   playOffTime = dminutes(15), roundingUnit = "minute")
 
 
 future::plan(future::multiprocess)
@@ -263,6 +267,13 @@ GPW_tick_10min <- furrr::future_map(.x = GPW_tick,
                                    .f = GPWTickAggregateAndFillNA, 
                                    patternDatesToAgg = GPWT_time_pattern_10min)
 future::plan(future::sequential)
+
+future::plan(future::multiprocess)
+GPW_tick_60min <- furrr::future_map(.x = GPW_tick, 
+                                    .f = GPWTickAggregateAndFillNA, 
+                                    patternDatesToAgg = GPWT_time_pattern_60min)
+future::plan(future::sequential)
+
 
 # Series filtration
 GPW_tick_1min <- purrr::map(GPW_tick_1min,
@@ -365,3 +376,449 @@ classResults_GPW_d5min_100_25 <- runShapeDTWForDefinedParamsTable(input_params =
                                                                    sd_border = 1.5)
 
 saveRDS(classResults_GPW_d5min_100_25, file = "Data/Results/RDSFiles/classResults_GPW_d5min_100_25.rds")
+
+### 5 min GPW wersja 100 / 50 ###
+
+input_params_GPW_d5min_100_50 <- buildParamsSetFinancialSeries(ts_list = GPW_tick_5min, 
+                                                               time_border = timeDate("2015-01-01 00:05:00", format = "%Y-%m-%d %H:%M:%S"), 
+                                                               shape_DTW_params = c(SDP_traditional, SDP_compound), 
+                                                               trigonometric_transform_params = TTR, 
+                                                               subsequenceWidth = 4, 
+                                                               learn_part_length = 100, 
+                                                               forecast_part_length = 50, 
+                                                               learn_set_n = 500, 
+                                                               test_set_n = 100)
+
+
+
+classResults_GPW_d5min_100_50 <- runShapeDTWForDefinedParamsTable(input_params = input_params_GPW_d5min_100_50, 
+                                                                  targetDistance = "raw", 
+                                                                  normalizationType = "Z", 
+                                                                  sd_border = 1.5)
+
+saveRDS(classResults_GPW_d5min_100_50, file = "Data/Results/RDSFiles/classResults_GPW_d5min_100_50.rds")
+
+### 5 min GPW wersja 100 / 100 ###
+
+input_params_GPW_d5min_100_100 <- buildParamsSetFinancialSeries(ts_list = GPW_tick_5min, 
+                                                               time_border = timeDate("2015-01-01 00:05:00", format = "%Y-%m-%d %H:%M:%S"), 
+                                                               shape_DTW_params = c(SDP_traditional, SDP_compound), 
+                                                               trigonometric_transform_params = TTR, 
+                                                               subsequenceWidth = 4, 
+                                                               learn_part_length = 100, 
+                                                               forecast_part_length = 100, 
+                                                               learn_set_n = 500, 
+                                                               test_set_n = 100)
+
+
+
+classResults_GPW_d5min_100_100 <- runShapeDTWForDefinedParamsTable(input_params = input_params_GPW_d5min_100_100, 
+                                                                  targetDistance = "raw", 
+                                                                  normalizationType = "Z", 
+                                                                  sd_border = 1.5)
+
+saveRDS(classResults_GPW_d5min_100_100, file = "Data/Results/RDSFiles/classResults_GPW_d5min_100_100.rds")
+
+
+### 10 min GPW wersja 100 / 25 ###
+
+input_params_GPW_d10min_100_25 <- buildParamsSetFinancialSeries(ts_list = GPW_tick_10min, 
+                                                               time_border = timeDate("2015-01-01 00:05:00", format = "%Y-%m-%d %H:%M:%S"), 
+                                                               shape_DTW_params = c(SDP_traditional, SDP_compound), 
+                                                               trigonometric_transform_params = TTR, 
+                                                               subsequenceWidth = 4, 
+                                                               learn_part_length = 100, 
+                                                               forecast_part_length = 25, 
+                                                               learn_set_n = 500, 
+                                                               test_set_n = 100)
+
+
+
+classResults_GPW_d10min_100_25 <- runShapeDTWForDefinedParamsTable(input_params = input_params_GPW_d10min_100_25, 
+                                                                  targetDistance = "raw", 
+                                                                  normalizationType = "Z", 
+                                                                  sd_border = 1)
+
+saveRDS(classResults_GPW_d10min_100_25, file = "Data/Results/RDSFiles/classResults_GPW_d10min_100_25.rds")
+
+### 10 min GPW wersja 100 / 50 ###
+
+input_params_GPW_d10min_100_50 <- buildParamsSetFinancialSeries(ts_list = GPW_tick_10min, 
+                                                               time_border = timeDate("2015-01-01 00:05:00", format = "%Y-%m-%d %H:%M:%S"), 
+                                                               shape_DTW_params = c(SDP_traditional, SDP_compound), 
+                                                               trigonometric_transform_params = TTR, 
+                                                               subsequenceWidth = 4, 
+                                                               learn_part_length = 100, 
+                                                               forecast_part_length = 50, 
+                                                               learn_set_n = 500, 
+                                                               test_set_n = 100)
+
+
+
+classResults_GPW_d10min_100_50 <- runShapeDTWForDefinedParamsTable(input_params = input_params_GPW_d10min_100_50, 
+                                                                  targetDistance = "raw", 
+                                                                  normalizationType = "Z", 
+                                                                  sd_border = 1.5)
+
+saveRDS(classResults_GPW_d10min_100_50, file = "Data/Results/RDSFiles/classResults_GPW_d10min_100_50.rds")
+
+### 10 min GPW wersja 100 / 100 ###
+
+input_params_GPW_d10min_100_100 <- buildParamsSetFinancialSeries(ts_list = GPW_tick_10min, 
+                                                                time_border = timeDate("2015-01-01 00:05:00", format = "%Y-%m-%d %H:%M:%S"), 
+                                                                shape_DTW_params = c(SDP_traditional, SDP_compound), 
+                                                                trigonometric_transform_params = TTR, 
+                                                                subsequenceWidth = 4, 
+                                                                learn_part_length = 100, 
+                                                                forecast_part_length = 100, 
+                                                                learn_set_n = 500, 
+                                                                test_set_n = 100)
+
+
+
+classResults_GPW_d10min_100_100 <- runShapeDTWForDefinedParamsTable(input_params = input_params_GPW_d10min_100_100, 
+                                                                   targetDistance = "raw", 
+                                                                   normalizationType = "Z", 
+                                                                   sd_border = 2)
+
+saveRDS(classResults_GPW_d10min_100_100, file = "Data/Results/RDSFiles/classResults_GPW_d10min_100_100.rds")
+
+
+
+### 60 min GPW wersja 100 / 25 ###
+
+input_params_GPW_d60min_100_25 <- buildParamsSetFinancialSeries(ts_list = GPW_tick_60min, 
+                                                                time_border = timeDate("2015-01-01 00:05:00", format = "%Y-%m-%d %H:%M:%S"), 
+                                                                shape_DTW_params = c(SDP_traditional, SDP_compound), 
+                                                                trigonometric_transform_params = TTR, 
+                                                                subsequenceWidth = 4, 
+                                                                learn_part_length = 100, 
+                                                                forecast_part_length = 25, 
+                                                                learn_set_n = 500, 
+                                                                test_set_n = 100)
+
+
+
+classResults_GPW_d60min_100_25 <- runShapeDTWForDefinedParamsTable(input_params = input_params_GPW_d60min_100_25, 
+                                                                   targetDistance = "raw", 
+                                                                   normalizationType = "Z", 
+                                                                   sd_border = 1)
+
+saveRDS(classResults_GPW_d60min_100_25, file = "Data/Results/RDSFiles/classResults_GPW_d60min_100_25.rds")
+
+### 10 min GPW wersja 100 / 50 ###
+
+input_params_GPW_d60min_100_50 <- buildParamsSetFinancialSeries(ts_list = GPW_tick_60min, 
+                                                                time_border = timeDate("2015-01-01 00:05:00", format = "%Y-%m-%d %H:%M:%S"), 
+                                                                shape_DTW_params = c(SDP_traditional, SDP_compound), 
+                                                                trigonometric_transform_params = TTR, 
+                                                                subsequenceWidth = 4, 
+                                                                learn_part_length = 100, 
+                                                                forecast_part_length = 50, 
+                                                                learn_set_n = 500, 
+                                                                test_set_n = 100)
+
+
+
+classResults_GPW_d60min_100_50 <- runShapeDTWForDefinedParamsTable(input_params = input_params_GPW_d60min_100_50, 
+                                                                   targetDistance = "raw", 
+                                                                   normalizationType = "Z", 
+                                                                   sd_border = 1.5)
+
+saveRDS(classResults_GPW_d60min_100_50, file = "Data/Results/RDSFiles/classResults_GPW_d60min_100_50.rds")
+
+### 60 min GPW wersja 100 / 100 ###
+
+input_params_GPW_d60min_100_100 <- buildParamsSetFinancialSeries(ts_list = GPW_tick_60min, 
+                                                                 time_border = timeDate("2015-01-01 00:05:00", format = "%Y-%m-%d %H:%M:%S"), 
+                                                                 shape_DTW_params = c(SDP_traditional, SDP_compound), 
+                                                                 trigonometric_transform_params = TTR, 
+                                                                 subsequenceWidth = 4, 
+                                                                 learn_part_length = 100, 
+                                                                 forecast_part_length = 100, 
+                                                                 learn_set_n = 500, 
+                                                                 test_set_n = 100)
+
+
+
+classResults_GPW_d60min_100_100 <- runShapeDTWForDefinedParamsTable(input_params = input_params_GPW_d60min_100_100, 
+                                                                    targetDistance = "raw", 
+                                                                    normalizationType = "Z", 
+                                                                    sd_border = 2)
+
+saveRDS(classResults_GPW_d60min_100_100, file = "Data/Results/RDSFiles/classResults_GPW_d60min_100_100.rds")
+
+########## GPW Daily data ##############
+
+GPW_daily_data <- load_financial_data("Data/GPW day/",
+                                      data_type = "GPW_d", include_all = T)
+GPW_daily_parsed <- purrr::map(GPW_daily_data, GPWDailyParse)
+
+### GPW daily wersja 100 / 25 ###
+
+input_params_GPW_daily_100_25 <- buildParamsSetFinancialSeries(ts_list = GPW_daily_parsed, 
+                                                                time_border = timeDate("2015-01-01 00:05:00", format = "%Y-%m-%d %H:%M:%S"), 
+                                                                shape_DTW_params = c(SDP_traditional, SDP_compound), 
+                                                                trigonometric_transform_params = TTR, 
+                                                                subsequenceWidth = 4, 
+                                                                learn_part_length = 100, 
+                                                                forecast_part_length = 25, 
+                                                                learn_set_n = 500, 
+                                                                test_set_n = 100)
+
+
+
+classResults_GPW_daily_100_25 <- runShapeDTWForDefinedParamsTable(input_params = input_params_GPW_daily_100_25, 
+                                                                   targetDistance = "raw", 
+                                                                   normalizationType = "Z", 
+                                                                   sd_border = 1)
+
+saveRDS(classResults_GPW_daily_100_25, file = "Data/Results/RDSFiles/classResults_GPW_daily_100_25.rds")
+
+### GPW daily wersja 100 / 50 ###
+
+input_params_GPW_daily_100_50 <- buildParamsSetFinancialSeries(ts_list = GPW_daily_parsed, 
+                                                                time_border = timeDate("2015-01-01 00:05:00", format = "%Y-%m-%d %H:%M:%S"), 
+                                                                shape_DTW_params = c(SDP_traditional, SDP_compound), 
+                                                                trigonometric_transform_params = TTR, 
+                                                                subsequenceWidth = 4, 
+                                                                learn_part_length = 100, 
+                                                                forecast_part_length = 50, 
+                                                                learn_set_n = 500, 
+                                                                test_set_n = 100)
+
+
+
+classResults_GPW_daily_100_50 <- runShapeDTWForDefinedParamsTable(input_params = input_params_GPW_daily_100_50, 
+                                                                   targetDistance = "raw", 
+                                                                   normalizationType = "Z", 
+                                                                   sd_border = 1.5)
+
+saveRDS(classResults_GPW_daily_100_50, file = "Data/Results/RDSFiles/classResults_GPW_daily_100_50.rds")
+
+### GPW daily wersja 100 / 100 ###
+
+input_params_GPW_daily_100_100 <- buildParamsSetFinancialSeries(ts_list = GPW_daily_parsed, 
+                                                                 time_border = timeDate("2015-01-01 00:05:00", format = "%Y-%m-%d %H:%M:%S"), 
+                                                                 shape_DTW_params = c(SDP_traditional, SDP_compound), 
+                                                                 trigonometric_transform_params = TTR, 
+                                                                 subsequenceWidth = 4, 
+                                                                 learn_part_length = 100, 
+                                                                 forecast_part_length = 100, 
+                                                                 learn_set_n = 500, 
+                                                                 test_set_n = 100)
+
+
+
+classResults_GPW_daily_100_100 <- runShapeDTWForDefinedParamsTable(input_params = input_params_GPW_daily_100_100, 
+                                                                    targetDistance = "raw", 
+                                                                    normalizationType = "Z", 
+                                                                    sd_border = 2)
+
+saveRDS(classResults_GPW_daily_100_100, file = "Data/Results/RDSFiles/classResults_GPW_daily_100_100.rds")
+
+# FX daily data
+
+FX_daily_set <- load_financial_data("Data/FX day",
+                                    data_type = "FOREX_da", include_all = T)
+
+FX_daily_parsed <- purrr::map(FX_daily_set, FXDailyParse)
+FX_daily_filtered <- purrr::map(FX_daily_parsed, function(x, d){
+  x <- window(x, start = d, end = Inf)
+  x
+}, d = as.Date("2010-01-01"))
+
+FX_daily_filtered <- FX_daily_filtered[-1]
+
+
+
+### FX daily wersja 100 / 25 ###
+
+input_params_FX_daily_100_25 <- buildParamsSetFinancialSeries(ts_list = FX_daily_filtered, 
+                                                               time_border = timeDate("2015-01-01 00:05:00", format = "%Y-%m-%d %H:%M:%S"), 
+                                                               shape_DTW_params = c(SDP_traditional, SDP_compound), 
+                                                               trigonometric_transform_params = TTR, 
+                                                               subsequenceWidth = 4, 
+                                                               learn_part_length = 100, 
+                                                               forecast_part_length = 25, 
+                                                               learn_set_n = 500, 
+                                                               test_set_n = 100)
+
+
+
+classResults_FX_daily_100_25 <- runShapeDTWForDefinedParamsTable(input_params = input_params_FX_daily_100_25, 
+                                                                  targetDistance = "raw", 
+                                                                  normalizationType = "Z", 
+                                                                  sd_border = 1)
+
+saveRDS(classResults_FX_daily_100_25, file = "Data/Results/RDSFiles/classResults_FX_daily_100_25.rds")
+
+### FX daily wersja 100 / 50 ###
+
+input_params_FX_daily_100_50 <- buildParamsSetFinancialSeries(ts_list = FX_daily_filtered, 
+                                                               time_border = timeDate("2015-01-01 00:05:00", format = "%Y-%m-%d %H:%M:%S"), 
+                                                               shape_DTW_params = c(SDP_traditional, SDP_compound), 
+                                                               trigonometric_transform_params = TTR, 
+                                                               subsequenceWidth = 4, 
+                                                               learn_part_length = 100, 
+                                                               forecast_part_length = 50, 
+                                                               learn_set_n = 500, 
+                                                               test_set_n = 100)
+
+
+
+classResults_FX_daily_100_50 <- runShapeDTWForDefinedParamsTable(input_params = input_params_FX_daily_100_50, 
+                                                                  targetDistance = "raw", 
+                                                                  normalizationType = "Z", 
+                                                                  sd_border = 1.5)
+
+saveRDS(classResults_FX_daily_100_50, file = "Data/Results/RDSFiles/classResults_FX_daily_100_50.rds")
+
+### FX daily wersja 100 / 100 ###
+
+input_params_FX_daily_100_100 <- buildParamsSetFinancialSeries(ts_list = FX_daily_filtered, 
+                                                                time_border = timeDate("2015-01-01 00:05:00", format = "%Y-%m-%d %H:%M:%S"), 
+                                                                shape_DTW_params = c(SDP_traditional, SDP_compound), 
+                                                                trigonometric_transform_params = TTR, 
+                                                                subsequenceWidth = 4, 
+                                                                learn_part_length = 100, 
+                                                                forecast_part_length = 100, 
+                                                                learn_set_n = 500, 
+                                                                test_set_n = 100)
+
+
+
+classResults_FX_daily_100_100 <- runShapeDTWForDefinedParamsTable(input_params = input_params_FX_daily_100_100, 
+                                                                   targetDistance = "raw", 
+                                                                   normalizationType = "Z", 
+                                                                   sd_border = 2)
+
+saveRDS(classResults_FX_daily_100_100, file = "Data/Results/RDSFiles/classResults_FX_daily_100_100.rds")
+
+### GPW Indexes Day ###
+
+GPW_ind_daily_set <- load_financial_data("Data/GPW indexes day/",
+                                    data_type = "GPW_d", include_all = T)
+
+GPW_ind_daily_set_parsed <- purrr::map(GPW_ind_daily_set, GPWDailyParse)
+GPW_ind_daily_filtered <- purrr::map(GPW_ind_daily_set_parsed, function(x, d){
+  x <- window(x, start = d, end = Inf)
+  x
+}, d = as.Date("2010-01-01"))
+
+### GPW indexes daily wersja 100 / 25 ###
+
+input_params_GPW_ind_daily_100_25 <- buildParamsSetFinancialSeries(ts_list = GPW_ind_daily_filtered, 
+                                                              time_border = timeDate("2015-01-01 00:05:00", format = "%Y-%m-%d %H:%M:%S"), 
+                                                              shape_DTW_params = c(SDP_traditional, SDP_compound), 
+                                                              trigonometric_transform_params = TTR, 
+                                                              subsequenceWidth = 4, 
+                                                              learn_part_length = 100, 
+                                                              forecast_part_length = 25, 
+                                                              learn_set_n = 500, 
+                                                              test_set_n = 100)
+
+
+
+classResults_GPW_ind_daily_100_25 <- runShapeDTWForDefinedParamsTable(input_params = input_params_GPW_ind_daily_100_25, 
+                                                                 targetDistance = "raw", 
+                                                                 normalizationType = "Z", 
+                                                                 sd_border = 2)
+
+saveRDS(classResults_GPW_ind_daily_100_25, file = "Data/Results/RDSFiles/classResults_GPW_ind_daily_100_25.rds")
+
+### GPW indexes daily wersja 100 / 50 ###
+
+input_params_GPW_ind_daily_100_50 <- buildParamsSetFinancialSeries(ts_list = GPW_ind_daily_filtered, 
+                                                              time_border = timeDate("2015-01-01 00:05:00", format = "%Y-%m-%d %H:%M:%S"), 
+                                                              shape_DTW_params = c(SDP_traditional, SDP_compound), 
+                                                              trigonometric_transform_params = TTR, 
+                                                              subsequenceWidth = 4, 
+                                                              learn_part_length = 100, 
+                                                              forecast_part_length = 50, 
+                                                              learn_set_n = 500, 
+                                                              test_set_n = 100)
+
+
+
+classResults_GPW_ind_daily_100_50 <- runShapeDTWForDefinedParamsTable(input_params = input_params_GPW_ind_daily_100_50, 
+                                                                 targetDistance = "raw", 
+                                                                 normalizationType = "Z", 
+                                                                 sd_border = 3)
+
+saveRDS(classResults_GPW_ind_daily_100_50, file = "Data/Results/RDSFiles/classResults_GPW_ind_daily_100_50.rds")
+
+### GPW indexes daily wersja 100 / 100 ###
+
+input_params_GPW_ind_daily_100_100 <- buildParamsSetFinancialSeries(ts_list = GPW_ind_daily_filtered, 
+                                                               time_border = timeDate("2015-01-01 00:05:00", format = "%Y-%m-%d %H:%M:%S"), 
+                                                               shape_DTW_params = c(SDP_traditional, SDP_compound), 
+                                                               trigonometric_transform_params = TTR, 
+                                                               subsequenceWidth = 4, 
+                                                               learn_part_length = 100, 
+                                                               forecast_part_length = 100, 
+                                                               learn_set_n = 500, 
+                                                               test_set_n = 100)
+
+
+
+classResults_GPW_ind_daily_100_100 <- runShapeDTWForDefinedParamsTable(input_params = input_params_GPW_ind_daily_100_100, 
+                                                                  targetDistance = "raw", 
+                                                                  normalizationType = "Z", 
+                                                                  sd_border = 5)
+
+saveRDS(classResults_GPW_ind_daily_100_100, file = "Data/Results/RDSFiles/classResults_GPW_ind_daily_100_100.rds")
+
+
+
+
+### FX tick 30 minutes ###
+FX_tick_data_Oct_2019 <- load_financial_data(folder_path = "Data/FX tick/Oct2019/", 
+                                             data_type = "FOREX_tick", include_all = T)
+
+future::plan(future::multiprocess)
+FXtickAgg_Oct2019_d30min <- furrr::future_map(.x = FX_tick_data_Oct_2019, 
+                                              .f = FXTickAggregateAndFillNA,
+                                              delta = lubridate::dminutes(30))
+future::plan(future::sequential)
+rm(FX_tick_data_Oct_2019)
+
+FX_tick_data_Nov_2019 <- load_financial_data(folder_path = "Data/FX tick/Nov2019/", 
+                                             data_type = "FOREX_tick", include_all = T)
+
+future::plan(future::multiprocess)
+FXtickAgg_Nov2019_d30min <- furrr::future_map(.x = FX_tick_data_Nov_2019, 
+                                              .f = FXTickAggregateAndFillNA,
+                                              delta = lubridate::dminutes(30))
+future::plan(future::sequential)
+rm(FX_tick_data_Nov_2019)
+
+FX_tick_data_Dec_2019 <- load_financial_data(folder_path = "Data/FX tick/Dec2019/", 
+                                             data_type = "FOREX_tick", include_all = T)
+
+future::plan(future::multiprocess)
+FXtickAgg_Dec2019_d30min <- furrr::future_map(.x = FX_tick_data_Dec_2019, 
+                                              .f = FXTickAggregateAndFillNA,
+                                              delta = lubridate::dminutes(30))
+future::plan(future::sequential)
+rm(FX_tick_data_Dec_2019)
+
+FX_tick_data_Jan_2020 <- load_financial_data(folder_path = "Data/FX tick/Jan2020/", 
+                                             data_type = "FOREX_tick", include_all = T)
+
+future::plan(future::multiprocess)
+FXtickAgg_Jan2020_d30min <- furrr::future_map(.x = FX_tick_data_Jan_2020, 
+                                              .f = FXTickAggregateAndFillNA,
+                                              delta = lubridate::dminutes(30))
+future::plan(future::sequential)
+rm(FX_tick_data_Jan_2020)
+
+FX_tick_data_Feb_2020 <- load_financial_data(folder_path = "Data/FX tick/Feb2020/", 
+                                             data_type = "FOREX_tick", include_all = T)
+
+future::plan(future::multiprocess)
+FXtickAgg_Feb2020_d30min <- furrr::future_map(.x = FX_tick_data_Feb_2020, 
+                                              .f = FXTickAggregateAndFillNA,
+                                              delta = lubridate::dminutes(30))
+future::plan(future::sequential)
+rm(FX_tick_data_Feb_2020)

@@ -645,7 +645,8 @@ runShapeDTWForDefinedParamsTable <- function(input_params,
                                         test_set,
                                         learn_part_length,
                                         forecast_part_length,
-                                        tab_ind){
+                                        tab_ind,
+                                        sakoeChibaWindow){
                                  
                                  msg <- paste("Calculating table number ", tab_ind, "\n", sep = "")
                                  message(msg)

@@ -4,7 +4,8 @@
 load_financial_data <- function(folder_path, data_type = c("GPW_daily", "GPW_tick",
                                                            "FOREX_daily", "FOREX_tick"),
                                 include_columns = c("Date", "Close", "Volume"),
-                                include_all = F){
+                                include_all = F, first_header = NULL,
+                                file_col_names = NULL){
   
   currentPath <- getwd()
   pathAbsolute <- isAbsolutePath(folder_path)
@@ -21,17 +22,24 @@ load_financial_data <- function(folder_path, data_type = c("GPW_daily", "GPW_tic
   fin_inst_names <- str_extract(files_name, pattern = "[^\\.]+")
   
   # Parametr wskazujący, czy w pierwszym wierszu pliku znajdują się nazwy kolumn
-  first_header <- is.element(d_type, c("FOREX_daily", "GPW_daily"))
+  if(is.null(first_header)){
+    first_header <- is.element(d_type, c("FOREX_daily", "GPW_daily"))
+  }
   
   # Nazwy kolumn w zależności od typu danych
-  file_col_names <- list(GPW_daily = c("Instrument", "Date", "Open", "High", "Low",
-                                       "Close", "Volume"),
-                         FOREX_daily = c("Instrument", "Date", "Open", "High", "Low",
+  if(is.null(file_col_names)){
+    file_col_names <- list(GPW_daily = c("Instrument", "Date", "Open", "High", "Low",
                                          "Close", "Volume"),
-                         FOREX_tick = c("Instrument", "Date", "Open", "Close"),
-                         GPW_tick = c("Instrument", "ControlCol", "Day", "Time",
-                                      "Open","High", "Low", "Close", "Volume",
-                                      "ControlCol2"))
+                           FOREX_daily = c("Instrument", "Date", "Open", "High", "Low",
+                                           "Close", "Volume"),
+                           FOREX_tick = c("Instrument", "Date", "Open", "Close"),
+                           GPW_tick = c("Instrument", "ControlCol", "Day", "Time",
+                                        "Open","High", "Low", "Close", "Volume",
+                                        "ControlCol2"))
+    
+  }else{
+    file_col_names <- list(d_type = file_col_names)
+  }
   
   # Załadowanie danych z plików tekstowych do listy wypełnionej ramkami danych 
   data_list <- lapply(files_name, function(x, col_n, first_header, data_type,
@@ -274,7 +282,9 @@ GPWDailyParse <- function(GPWDailyData){
 FXDailyParse <- function(FXDailyData){
   
   FXDailyData <- FXDailyData %>%
-    mutate(Variability = (Close - Open) / (High - Low)) %>%
+    mutate(Variability = ifelse(!is.nan((Close - Open) / (High - Low)),
+                                        (Close - Open) / (High - Low),
+                                        0)) %>%
     dplyr::rename(closePrice = Close)
   
   results <- timeSeries(data = FXDailyData[,c("closePrice", "Variability")],

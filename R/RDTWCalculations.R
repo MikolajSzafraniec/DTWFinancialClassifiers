@@ -706,7 +706,7 @@ runShapeDTWForDefinedParamsTable <- function(input_params,
 }
 
 classResultsToAccuracyMeasure <- function(classification_results_list,
-                                          measure = c("acc", "prec", "rec", "corr"),
+                                          measure = c("acc", "balanced_acc", "prec", "rec", "corr"),
                                           target_class = c("Fall", "Growth", "Flat_move")){
   
   measure = match.arg(measure)
@@ -718,6 +718,26 @@ classResultsToAccuracyMeasure <- function(classification_results_list,
                           res <- switch(
                             measure,
                             acc = sum(crt$refReturnClass == crt$testReturnClass) / nrow(crt),
+                            
+                            balanced_acc = 
+                            {
+                              acc_fall <- 
+                                sum(crt$refReturnClass == "Fall" & (crt$testReturnClass ==
+                                                                                 crt$refReturnClass)) /
+                                sum(crt$refReturnClass == "Fall")
+                              
+                              acc_growth <- 
+                                sum(crt$refReturnClass == "Growth" & (crt$testReturnClass ==
+                                                                      crt$refReturnClass)) /
+                                sum(crt$refReturnClass == "Growth")
+                              
+                              acc_flat <- 
+                                sum(crt$refReturnClass == "Flat_move" & (crt$testReturnClass ==
+                                                                        crt$refReturnClass)) /
+                                sum(crt$refReturnClass == "Flat_move")
+                              
+                              sum(acc_fall, acc_growth, acc_flat) / 3
+                            },
                             
                             prec = 
                             {

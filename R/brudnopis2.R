@@ -757,8 +757,51 @@ classResultsToAccuracyMeasure(classResults_GPW_d5min_100_50, "cor")
 classResultsToAccuracyMeasure(classResults_GPW_d5min_100_100_mod, "acc")
 
 
-classResultsToAccuracyMeasure(classResults_GPW_d10min_100_100, "ac", "G")
+classResultsToAccuracyMeasure(classResults_GPW_d10min_100_100, "co", "G")
 table(classResults_GPW_d10min_100_100$dtw_type_Dependent.shape_desc_type_simple.dims1$refReturnClass)
 
 plot(classResults_GPW_d10min_100_100$dtw_type_Dependent.shape_desc_type_simple.dims1$refSeriesReturn,
      classResults_GPW_d10min_100_100$dtw_type_Dependent.shape_desc_type_simple.dims1$learnSeriesReturn)
+
+
+classResultsToAccuracyMeasure(classResults_GPW_d60min_100_100_TTR_1_dim)
+
+
+
+
+input_params_GPW_d60min_100_50_mod <- buildParamsSetFinancialSeries(ts_list = GPW_tick_60min, 
+                                                                time_border = timeDate("2015-01-01 00:05:00", format = "%Y-%m-%d %H:%M:%S"), 
+                                                                shape_DTW_params = c(SDP_traditional, SDP_compound), 
+                                                                trigonometric_transform_params = TTR, 
+                                                                subsequenceWidth = 4, 
+                                                                learn_part_length = 100, 
+                                                                forecast_part_length = 50, 
+                                                                learn_set_n = 500, 
+                                                                test_set_n = 100)
+
+input_params_GPW_d60min_100_50_mod$params_table <- input_params_GPW_d60min_100_50_mod$params_table %>%
+  dplyr::filter(descr == "dtw_type_Independent.shape_desc_type_compound.dims1_2")
+
+classResults_GPW_d60min_100_50_mod <- runShapeDTWForDefinedParamsTable(input_params = input_params_GPW_d60min_100_50_mod, 
+                                                                   targetDistance = "raw", 
+                                                                   normalizationType = "Z", 
+                                                                   sd_border = 1.5)
+sum(classResults_GPW_d60min_100_50_mod$dtw_type_Independent.shape_desc_type_compound.dims1_2$kNNSuccess)
+
+
+
+
+### GPW daily wersja 100 / 50 ###
+
+input_params_GPW_daily_100_50_mod <- input_params_GPW_daily_100_50
+input_params_GPW_daily_100_50_mod$params_table <- input_params_GPW_daily_100_50_mod$params_table[6,]
+
+
+classResults_GPW_daily_100_50_mod <- runShapeDTWForDefinedParamsTable(input_params = input_params_GPW_daily_100_50_mod, 
+                                                                  targetDistance = "raw", 
+                                                                  normalizationType = "Z", 
+                                                                  sd_border = 1.5, sakoeChibaWindow = NULL)
+
+sum(classResults_GPW_daily_100_50_mod$dtw_type_Independent.shape_desc_type_simple.dims1_2_3$kNNSuccess)
+cor(classResults_GPW_daily_100_50_mod$dtw_type_Independent.shape_desc_type_simple.dims1_2_3$refSeriesReturn,
+    classResults_GPW_daily_100_50_mod$dtw_type_Independent.shape_desc_type_simple.dims1_2_3$learnSeriesReturn)

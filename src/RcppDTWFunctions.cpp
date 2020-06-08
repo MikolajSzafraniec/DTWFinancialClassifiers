@@ -458,7 +458,7 @@ NumericMatrix knnEuclideanCpp(NumericMatrix refSeries,
     distancesObj.push_back(IndDistPair(iteratorsSet[i] + 1, currentDist));
   }
     
-  if(nn < distancesObj.size()){
+  if(nn >= iteratorsSetLength){
     NumericMatrix res(iteratorsSetLength, 2);
     colnames(res) = CharacterVector::create("Idx", "Distance");
     for(int i = 0; i < iteratorsSetLength; i++){

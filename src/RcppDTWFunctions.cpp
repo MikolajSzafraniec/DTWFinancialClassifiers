@@ -2,6 +2,7 @@
 #include <math.h>
 #include "Iterators.h"
 #include "CppDTWFunctions.h"
+#include <bits/stdc++.h>
 #ifndef TimeSeriesTransformation
 #define TimeSeriesTransformation
 #endif
@@ -357,4 +358,121 @@ List kNNShapeDTWCpp(NumericMatrix referenceSeries,
   );
   
   return res;
+}
+
+/*
+ * Class which represents index - value (distance) pair
+ */
+
+class IndDistPair{
+  
+public:
+  int idx;
+  double dist;
+  
+  IndDistPair(int i, double d) 
+    : idx(i), dist(d)
+  {
+  }
+  
+};
+
+bool distComp(IndDistPair A, IndDistPair B) 
+{ 
+  // Compare the indices if the values are equal 
+  if (A.dist == B.dist) 
+    return A.idx < B.idx; 
+  
+  // Else compare values 
+  return A.dist < B.dist; 
+} 
+
+/*
+ * Function which find n nearest neighbours based on the Euclidean Distance
+ * among several time series passed as the list of matrices.
+ */
+
+//[[Rcpp::export]]
+NumericMatrix knnEuclideanCpp(NumericMatrix refSeries,
+                              NumericMatrix testSeries,
+                              int nn,
+                              int forecastHorizon,
+                              int subsequenceBreaks,
+                              std::string normalizationType = "Unitarization"){
+  
+  int refSeriesLength = refSeries.nrow();
+  int testSeriesLengt = testSeries.nrow();
+  int refSeriesDim = refSeries.ncol();
+  int testSeriesDim = testSeries.ncol();
+  
+  if(refSeriesDim != testSeriesDim)
+    stop("Number of dimensions (columns) in both series must match.");
+  
+  IntegerVector iteratorsSet = Iterators::CreateTSIterator(refSeriesLength = refSeriesLength, 
+                                                           testSeriesLengt = testSeriesLengt, 
+                                                           forecastHorizon = forecastHorizon,
+                                                           subsequenceBreaks = subsequenceBreaks);
+  int iteratorsSetLength = iteratorsSet.length();
+  
+  TSNormalizationMethods normalizationTypeEnum = 
+    TSNormalizationMethodMap()[normalizationType];
+  
+  TSTransformation::TSNorm normFunc;
+  
+  switch(normalizationTypeEnum){
+  case(ZSCORE):
+    normFunc = zScoreComputation;
+    break;
+  case(UNITARIZATION):
+    normFunc = unitarizationComputation;
+    break;
+  default:
+    normFunc = unitarizationComputation;
+  }
+  
+  std::vector<IndDistPair> distancesObj;
+  
+  NumericMatrix refSeriesNormalized(refSeriesLength, refSeriesDim);
+  NumericMatrix testSeriesNormalizedTemp(refSeriesLength, refSeriesDim);
+  NumericMatrix tempTestSeriesSubset(refSeriesLength, refSeriesDim);
+  
+  for(int i = 0; i < refSeriesDim; i++){
+    refSeriesNormalized(_ , i) = normFunc(refSeries(_, i));
+  }
+  
+  double currentDist;
+  
+  for(int i = 0; i < iteratorsSetLength; i++){
+    currentDist = 0;
+    int currentStart = iteratorsSet[i];
+    int currentEnd = currentStart + refSeriesLength - 1;
+    
+    tempTestSeriesSubset = testSeries(Range(currentStart, currentEnd),
+                                      Range(0, testSeriesDim-1));
+    
+    for(int j = 0; j < testSeriesDim; j++){
+      currentDist += RcppDist::DistanceCpp(refSeriesNormalized(_, j),
+                                           normFunc(tempTestSeriesSubset(_, j)));
+    }
+    
+    distancesObj.push_back(IndDistPair(iteratorsSet[i] + 1, currentDist));
+  }
+    
+  if(nn < distancesObj.size()){
+    NumericMatrix res(iteratorsSetLength, 2);
+    colnames(res) = CharacterVector::create("Idx", "Distance");
+    for(int i = 0; i < iteratorsSetLength; i++){
+      res(i, _) = NumericVector::create(distancesObj[i].idx, distancesObj[i].dist);
+    }
+    return(res);
+  }
+  
+  sort(distancesObj.begin(), distancesObj.end(), distComp);
+  NumericMatrix res(nn, 2);
+  colnames(res) = CharacterVector::create("Idx", "Distance");
+  
+  for(int i = 0; i < nn; i++){
+    res(i, _) = NumericVector::create(distancesObj[i].idx, distancesObj[i].dist);
+  }
+  return(res);
 }

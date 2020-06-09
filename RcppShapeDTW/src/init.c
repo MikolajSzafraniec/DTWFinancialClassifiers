@@ -8,6 +8,7 @@
 */
 
 /* .Call calls */
+extern SEXP _RcppShapeDTW_knnEuclideanCpp(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP _RcppShapeDTW_kNNShapeDTWCpp(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP _RcppShapeDTW_rcpp_hello_world();
 extern SEXP _RcppShapeDTW_RcppAccumulatedCostMatrix(SEXP, SEXP);
@@ -22,6 +23,7 @@ extern SEXP _RcppShapeDTW_RcppTSNormalization(SEXP, SEXP);
 extern SEXP _RcppShapeDTW_RcpptsTransformation(SEXP, SEXP, SEXP, SEXP, SEXP);
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_RcppShapeDTW_knnEuclideanCpp",              (DL_FUNC) &_RcppShapeDTW_knnEuclideanCpp,               6},
     {"_RcppShapeDTW_kNNShapeDTWCpp",               (DL_FUNC) &_RcppShapeDTW_kNNShapeDTWCpp,               10},
     {"_RcppShapeDTW_rcpp_hello_world",             (DL_FUNC) &_RcppShapeDTW_rcpp_hello_world,              0},
     {"_RcppShapeDTW_RcppAccumulatedCostMatrix",    (DL_FUNC) &_RcppShapeDTW_RcppAccumulatedCostMatrix,     2},

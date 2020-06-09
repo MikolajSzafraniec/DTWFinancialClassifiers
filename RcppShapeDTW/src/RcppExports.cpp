@@ -156,6 +156,22 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// knnEuclideanCpp
+NumericMatrix knnEuclideanCpp(NumericMatrix refSeries, NumericMatrix testSeries, int nn, int forecastHorizon, int subsequenceBreaks, std::string normalizationType);
+RcppExport SEXP _RcppShapeDTW_knnEuclideanCpp(SEXP refSeriesSEXP, SEXP testSeriesSEXP, SEXP nnSEXP, SEXP forecastHorizonSEXP, SEXP subsequenceBreaksSEXP, SEXP normalizationTypeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type refSeries(refSeriesSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type testSeries(testSeriesSEXP);
+    Rcpp::traits::input_parameter< int >::type nn(nnSEXP);
+    Rcpp::traits::input_parameter< int >::type forecastHorizon(forecastHorizonSEXP);
+    Rcpp::traits::input_parameter< int >::type subsequenceBreaks(subsequenceBreaksSEXP);
+    Rcpp::traits::input_parameter< std::string >::type normalizationType(normalizationTypeSEXP);
+    rcpp_result_gen = Rcpp::wrap(knnEuclideanCpp(refSeries, testSeries, nn, forecastHorizon, subsequenceBreaks, normalizationType));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpp_hello_world
 List rcpp_hello_world();
 RcppExport SEXP _RcppShapeDTW_rcpp_hello_world() {
@@ -179,6 +195,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_RcppShapeDTW_RcppdistanceFromWarpingPaths", (DL_FUNC) &_RcppShapeDTW_RcppdistanceFromWarpingPaths, 3},
     {"_RcppShapeDTW_RcppComplexDTWResults", (DL_FUNC) &_RcppShapeDTW_RcppComplexDTWResults, 4},
     {"_RcppShapeDTW_kNNShapeDTWCpp", (DL_FUNC) &_RcppShapeDTW_kNNShapeDTWCpp, 10},
+    {"_RcppShapeDTW_knnEuclideanCpp", (DL_FUNC) &_RcppShapeDTW_knnEuclideanCpp, 6},
     {"_RcppShapeDTW_rcpp_hello_world", (DL_FUNC) &_RcppShapeDTW_rcpp_hello_world, 0},
     {NULL, NULL, 0}
 };

@@ -45,6 +45,10 @@ kNNShapeDTWCpp <- function(referenceSeries, testSeries, forecastHorizon, subsequ
     .Call(`_RcppShapeDTW_kNNShapeDTWCpp`, referenceSeries, testSeries, forecastHorizon, subsequenceWidth, subsequenceBreaks, shapeDescriptorParams, normalizationType, distanceType, ttParams, sakoeChibaWindow)
 }
 
+knnEuclideanCpp <- function(refSeries, testSeries, nn, forecastHorizon, subsequenceBreaks, normalizationType = "Unitarization") {
+    .Call(`_RcppShapeDTW_knnEuclideanCpp`, refSeries, testSeries, nn, forecastHorizon, subsequenceBreaks, normalizationType)
+}
+
 rcpp_hello_world <- function() {
     .Call(`_RcppShapeDTW_rcpp_hello_world`)
 }

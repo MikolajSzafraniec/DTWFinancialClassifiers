@@ -32,7 +32,6 @@ RknnShapeDTW <- function(refSeries,
                          learnSeries,
                          refSeriesStart, #Integer index of ts
                          shapeDTWParams,
-                         learnSeriesName = "learnSeries",
                          distanceType = c("Dependent", "Independent"),
                          normalizationType = c("Unitarization", "Zscore"),
                          refSeriesLength = 100,
@@ -41,7 +40,9 @@ RknnShapeDTW <- function(refSeries,
                          trigonometricTP = NULL,
                          subsequenceBreaks = 10,
                          sakoeChibaWindow = NULL){
-
+  
+  normalizationType <- match.arg(normalizationType)
+  distanceType <- match.arg(distanceType)
   
   refSeriesStartTime <- time(refSeries)[refSeriesStart]
   refSeriesEndTime <- time(refSeries)[refSeriesStart + refSeriesLength - 1]
@@ -100,8 +101,7 @@ RknnShapeDTWParallel <- function(refSeries,
     list(refSeries = list(refSeries),
          learnSeries = learnSeries,
          n = names(learnSeries)),
-    ~RknnShapeDTW(refSeries = ..1, learnSeries = ..2, 
-                  learnSeriesName = ..3, refSeriesStart = refSeriesStart, 
+    ~RknnShapeDTW(refSeries = ..1, learnSeries = ..2, refSeriesStart = refSeriesStart, 
                   shapeDTWParams = shapeDTWParams, 
                   refSeriesLength = refSeriesLength, forecastHorizon = forecastHorizon, 
                   subsequenceWidth = subsequenceWidth, trigonometricTP = trigonometricTP, 

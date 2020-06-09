@@ -107,6 +107,49 @@ retrieveLearningSetFromList <- function(learnSeriesList,
   return(res)
 }
 
+calcReturn <- function(target_series,
+                       idx_begin,
+                       target_series_length,
+                       forecast_horizon,
+                       return_type = c("natural", "log")){
+  
+  return_type <- match.arg(return_type)
+  
+  last_actual_val <- target_series[idx_begin + target_series_length - 1]
+  last_frcst_val <- target_series[idx_begin + target_series_length + forecast_horizon - 1]
+  res <- switch(
+    return_type,
+    natural = (last_frcst_val - last_actual_val) / last_actual_val,
+    log = log(last_frcst_val/last_actual_val)
+  )
+  return(res)
+}
+
+calcSD <- function(target_series,
+                   idx_begin, 
+                   target_series_lenght,
+                   return_type = c( "simple", "continuous")){
+  
+  return_type <- match.arg(return_type)
+  
+  subset_series <- target_series[idx_begin:(idx_begin+target_series_lenght-1)]
+  series_returns <- timeSeries::returns(
+    subset_series,
+    method = return_type,
+    trim = TRUE,
+    na.rm = TRUE
+  )
+  series_returns <- na.omit(series_returns)
+  
+  return(sd(series_returns))
+}
+
+assignReturnClass <- function(rt, sd_border, sd){
+  res <- cut.default(rt,
+              breaks = c(-Inf, -sd_border*sd, sd_border*sd, Inf), 
+              labels = c("Sell", "Hold", "Buy"))
+  return(as.character(res))
+}
 
 RknnShapeDTWParallelSimplified <- function(refSeries,
                                            learnSeriesList,
@@ -117,20 +160,23 @@ RknnShapeDTWParallelSimplified <- function(refSeries,
                                            normalizationType = c("Unitarization", "Zscore"),
                                            refSeriesLength = 100,
                                            forecastHorizons = c(25, 50, 100),
+                                           sd_borders = c(1, 1.5, 2),
                                            subsequenceWidth = 4,
                                            trigonometricTP = NULL,
                                            subsequenceBreaks = 1,
                                            includeRefSeries = F,
                                            sakoeChibaWindow = NULL){
   
+  stopifnot(length(forecastHorizons) == length(sd_borders))
+  
   targetDistance <- match.arg(targetDistance)
   distanceType <- match.arg(distanceType)
   normalizationType <- match.arg(normalizationType)
   
-  tsListLen <- length(learnSeries)
+  tsListLen <- length(learnSeriesList)
   
   if(includeRefSeries){
-    learnSeries[[tsListLen+1]] <- refSeries
+    learnSeriesList[[tsListLen+1]] <- refSeries
   }
   
   if(class(future::plan())[2] == "sequential"){
@@ -142,7 +188,7 @@ RknnShapeDTWParallelSimplified <- function(refSeries,
   
   results_set <- furrr::future_pmap(
     list(refSeries = list(refSeries),
-         learnSeries = learnSeries),
+         learnSeriesList = learnSeriesList),
     ~RknnShapeDTW(refSeries = ..1, learnSeries = ..2, 
                   refSeriesStart = refSeriesStart, 
                   shapeDTWParams = shapeDTWParams, 
@@ -168,72 +214,6 @@ RknnShapeDTWParallelSimplified <- function(refSeries,
   }, td = targetDistance, apply_at = apply_at)
   
   which_dist_min <- which.min(distances)
-}
-
-
-RknnShapeDTWParallel <- function(refSeries,
-                                 learnSeries, # List of time series
-                                 refSeriesStart, #Integer index of ts
-                                 shapeDTWParams,
-                                 targetDistance = c("raw", "shapeDesc"),
-                                 distanceType = c("Dependent", "Independent"),
-                                 normalizationType = c("Unitarization", "Zscore"),
-                                 refSeriesLength = 100,
-                                 forecastHorizon = 20,
-                                 subsequenceWidth = 4,
-                                 trigonometricTP = NULL,
-                                 subsequenceBreaks = 10,
-                                 includeRefSeries = TRUE,
-                                 sd_border = 1,
-                                 sakoeChibaWindow = NULL){
-  
-  targetDistance <- match.arg(targetDistance)
-  distanceType <- match.arg(distanceType)
-  normalizationType <- match.arg(normalizationType)
-  
-  tsListLen <- length(learnSeries)
-  
-  if(includeRefSeries){
-    learnSeries[[tsListLen+1]] <- refSeries
-    names(learnSeries)[tsListLen+1] <- "refSeries"
-  }
-  
-  if(class(future::plan())[2] == "sequential"){
-    message("Changing plan to multiprocess")
-    future::plan(future::multiprocess)
-  }
-  
-  results_set <- furrr::future_pmap(
-    list(refSeries = list(refSeries),
-         learnSeries = learnSeries),
-    ~RknnShapeDTW(refSeries = ..1, learnSeries = ..2, 
-                  refSeriesStart = refSeriesStart, 
-                  shapeDTWParams = shapeDTWParams, 
-                  refSeriesLength = refSeriesLength, forecastHorizon = forecastHorizon, 
-                  subsequenceWidth = subsequenceWidth, trigonometricTP = trigonometricTP, 
-                  distanceType = distanceType, subsequenceBreaks = subsequenceBreaks, 
-                  normalizationType = normalizationType,
-                  sakoeChibaWindow = sakoeChibaWindow)
-  )
-  
-  #message("Switching plan back to sequential")
-  #future::plan(future::sequential)
-  
-  apply_at <- ifelse(targetDistance == "raw", 
-                     "RawSeriesDistanceResults",
-                     "ShapeDescriptorsDistanceResults")
-  
-  distances <- map_depth(.x = results_set, .depth = 1, .f = function(x, td, apply_at){
-    
-    if(targetDistance == "raw"){
-      return(x[[apply_at]]$RawDistance)
-    }else{
-      return(x[[apply_at]]$ShapeDescriptorsDistance)
-    }
-    
-  }, td = targetDistance, apply_at = apply_at)
-  
-  which_dist_min <- which.min(distances)
   
   dtw_res <- NULL
   if(targetDistance == "raw"){
@@ -242,76 +222,65 @@ RknnShapeDTWParallel <- function(refSeries,
     dtw_res <- results_set[[which_dist_min]]$ShapeDescriptorsDistanceResults
   }
   
-  res_name <- names(learnSeries)[which_dist_min]
+  nnSeries <- learnSeriesList[[which_dist_min]]
   
-  fun_to_apply <- ifelse(normalizationType == "Unitarization",
-                         Unitarization,
-                         Zscore)
+  target_series_returns <- purrr::map_dbl(forecastHorizons, 
+                                      ~calcReturn(target_series = refSeries, 
+                                                  idx_begin = refSeriesStart, 
+                                                  target_series_length = refSeriesLength, 
+                                                  forecast_horizon = .x, 
+                                                  return_type = "n"))
+  names(target_series_returns) <- paste0("target_series_", forecastHorizons, "_returns")
   
-  nnSeries <- learnSeries[[which_dist_min]]
+  learn_series_returns <- purrr::map_dbl(forecastHorizons, 
+                                     ~calcReturn(target_series = nnSeries, 
+                                                 idx_begin = dtw_res$bestSubsequenceIdx, 
+                                                 target_series_length = refSeriesLength, 
+                                                 forecast_horizon = .x, 
+                                                 return_type = "n"))
+  names(learn_series_returns) <- paste0("learn_series_", forecastHorizons, "_returns")
   
-  # Defining last indicies of time series subsets
-  refSeriesLastIdx <- refSeriesStart+refSeriesLength-1
-  learnSeriesLastIdx <- dtw_res$bestSubsequenceIdx+refSeriesLength-1
+  target_series_sd <- calcSD(target_series = refSeries, 
+                             idx_begin = refSeriesStart,
+                             target_series_lenght = refSeriesLength, 
+                             return_type = "s")
   
-  refSeriesFrcstHorizonLastIdx <- refSeriesStart+refSeriesLength+forecastHorizon-1
-  learnSeriesFrctHorizonLastIdx <- dtw_res$bestSubsequenceIdx+refSeriesLength+forecastHorizon-1
+  learn_series_sd <- calcSD(target_series = nnSeries, 
+                            idx_begin = dtw_res$bestSubsequenceIdx,
+                            target_series_lenght = refSeriesLength, 
+                            return_type = "s")
   
-  # Retrieving subseries from original series
-  refSeriesIdx <- refSeriesStart:refSeriesLastIdx
-  #refSeriesSubset <- refSeries@.Data[refSeriesIdx,]
-  refSeriesSubset <- refSeries[refSeriesIdx,]
+  target_series_classes <- purrr::pmap_chr(.l = list(target_series_returns,
+                                                     sd_borders,
+                                                     list(target_series_sd)), 
+                                           ~assignReturnClass(rt = ..1, 
+                                                              sd_border = ..2, 
+                                                              sd = ..3))
+  names(target_series_classes) <- paste0("target_series_", forecastHorizons, "_return_class")
   
-  learnSeriesIdx <- (dtw_res$bestSubsequenceIdx):(learnSeriesLastIdx)
-  #learnSeriesSubset <- nnSeries@.Data[learnSeriesIdx,]
-  learnSeriesSubset <- nnSeries[learnSeriesIdx,]
+  learn_series_classes <- purrr::pmap_chr(.l = list(learn_series_returns,
+                                                     sd_borders,
+                                                     list(learn_series_sd)), 
+                                           ~assignReturnClass(rt = ..1, 
+                                                              sd_border = ..2, 
+                                                              sd = ..3))
+  names(learn_series_classes) <- paste0("learn_series_", forecastHorizons, "_return_class")
   
-  # Retrieving validation results
-  refSeriesIdxWithForecastHorizon <- refSeriesStart:refSeriesFrcstHorizonLastIdx
-  refSeriesSubsetWithFrcstHorizon <- refSeries[refSeriesIdxWithForecastHorizon,]
+  as.list(c(target_series_returns,
+    target_series_classes,
+    learn_series_returns,
+    learn_series_classes))
   
-  learnSeriesIdxWithForecastHorizon <- (dtw_res$bestSubsequenceIdx):learnSeriesFrctHorizonLastIdx
-  learnSeriesSubsetWithForecastHorizon <- nnSeries[learnSeriesIdxWithForecastHorizon,]
+  res <- c(as.list(c(target_series_returns,
+                     learn_series_returns)),
+           as.list(c(target_series_classes,
+                     learn_series_classes)),
+           target_series_sd = target_series_sd,
+           learn_series_sd = learn_series_sd,
+           dtw_res = list(dtw_res),
+           best_series_ind = which_dist_min)
   
-  refSeriesReturn <- log(refSeries@.Data[refSeriesFrcstHorizonLastIdx,1] / 
-                           refSeries@.Data[refSeriesLastIdx,1])
-  learnSeriesReturn <- log(nnSeries@.Data[learnSeriesFrctHorizonLastIdx,1]/
-                             nnSeries@.Data[learnSeriesLastIdx,1])
-  
-  refValResults <- score_return(ts = refSeriesSubset[,1], r = refSeriesReturn, sd_border = sd_border)
-  testValResults <- score_return(ts = learnSeriesSubset[,1], r = learnSeriesReturn, sd_border = sd_border)
-  
-  refSeriesSubsetNorm <- apply(refSeriesSubset, 2, fun_to_apply)
-  learnSeriesSubsetNorm <- apply(learnSeriesSubset, 2, fun_to_apply)
-  refSeriesSubsetWithFrcstHorizonNorm <- apply(refSeriesSubsetWithFrcstHorizon, 2, fun_to_apply)
-  learnSeriesSubsetWithForecastHorizonNorm <- apply(learnSeriesSubsetWithForecastHorizon, 2, fun_to_apply)
-  
-  final_results <- list(
-    nn_name = res_name,
-    dtw_results = dtw_res,
-    refSeries = refSeriesSubset,
-    learnSeries = learnSeriesSubset,
-    refSeriesNorm = refSeriesSubsetNorm,
-    learnSeriesNorm = learnSeriesSubsetNorm,
-    validation_results = list(
-      distanceType = distanceType,
-      refSeriesLength = refSeriesLength,
-      forecastHorizon = forecastHorizon,
-      refSeriesFull = refSeriesSubsetWithFrcstHorizon,
-      learnSeriesFull = learnSeriesSubsetWithForecastHorizon,
-      refSeriesFullNorm = refSeriesSubsetWithFrcstHorizonNorm,
-      learnSeriesFullNorm = learnSeriesSubsetWithForecastHorizonNorm,
-      refSeriesReturn = refSeriesReturn,
-      learnSeriesReturn = learnSeriesReturn,
-      refReturnClass = refValResults$r_class,
-      testReturnClass = testValResults$r_class,
-      refTsSD = refValResults$ts_sd,
-      testTsSD = testValResults$ts_sd,
-      kNNSuccess = ifelse(refValResults$r_class==testValResults$r_class, 1, 0)
-    )
-  )
-  
-  class(final_results) <- "DTWResults"
-  
-  return(final_results)
+  return(res)
 }
+
+

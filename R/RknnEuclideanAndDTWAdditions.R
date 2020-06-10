@@ -5,7 +5,8 @@ RknnEuclidean <- function(refSeries,
                           normalizationType = c("Unitarization", "Zscore"),
                           refSeriesLength = 100,
                           forecastHorizon = 100,
-                          subsequenceBreaks = 1){
+                          subsequenceBreaks = 1,
+                          euclidKnnDims = c(1, 2)){
   
   normalizationType <- match.arg(normalizationType)
   
@@ -15,6 +16,9 @@ RknnEuclidean <- function(refSeries,
   
   refSeriesSubset <- window(refSeries, start = refSeriesStartTime, end = refSeriesEndTime)
   learnSeriesSubset <- window(learnSeries, start = -Inf, end = learnSeriesEndTime)
+  
+  refSeriesSubset <- refSeriesSubset[,euclidKnnDims]
+  learnSeriesSubset <- learnSeriesSubset[,euclidKnnDims]
   
   res <- RcppShapeDTW::knnEuclideanCpp(refSeries = refSeriesSubset@.Data, 
                                        testSeries = learnSeriesSubset@.Data, 
@@ -33,7 +37,8 @@ RknnEuclideanMultipleSeries <- function(refSeries,
                                         normalizationType = c("Unitarization", "Zscore"),
                                         refSeriesLength = 100,
                                         forecastHorizon = 100,
-                                        subsequenceBreaks = 1){
+                                        subsequenceBreaks = 1,
+                                        euclidKnnDims = c(1, 2)){
   
   normalizationType <- match.arg(normalizationType)
   tsListLen <- length(learnSeries)
@@ -51,7 +56,8 @@ RknnEuclideanMultipleSeries <- function(refSeries,
                    normalizationType = normalizationType,
                    refSeriesLength = refSeriesLength,
                    forecastHorizon = forecastHorizon,
-                   subsequenceBreaks = subsequenceBreaks)
+                   subsequenceBreaks = subsequenceBreaks,
+                   euclidKnnDims = euclidKnnDims)
   )
   
   results_set_indexed <- purrr::imap(results_set, function(res_table, ind){
@@ -152,6 +158,7 @@ RknnShapeDTWParallelSimplified <- function(refSeries,
                                            targetDistance = c("raw", "shapeDesc"),
                                            distanceType = c("Dependent", "Independent"),
                                            normalizationType = c("Unitarization", "Zscore"),
+                                           euclidKnnDims = c(1, 2),
                                            knn = 100,
                                            refSeriesLength = 100,
                                            forecastHorizons = c(25, 50, 100),
@@ -184,7 +191,8 @@ RknnShapeDTWParallelSimplified <- function(refSeries,
                                                     normalizationType = normalizationType, 
                                                     refSeriesLength = refSeriesLength, 
                                                     forecastHorizon = max_frcst_horizon, 
-                                                    subsequenceBreaks = subsequenceBreaksknnEuclid)
+                                                    subsequenceBreaks = subsequenceBreaksknnEuclid,
+                                                    euclidKnnDims = euclidKnnDims)
   
   learningSetRetrieved <- retrieveLearningSetFromList(learnSeriesList = learnSeriesList, 
                                                       knnMatrix = knnEuclideanMatrix, 
@@ -310,6 +318,114 @@ RknnShapeDTWParallelSimplified <- function(refSeries,
            dtw_res = list(dtw_res),
            best_series_ind = knnEuclideanMatrix[which_dist_min,],
            best_euclid = knnEuclideanMatrix[1,])
+  
+  return(res)
+}
+
+RunMultipleShapeDTWWithEuclidPreprocessing <- function(refSeries,
+                                                       learnSeriesList,
+                                                       refSeriesStartIndices,
+                                                       shapeDTWParams,
+                                                       targetDistance = c("raw", "shapeDesc"),
+                                                       distanceType = c("Dependent", "Independent"),
+                                                       normalizationType = c("Unitarization", "Zscore"),
+                                                       euclidKnnDims = c(1, 2),
+                                                       knn = 100,
+                                                       refSeriesLength = 100,
+                                                       forecastHorizons = c(25, 50, 100),
+                                                       sd_borders = c(1, 1.5, 2),
+                                                       subsequenceWidth = 4,
+                                                       trigonometricTP = NULL,
+                                                       subsequenceBreaks = 1,
+                                                       subsequenceBreaksknnEuclid = 1,
+                                                       includeRefSeries = F,
+                                                       sakoeChibaWindow = NULL,
+                                                       switchBackToSequential = T){
+  # Matching arguments with multiple possible values
+  targetDistance <- match.arg(targetDistance)
+  distanceType <- match.arg(distanceType)
+  normalizationType <- match.arg(normalizationType)
+  
+  firstIndex <- refSeriesStartIndices[1]
+  refSeriesTimeBeggining <- time(refSeries)[firstIndex]
+  
+  max_frcst_horizon <- max(forecastHorizons)
+  
+  availableRecords <- purrr::map_lgl(.x = learnSeriesList, function(ts, timeBegin, recordBorder){
+    
+    ar <- nrow(window(ts, start = -Inf, end = timeBegin))
+    res <- ifelse(ar < recordBorder, F, T)
+    return(res)
+    
+  }, timeBegin = refSeriesTimeBeggining, recordBorder = refSeriesLength + max_frcst_horizon)
+  
+  # Filtering set of test series
+  learnSeriesList <- learnSeriesList[availableRecords]
+  
+  if(includeRefSeries){
+    refSeriesAvailabilty <- nrow(window(refSeries, start = -Inf, end = refSeriesTimeBeggining))
+    if(refSeriesAvailabilty < (refSeriesLength + max_frcst_horizon))
+      includeRefSeries <- FALSE
+  }
+  
+  if(class(future::plan())[2] == "sequential"){
+    message("Switching plan to multiprocess.")
+    future::plan(future::multiprocess)
+  }
+  
+  target_series_classes_names <- paste0("target_series_", forecastHorizons, "_return_class")
+  learn_series_classes_names <- paste0("learn_series_", forecastHorizons, "_return_class")
+  euclid_series_classes_names <- paste0("euclid_series_", forecastHorizons, "_return_class")
+  
+  learn_series_succes_names <- paste0("learn_series_", forecastHorizons, "_knn_success")
+  euclid_series_succes_names <- paste0("euclid_series_", forecastHorizons, "_knn_success")
+  
+  res <- purrr::map_dfr(.x = refSeriesStartIndices, .f = function(idx){
+    message(paste0("Processing data for part of reference series beggining with index: ", idx))
+    
+    kNNResults <- RknnShapeDTWParallelSimplified(refSeries = refSeries, 
+                                                 learnSeriesList = learnSeriesList, 
+                                                 refSeriesStart = idx, 
+                                                 shapeDTWParams = shapeDTWParams, 
+                                                 targetDistance = targetDistance, 
+                                                 distanceType = distanceType, 
+                                                 normalizationType = normalizationType, 
+                                                 euclidKnnDims = euclidKnnDims, 
+                                                 knn = knn, 
+                                                 refSeriesLength = refSeriesLength, 
+                                                 forecastHorizons = forecastHorizons, 
+                                                 sd_borders = sd_borders, 
+                                                 subsequenceWidth = subsequenceWidth, 
+                                                 trigonometricTP = trigonometricTP, 
+                                                 subsequenceBreaks = subsequenceBreaks, 
+                                                 subsequenceBreaksknnEuclid = subsequenceBreaksknnEuclid, 
+                                                 includeRefSeries = includeRefSeries, 
+                                                 sakoeChibaWindow = sakoeChibaWindow)
+    
+    res <- kNNResults[-which(names(kNNResults) == "dtw_res")]
+    learn_successes <- purrr::pmap_int(list(target_series_classes_names,
+                                            learn_series_classes_names,
+                                            list(res)), function(tc, lc, tb){
+                                              tb[[tc]] == tb[[lc]]
+                                            })
+    names(learn_successes) <- learn_series_succes_names
+    
+    euclid_successes <- purrr::pmap_int(list(target_series_classes_names,
+                                             euclid_series_classes_names,
+                                             list(res)), function(tc, ec, tb){
+                                               tb[[tc]] == tb[[ec]]
+                                             })
+    names(euclid_successes) <- euclid_series_succes_names
+    
+    res <- c(res, learn_successes, euclid_successes)
+    return(res)
+  })
+  
+  
+  if(switchBackToSequential){
+    message("Switching plan to sequential.")
+    future::plan(future::sequential)  
+  }
   
   return(res)
 }

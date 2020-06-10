@@ -33,16 +33,10 @@ RknnEuclideanMultipleSeries <- function(refSeries,
                                         normalizationType = c("Unitarization", "Zscore"),
                                         refSeriesLength = 100,
                                         forecastHorizon = 100,
-                                        subsequenceBreaks = 1,
-                                        includeRefSeries = T){
+                                        subsequenceBreaks = 1){
   
   normalizationType <- match.arg(normalizationType)
   tsListLen <- length(learnSeries)
-  
-  if(includeRefSeries){
-    learnSeries[[tsListLen+1]] <- refSeries
-    names(learnSeries)[tsListLen+1] <- "refSeries"
-  }
   
   if(class(future::plan())[2] == "sequential"){
     message("Changing plan to multiprocess")
@@ -158,12 +152,14 @@ RknnShapeDTWParallelSimplified <- function(refSeries,
                                            targetDistance = c("raw", "shapeDesc"),
                                            distanceType = c("Dependent", "Independent"),
                                            normalizationType = c("Unitarization", "Zscore"),
+                                           knn = 100,
                                            refSeriesLength = 100,
                                            forecastHorizons = c(25, 50, 100),
                                            sd_borders = c(1, 1.5, 2),
                                            subsequenceWidth = 4,
                                            trigonometricTP = NULL,
                                            subsequenceBreaks = 1,
+                                           subsequenceBreaksknnEuclid = 1,
                                            includeRefSeries = F,
                                            sakoeChibaWindow = NULL){
   
@@ -179,16 +175,30 @@ RknnShapeDTWParallelSimplified <- function(refSeries,
     learnSeriesList[[tsListLen+1]] <- refSeries
   }
   
+  max_frcst_horizon = max(forecastHorizons)
+  
+  knnEuclideanMatrix <- RknnEuclideanMultipleSeries(refSeries = refSeries, 
+                                                    learnSeries = learnSeriesList, 
+                                                    refSeriesStart = refSeriesStart, 
+                                                    knn = knn, 
+                                                    normalizationType = normalizationType, 
+                                                    refSeriesLength = refSeriesLength, 
+                                                    forecastHorizon = max_frcst_horizon, 
+                                                    subsequenceBreaks = subsequenceBreaksknnEuclid)
+  
+  learningSetRetrieved <- retrieveLearningSetFromList(learnSeriesList = learnSeriesList, 
+                                                      knnMatrix = knnEuclideanMatrix, 
+                                                      refSeriesLength = refSeriesLength, 
+                                                      maxForecastHorizon = max_frcst_horizon)
+  
   if(class(future::plan())[2] == "sequential"){
     message("Changing plan to multiprocess")
     future::plan(future::multiprocess)
   }
   
-  max_frcst_horizon = max(forecastHorizons)
-  
   results_set <- furrr::future_pmap(
     list(refSeries = list(refSeries),
-         learnSeriesList = learnSeriesList),
+         learnSeriesList = learningSetRetrieved),
     ~RknnShapeDTW(refSeries = ..1, learnSeries = ..2, 
                   refSeriesStart = refSeriesStart, 
                   shapeDTWParams = shapeDTWParams, 
@@ -222,7 +232,8 @@ RknnShapeDTWParallelSimplified <- function(refSeries,
     dtw_res <- results_set[[which_dist_min]]$ShapeDescriptorsDistanceResults
   }
   
-  nnSeries <- learnSeriesList[[which_dist_min]]
+  nnSeries <- learningSetRetrieved[[which_dist_min]]
+  nnEuclidean <- learningSetRetrieved[[1]]
   
   target_series_returns <- purrr::map_dbl(forecastHorizons, 
                                       ~calcReturn(target_series = refSeries, 
@@ -240,6 +251,14 @@ RknnShapeDTWParallelSimplified <- function(refSeries,
                                                  return_type = "n"))
   names(learn_series_returns) <- paste0("learn_series_", forecastHorizons, "_returns")
   
+  euclid_series_returns <- purrr::map_dbl(forecastHorizons, 
+                                         ~calcReturn(target_series = nnEuclidean, 
+                                                     idx_begin = 1, 
+                                                     target_series_length = refSeriesLength, 
+                                                     forecast_horizon = .x, 
+                                                     return_type = "n"))
+  names(euclid_series_returns) <- paste0("euclid_series_", forecastHorizons, "_returns")
+  
   target_series_sd <- calcSD(target_series = refSeries, 
                              idx_begin = refSeriesStart,
                              target_series_lenght = refSeriesLength, 
@@ -249,6 +268,11 @@ RknnShapeDTWParallelSimplified <- function(refSeries,
                             idx_begin = dtw_res$bestSubsequenceIdx,
                             target_series_lenght = refSeriesLength, 
                             return_type = "s")
+  
+  euclid_series_sd <- calcSD(target_series = nnEuclidean, 
+                             idx_begin = 1,
+                             target_series_lenght = refSeriesLength, 
+                             return_type = "s")
   
   target_series_classes <- purrr::pmap_chr(.l = list(target_series_returns,
                                                      sd_borders,
@@ -266,19 +290,26 @@ RknnShapeDTWParallelSimplified <- function(refSeries,
                                                               sd = ..3))
   names(learn_series_classes) <- paste0("learn_series_", forecastHorizons, "_return_class")
   
-  as.list(c(target_series_returns,
-    target_series_classes,
-    learn_series_returns,
-    learn_series_classes))
+  euclid_series_classes <- purrr::pmap_chr(.l = list(euclid_series_returns,
+                                                    sd_borders,
+                                                    list(euclid_series_sd)), 
+                                          ~assignReturnClass(rt = ..1, 
+                                                             sd_border = ..2, 
+                                                             sd = ..3))
+  names(euclid_series_classes) <- paste0("euclid_series_", forecastHorizons, "_return_class")
   
   res <- c(as.list(c(target_series_returns,
-                     learn_series_returns)),
+                     learn_series_returns,
+                     euclid_series_returns)),
            as.list(c(target_series_classes,
-                     learn_series_classes)),
+                     learn_series_classes,
+                     euclid_series_classes)),
            target_series_sd = target_series_sd,
            learn_series_sd = learn_series_sd,
+           euclid_series_sd = euclid_series_sd,
            dtw_res = list(dtw_res),
-           best_series_ind = which_dist_min)
+           best_series_ind = knnEuclideanMatrix[which_dist_min,],
+           best_euclid = knnEuclideanMatrix[1,])
   
   return(res)
 }

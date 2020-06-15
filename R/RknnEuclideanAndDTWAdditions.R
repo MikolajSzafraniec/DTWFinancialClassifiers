@@ -430,4 +430,342 @@ RunMultipleShapeDTWWithEuclidPreprocessing <- function(refSeries,
   return(res)
 }
 
+buildParamsSetEuclidPreprocessing <- function(shape_DTW_params,
+                                              trigonometric_transform_params,
+                                              subsequenceWidth = 4){
+  
+  dims <- list(1, c(1,2), c(1, 2, 3))
+  dtw_types = c("Dependent", "Independent")
+  params_set <- as_tibble(expand.grid(
+    dims = dims,
+    dtw_types = dtw_types,
+    sdp = shape_DTW_params,
+    stringsAsFactors = F
+  ), stringsAsFactors = F)
+  
+  params_set_full <- params_set %>%
+    dplyr::mutate(
+      dimensions = ifelse(
+        purrr::map(dims, length) == 1,
+        list(1),
+        list(c(1, 2))
+      ),
+      euclid_dims = ifelse(
+        purrr::map(dims, length) == 1,
+        list(1),
+        list(c(1, 2))
+      ),
+      trig_tran_params = ifelse(
+        purrr::map(dims, length) == 3,
+        list(trigonometric_transform_params),
+        list(NULL)
+      ),
+      descr = purrr::pmap_chr(., 
+                              function(dtw_types,
+                                       sdp,
+                                       dims){
+                                paste(
+                                  "dtw_type_", dtw_types, ".",
+                                  "shape_desc_type_", sdp@Type, ".",
+                                  "dims", paste(dims, sep = "_", collapse = "_"),
+                                  sep = ""
+                                )
+                              }),
+      subsequenceWidth = ifelse(purrr::map(sdp, function(x) {x@Type}) == "simple",
+                                1,
+                                subsequenceWidth)
+    ) %>%
+    dplyr::select(-"dims")
+  
+  return(params_set_full)
+}
 
+
+runShapeDTWForDefinedParamsTableWithEuclidPreprocessing <- function(refSeries,
+                                                                    learnSeriesList,
+                                                                    refSeriesStartIndices,
+                                                                    input_params,
+                                                                    targetDistance = c("raw", "shapeDesc"),
+                                                                    normalizationType = c("Unitarization", "Zscore"),
+                                                                    knn = 100,
+                                                                    refSeriesLength = 100,
+                                                                    forecastHorizons = c(25, 50, 75, 100, 150),
+                                                                    sd_borders = c(1, 1.5, 1.75, 2, 2.5),
+                                                                    subsequenceBreaks = 1,
+                                                                    subsequenceBreaksknnEuclid = 1,
+                                                                    includeRefSeries = F,
+                                                                    sakoeChibaWindow = NULL){
+  
+  targetDistance <- match.arg(targetDistance)
+  normalizationType <- match.arg(normalizationType)
+  
+  descr <- dplyr::pull(input_params, descr)
+  input_params_filtered <- input_params %>%
+    dplyr::select(-descr)
+  
+  if(class(future::plan())[2] == "sequential"){
+    message("Changing plan to multiprocess")
+    future::plan(future::multiprocess)
+  }
+  
+  result_tables <- purrr::pmap(c(input_params_filtered,
+                                 tab_ind = list(1:nrow(input_params_filtered)),
+                                 learn_set = list(list(learnSeriesList)),
+                                 ref_series = list(list(refSeries))),
+                               
+                               function(dtw_types,
+                                        sdp,
+                                        dimensions,
+                                        euclid_dims,
+                                        trig_tran_params,
+                                        subsequenceWidth,
+                                        tab_ind,
+                                        learn_set,
+                                        ref_series){
+                                 
+                                 msg <- paste("Calculating table number ", tab_ind, "\n", sep = "")
+                                 message(msg)
+                                 
+                                 learn_set_filtered <- purrr::map(learn_set, .f = function(x, dims){
+                                   x[,dims]
+                                 }, dims = dimensions)
+                                 
+                                 ref_series_filtered <- ref_series[,dimensions]
+                                 
+                                 res <- RunMultipleShapeDTWWithEuclidPreprocessing(refSeries = ref_series_filtered, 
+                                                                                   learnSeriesList = learn_set_filtered, 
+                                                                                   refSeriesStartIndices = refSeriesStartIndices, 
+                                                                                   shapeDTWParams = sdp, 
+                                                                                   targetDistance = targetDistance, 
+                                                                                   distanceType = dtw_types, 
+                                                                                   normalizationType = normalizationType, 
+                                                                                   euclidKnnDims = euclid_dims, 
+                                                                                   knn = knn, 
+                                                                                   refSeriesLength = refSeriesLength, 
+                                                                                   forecastHorizons = forecastHorizons, 
+                                                                                   sd_borders = sd_borders, 
+                                                                                   subsequenceWidth = subsequenceWidth, 
+                                                                                   trigonometricTP = trig_tran_params, 
+                                                                                   subsequenceBreaks = subsequenceBreaks, 
+                                                                                   subsequenceBreaksknnEuclid = subsequenceBreaksknnEuclid, 
+                                                                                   includeRefSeries = includeRefSeries, 
+                                                                                   sakoeChibaWindow = sakoeChibaWindow, 
+                                                                                   switchBackToSequential = F)
+                               }
+                               
+  )
+  
+  names(result_tables) <- descr
+  message("Switching plan back to sequential")
+  future::plan(future::sequential)
+  return(result_tables)
+}
+
+
+
+classResultsToAccuracyMeasureEuclidPreprocessing <- function(classification_results_list,
+                                                             measure = c("acc", "balanced_acc", "prec", "rec", "corr"),
+                                                             target_class = c("Sell", "Hold", "Buy")){
+  
+  measure = match.arg(measure)
+  target_class = match.arg(target_class)
+  
+  forecast_horizons <- stringr::str_extract(colnames(classification_results_list[[1]]), 
+                                            pattern = "[0-9]{2,3}") %>% 
+    .[!is.na(.)] %>%
+    unique(.)
+  
+  names_ref_series_returns <- paste0("target_series_", forecast_horizons, "_returns")
+  names_learn_series_returns <- paste0("learn_series_", forecast_horizons, "_returns")
+  names_ref_series_class <- paste0("target_series_", forecast_horizons, "_return_class")
+  names_learn_series_class <- paste0("learn_series_", forecast_horizons, "_return_class")
+  
+  res <- purrr::pmap(list(names_ref_series_returns,
+                          names_learn_series_returns,
+                          names_ref_series_class,
+                          names_learn_series_class),
+
+                     function(nrsr, nlsr, nrsc, nlsc, crl, measure, target_class){
+                                
+                       acc_res_list <- purrr::map(.x = crl, .f = function(crt, 
+                                                                          nrsr, 
+                                                                          nlsr, 
+                                                                          nrsc, 
+                                                                          nlsc, 
+                                                                          measure, 
+                                                                          target_class){
+                         
+                         res <- switch (
+                           measure,
+                           acc = sum(crt[nrsc] == crt[nlsc]) / nrow(crt),
+                           
+                           balanced_acc = 
+                           {
+                             acc_sell <- 
+                               sum(crt[nrsc] == "Sell" & (crt[nlsc] == crt[nrsc])) /
+                               sum(crt[nrsc] == "Sell")
+                             
+                             acc_buy <- 
+                               sum(crt[nrsc] == "Buy" & (crt[nlsc] == crt[nrsc])) /
+                               sum(crt[nrsc] == "Buy")
+                             
+                             acc_hold <- 
+                               sum(crt[nrsc] == "Hold" & (crt[nlsc] == crt[nrsc])) /
+                               sum(crt[nrsc] == "Hold")
+                             
+                             sum(acc_sell, acc_buy, acc_hold) / 3
+                           },
+                           
+                           prec = 
+                           {
+                             crt_filtered <- crt %>% 
+                               dplyr::filter(dplyr::sym(nlsc) == target_class)
+                             
+                             sum(crt_filtered[nrsc] == crt_filtered[nlsc]) / nrow(crt_filtered)
+                           },
+                           
+                           rec = 
+                           {
+                             crt_filtered <- crt %>% 
+                               dplyr::filter(dplyr::sym(nrsc) == target_class)
+                             sum(crt_filtered[nrsc] == crt_filtered[nlsc]) / nrow(crt_filtered)
+                           },
+                           
+                           corr = cor(crt[nrsr], crt[nlsr])
+                         )
+                         
+                         return(res)
+                       }, 
+                       measure = measure, 
+                       target_class = target_class, 
+                       nrsr = nrsr, 
+                       nlsr = nlsr, 
+                       nrsc = nrsc, 
+                       nlsc = nlsc)
+                       
+                       accResNames <- names(acc_res_list)
+                       accResNamesSplitted <- stringr::str_split(string = accResNames, 
+                                                                 pattern = "\\.", simplify = T)
+                       
+                       colnames(accResNamesSplitted) <- c("DistMatrixType", "DTWType", "Dimensions")
+                       
+                       accResTibble <- as_tibble(accResNamesSplitted, stringsAsFactors = F) %>%
+                         mutate(accuracyRes = unlist(acc_res_list))
+                       
+                       accResTibblePivoted <- accResTibble %>%
+                         tidyr::pivot_wider(names_from = c("DistMatrixType",
+                                                           "DTWType"), 
+                                            values_from = "accuracyRes")
+                       
+                       return(accResTibblePivoted)
+                       
+                    }, 
+                    crl = classification_results_list, 
+                    measure = measure, 
+                    target_class = target_class)
+  
+  names(res) <- paste0("res_frcst_horizon_", forecast_horizons)
+  
+  names_ref_series_returns <- paste0("target_series_", forecast_horizons, "_returns")
+  names_euclid_series_returns <- paste0("euclid_series_", forecast_horizons, "_returns")
+  names_ref_series_class <- paste0("target_series_", forecast_horizons, "_return_class")
+  names_euclid_series_class <- paste0("euclid_series_", forecast_horizons, "_return_class")
+  
+  euclid_table <- purrr::pmap(list(names_ref_series_returns,
+                                       names_euclid_series_returns,
+                                       names_ref_series_class,
+                                       names_euclid_series_class),
+                                  function(nrsr, nesr, nrsc, nesc, crl, measure, target_class){
+                                    
+                                    crt_1_dim <- crl$dtw_type_Dependent.shape_desc_type_simple.dims1
+                                    crt_2_dim <- crl$dtw_type_Dependent.shape_desc_type_simple.dims1_2
+                                    
+                                    euclid_1_dim <- switch (
+                                      measure,
+                                      acc = sum(crt_1_dim[nrsc] == crt_1_dim[nesc]) / nrow(crt_1_dim),
+                                      
+                                      balanced_acc = 
+                                      {
+                                        acc_sell <- 
+                                          sum(crt_1_dim[nrsc] == "Sell" & (crt_1_dim[nesc] == crt_1_dim[nrsc])) /
+                                          sum(crt_1_dim[nrsc] == "Sell")
+                                        
+                                        acc_buy <- 
+                                          sum(crt_1_dim[nrsc] == "Buy" & (crt_1_dim[nesc] == crt_1_dim[nrsc])) /
+                                          sum(crt_1_dim[nrsc] == "Buy")
+                                        
+                                        acc_hold <- 
+                                          sum(crt_1_dim[nrsc] == "Hold" & (crt_1_dim[nesc] == crt_1_dim[nrsc])) /
+                                          sum(crt_1_dim[nrsc] == "Hold")
+                                        
+                                        sum(acc_sell, acc_buy, acc_hold) / 3
+                                      },
+                                      
+                                      prec = 
+                                      {
+                                        crt_filtered <- crt_1_dim %>% 
+                                          dplyr::filter(dplyr::sym(nesc) == target_class)
+                                        
+                                        sum(crt_filtered[nrsc] == crt_filtered[nesc]) / nrow(crt_filtered)
+                                      },
+                                      
+                                      rec = 
+                                      {
+                                        crt_filtered <- crt_1_dim %>% 
+                                          dplyr::filter(dplyr::sym(nrsc) == target_class)
+                                        sum(crt_filtered[nrsc] == crt_filtered[nesc]) / nrow(crt_filtered)
+                                      },
+                                      
+                                      corr = cor(crt_1_dim[nrsr], crt_1_dim[nesr])
+                                    )
+                                    
+                                    euclid_2_dim <- switch (
+                                      measure,
+                                      acc = sum(crt_2_dim[nrsc] == crt_2_dim[nesc]) / nrow(crt_2_dim),
+                                      
+                                      balanced_acc = 
+                                      {
+                                        acc_sell <- 
+                                          sum(crt_2_dim[nrsc] == "Sell" & (crt_2_dim[nesc] == crt_2_dim[nrsc])) /
+                                          sum(crt_2_dim[nrsc] == "Sell")
+                                        
+                                        acc_buy <- 
+                                          sum(crt_2_dim[nrsc] == "Buy" & (crt_2_dim[nesc] == crt_2_dim[nrsc])) /
+                                          sum(crt_2_dim[nrsc] == "Buy")
+                                        
+                                        acc_hold <- 
+                                          sum(crt_2_dim[nrsc] == "Hold" & (crt_2_dim[nesc] == crt_2_dim[nrsc])) /
+                                          sum(crt_2_dim[nrsc] == "Hold")
+                                        
+                                        sum(acc_sell, acc_buy, acc_hold) / 3
+                                      },
+                                      
+                                      prec = 
+                                      {
+                                        crt_filtered <- crt_2_dim %>% 
+                                          dplyr::filter(dplyr::sym(nesc) == target_class)
+                                        
+                                        sum(crt_filtered[nrsc] == crt_filtered[nesc]) / nrow(crt_filtered)
+                                      },
+                                      
+                                      rec = 
+                                      {
+                                        crt_filtered <- crt_2_dim %>% 
+                                          dplyr::filter(dplyr::sym(nrsc) == target_class)
+                                        sum(crt_filtered[nrsc] == crt_filtered[nesc]) / nrow(crt_filtered)
+                                      },
+                                      
+                                      corr = cor(crt_2_dim[nrsr], crt_2_dim[nesr])
+                                    )
+                                    
+                                    return(c(euclid_1_dim = euclid_1_dim, euclid_2_dim = euclid_2_dim))
+                                    
+                                  }, crl = classification_results_list, measure = measure, target_class = target_class)
+  
+  euclid_table <- do.call(rbind, euclid_table)
+  rownames(euclid_table) <- paste0("res_frcst_horizon_", forecast_horizons)
+  
+  res <- c(res, euclid_table = list(euclid_table))
+  
+  return(res)
+}

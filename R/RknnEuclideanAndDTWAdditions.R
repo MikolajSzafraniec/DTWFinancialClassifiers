@@ -8,6 +8,43 @@ Zscore <- function(x){
   (x - mean(x)) / sd(x)
 }
 
+RknnShapeDTW <- function(refSeries,
+                         learnSeries,
+                         refSeriesStart, #Integer index of ts
+                         shapeDTWParams,
+                         distanceType = c("Dependent", "Independent"),
+                         normalizationType = c("Unitarization", "Zscore"),
+                         refSeriesLength = 100,
+                         forecastHorizon = 20,
+                         subsequenceWidth = 4,
+                         trigonometricTP = NULL,
+                         subsequenceBreaks = 10,
+                         sakoeChibaWindow = NULL){
+  
+  normalizationType <- match.arg(normalizationType)
+  distanceType <- match.arg(distanceType)
+  
+  refSeriesStartTime <- time(refSeries)[refSeriesStart]
+  refSeriesEndTime <- time(refSeries)[refSeriesStart + refSeriesLength - 1]
+  learnSeriesEndTime <- time(refSeries)[refSeriesStart]
+  
+  refSeriesSubset <- window(refSeries, start = refSeriesStartTime, end = refSeriesEndTime)
+  learnSeriesSubset <- window(learnSeries, start = -Inf, end = learnSeriesEndTime)
+  
+  res <- RcppShapeDTW::kNNShapeDTWCpp(referenceSeries = refSeriesSubset@.Data, 
+                                      testSeries = learnSeriesSubset@.Data, 
+                                      forecastHorizon = forecastHorizon, 
+                                      subsequenceWidth = subsequenceWidth, 
+                                      subsequenceBreaks = subsequenceBreaks, 
+                                      shapeDescriptorParams = shapeDTWParams, 
+                                      normalizationType = normalizationType, 
+                                      distanceType = distanceType, 
+                                      ttParams = trigonometricTP, 
+                                      sakoeChibaWindow = sakoeChibaWindow)
+  
+  return(res)
+}
+
 RknnEuclidean <- function(refSeries,
                           learnSeries,
                           refSeriesStart, #Integer index of ts

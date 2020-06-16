@@ -74,3 +74,50 @@ FX_tick_d1min <- purrr::map(.x = FX_tick_whole_set,
                             .f = FXTickAggregateAndFillNA,
                             delta = lubridate::dminutes(1))
 
+saveRDS(FX_tick_d1min, file = "Data/EuclidPreprocSets/FXTickSetsProcessed/FXTickd1min.RDS")
+
+FX_tick_d5min <- purrr::map(.x = FX_tick_whole_set, 
+                            .f = FXTickAggregateAndFillNA,
+                            delta = lubridate::dminutes(5))
+
+saveRDS(FX_tick_d5min, file = "Data/EuclidPreprocSets/FXTickSetsProcessed/FXTickd5min.RDS")
+
+FX_tick_d10min <- purrr::map(.x = FX_tick_whole_set, 
+                            .f = FXTickAggregateAndFillNA,
+                            delta = lubridate::dminutes(10))
+
+saveRDS(FX_tick_d10min, file = "Data/EuclidPreprocSets/FXTickSetsProcessed/FXTickd10min.RDS")
+
+FX_tick_d30min <- purrr::map(.x = FX_tick_whole_set, 
+                             .f = FXTickAggregateAndFillNA,
+                             delta = lubridate::dminutes(30))
+
+saveRDS(FX_tick_d30min, file = "Data/EuclidPreprocSets/FXTickSetsProcessed/FXTickd30min.RDS")
+
+FX_daily_set <- load_financial_data(folder_path = "Data/EuclidPreprocSets/FX day/", 
+                                    data_type = "FOREX_d", include_all = T)
+
+FX_daily_parsed <- purrr::map(FX_daily_set, FXDailyParse)
+
+# Preparing set of parameters 
+params_set <- buildParamsSetEuclidPreprocessing(shape_DTW_params = c(SDP_traditional,
+                                                                     SDP_compound), 
+                                                trigonometric_transform_params = TTR, 
+                                                subsequenceWidth = 4)
+
+# FX tick delta 1 min #
+FX_tick_d1min_filtered <- purrr::map(FX_tick_d1min, function(x){
+  res <- x[50000:55000,]
+})[-5]
+
+FX_tick_d1min_results_AUDUSD <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+  refSeries = FX_tick_d1min_filtered$`AUDUSD-2019-10`, 
+  learnSeriesList = FX_tick_d1min_filtered, 
+  refSeriesStartIndices = seq(from = 2800, by = 10, length.out = 200), 
+  input_params = params_set, 
+  targetDistance = "r", 
+  normalizationType = "Z", 
+  knn = 150, 
+  refSeriesLength = 100
+)
+

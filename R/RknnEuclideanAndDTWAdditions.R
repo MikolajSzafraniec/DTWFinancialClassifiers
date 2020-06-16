@@ -1,3 +1,13 @@
+# Function to conduct normalization through unitarization
+Unitarization <- function(x){
+  (x - min(x)) / (max(x) - min(x))
+}
+
+# Function to conduct normalization through z-score
+Zscore <- function(x){
+  (x - mean(x)) / sd(x)
+}
+
 RknnEuclidean <- function(refSeries,
                           learnSeries,
                           refSeriesStart, #Integer index of ts

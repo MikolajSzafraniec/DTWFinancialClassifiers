@@ -162,8 +162,8 @@ calcReturn <- function(target_series,
   
   return_type <- match.arg(return_type)
   
-  last_actual_val <- target_series[idx_begin + target_series_length - 1]
-  last_frcst_val <- target_series[idx_begin + target_series_length + forecast_horizon - 1]
+  last_actual_val <- target_series[idx_begin + target_series_length - 1, 1]@.Data
+  last_frcst_val <- target_series[idx_begin + target_series_length + forecast_horizon - 1, 1]@.Data
   res <- switch(
     return_type,
     natural = (last_frcst_val - last_actual_val) / last_actual_val,
@@ -179,7 +179,7 @@ calcSD <- function(target_series,
   
   return_type <- match.arg(return_type)
   
-  subset_series <- target_series[idx_begin:(idx_begin+target_series_lenght-1)]
+  subset_series <- target_series[idx_begin:(idx_begin+target_series_lenght-1), 1]@.Data
   series_returns <- timeSeries::returns(
     subset_series,
     method = return_type,

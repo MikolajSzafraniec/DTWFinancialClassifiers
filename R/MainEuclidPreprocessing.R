@@ -121,3 +121,20 @@ FX_tick_d1min_results_AUDUSD <- runShapeDTWForDefinedParamsTableWithEuclidPrepro
   refSeriesLength = 100
 )
 
+
+nrow(FX_tick_d1min_filtered$`AUDUSD-2019-10`)
+classResultsToAccuracyMeasureEuclidPreprocessing(FX_tick_d1min_results_AUDUSD, measure = "cor")
+FX_tick_d1min_results_AUDUSD$dtw_type_Dependent.shape_desc_type_simple.dims1$target_series_150_returns
+
+indices <- seq(from = 2800, by = 10, length.out = 200)
+
+(FX_tick_d1min_filtered$`AUDUSD-2019-10`[indices[197]+99,1]@.Data - 
+  FX_tick_d1min_filtered$`AUDUSD-2019-10`[indices[197]+99+150,1]@.Data) /
+  FX_tick_d1min_filtered$`AUDUSD-2019-10`[indices[197]+99,1]@.Data
+calcReturn(target_series = FX_tick_d1min_filtered$`AUDUSD-2019-10`,
+           idx_begin = indices[196], 
+           target_series_length =  100, 
+           forecast_horizon = 150)
+calcSD(target_series = FX_tick_d1min_filtered$`AUDUSD-2019-10`, 
+       idx_begin = indices[196], 
+       target_series_lenght = 100)

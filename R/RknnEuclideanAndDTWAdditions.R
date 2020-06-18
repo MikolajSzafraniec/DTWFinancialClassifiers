@@ -192,10 +192,17 @@ calcSD <- function(target_series,
 }
 
 assignReturnClass <- function(rt, sd_border, sd){
-  res <- cut.default(rt,
-              breaks = c(-Inf, -sd_border*sd, sd_border*sd, Inf), 
-              labels = c("Sell", "Hold", "Buy"))
-  return(as.character(res))
+  
+  if(sd == 0){
+    res <- cut.default(rt,
+                       breaks = c(-Inf, 0, Inf), 
+                       labels = c("Sell", "Buy"))
+  }else{
+    res <- cut.default(rt,
+                       breaks = c(-Inf, -sd_border*sd, sd_border*sd, Inf), 
+                       labels = c("Sell", "Hold", "Buy"))
+    return(as.character(res))
+  }
 }
 
 RknnShapeDTWParallelSimplified <- function(refSeries,

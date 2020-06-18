@@ -113,7 +113,65 @@ FX_tick_d1min_filtered <- purrr::map(FX_tick_d1min, function(x){
 FX_tick_d1min_results_AUDUSD <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
   refSeries = FX_tick_d1min_filtered$`AUDUSD-2019-10`, 
   learnSeriesList = FX_tick_d1min_filtered, 
-  refSeriesStartIndices = seq(from = 2800, by = 10, length.out = 200), 
+  refSeriesStartIndices = seq(from = 2500, by = 10, length.out = 200), 
+  input_params = params_set, 
+  targetDistance = "r", 
+  normalizationType = "Z", 
+  knn = 150, 
+  refSeriesLength = 100
+)
+
+saveRDS(FX_tick_d1min_results_AUDUSD, file = "Data/EuclidPreprocSets/ResultsEuclidPreproc/FX_tick_d1min_results_AUDUSD.rds")
+
+FX_tick_d1min_results_EURCHF <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+  refSeries = FX_tick_d1min_filtered$`EURCHF-2019-10`, 
+  learnSeriesList = FX_tick_d1min_filtered, 
+  refSeriesStartIndices = seq(from = 2500, by = 10, length.out = 200), 
+  input_params = params_set, 
+  targetDistance = "r", 
+  normalizationType = "Z", 
+  knn = 150, 
+  refSeriesLength = 100
+)
+
+saveRDS(FX_tick_d1min_results_EURCHF, file = "Data/EuclidPreprocSets/ResultsEuclidPreproc/FX_tick_d1min_results_EURCHF.rds")
+
+FX_tick_d1min_results_EURPLN <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+  refSeries = FX_tick_d1min_filtered$`EURPLN-2019-10`, 
+  learnSeriesList = FX_tick_d1min_filtered, 
+  refSeriesStartIndices = seq(from = 2500, by = 10, length.out = 200), 
+  input_params = params_set, 
+  targetDistance = "r", 
+  normalizationType = "Z", 
+  knn = 150, 
+  refSeriesLength = 100
+)
+
+saveRDS(FX_tick_d1min_results_EURPLN, file = "Data/EuclidPreprocSets/ResultsEuclidPreproc/FX_tick_d1min_results_EURPLN.rds")
+
+FX_tick_d1min_results_GBPUSD <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+  refSeries = FX_tick_d1min_filtered$`GBPUSD-2019-10`, 
+  learnSeriesList = FX_tick_d1min_filtered, 
+  refSeriesStartIndices = seq(from = 2500, by = 10, length.out = 200), 
+  input_params = params_set, 
+  targetDistance = "r", 
+  normalizationType = "Z", 
+  knn = 150, 
+  refSeriesLength = 100
+)
+
+saveRDS(FX_tick_d1min_results_GBPUSD, file = "Data/EuclidPreprocSets/ResultsEuclidPreproc/FX_tick_d1min_results_GBPUSD.rds")
+
+# FX tick delta 5min #
+FX_tick_d5min_filtered <- purrr::map(FX_tick_d5min[-5], function(x){
+  res <- x[20000:25000,]
+})
+
+
+FX_tick_d5min_results_AUDUSD <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+  refSeries = FX_tick_d5min_filtered$`AUDUSD-2019-10`, 
+  learnSeriesList = FX_tick_d5min_filtered, 
+  refSeriesStartIndices = seq(from = 2500, by = 10, length.out = 200), 
   input_params = params_set, 
   targetDistance = "r", 
   normalizationType = "Z", 
@@ -122,19 +180,314 @@ FX_tick_d1min_results_AUDUSD <- runShapeDTWForDefinedParamsTableWithEuclidPrepro
 )
 
 
-nrow(FX_tick_d1min_filtered$`AUDUSD-2019-10`)
-classResultsToAccuracyMeasureEuclidPreprocessing(FX_tick_d1min_results_AUDUSD, measure = "cor")
-FX_tick_d1min_results_AUDUSD$dtw_type_Dependent.shape_desc_type_simple.dims1$target_series_150_returns
+saveRDS(FX_tick_d5min_results_AUDUSD, file = "Data/EuclidPreprocSets/ResultsEuclidPreproc/FX_tick_d5min_results_AUDUSD.rds")
 
-indices <- seq(from = 2800, by = 10, length.out = 200)
+FX_tick_d5min_results_EURCHF <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+  refSeries = FX_tick_d5min_filtered$`EURCHF-2019-10`, 
+  learnSeriesList = FX_tick_d5min_filtered, 
+  refSeriesStartIndices = seq(from = 2500, by = 10, length.out = 200), 
+  input_params = params_set, 
+  targetDistance = "r", 
+  normalizationType = "Z", 
+  knn = 150, 
+  refSeriesLength = 100
+)
 
-(FX_tick_d1min_filtered$`AUDUSD-2019-10`[indices[197]+99,1]@.Data - 
-  FX_tick_d1min_filtered$`AUDUSD-2019-10`[indices[197]+99+150,1]@.Data) /
-  FX_tick_d1min_filtered$`AUDUSD-2019-10`[indices[197]+99,1]@.Data
-calcReturn(target_series = FX_tick_d1min_filtered$`AUDUSD-2019-10`,
-           idx_begin = indices[196], 
-           target_series_length =  100, 
-           forecast_horizon = 150)
-calcSD(target_series = FX_tick_d1min_filtered$`AUDUSD-2019-10`, 
-       idx_begin = indices[196], 
-       target_series_lenght = 100)
+
+saveRDS(FX_tick_d5min_results_EURCHF, file = "Data/EuclidPreprocSets/ResultsEuclidPreproc/FX_tick_d5min_results_EURCHF.rds")
+
+FX_tick_d5min_results_EURPLN <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+  refSeries = FX_tick_d5min_filtered$`EURPLN-2019-10`, 
+  learnSeriesList = FX_tick_d5min_filtered, 
+  refSeriesStartIndices = seq(from = 2500, by = 10, length.out = 200), 
+  input_params = params_set, 
+  targetDistance = "r", 
+  normalizationType = "Z", 
+  knn = 150, 
+  refSeriesLength = 100
+)
+
+
+saveRDS(FX_tick_d5min_results_EURPLN, file = "Data/EuclidPreprocSets/ResultsEuclidPreproc/FX_tick_d5min_results_EURPLN.rds")
+
+FX_tick_d5min_results_GBPUSD <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+  refSeries = FX_tick_d5min_filtered$`GBPUSD-2019-10`, 
+  learnSeriesList = FX_tick_d5min_filtered, 
+  refSeriesStartIndices = seq(from = 2500, by = 10, length.out = 200), 
+  input_params = params_set, 
+  targetDistance = "r", 
+  normalizationType = "Z", 
+  knn = 150, 
+  refSeriesLength = 100
+)
+
+
+saveRDS(FX_tick_d5min_results_GBPUSD, file = "Data/EuclidPreprocSets/ResultsEuclidPreproc/FX_tick_d5min_results_GBPUSD.rds")
+
+# FX tick delta 10min #
+FX_tick_d10min_filtered <- purrr::map(FX_tick_d10min[-5], function(x){
+  res <- x[5000:10000,]
+})
+
+
+FX_tick_d10min_results_AUDUSD <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+  refSeries = FX_tick_d10min_filtered$`AUDUSD-2019-10`, 
+  learnSeriesList = FX_tick_d10min_filtered, 
+  refSeriesStartIndices = seq(from = 2500, by = 10, length.out = 200), 
+  input_params = params_set, 
+  targetDistance = "r", 
+  normalizationType = "Z", 
+  knn = 150, 
+  refSeriesLength = 100
+)
+
+
+saveRDS(FX_tick_d10min_results_AUDUSD, file = "Data/EuclidPreprocSets/ResultsEuclidPreproc/FX_tick_d10min_results_AUDUSD.rds")
+
+FX_tick_d10min_results_EURCHF <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+  refSeries = FX_tick_d10min_filtered$`EURCHF-2019-10`, 
+  learnSeriesList = FX_tick_d10min_filtered, 
+  refSeriesStartIndices = seq(from = 2500, by = 10, length.out = 200), 
+  input_params = params_set, 
+  targetDistance = "r", 
+  normalizationType = "Z", 
+  knn = 150, 
+  refSeriesLength = 100
+)
+
+
+saveRDS(FX_tick_d10min_results_EURCHF, file = "Data/EuclidPreprocSets/ResultsEuclidPreproc/FX_tick_d10min_results_EURCHF.rds")
+
+FX_tick_d10min_results_EURPLN <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+  refSeries = FX_tick_d10min_filtered$`EURPLN-2019-10`, 
+  learnSeriesList = FX_tick_d10min_filtered, 
+  refSeriesStartIndices = seq(from = 2500, by = 10, length.out = 200), 
+  input_params = params_set, 
+  targetDistance = "r", 
+  normalizationType = "Z", 
+  knn = 150, 
+  refSeriesLength = 100
+)
+
+
+saveRDS(FX_tick_d10min_results_EURPLN, file = "Data/EuclidPreprocSets/ResultsEuclidPreproc/FX_tick_d10min_results_EURPLN.rds")
+
+FX_tick_d10min_results_GBPUSD <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+  refSeries = FX_tick_d10min_filtered$`GBPUSD-2019-10`, 
+  learnSeriesList = FX_tick_d10min_filtered, 
+  refSeriesStartIndices = seq(from = 2500, by = 10, length.out = 200), 
+  input_params = params_set, 
+  targetDistance = "r", 
+  normalizationType = "Z", 
+  knn = 150, 
+  refSeriesLength = 100
+)
+
+
+saveRDS(FX_tick_d10min_results_GBPUSD, file = "Data/EuclidPreprocSets/ResultsEuclidPreproc/FX_tick_d10min_results_GBPUSD.rds")
+
+# FX tick delta 30min #
+FX_tick_d30min_filtered <- purrr::map(FX_tick_d30min[-5], function(x){
+  res <- x[1:5000,]
+})
+
+FX_tick_d30min_results_AUDUSD <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+  refSeries = FX_tick_d30min_filtered$`AUDUSD-2019-10`, 
+  learnSeriesList = FX_tick_d30min_filtered, 
+  refSeriesStartIndices = seq(from = 2500, by = 10, length.out = 200), 
+  input_params = params_set, 
+  targetDistance = "r", 
+  normalizationType = "Z", 
+  knn = 150, 
+  refSeriesLength = 100
+)
+
+
+saveRDS(FX_tick_d30min_results_AUDUSD, file = "Data/EuclidPreprocSets/ResultsEuclidPreproc/FX_tick_d30min_results_AUDUSD.rds")
+
+FX_tick_d30min_results_EURCHF <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+  refSeries = FX_tick_d30min_filtered$`EURCHF-2019-10`, 
+  learnSeriesList = FX_tick_d30min_filtered, 
+  refSeriesStartIndices = seq(from = 2500, by = 10, length.out = 200), 
+  input_params = params_set, 
+  targetDistance = "r", 
+  normalizationType = "Z", 
+  knn = 150, 
+  refSeriesLength = 100
+)
+
+
+saveRDS(FX_tick_d30min_results_EURCHF, file = "Data/EuclidPreprocSets/ResultsEuclidPreproc/FX_tick_d30min_results_EURCHF.rds")
+
+FX_tick_d30min_results_EURPLN <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+  refSeries = FX_tick_d30min_filtered$`EURPLN-2019-10`, 
+  learnSeriesList = FX_tick_d30min_filtered, 
+  refSeriesStartIndices = seq(from = 2500, by = 10, length.out = 200), 
+  input_params = params_set, 
+  targetDistance = "r", 
+  normalizationType = "Z", 
+  knn = 150, 
+  refSeriesLength = 100
+)
+
+
+saveRDS(FX_tick_d30min_results_EURPLN, file = "Data/EuclidPreprocSets/ResultsEuclidPreproc/FX_tick_d30min_results_EURPLN.rds")
+
+FX_tick_d30min_results_GBPUSD <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+  refSeries = FX_tick_d30min_filtered$`GBPUSD-2019-10`, 
+  learnSeriesList = FX_tick_d30min_filtered, 
+  refSeriesStartIndices = seq(from = 2500, by = 10, length.out = 200), 
+  input_params = params_set, 
+  targetDistance = "r", 
+  normalizationType = "Z", 
+  knn = 150, 
+  refSeriesLength = 100
+)
+
+
+saveRDS(FX_tick_d30min_results_GBPUSD, file = "Data/EuclidPreprocSets/ResultsEuclidPreproc/FX_tick_d30min_results_GBPUSD.rds")
+
+# FX daily #
+
+FX_daily_filtered <- purrr::map(FX_daily_parsed[-5], function(x){
+  window(x, start = as.Date("2007-01-01"), end = Inf)
+})
+
+FX_daily_results_AUDUSD <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+  refSeries = FX_daily_filtered$AUDUSD, 
+  learnSeriesList = FX_daily_filtered, 
+  refSeriesStartIndices = seq(from = 1900, by = 10, length.out = 200), 
+  input_params = params_set, 
+  targetDistance = "r", 
+  normalizationType = "Z", 
+  knn = 150, 
+  refSeriesLength = 100
+)
+
+
+saveRDS(FX_daily_results_AUDUSD, file = "Data/EuclidPreprocSets/ResultsEuclidPreproc/FX_daily_results_AUDUSD.rds")
+
+FX_daily_results_EURCHF <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+  refSeries = FX_daily_filtered$EURCHF, 
+  learnSeriesList = FX_daily_filtered, 
+  refSeriesStartIndices = seq(from = 1900, by = 10, length.out = 200), 
+  input_params = params_set, 
+  targetDistance = "r", 
+  normalizationType = "Z", 
+  knn = 150, 
+  refSeriesLength = 100
+)
+
+
+saveRDS(FX_daily_results_EURCHF, file = "Data/EuclidPreprocSets/ResultsEuclidPreproc/FX_daily_results_EURCHF.rds")
+
+FX_daily_results_EURPLN <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+  refSeries = FX_daily_filtered$EURPLN, 
+  learnSeriesList = FX_daily_filtered, 
+  refSeriesStartIndices = seq(from = 1900, by = 10, length.out = 200), 
+  input_params = params_set, 
+  targetDistance = "r", 
+  normalizationType = "Z", 
+  knn = 150, 
+  refSeriesLength = 100
+)
+
+
+saveRDS(FX_daily_results_EURPLN, file = "Data/EuclidPreprocSets/ResultsEuclidPreproc/FX_daily_results_EURPLN.rds")
+
+FX_daily_results_GBPUSD <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+  refSeries = FX_daily_filtered$GBPUSD, 
+  learnSeriesList = FX_daily_filtered, 
+  refSeriesStartIndices = seq(from = 1900, by = 10, length.out = 200), 
+  input_params = params_set, 
+  targetDistance = "r", 
+  normalizationType = "Z", 
+  knn = 150, 
+  refSeriesLength = 100
+)
+
+
+saveRDS(FX_daily_results_GBPUSD, file = "Data/EuclidPreprocSets/ResultsEuclidPreproc/FX_daily_results_GBPUSD.rds")
+
+
+###########################################################################
+###                            GPW Data                                 ###
+###########################################################################
+
+# Loading and processing data
+
+GPW_tick_set <- load_financial_data("Data/EuclidPreprocSets/GPW Tick/",
+                                    data_type = "GPW_t", include_all = T)
+GPW_pattern_series <- load_financial_data("Data/EuclidPreprocSets/PatternSeries/",
+                                          data_type = "GPW_t", include_all = T)
+GPW_pattern_d1min <- parsePatternGPWTickTime(GPW_pattern_series$WIG20, delta = lubridate::dminutes(1),
+                                             playOffTime = lubridate::dminutes(15),
+                                             roundingUnit = "minute")
+saveRDS(GPW_pattern_d1min, file = "Data/EuclidPreprocSets/GPWTickSetsProcessed/GPW_tick_pattern_d1min.rds")
+
+GPW_pattern_d5min <- parsePatternGPWTickTime(GPW_pattern_series$WIG20, delta = lubridate::dminutes(5),
+                                             playOffTime = lubridate::dminutes(15),
+                                             roundingUnit = "minute")
+saveRDS(GPW_pattern_d5min, file = "Data/EuclidPreprocSets/GPWTickSetsProcessed/GPW_tick_pattern_d5min.rds")
+
+GPW_pattern_d10min <- parsePatternGPWTickTime(GPW_pattern_series$WIG20, delta = lubridate::dminutes(10),
+                                             playOffTime = lubridate::dminutes(15),
+                                             roundingUnit = "minute")
+saveRDS(GPW_pattern_d10min, file = "Data/EuclidPreprocSets/GPWTickSetsProcessed/GPW_tick_pattern_d10min.rds")
+GPW_pattern_d30min <- parsePatternGPWTickTime(GPW_pattern_series$WIG20, delta = lubridate::dminutes(30),
+                                              playOffTime = lubridate::dminutes(15),
+                                              roundingUnit = "minute")
+saveRDS(GPW_pattern_d30min, file = "Data/EuclidPreprocSets/GPWTickSetsProcessed/GPW_tick_pattern_d30min.rds")
+
+# Aggregating sets
+
+GPW_tick_d1min <- purrr::map(GPW_tick_set, GPWTickAggregateAndFillNA,
+                             patternDatesToAgg = GPW_pattern_d1min)
+
+saveRDS(GPW_tick_d1min, "Data/EuclidPreprocSets/GPWTickSetsProcessed/GPW_tick_d1min.rds")
+
+GPW_tick_d5min <- purrr::map(GPW_tick_set, GPWTickAggregateAndFillNA,
+                             patternDatesToAgg = GPW_pattern_d5min)
+
+saveRDS(GPW_tick_d5min, "Data/EuclidPreprocSets/GPWTickSetsProcessed/GPW_tick_d5min.rds")
+
+GPW_tick_d10min <- purrr::map(GPW_tick_set, GPWTickAggregateAndFillNA,
+                             patternDatesToAgg = GPW_pattern_d10min)
+
+saveRDS(GPW_tick_d10min, "Data/EuclidPreprocSets/GPWTickSetsProcessed/GPW_tick_d10min.rds")
+
+GPW_tick_d30min <- purrr::map(GPW_tick_set, GPWTickAggregateAndFillNA,
+                              patternDatesToAgg = GPW_pattern_d10min)
+
+saveRDS(GPW_tick_d30min, "Data/EuclidPreprocSets/GPWTickSetsProcessed/GPW_tick_d30min.rds")
+
+rm(GPW_pattern_d1min)
+rm(GPW_pattern_d5min)
+rm(GPW_pattern_d10min)
+rm(GPW_pattern_d30min)
+
+GPW_daily_data <- load_financial_data(folder_path = "Data/EuclidPreprocSets/GPW day/",
+                                      data_type = "GPW_d", include_all = T)
+GPW_daily_parsed <- purrr::map(GPW_daily_data, GPWDailyParse)
+rm(GPW_daily_data)
+saveRDS(GPW_daily_parsed, "Data/EuclidPreprocSets/GPWTickSetsProcessed/GPW_daily_parsed.rds")
+
+
+### GPW delta 1 min ###
+GPW_tick_d1min_filtered <- purrr::map(GPW_tick_d1min, function(x){
+  window(x, start = as.Date("2015-07-01"), end = as.Date("2015-07-15"))
+})
+
+GPW_tick_d1min_results_BORYSZEW <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+  refSeries = GPW_tick_d1min_filtered$BORYSZEW, 
+  learnSeriesList = GPW_tick_d1min_filtered, 
+  refSeriesStartIndices = seq(from = 2000, by = 10, length.out = 200), 
+  input_params = params_set, 
+  targetDistance = "r", 
+  normalizationType = "Z", 
+  knn = 150, 
+  refSeriesLength = 100
+)
+
+saveRDS(GPW_tick_d1min_results_BORYSZEW, file = "Data/EuclidPreprocSets/ResultsEuclidPreproc/GPW_tick_d1min_results_BORYSZEW.rds")
+

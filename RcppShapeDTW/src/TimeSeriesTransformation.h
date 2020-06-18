@@ -24,6 +24,10 @@ namespace TSTransformation{
     
     NumericVector output(input_len);
     
+    if(input_sd == 0){
+      return(output);
+    }
+    
     for(int i = 0; i < input_len; i++)
       output[i] = (input[i] - input_avg) / input_sd;
     
@@ -39,6 +43,10 @@ namespace TSTransformation{
     
     
     NumericVector output(input_len);
+    
+    if(input_range == 0){
+      return(output);
+    }
     
     for(int i = 0; i < input_len; i++)
       output[i] = (input[i] - input_min) / input_range;

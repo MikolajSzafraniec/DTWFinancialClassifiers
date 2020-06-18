@@ -674,7 +674,7 @@ classResultsToAccuracyMeasureEuclidPreprocessing <- function(classification_resu
                            rec = 
                            {
                              crt_filtered <- crt %>% 
-                               dplyr::filter(dplyr::sym(nrsc) == target_class)
+                               dplyr::filter(!!dplyr::sym(nrsc) == target_class)
                              sum(crt_filtered[nrsc] == crt_filtered[nlsc]) / nrow(crt_filtered)
                            },
                            

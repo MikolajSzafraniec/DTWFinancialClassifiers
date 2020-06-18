@@ -638,9 +638,9 @@ classResultsToAccuracyMeasureEuclidPreprocessing <- function(classification_resu
                           names_learn_series_returns,
                           names_ref_series_class,
                           names_learn_series_class),
-
+                     
                      function(nrsr, nlsr, nrsc, nlsc, crl, measure, target_class){
-                                
+                       
                        acc_res_list <- purrr::map(.x = crl, .f = function(crt, 
                                                                           nrsr, 
                                                                           nlsr, 
@@ -651,21 +651,21 @@ classResultsToAccuracyMeasureEuclidPreprocessing <- function(classification_resu
                          
                          res <- switch (
                            measure,
-                           acc = sum(crt[nrsc] == crt[nlsc]) / nrow(crt),
+                           acc = sum(crt[[nrsc]] == crt[[nlsc]]) / nrow(crt),
                            
                            balanced_acc = 
                            {
                              acc_sell <- 
-                               sum(crt[nrsc] == "Sell" & (crt[nlsc] == crt[nrsc])) /
-                               sum(crt[nrsc] == "Sell")
+                               sum(crt[[nrsc]] == "Sell" & (crt[[nlsc]] == crt[[nrsc]])) /
+                               sum(crt[[nrsc]] == "Sell")
                              
                              acc_buy <- 
-                               sum(crt[nrsc] == "Buy" & (crt[nlsc] == crt[nrsc])) /
-                               sum(crt[nrsc] == "Buy")
+                               sum(crt[[nrsc]] == "Buy" & (crt[[nlsc]] == crt[[nrsc]])) /
+                               sum(crt[[nrsc]] == "Buy")
                              
                              acc_hold <- 
-                               sum(crt[nrsc] == "Hold" & (crt[nlsc] == crt[nrsc])) /
-                               sum(crt[nrsc] == "Hold")
+                               sum(crt[[nrsc]] == "Hold" & (crt[[nlsc]] == crt[[nrsc]])) /
+                               sum(crt[[nrsc]] == "Hold")
                              
                              sum(acc_sell, acc_buy, acc_hold) / 3
                            },
@@ -673,19 +673,19 @@ classResultsToAccuracyMeasureEuclidPreprocessing <- function(classification_resu
                            prec = 
                            {
                              crt_filtered <- crt %>% 
-                               dplyr::filter(dplyr::sym(nlsc) == target_class)
+                               dplyr::filter(!!dplyr::sym(nlsc) == target_class)
                              
-                             sum(crt_filtered[nrsc] == crt_filtered[nlsc]) / nrow(crt_filtered)
+                             sum(crt_filtered[[nrsc]] == crt_filtered[[nlsc]]) / nrow(crt_filtered)
                            },
                            
                            rec = 
                            {
                              crt_filtered <- crt %>% 
                                dplyr::filter(!!dplyr::sym(nrsc) == target_class)
-                             sum(crt_filtered[nrsc] == crt_filtered[nlsc]) / nrow(crt_filtered)
+                             sum(crt_filtered[[nrsc]] == crt_filtered[[nlsc]]) / nrow(crt_filtered)
                            },
                            
-                           corr = cor(crt[nrsr], crt[nlsr])
+                           corr = cor(crt[[nrsr]], crt[[nlsr]])
                          )
                          
                          return(res)
@@ -713,10 +713,10 @@ classResultsToAccuracyMeasureEuclidPreprocessing <- function(classification_resu
                        
                        return(accResTibblePivoted)
                        
-                    }, 
-                    crl = classification_results_list, 
-                    measure = measure, 
-                    target_class = target_class)
+                     }, 
+                     crl = classification_results_list, 
+                     measure = measure, 
+                     target_class = target_class)
   
   names(res) <- paste0("res_frcst_horizon_", forecast_horizons)
   
@@ -726,95 +726,95 @@ classResultsToAccuracyMeasureEuclidPreprocessing <- function(classification_resu
   names_euclid_series_class <- paste0("euclid_series_", forecast_horizons, "_return_class")
   
   euclid_table <- purrr::pmap(list(names_ref_series_returns,
-                                       names_euclid_series_returns,
-                                       names_ref_series_class,
-                                       names_euclid_series_class),
-                                  function(nrsr, nesr, nrsc, nesc, crl, measure, target_class){
+                                   names_euclid_series_returns,
+                                   names_ref_series_class,
+                                   names_euclid_series_class),
+                              function(nrsr, nesr, nrsc, nesc, crl, measure, target_class){
+                                
+                                crt_1_dim <- crl$dtw_type_Dependent.shape_desc_type_simple.dims1
+                                crt_2_dim <- crl$dtw_type_Dependent.shape_desc_type_simple.dims1_2
+                                
+                                euclid_1_dim <- switch (
+                                  measure,
+                                  acc = sum(crt_1_dim[[nrsc]] == crt_1_dim[[nesc]]) / nrow(crt_1_dim),
+                                  
+                                  balanced_acc = 
+                                  {
+                                    acc_sell <- 
+                                      sum(crt_1_dim[[nrsc]] == "Sell" & (crt_1_dim[[nesc]] == crt_1_dim[[nrsc]])) /
+                                      sum(crt_1_dim[[nrsc]] == "Sell")
                                     
-                                    crt_1_dim <- crl$dtw_type_Dependent.shape_desc_type_simple.dims1
-                                    crt_2_dim <- crl$dtw_type_Dependent.shape_desc_type_simple.dims1_2
+                                    acc_buy <- 
+                                      sum(crt_1_dim[[nrsc]] == "Buy" & (crt_1_dim[[nesc]] == crt_1_dim[[nrsc]])) /
+                                      sum(crt_1_dim[[nrsc]] == "Buy")
                                     
-                                    euclid_1_dim <- switch (
-                                      measure,
-                                      acc = sum(crt_1_dim[nrsc] == crt_1_dim[nesc]) / nrow(crt_1_dim),
-                                      
-                                      balanced_acc = 
-                                      {
-                                        acc_sell <- 
-                                          sum(crt_1_dim[nrsc] == "Sell" & (crt_1_dim[nesc] == crt_1_dim[nrsc])) /
-                                          sum(crt_1_dim[nrsc] == "Sell")
-                                        
-                                        acc_buy <- 
-                                          sum(crt_1_dim[nrsc] == "Buy" & (crt_1_dim[nesc] == crt_1_dim[nrsc])) /
-                                          sum(crt_1_dim[nrsc] == "Buy")
-                                        
-                                        acc_hold <- 
-                                          sum(crt_1_dim[nrsc] == "Hold" & (crt_1_dim[nesc] == crt_1_dim[nrsc])) /
-                                          sum(crt_1_dim[nrsc] == "Hold")
-                                        
-                                        sum(acc_sell, acc_buy, acc_hold) / 3
-                                      },
-                                      
-                                      prec = 
-                                      {
-                                        crt_filtered <- crt_1_dim %>% 
-                                          dplyr::filter(dplyr::sym(nesc) == target_class)
-                                        
-                                        sum(crt_filtered[nrsc] == crt_filtered[nesc]) / nrow(crt_filtered)
-                                      },
-                                      
-                                      rec = 
-                                      {
-                                        crt_filtered <- crt_1_dim %>% 
-                                          dplyr::filter(dplyr::sym(nrsc) == target_class)
-                                        sum(crt_filtered[nrsc] == crt_filtered[nesc]) / nrow(crt_filtered)
-                                      },
-                                      
-                                      corr = cor(crt_1_dim[nrsr], crt_1_dim[nesr])
-                                    )
+                                    acc_hold <- 
+                                      sum(crt_1_dim[[nrsc]] == "Hold" & (crt_1_dim[[nesc]] == crt_1_dim[[nrsc]])) /
+                                      sum(crt_1_dim[[nrsc]] == "Hold")
                                     
-                                    euclid_2_dim <- switch (
-                                      measure,
-                                      acc = sum(crt_2_dim[nrsc] == crt_2_dim[nesc]) / nrow(crt_2_dim),
-                                      
-                                      balanced_acc = 
-                                      {
-                                        acc_sell <- 
-                                          sum(crt_2_dim[nrsc] == "Sell" & (crt_2_dim[nesc] == crt_2_dim[nrsc])) /
-                                          sum(crt_2_dim[nrsc] == "Sell")
-                                        
-                                        acc_buy <- 
-                                          sum(crt_2_dim[nrsc] == "Buy" & (crt_2_dim[nesc] == crt_2_dim[nrsc])) /
-                                          sum(crt_2_dim[nrsc] == "Buy")
-                                        
-                                        acc_hold <- 
-                                          sum(crt_2_dim[nrsc] == "Hold" & (crt_2_dim[nesc] == crt_2_dim[nrsc])) /
-                                          sum(crt_2_dim[nrsc] == "Hold")
-                                        
-                                        sum(acc_sell, acc_buy, acc_hold) / 3
-                                      },
-                                      
-                                      prec = 
-                                      {
-                                        crt_filtered <- crt_2_dim %>% 
-                                          dplyr::filter(dplyr::sym(nesc) == target_class)
-                                        
-                                        sum(crt_filtered[nrsc] == crt_filtered[nesc]) / nrow(crt_filtered)
-                                      },
-                                      
-                                      rec = 
-                                      {
-                                        crt_filtered <- crt_2_dim %>% 
-                                          dplyr::filter(dplyr::sym(nrsc) == target_class)
-                                        sum(crt_filtered[nrsc] == crt_filtered[nesc]) / nrow(crt_filtered)
-                                      },
-                                      
-                                      corr = cor(crt_2_dim[nrsr], crt_2_dim[nesr])
-                                    )
+                                    sum(acc_sell, acc_buy, acc_hold) / 3
+                                  },
+                                  
+                                  prec = 
+                                  {
+                                    crt_filtered <- crt_1_dim %>% 
+                                      dplyr::filter(!!dplyr::sym(nesc) == target_class)
                                     
-                                    return(c(euclid_1_dim = euclid_1_dim, euclid_2_dim = euclid_2_dim))
+                                    sum(crt_filtered[[nrsc]] == crt_filtered[[nesc]]) / nrow(crt_filtered)
+                                  },
+                                  
+                                  rec = 
+                                  {
+                                    crt_filtered <- crt_1_dim %>% 
+                                      dplyr::filter(!!dplyr::sym(nrsc) == target_class)
+                                    sum(crt_filtered[[nrsc]] == crt_filtered[[nesc]]) / nrow(crt_filtered)
+                                  },
+                                  
+                                  corr = cor(crt_1_dim[[nrsr]], crt_1_dim[[nesr]])
+                                )
+                                
+                                euclid_2_dim <- switch (
+                                  measure,
+                                  acc = sum(crt_2_dim[[nrsc]] == crt_2_dim[[nesc]]) / nrow(crt_2_dim),
+                                  
+                                  balanced_acc = 
+                                  {
+                                    acc_sell <- 
+                                      sum(crt_2_dim[[nrsc]] == "Sell" & (crt_2_dim[[nesc]] == crt_2_dim[[nrsc]])) /
+                                      sum(crt_2_dim[[nrsc]] == "Sell")
                                     
-                                  }, crl = classification_results_list, measure = measure, target_class = target_class)
+                                    acc_buy <- 
+                                      sum(crt_2_dim[[nrsc]] == "Buy" & (crt_2_dim[[nesc]] == crt_2_dim[[nrsc]])) /
+                                      sum(crt_2_dim[[nrsc]] == "Buy")
+                                    
+                                    acc_hold <- 
+                                      sum(crt_2_dim[[nrsc]] == "Hold" & (crt_2_dim[[nesc]] == crt_2_dim[[nrsc]])) /
+                                      sum(crt_2_dim[[nrsc]] == "Hold")
+                                    
+                                    sum(acc_sell, acc_buy, acc_hold) / 3
+                                  },
+                                  
+                                  prec = 
+                                  {
+                                    crt_filtered <- crt_2_dim %>% 
+                                      dplyr::filter(!!dplyr::sym(nesc) == target_class)
+                                    
+                                    sum(crt_filtered[[nrsc]] == crt_filtered[[nesc]]) / nrow(crt_filtered)
+                                  },
+                                  
+                                  rec = 
+                                  {
+                                    crt_filtered <- crt_2_dim %>% 
+                                      dplyr::filter(!!dplyr::sym(nrsc) == target_class)
+                                    sum(crt_filtered[[nrsc]] == crt_filtered[[nesc]]) / nrow(crt_filtered)
+                                  },
+                                  
+                                  corr = cor(crt_2_dim[[nrsr]], crt_2_dim[[nesr]])
+                                )
+                                
+                                return(c(euclid_1_dim = euclid_1_dim, euclid_2_dim = euclid_2_dim))
+                                
+                              }, crl = classification_results_list, measure = measure, target_class = target_class)
   
   euclid_table <- do.call(rbind, euclid_table)
   rownames(euclid_table) <- paste0("res_frcst_horizon_", forecast_horizons)

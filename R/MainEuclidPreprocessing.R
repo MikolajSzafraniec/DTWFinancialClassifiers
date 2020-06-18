@@ -481,7 +481,7 @@ GPW_tick_d1min_filtered <- purrr::map(GPW_tick_d1min, function(x){
 GPW_tick_d1min_results_BORYSZEW <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
   refSeries = GPW_tick_d1min_filtered$BORYSZEW, 
   learnSeriesList = GPW_tick_d1min_filtered, 
-  refSeriesStartIndices = seq(from = 2000, by = 10, length.out = 200), 
+  refSeriesStartIndices = seq(from = 2500, by = 10, length.out = 200), 
   input_params = params_set, 
   targetDistance = "r", 
   normalizationType = "Z", 

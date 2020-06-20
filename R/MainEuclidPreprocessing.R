@@ -457,7 +457,7 @@ GPW_tick_d10min <- purrr::map(GPW_tick_set, GPWTickAggregateAndFillNA,
 saveRDS(GPW_tick_d10min, "Data/EuclidPreprocSets/GPWTickSetsProcessed/GPW_tick_d10min.rds")
 
 GPW_tick_d30min <- purrr::map(GPW_tick_set, GPWTickAggregateAndFillNA,
-                              patternDatesToAgg = GPW_pattern_d10min)
+                              patternDatesToAgg = GPW_pattern_d30min)
 
 saveRDS(GPW_tick_d30min, "Data/EuclidPreprocSets/GPWTickSetsProcessed/GPW_tick_d30min.rds")
 
@@ -465,6 +465,7 @@ rm(GPW_pattern_d1min)
 rm(GPW_pattern_d5min)
 rm(GPW_pattern_d10min)
 rm(GPW_pattern_d30min)
+rm(GPW_tick_set)
 
 GPW_daily_data <- load_financial_data(folder_path = "Data/EuclidPreprocSets/GPW day/",
                                       data_type = "GPW_d", include_all = T)
@@ -491,3 +492,218 @@ GPW_tick_d1min_results_BORYSZEW <- runShapeDTWForDefinedParamsTableWithEuclidPre
 
 saveRDS(GPW_tick_d1min_results_BORYSZEW, file = "Data/EuclidPreprocSets/ResultsEuclidPreproc/GPW_tick_d1min_results_BORYSZEW.rds")
 
+GPW_tick_d1min_results_CCC <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+  refSeries = GPW_tick_d1min_filtered$CCC, 
+  learnSeriesList = GPW_tick_d1min_filtered, 
+  refSeriesStartIndices = seq(from = 2500, by = 10, length.out = 200), 
+  input_params = params_set, 
+  targetDistance = "r", 
+  normalizationType = "Z", 
+  knn = 150, 
+  refSeriesLength = 100
+)
+
+saveRDS(GPW_tick_d1min_results_CCC, file = "Data/EuclidPreprocSets/ResultsEuclidPreproc/GPW_tick_d1min_results_CCC.rds")
+
+GPW_tick_d1min_results_LENTEX <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+  refSeries = GPW_tick_d1min_filtered$LENTEX, 
+  learnSeriesList = GPW_tick_d1min_filtered, 
+  refSeriesStartIndices = seq(from = 2500, by = 10, length.out = 200), 
+  input_params = params_set, 
+  targetDistance = "r", 
+  normalizationType = "Z", 
+  knn = 150, 
+  refSeriesLength = 100
+)
+
+saveRDS(GPW_tick_d1min_results_LENTEX, file = "Data/EuclidPreprocSets/ResultsEuclidPreproc/GPW_tick_d1min_results_LENTEX.rds")
+
+GPW_tick_d1min_results_PGNIG <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+  refSeries = GPW_tick_d1min_filtered$PGNIG, 
+  learnSeriesList = GPW_tick_d1min_filtered, 
+  refSeriesStartIndices = seq(from = 2500, by = 10, length.out = 200), 
+  input_params = params_set, 
+  targetDistance = "r", 
+  normalizationType = "Z", 
+  knn = 150, 
+  refSeriesLength = 100
+)
+
+saveRDS(GPW_tick_d1min_results_PGNIG, file = "Data/EuclidPreprocSets/ResultsEuclidPreproc/GPW_tick_d1min_results_PGNIG.rds")
+
+
+
+### GPW delta 5 min ###
+GPW_tick_d5min_filtered <- purrr::map(GPW_tick_d5min, function(x){
+  window(x, start = as.Date("2017-07-01"), end = as.Date("2017-09-15"))
+})
+
+GPW_tick_d5min_results_BORYSZEW <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+  refSeries = GPW_tick_d5min_filtered$BORYSZEW, 
+  learnSeriesList = GPW_tick_d5min_filtered, 
+  refSeriesStartIndices = seq(from = 2500, by = 10, length.out = 200), 
+  input_params = params_set, 
+  targetDistance = "r", 
+  normalizationType = "Z", 
+  knn = 150, 
+  refSeriesLength = 100
+)
+
+saveRDS(GPW_tick_d5min_results_BORYSZEW, file = "Data/EuclidPreprocSets/ResultsEuclidPreproc/GPW_tick_d5min_results_BORYSZEW.rds")
+
+GPW_tick_d5min_results_CCC <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+  refSeries = GPW_tick_d5min_filtered$CCC, 
+  learnSeriesList = GPW_tick_d5min_filtered, 
+  refSeriesStartIndices = seq(from = 2500, by = 10, length.out = 200), 
+  input_params = params_set, 
+  targetDistance = "r", 
+  normalizationType = "Z", 
+  knn = 150, 
+  refSeriesLength = 100
+)
+
+saveRDS(GPW_tick_d5min_results_CCC, file = "Data/EuclidPreprocSets/ResultsEuclidPreproc/GPW_tick_d5min_results_CCC.rds")
+
+GPW_tick_d5min_results_LENTEX <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+  refSeries = GPW_tick_d5min_filtered$LENTEX, 
+  learnSeriesList = GPW_tick_d5min_filtered, 
+  refSeriesStartIndices = seq(from = 2500, by = 10, length.out = 200), 
+  input_params = params_set, 
+  targetDistance = "r", 
+  normalizationType = "Z", 
+  knn = 150, 
+  refSeriesLength = 100
+)
+
+saveRDS(GPW_tick_d5min_results_LENTEX, file = "Data/EuclidPreprocSets/ResultsEuclidPreproc/GPW_tick_d5min_results_LENTEX.rds")
+
+GPW_tick_d5min_results_PGNIG <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+  refSeries = GPW_tick_d5min_filtered$PGNIG, 
+  learnSeriesList = GPW_tick_d5min_filtered, 
+  refSeriesStartIndices = seq(from = 2500, by = 10, length.out = 200), 
+  input_params = params_set, 
+  targetDistance = "r", 
+  normalizationType = "Z", 
+  knn = 150, 
+  refSeriesLength = 100
+)
+
+saveRDS(GPW_tick_d5min_results_PGNIG, file = "Data/EuclidPreprocSets/ResultsEuclidPreproc/GPW_tick_d5min_results_PGNIG.rds")
+
+
+### GPW delta 10 min ###
+GPW_tick_d10min_filtered <- purrr::map(GPW_tick_d10min, function(x){
+  window(x, start = as.Date("2017-01-01"), end = as.Date("2017-06-15"))
+})
+
+GPW_tick_d10min_results_BORYSZEW <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+  refSeries = GPW_tick_d10min_filtered$BORYSZEW, 
+  learnSeriesList = GPW_tick_d10min_filtered, 
+  refSeriesStartIndices = seq(from = 2500, by = 10, length.out = 200), 
+  input_params = params_set, 
+  targetDistance = "r", 
+  normalizationType = "Z", 
+  knn = 150, 
+  refSeriesLength = 100
+)
+
+saveRDS(GPW_tick_d10min_results_BORYSZEW, file = "Data/EuclidPreprocSets/ResultsEuclidPreproc/GPW_tick_d10min_results_BORYSZEW.rds")
+
+GPW_tick_d10min_results_CCC <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+  refSeries = GPW_tick_d10min_filtered$CCC, 
+  learnSeriesList = GPW_tick_d10min_filtered, 
+  refSeriesStartIndices = seq(from = 2500, by = 10, length.out = 200), 
+  input_params = params_set, 
+  targetDistance = "r", 
+  normalizationType = "Z", 
+  knn = 150, 
+  refSeriesLength = 100
+)
+
+saveRDS(GPW_tick_d10min_results_CCC, file = "Data/EuclidPreprocSets/ResultsEuclidPreproc/GPW_tick_d10min_results_CCC.rds")
+
+GPW_tick_d10min_results_LENTEX <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+  refSeries = GPW_tick_d10min_filtered$LENTEX, 
+  learnSeriesList = GPW_tick_d10min_filtered, 
+  refSeriesStartIndices = seq(from = 2500, by = 10, length.out = 200), 
+  input_params = params_set, 
+  targetDistance = "r", 
+  normalizationType = "Z", 
+  knn = 150, 
+  refSeriesLength = 100
+)
+
+saveRDS(GPW_tick_d10min_results_LENTEX, file = "Data/EuclidPreprocSets/ResultsEuclidPreproc/GPW_tick_d10min_results_LENTEX.rds")
+
+GPW_tick_d10min_results_PGNIG <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+  refSeries = GPW_tick_d10min_filtered$PGNIG, 
+  learnSeriesList = GPW_tick_d10min_filtered, 
+  refSeriesStartIndices = seq(from = 2500, by = 10, length.out = 200), 
+  input_params = params_set, 
+  targetDistance = "r", 
+  normalizationType = "Z", 
+  knn = 150, 
+  refSeriesLength = 100
+)
+
+saveRDS(GPW_tick_d10min_results_PGNIG, file = "Data/EuclidPreprocSets/ResultsEuclidPreproc/GPW_tick_d10min_results_PGNIG.rds")
+
+
+GPW_tick_d30min <- readRDS("Data/EuclidPreprocSets/GPWTickSetsProcessed/GPW_tick_d30min.rds")
+
+### GPW delta 30 min ###
+GPW_tick_d30min_filtered <- purrr::map(GPW_tick_d30min, function(x){
+  window(x, start = as.Date("2018-01-01"), end = as.Date("2019-06-15"))
+})
+
+GPW_tick_d30min_results_BORYSZEW <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+  refSeries = GPW_tick_d30min_filtered$BORYSZEW, 
+  learnSeriesList = GPW_tick_d30min_filtered, 
+  refSeriesStartIndices = seq(from = 2500, by = 10, length.out = 200), 
+  input_params = params_set, 
+  targetDistance = "r", 
+  normalizationType = "Z", 
+  knn = 150, 
+  refSeriesLength = 100
+)
+
+saveRDS(GPW_tick_d30min_results_BORYSZEW, file = "Data/EuclidPreprocSets/ResultsEuclidPreproc/GPW_tick_d30min_results_BORYSZEW.rds")
+
+GPW_tick_d30min_results_CCC <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+  refSeries = GPW_tick_d30min_filtered$CCC, 
+  learnSeriesList = GPW_tick_d30min_filtered, 
+  refSeriesStartIndices = seq(from = 2500, by = 10, length.out = 200), 
+  input_params = params_set, 
+  targetDistance = "r", 
+  normalizationType = "Z", 
+  knn = 150, 
+  refSeriesLength = 100
+)
+
+saveRDS(GPW_tick_d30min_results_CCC, file = "Data/EuclidPreprocSets/ResultsEuclidPreproc/GPW_tick_d30min_results_CCC.rds")
+
+GPW_tick_d30min_results_LENTEX <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+  refSeries = GPW_tick_d30min_filtered$LENTEX, 
+  learnSeriesList = GPW_tick_d30min_filtered, 
+  refSeriesStartIndices = seq(from = 2500, by = 10, length.out = 200), 
+  input_params = params_set, 
+  targetDistance = "r", 
+  normalizationType = "Z", 
+  knn = 150, 
+  refSeriesLength = 100
+)
+
+saveRDS(GPW_tick_d30min_results_LENTEX, file = "Data/EuclidPreprocSets/ResultsEuclidPreproc/GPW_tick_d30min_results_LENTEX.rds")
+
+GPW_tick_d30min_results_PGNIG <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+  refSeries = GPW_tick_d30min_filtered$PGNIG, 
+  learnSeriesList = GPW_tick_d30min_filtered, 
+  refSeriesStartIndices = seq(from = 2500, by = 10, length.out = 200), 
+  input_params = params_set, 
+  targetDistance = "r", 
+  normalizationType = "Z", 
+  knn = 150, 
+  refSeriesLength = 100
+)
+
+saveRDS(GPW_tick_d30min_results_PGNIG, file = "Data/EuclidPreprocSets/ResultsEuclidPreproc/GPW_tick_d30min_results_PGNIG.rds")

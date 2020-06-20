@@ -201,8 +201,9 @@ assignReturnClass <- function(rt, sd_border, sd){
     res <- cut.default(rt,
                        breaks = c(-Inf, -sd_border*sd, sd_border*sd, Inf), 
                        labels = c("Sell", "Hold", "Buy"))
-    return(as.character(res))
   }
+  
+  return(as.character(res))
 }
 
 RknnShapeDTWParallelSimplified <- function(refSeries,
@@ -618,7 +619,7 @@ runShapeDTWForDefinedParamsTableWithEuclidPreprocessing <- function(refSeries,
 
 
 classResultsToAccuracyMeasureEuclidPreprocessing <- function(classification_results_list,
-                                                             measure = c("acc", "balanced_acc", "prec", "rec", "corr"),
+                                                             measure = c("acc", "balanced_acc", "prec", "rec", "corr", "sign_acc"),
                                                              target_class = c("Sell", "Hold", "Buy")){
   
   measure = match.arg(measure)
@@ -685,7 +686,9 @@ classResultsToAccuracyMeasureEuclidPreprocessing <- function(classification_resu
                              sum(crt_filtered[[nrsc]] == crt_filtered[[nlsc]]) / nrow(crt_filtered)
                            },
                            
-                           corr = cor(crt[[nrsr]], crt[[nlsr]])
+                           corr = cor(crt[[nrsr]], crt[[nlsr]]),
+                           
+                           sign_acc = sum(sign(crt[[nrsr]]) == sign(crt[[nlsr]])) / nrow(crt)
                          )
                          
                          return(res)
@@ -770,7 +773,9 @@ classResultsToAccuracyMeasureEuclidPreprocessing <- function(classification_resu
                                     sum(crt_filtered[[nrsc]] == crt_filtered[[nesc]]) / nrow(crt_filtered)
                                   },
                                   
-                                  corr = cor(crt_1_dim[[nrsr]], crt_1_dim[[nesr]])
+                                  corr = cor(crt_1_dim[[nrsr]], crt_1_dim[[nesr]]),
+                                  
+                                  sign_acc = sum(sign(crt_1_dim[[nrsr]]) == sign(crt_1_dim[[nesr]])) / nrow(crt_1_dim)
                                 )
                                 
                                 euclid_2_dim <- switch (
@@ -809,7 +814,9 @@ classResultsToAccuracyMeasureEuclidPreprocessing <- function(classification_resu
                                     sum(crt_filtered[[nrsc]] == crt_filtered[[nesc]]) / nrow(crt_filtered)
                                   },
                                   
-                                  corr = cor(crt_2_dim[[nrsr]], crt_2_dim[[nesr]])
+                                  corr = cor(crt_2_dim[[nrsr]], crt_2_dim[[nesr]]),
+                                  
+                                  sign_acc = sum(sign(crt_2_dim[[nrsr]]) == sign(crt_2_dim[[nesr]])) / nrow(crt_2_dim)
                                 )
                                 
                                 return(c(euclid_1_dim = euclid_1_dim, euclid_2_dim = euclid_2_dim))

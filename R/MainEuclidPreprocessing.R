@@ -707,3 +707,61 @@ GPW_tick_d30min_results_PGNIG <- runShapeDTWForDefinedParamsTableWithEuclidPrepr
 )
 
 saveRDS(GPW_tick_d30min_results_PGNIG, file = "Data/EuclidPreprocSets/ResultsEuclidPreproc/GPW_tick_d30min_results_PGNIG.rds")
+
+
+### GPW daily ###
+GPW_daily_filtered <- purrr::map(GPW_daily_parsed, function(x){
+  window(x, start = as.Date("2005-10-01"), end = Inf)
+})
+
+GPW_daily_results_BORYSZEW <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+  refSeries = GPW_daily_filtered$BORYSZEW, 
+  learnSeriesList = GPW_daily_filtered, 
+  refSeriesStartIndices = seq(from = 2200, by = 5, length.out = 200), 
+  input_params = params_set, 
+  targetDistance = "r", 
+  normalizationType = "Z", 
+  knn = 150, 
+  refSeriesLength = 100
+)
+
+saveRDS(GPW_daily_results_BORYSZEW, file = "Data/EuclidPreprocSets/ResultsEuclidPreproc/GPW_daily_results_BORYSZEW.rds")
+
+GPW_daily_results_CCC <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+  refSeries = GPW_daily_filtered$CCC, 
+  learnSeriesList = GPW_daily_filtered, 
+  refSeriesStartIndices = seq(from = 2200, by = 5, length.out = 200), 
+  input_params = params_set, 
+  targetDistance = "r", 
+  normalizationType = "Z", 
+  knn = 150, 
+  refSeriesLength = 100
+)
+
+saveRDS(GPW_daily_results_CCC, file = "Data/EuclidPreprocSets/ResultsEuclidPreproc/GPW_daily_results_CCC.rds")
+
+GPW_daily_results_LENTEX <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+  refSeries = GPW_daily_filtered$LENTEX, 
+  learnSeriesList = GPW_daily_filtered, 
+  refSeriesStartIndices = seq(from = 2200, by = 5, length.out = 200), 
+  input_params = params_set, 
+  targetDistance = "r", 
+  normalizationType = "Z", 
+  knn = 150, 
+  refSeriesLength = 100
+)
+
+saveRDS(GPW_daily_results_LENTEX, file = "Data/EuclidPreprocSets/ResultsEuclidPreproc/GPW_daily_results_LENTEX.rds")
+
+GPW_daily_results_PGNIG <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+  refSeries = GPW_daily_filtered$PGNIG, 
+  learnSeriesList = GPW_daily_filtered, 
+  refSeriesStartIndices = seq(from = 2200, by = 5, length.out = 200), 
+  input_params = params_set, 
+  targetDistance = "r", 
+  normalizationType = "Z", 
+  knn = 150, 
+  refSeriesLength = 100
+)
+
+saveRDS(GPW_daily_results_PGNIG, file = "Data/EuclidPreprocSets/ResultsEuclidPreproc/GPW_daily_results_PGNIG.rds")

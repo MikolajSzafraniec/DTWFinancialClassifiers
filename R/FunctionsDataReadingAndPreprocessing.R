@@ -235,7 +235,7 @@ GPWTickAggregateAndFillNA <- function(GPWTickData, patternDatesToAgg,
   
   timeSeriesAfterAggregate <- timeSeriesApply(timeSeriesToAggregate,
                                               funToApply = aggregate,
-                                              args = list(by = list(patternDatesToAgg),
+                                              args = list(by = list(timeDate(dfTimeParsed$timestamp)),
                                                           FUN = funAggBy))
   
   dfTimeSeriesAfterAggregate <- data.frame(timestamp = time(timeSeriesAfterAggregate),

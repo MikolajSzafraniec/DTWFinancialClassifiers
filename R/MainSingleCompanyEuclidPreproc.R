@@ -532,3 +532,14 @@ GPW_tick_d5min_results_ref_25 <- purrr::map(GPW_tick_d5min_filtered, function(da
 
 saveRDS(GPW_tick_d5min_results_ref_25, file = "Data/EuclidPreproSingleStock/ResultsEuclidPreproc/GPW_tick_d5min_results_ref_25.rds")
 
+classResultsToAccuracyMeasureEuclidPreprocessing(
+  GPW_tick_d5min_results_ref_25$POLICE,
+  "bal"
+)
+
+table(GPW_tick_d5min_results_ref_25$POLICE$dtw_type_Dependent.shape_desc_type_simple.dims1_2$target_series_5_return_class,
+      GPW_tick_d5min_results_ref_25$POLICE$dtw_type_Dependent.shape_desc_type_simple.dims1_2$euclid_series_5_return_class)
+
+cbind(GPW_tick_d5min_results_ref_25$POLICE$dtw_type_Dependent.shape_desc_type_simple.dims1_2$target_series_5_returns,
+      GPW_tick_d5min_results_ref_25$POLICE$dtw_type_Dependent.shape_desc_type_simple.dims1_2$target_series_5_return_class,
+      GPW_tick_d5min_results_ref_25$POLICE$dtw_type_Dependent.shape_desc_type_simple.dims1_2$target_series_sd)

@@ -193,6 +193,10 @@ calcSD <- function(target_series,
 
 assignReturnClass <- function(rt, sd_border, sd){
   
+  if(rt == 0){
+    return("Hold")
+  }
+  
   if(sd == 0){
     res <- cut.default(rt,
                        breaks = c(-Inf, 0, Inf), 
@@ -626,7 +630,7 @@ classResultsToAccuracyMeasureEuclidPreprocessing <- function(classification_resu
   target_class = match.arg(target_class)
   
   forecast_horizons <- stringr::str_extract(colnames(classification_results_list[[1]]), 
-                                            pattern = "[0-9]{2,3}") %>% 
+                                            pattern = "[0-9]{1,3}") %>% 
     .[!is.na(.)] %>%
     unique(.)
   

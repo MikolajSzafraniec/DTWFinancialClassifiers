@@ -641,7 +641,7 @@ FX_tick_d10min_results_ref_100 <- purrr::map(FX_tick_d10min_filtered, function(d
 
 saveRDS(FX_tick_d10min_results_ref_100, file = "Data/EuclidPreproSingleStock/ResultsEuclidPreproc/FX_tick_d10min_results_ref_100.rds")
 
-# GPW tick delta 5 min
+# GPW tick delta 10 min
 
 GPW_tick_d10min_results_ref_25 <- purrr::map(GPW_tick_d10min_filtered, function(data_set){
   
@@ -664,3 +664,182 @@ GPW_tick_d10min_results_ref_25 <- purrr::map(GPW_tick_d10min_filtered, function(
 
 saveRDS(GPW_tick_d10min_results_ref_25, file = "Data/EuclidPreproSingleStock/ResultsEuclidPreproc/GPW_tick_d10min_results_ref_25.rds")
 
+
+GPW_tick_d10min_results_ref_50 <- purrr::map(GPW_tick_d10min_filtered, function(data_set){
+  
+  res <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+    refSeries = data_set, 
+    learnSeriesList = list(data_set), 
+    refSeriesStartIndices = seq(from = 9926, by = 10, length.out = 100), 
+    input_params = params_set, 
+    targetDistance = "r", 
+    normalizationType = "Z", 
+    knn = 25, 
+    refSeriesLength = 50, 
+    forecastHorizons = c(5, 10, 25, 50, 75, 100, 150, 200), 
+    sd_borders = c(0.5, 0.6, 1, 1.4, 1.7, 2, 2.4, 2.8),
+    includeRefSeries = F
+  )
+  
+  return(res)
+})
+
+saveRDS(GPW_tick_d10min_results_ref_50, file = "Data/EuclidPreproSingleStock/ResultsEuclidPreproc/GPW_tick_d10min_results_ref_50.rds")
+
+
+GPW_tick_d10min_results_ref_100 <- purrr::map(GPW_tick_d10min_filtered, function(data_set){
+  
+  res <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+    refSeries = data_set, 
+    learnSeriesList = list(data_set), 
+    refSeriesStartIndices = seq(from = 9926, by = 10, length.out = 100), 
+    input_params = params_set, 
+    targetDistance = "r", 
+    normalizationType = "Z", 
+    knn = 25, 
+    refSeriesLength = 100, 
+    forecastHorizons = c(5, 10, 25, 50, 75, 100, 150, 200), 
+    sd_borders = c(0.5, 0.6, 1, 1.4, 1.7, 2, 2.4, 2.8),
+    includeRefSeries = F
+  )
+  
+  return(res)
+})
+
+saveRDS(GPW_tick_d10min_results_ref_100, file = "Data/EuclidPreproSingleStock/ResultsEuclidPreproc/GPW_tick_d10min_results_ref_100.rds")
+
+
+# Forex tick delta 30 min
+
+FX_tick_d30min_results_ref_25 <- purrr::map(FX_tick_d30min_filtered, function(data_set){
+  
+  res <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+    refSeries = data_set, 
+    learnSeriesList = list(data_set), 
+    refSeriesStartIndices = seq(from = 9800, by = 10, length.out = 100), 
+    input_params = params_set, 
+    targetDistance = "r", 
+    normalizationType = "Z", 
+    knn = 25, 
+    refSeriesLength = 25, 
+    forecastHorizons = c(5, 10, 25, 50, 75, 100, 150, 200), 
+    sd_borders = c(0.5, 0.6, 1, 1.4, 1.7, 2, 2.4, 2.8),
+    includeRefSeries = F
+  )
+  
+  
+  return(res)
+})
+
+saveRDS(FX_tick_d30min_results_ref_25, file = "Data/EuclidPreproSingleStock/ResultsEuclidPreproc/FX_tick_d30min_results_ref_25.rds")
+
+
+FX_tick_d30min_results_ref_50 <- purrr::map(FX_tick_d30min_filtered, function(data_set){
+  
+  res <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+    refSeries = data_set, 
+    learnSeriesList = list(data_set), 
+    refSeriesStartIndices = seq(from = 9800, by = 10, length.out = 100), 
+    input_params = params_set, 
+    targetDistance = "r", 
+    normalizationType = "Z", 
+    knn = 25, 
+    refSeriesLength = 50, 
+    forecastHorizons = c(5, 10, 25, 50, 75, 100, 150, 200), 
+    sd_borders = c(0.5, 0.6, 1, 1.4, 1.7, 2, 2.4, 2.8),
+    includeRefSeries = F
+  )
+  
+  return(res)
+})
+
+saveRDS(FX_tick_d30min_results_ref_50, file = "Data/EuclidPreproSingleStock/ResultsEuclidPreproc/FX_tick_d30min_results_ref_50.rds")
+
+FX_tick_d30min_results_ref_100 <- purrr::map(FX_tick_d30min_filtered, function(data_set){
+  
+  res <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+    refSeries = data_set, 
+    learnSeriesList = list(data_set), 
+    refSeriesStartIndices = seq(from = 9800, by = 10, length.out = 100), 
+    input_params = params_set, 
+    targetDistance = "r", 
+    normalizationType = "Z", 
+    knn = 25, 
+    refSeriesLength = 100, 
+    forecastHorizons = c(5, 10, 25, 50, 75, 100, 150, 200), 
+    sd_borders = c(0.5, 0.6, 1, 1.4, 1.7, 2, 2.4, 2.8),
+    includeRefSeries = F
+  )
+  
+  return(res)
+})
+
+saveRDS(FX_tick_d30min_results_ref_100, file = "Data/EuclidPreproSingleStock/ResultsEuclidPreproc/FX_tick_d30min_results_ref_100.rds")
+
+
+# GPW tick delta 30 min
+
+GPW_tick_d30min_results_ref_25 <- purrr::map(GPW_tick_d30min_filtered, function(data_set){
+  
+  res <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+    refSeries = data_set, 
+    learnSeriesList = list(data_set), 
+    refSeriesStartIndices = seq(from = 9936, by = 10, length.out = 100), 
+    input_params = params_set, 
+    targetDistance = "r", 
+    normalizationType = "Z", 
+    knn = 25, 
+    refSeriesLength = 25, 
+    forecastHorizons = c(5, 10, 25, 50, 75, 100, 150, 200), 
+    sd_borders = c(0.5, 0.6, 1, 1.4, 1.7, 2, 2.4, 2.8),
+    includeRefSeries = F
+  )
+  
+  return(res)
+})
+
+saveRDS(GPW_tick_d30min_results_ref_25, file = "Data/EuclidPreproSingleStock/ResultsEuclidPreproc/GPW_tick_d30min_results_ref_25.rds")
+
+
+GPW_tick_d30min_results_ref_50 <- purrr::map(GPW_tick_d30min_filtered, function(data_set){
+  
+  res <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+    refSeries = data_set, 
+    learnSeriesList = list(data_set), 
+    refSeriesStartIndices = seq(from = 9936, by = 10, length.out = 100), 
+    input_params = params_set, 
+    targetDistance = "r", 
+    normalizationType = "Z", 
+    knn = 25, 
+    refSeriesLength = 50, 
+    forecastHorizons = c(5, 10, 25, 50, 75, 100, 150, 200), 
+    sd_borders = c(0.5, 0.6, 1, 1.4, 1.7, 2, 2.4, 2.8),
+    includeRefSeries = F
+  )
+  
+  return(res)
+})
+
+saveRDS(GPW_tick_d30min_results_ref_50, file = "Data/EuclidPreproSingleStock/ResultsEuclidPreproc/GPW_tick_d30min_results_ref_50.rds")
+
+
+GPW_tick_d30min_results_ref_100 <- purrr::map(GPW_tick_d30min_filtered, function(data_set){
+  
+  res <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+    refSeries = data_set, 
+    learnSeriesList = list(data_set), 
+    refSeriesStartIndices = seq(from = 9936, by = 10, length.out = 100), 
+    input_params = params_set, 
+    targetDistance = "r", 
+    normalizationType = "Z", 
+    knn = 25, 
+    refSeriesLength = 100, 
+    forecastHorizons = c(5, 10, 25, 50, 75, 100, 150, 200), 
+    sd_borders = c(0.5, 0.6, 1, 1.4, 1.7, 2, 2.4, 2.8),
+    includeRefSeries = F
+  )
+  
+  return(res)
+})
+
+saveRDS(GPW_tick_d30min_results_ref_100, file = "Data/EuclidPreproSingleStock/ResultsEuclidPreproc/GPW_tick_d30min_results_ref_100.rds")

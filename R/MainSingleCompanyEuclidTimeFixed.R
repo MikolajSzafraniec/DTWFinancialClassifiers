@@ -573,6 +573,28 @@ FX_tick_d5min_results_ref_200 <- purrr::map(FX_tick_d5min_filtered, function(dat
 
 saveRDS(FX_tick_d5min_results_ref_200, file = "Data/EuclidPreproSingleStock/ResultsEuclidTimeFixed/FX_tick_d5min_results_ref_200.rds")
 
+FX_tick_d5min_results_ref_400 <- purrr::map(FX_tick_d5min_filtered, function(data_set){
+  
+  res <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+    refSeries = data_set, 
+    learnSeriesList = list(data_set), 
+    refSeriesStartIndices = seq(from = 9757, by = 10, length.out = 100), 
+    input_params = params_set, 
+    targetDistance = "r", 
+    normalizationType = "Z", 
+    knn = 25, 
+    refSeriesLength = 400, 
+    forecastHorizons = c(5, 10, 25, 50, 75, 100, 150, 200), 
+    sd_borders = c(0.5, 0.6, 1, 1.4, 1.7, 2, 2.4, 2.8),
+    includeRefSeries = F
+  )
+  
+  return(res)
+})
+
+saveRDS(FX_tick_d5min_results_ref_400, file = "Data/EuclidPreproSingleStock/ResultsEuclidTimeFixed/FX_tick_d5min_results_ref_400.rds")
+
+
 # GPW tick delta 5 mi
 GPW_tick_d5min_results_ref_25 <- purrr::map(GPW_tick_d5min_filtered, function(data_set){
   

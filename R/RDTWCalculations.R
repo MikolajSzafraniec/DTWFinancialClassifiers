@@ -32,15 +32,26 @@ RknnShapeDTW <- function(refSeries,
                          learnSeries,
                          refSeriesStart, #Integer index of ts
                          shapeDTWParams,
+<<<<<<< HEAD
                          learnSeriesName = "learnSeries",
+=======
+>>>>>>> sakoe_chiba_window
                          distanceType = c("Dependent", "Independent"),
                          normalizationType = c("Unitarization", "Zscore"),
                          refSeriesLength = 100,
                          forecastHorizon = 20,
                          subsequenceWidth = 4,
                          trigonometricTP = NULL,
+<<<<<<< HEAD
                          subsequenceBreaks = 10){
 
+=======
+                         subsequenceBreaks = 10,
+                         sakoeChibaWindow = NULL){
+  
+  normalizationType <- match.arg(normalizationType)
+  distanceType <- match.arg(distanceType)
+>>>>>>> sakoe_chiba_window
   
   refSeriesStartTime <- time(refSeries)[refSeriesStart]
   refSeriesEndTime <- time(refSeries)[refSeriesStart + refSeriesLength - 1]
@@ -57,7 +68,12 @@ RknnShapeDTW <- function(refSeries,
                                       shapeDescriptorParams = shapeDTWParams, 
                                       normalizationType = normalizationType, 
                                       distanceType = distanceType, 
+<<<<<<< HEAD
                                       ttParams = trigonometricTP)
+=======
+                                      ttParams = trigonometricTP, 
+                                      sakoeChibaWindow = sakoeChibaWindow)
+>>>>>>> sakoe_chiba_window
   
   return(res)
 }
@@ -75,7 +91,12 @@ RknnShapeDTWParallel <- function(refSeries,
                                  trigonometricTP = NULL,
                                  subsequenceBreaks = 10,
                                  includeRefSeries = TRUE,
+<<<<<<< HEAD
                                  sd_border = 1){
+=======
+                                 sd_border = 1,
+                                 sakoeChibaWindow = NULL){
+>>>>>>> sakoe_chiba_window
   
   targetDistance <- match.arg(targetDistance)
   distanceType <- match.arg(distanceType)
@@ -97,13 +118,22 @@ RknnShapeDTWParallel <- function(refSeries,
     list(refSeries = list(refSeries),
          learnSeries = learnSeries,
          n = names(learnSeries)),
+<<<<<<< HEAD
     ~RknnShapeDTW(refSeries = ..1, learnSeries = ..2, 
                   learnSeriesName = ..3, refSeriesStart = refSeriesStart, 
+=======
+    ~RknnShapeDTW(refSeries = ..1, learnSeries = ..2, refSeriesStart = refSeriesStart, 
+>>>>>>> sakoe_chiba_window
                   shapeDTWParams = shapeDTWParams, 
                   refSeriesLength = refSeriesLength, forecastHorizon = forecastHorizon, 
                   subsequenceWidth = subsequenceWidth, trigonometricTP = trigonometricTP, 
                   distanceType = distanceType, subsequenceBreaks = subsequenceBreaks, 
+<<<<<<< HEAD
                   normalizationType = normalizationType)
+=======
+                  normalizationType = normalizationType,
+                  sakoeChibaWindow = sakoeChibaWindow)
+>>>>>>> sakoe_chiba_window
   )
   
   #message("Switching plan back to sequential")
@@ -330,7 +360,12 @@ RunMultipleShapeDTWkNN <- function(refSeries,
                                    includeRefSeries = TRUE,
                                    sd_border = 1,
                                    loggingThreshold = "DEBUG",
+<<<<<<< HEAD
                                    switchBackToSequential = T){
+=======
+                                   switchBackToSequential = T,
+                                   sakoeChibaWindow = NULL){
+>>>>>>> sakoe_chiba_window
   
   stopifnot(!is.null(names(learnSeries)))
   
@@ -394,7 +429,12 @@ RunMultipleShapeDTWkNN <- function(refSeries,
                                              trigonometricTP = trigonometricTP, 
                                              subsequenceBreaks = subsequenceBreaks, 
                                              includeRefSeries = includeRefSeries, 
+<<<<<<< HEAD
                                              sd_border = sd_border)
+=======
+                                             sd_border = sd_border,
+                                             sakoeChibaWindow = sakoeChibaWindow)
+>>>>>>> sakoe_chiba_window
           
           res <- data.frame(
             "kNNSuccess" = kNNResults$validation_results$kNNSuccess,
@@ -603,7 +643,12 @@ runShapeDTWForDefinedParamsTable <- function(input_params,
                                              normalizationType = c("Unitarization", "Zscore"),
                                              subsequenceBreaks = 1,
                                              includeRefSeries = FALSE,
+<<<<<<< HEAD
                                              sd_border = 1.5){
+=======
+                                             sd_border = 1.5,
+                                             sakoeChibaWindow = NULL){
+>>>>>>> sakoe_chiba_window
   
   targetDistance <- match.arg(targetDistance)
   normalizationType <- match.arg(normalizationType)
@@ -638,7 +683,12 @@ runShapeDTWForDefinedParamsTable <- function(input_params,
                                         test_set,
                                         learn_part_length,
                                         forecast_part_length,
+<<<<<<< HEAD
                                         tab_ind){
+=======
+                                        tab_ind,
+                                        sakoeChibaWindow){
+>>>>>>> sakoe_chiba_window
                                  
                                  msg <- paste("Calculating table number ", tab_ind, "\n", sep = "")
                                  message(msg)
@@ -666,7 +716,12 @@ runShapeDTWForDefinedParamsTable <- function(input_params,
                                                                       trigonometricTP = trig_tran_params, 
                                                                       subsequenceBreaks = subsequenceBreaks, 
                                                                       includeRefSeries = includeRefSeries, 
+<<<<<<< HEAD
                                                                       sd_border = sd_border)
+=======
+                                                                      sd_border = sd_border,
+                                                                      sakoeChibaWindow = sakoeChibaWindow)
+>>>>>>> sakoe_chiba_window
                                    
                                    res <- data.frame(
                                      "kNNSuccess" = kNNResults$validation_results$kNNSuccess,
@@ -686,7 +741,12 @@ runShapeDTWForDefinedParamsTable <- function(input_params,
                                includeRefSeries = includeRefSeries,
                                subsequenceBreaks = subsequenceBreaks,
                                normalizationType = normalizationType,
+<<<<<<< HEAD
                                targetDistance = targetDistance
+=======
+                               targetDistance = targetDistance,
+                               sakoeChibaWindow = sakoeChibaWindow
+>>>>>>> sakoe_chiba_window
                                )
   
   names(result_tables) <- descr
@@ -696,7 +756,11 @@ runShapeDTWForDefinedParamsTable <- function(input_params,
 }
 
 classResultsToAccuracyMeasure <- function(classification_results_list,
+<<<<<<< HEAD
                                           measure = c("acc", "prec", "rec", "corr"),
+=======
+                                          measure = c("acc", "balanced_acc", "prec", "rec", "corr"),
+>>>>>>> sakoe_chiba_window
                                           target_class = c("Fall", "Growth", "Flat_move")){
   
   measure = match.arg(measure)
@@ -709,6 +773,29 @@ classResultsToAccuracyMeasure <- function(classification_results_list,
                             measure,
                             acc = sum(crt$refReturnClass == crt$testReturnClass) / nrow(crt),
                             
+<<<<<<< HEAD
+=======
+                            balanced_acc = 
+                            {
+                              acc_fall <- 
+                                sum(crt$refReturnClass == "Fall" & (crt$testReturnClass ==
+                                                                                 crt$refReturnClass)) /
+                                sum(crt$refReturnClass == "Fall")
+                              
+                              acc_growth <- 
+                                sum(crt$refReturnClass == "Growth" & (crt$testReturnClass ==
+                                                                      crt$refReturnClass)) /
+                                sum(crt$refReturnClass == "Growth")
+                              
+                              acc_flat <- 
+                                sum(crt$refReturnClass == "Flat_move" & (crt$testReturnClass ==
+                                                                        crt$refReturnClass)) /
+                                sum(crt$refReturnClass == "Flat_move")
+                              
+                              sum(acc_fall, acc_growth, acc_flat) / 3
+                            },
+                            
+>>>>>>> sakoe_chiba_window
                             prec = 
                             {
                               crt_filtered <- crt %>% 

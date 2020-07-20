@@ -2,6 +2,10 @@
 #include <math.h>
 #include "Iterators.h"
 #include "CppDTWFunctions.h"
+<<<<<<< HEAD
+=======
+#include <bits/stdc++.h>
+>>>>>>> sakoe_chiba_window
 #ifndef TimeSeriesTransformation
 #define TimeSeriesTransformation
 #endif
@@ -91,9 +95,15 @@ List RcpptsTransformation(NumericMatrix timeSeries, S4 shapeDescriptorParams,
 }
 
 /*
+<<<<<<< HEAD
 * This function generate distance matrices between raw series and series transformed
 * to their shape descriptors.
 */
+=======
+ * This function generate distance matrices between raw series and series transformed
+ * to their shape descriptors.
+ */
+>>>>>>> sakoe_chiba_window
 
 //[[Rcpp::export]]
 List RcppDistanceMatrices(NumericMatrix timeSeriesRef, NumericMatrix timeSeriesTest,
@@ -127,6 +137,7 @@ List RcppDistanceMatrices(NumericMatrix timeSeriesRef, NumericMatrix timeSeriesT
 }
 
 /*
+<<<<<<< HEAD
 * This function transforms distance matrix to the accumulated cost matrix
 * used by the DTW algorithm.
 */
@@ -144,6 +155,27 @@ NumericMatrix RcppAccumulatedCostMatrix(NumericMatrix x){
 //[[Rcpp::export]]
 List RcppSimpleDTW(NumericMatrix x){
   SimpleDTWResults dtwRes = DTWRcpp(x);
+=======
+ * This function transforms distance matrix to the accumulated cost matrix
+ * used by the DTW algorithm.
+ */
+
+//[[Rcpp::export]]
+NumericMatrix RcppAccumulatedCostMatrix(NumericMatrix x,
+                                        Rcpp::Nullable<int> sakoeChibaWindow = R_NilValue){
+  return AccumulatedCostMatrix(x, sakoeChibaWindow);
+}
+
+/*
+ * This function returns DTW results (distance and warping paths)
+ * calculated based on the singular distance matrix
+ */
+
+//[[Rcpp::export]]
+List RcppSimpleDTW(NumericMatrix x,
+                   Rcpp::Nullable<int> sakoeChibaWindow = R_NilValue){
+  SimpleDTWResults dtwRes = DTWRcpp(x, sakoeChibaWindow);
+>>>>>>> sakoe_chiba_window
   
   List res = List::create(
     dtwRes.Distance,
@@ -157,11 +189,19 @@ List RcppSimpleDTW(NumericMatrix x){
 }
 
 /*
+<<<<<<< HEAD
 * This function calculate distance betweem time series based on the given distance
 * matrix and warping paths calculated with DTW algorithm. It is useful to calculate
 * distance between raw time series based on the warping paths determinated by shape
 * descriptors of these series. 
 */
+=======
+ * This function calculate distance betweem time series based on the given distance
+ * matrix and warping paths calculated with DTW algorithm. It is useful to calculate
+ * distance between raw time series based on the warping paths determinated by shape
+ * descriptors of these series. 
+ */
+>>>>>>> sakoe_chiba_window
 
 //[[Rcpp::export]]
 double RcppdistanceFromWarpingPaths(NumericMatrix distMatrix,
@@ -171,14 +211,25 @@ double RcppdistanceFromWarpingPaths(NumericMatrix distMatrix,
 }
 
 /*
+<<<<<<< HEAD
 * This function return results of the complex DTW algorithm applied to the
 * raw series and their shape descriptors.
 */
+=======
+ * This function return results of the complex DTW algorithm applied to the
+ * raw series and their shape descriptors.
+ */
+>>>>>>> sakoe_chiba_window
 
 //[[Rcpp::export]]
 List RcppComplexDTWResults(ListOf<NumericMatrix> RawSeriesDistMat,
                            ListOf<NumericMatrix> ShapeDescriptorMatrix,
+<<<<<<< HEAD
                            std::string DistanceType = "Dependent"){
+=======
+                           std::string DistanceType = "Dependent",
+                           Rcpp::Nullable<int> sakoeChibaWindow = R_NilValue){
+>>>>>>> sakoe_chiba_window
   
   std::vector<NumericMatrix> rawSeries;
   std::vector<NumericMatrix> shapeSeries;
@@ -198,7 +249,12 @@ List RcppComplexDTWResults(ListOf<NumericMatrix> RawSeriesDistMat,
   input.ShapeDesciptorDistMatrices = shapeSeries;
   input.DistanceType = distType;
   
+<<<<<<< HEAD
   DTWResults resCpp = ComplexDTWRcpp(input);
+=======
+  DTWResults resCpp = ComplexDTWRcpp(input,
+                                     sakoeChibaWindow);
+>>>>>>> sakoe_chiba_window
   
   List rRes;
   
@@ -233,7 +289,12 @@ List kNNShapeDTWCpp(NumericMatrix referenceSeries,
                     S4 shapeDescriptorParams,
                     std::string normalizationType = "Unitarization",
                     std::string distanceType = "Dependent",
+<<<<<<< HEAD
                     Rcpp::Nullable<S4> ttParams = R_NilValue){
+=======
+                    Rcpp::Nullable<S4> ttParams = R_NilValue,
+                    Rcpp::Nullable<int> sakoeChibaWindow = R_NilValue){
+>>>>>>> sakoe_chiba_window
   
   int refSeriesLength = referenceSeries.nrow();
   int testSeriesLengt = testSeries.nrow();
@@ -290,7 +351,12 @@ List kNNShapeDTWCpp(NumericMatrix referenceSeries,
       distanceTypeEnum
     );
     
+<<<<<<< HEAD
     tempRes = ComplexDTWRcpp(tempDistMat);
+=======
+    tempRes = ComplexDTWRcpp(tempDistMat,
+                             sakoeChibaWindow);
+>>>>>>> sakoe_chiba_window
     
     if(i == 0){
       //finalResRawDist = Rcpp::clone(tempRes);
@@ -352,3 +418,123 @@ List kNNShapeDTWCpp(NumericMatrix referenceSeries,
   
   return res;
 }
+<<<<<<< HEAD
+=======
+
+/*
+ * Class which represents index - value (distance) pair
+ */
+
+class IndDistPair{
+  
+public:
+  int idx;
+  double dist;
+  
+  IndDistPair(int i, double d) 
+    : idx(i), dist(d)
+  {
+  }
+  
+};
+
+bool distComp(IndDistPair A, IndDistPair B) 
+{ 
+  // Compare the indices if the values are equal 
+  if (A.dist == B.dist) 
+    return A.idx < B.idx; 
+  
+  // Else compare values 
+  return A.dist < B.dist; 
+} 
+
+/*
+ * Function which find n nearest neighbours based on the Euclidean Distance
+ * among several time series passed as the list of matrices.
+ */
+
+//[[Rcpp::export]]
+NumericMatrix knnEuclideanCpp(NumericMatrix refSeries,
+                              NumericMatrix testSeries,
+                              int nn,
+                              int forecastHorizon,
+                              int subsequenceBreaks,
+                              std::string normalizationType = "Unitarization"){
+  
+  int refSeriesLength = refSeries.nrow();
+  int testSeriesLengt = testSeries.nrow();
+  int refSeriesDim = refSeries.ncol();
+  int testSeriesDim = testSeries.ncol();
+  
+  if(refSeriesDim != testSeriesDim)
+    stop("Number of dimensions (columns) in both series must match.");
+  
+  IntegerVector iteratorsSet = Iterators::CreateTSIterator(refSeriesLength = refSeriesLength, 
+                                                           testSeriesLengt = testSeriesLengt, 
+                                                           forecastHorizon = forecastHorizon,
+                                                           subsequenceBreaks = subsequenceBreaks);
+  int iteratorsSetLength = iteratorsSet.length();
+  
+  TSNormalizationMethods normalizationTypeEnum = 
+    TSNormalizationMethodMap()[normalizationType];
+  
+  TSTransformation::TSNorm normFunc;
+  
+  switch(normalizationTypeEnum){
+  case(ZSCORE):
+    normFunc = zScoreComputation;
+    break;
+  case(UNITARIZATION):
+    normFunc = unitarizationComputation;
+    break;
+  default:
+    normFunc = unitarizationComputation;
+  }
+  
+  std::vector<IndDistPair> distancesObj;
+  
+  NumericMatrix refSeriesNormalized(refSeriesLength, refSeriesDim);
+  NumericMatrix testSeriesNormalizedTemp(refSeriesLength, refSeriesDim);
+  NumericMatrix tempTestSeriesSubset(refSeriesLength, refSeriesDim);
+  
+  for(int i = 0; i < refSeriesDim; i++){
+    refSeriesNormalized(_ , i) = normFunc(refSeries(_, i));
+  }
+  
+  double currentDist;
+  
+  for(int i = 0; i < iteratorsSetLength; i++){
+    currentDist = 0;
+    int currentStart = iteratorsSet[i];
+    int currentEnd = currentStart + refSeriesLength - 1;
+    
+    tempTestSeriesSubset = testSeries(Range(currentStart, currentEnd),
+                                      Range(0, testSeriesDim-1));
+    
+    for(int j = 0; j < testSeriesDim; j++){
+      currentDist += RcppDist::DistanceCpp(refSeriesNormalized(_, j),
+                                           normFunc(tempTestSeriesSubset(_, j)));
+    }
+    
+    distancesObj.push_back(IndDistPair(iteratorsSet[i] + 1, currentDist));
+  }
+    
+  if(nn >= iteratorsSetLength){
+    NumericMatrix res(iteratorsSetLength, 2);
+    colnames(res) = CharacterVector::create("Idx", "Distance");
+    for(int i = 0; i < iteratorsSetLength; i++){
+      res(i, _) = NumericVector::create(distancesObj[i].idx, distancesObj[i].dist);
+    }
+    return(res);
+  }
+  
+  sort(distancesObj.begin(), distancesObj.end(), distComp);
+  NumericMatrix res(nn, 2);
+  colnames(res) = CharacterVector::create("Idx", "Distance");
+  
+  for(int i = 0; i < nn; i++){
+    res(i, _) = NumericVector::create(distancesObj[i].idx, distancesObj[i].dist);
+  }
+  return(res);
+}
+>>>>>>> sakoe_chiba_window

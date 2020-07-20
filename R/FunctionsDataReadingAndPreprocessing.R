@@ -4,7 +4,12 @@
 load_financial_data <- function(folder_path, data_type = c("GPW_daily", "GPW_tick",
                                                            "FOREX_daily", "FOREX_tick"),
                                 include_columns = c("Date", "Close", "Volume"),
+<<<<<<< HEAD
                                 include_all = F){
+=======
+                                include_all = F, first_header = NULL,
+                                file_col_names = NULL){
+>>>>>>> sakoe_chiba_window
   
   currentPath <- getwd()
   pathAbsolute <- isAbsolutePath(folder_path)
@@ -21,6 +26,7 @@ load_financial_data <- function(folder_path, data_type = c("GPW_daily", "GPW_tic
   fin_inst_names <- str_extract(files_name, pattern = "[^\\.]+")
   
   # Parametr wskazujący, czy w pierwszym wierszu pliku znajdują się nazwy kolumn
+<<<<<<< HEAD
   first_header <- is.element(d_type, c("FOREX_daily", "GPW_daily"))
   
   # Nazwy kolumn w zależności od typu danych
@@ -32,6 +38,26 @@ load_financial_data <- function(folder_path, data_type = c("GPW_daily", "GPW_tic
                          GPW_tick = c("Instrument", "ControlCol", "Day", "Time",
                                       "Open","High", "Low", "Close", "Volume",
                                       "ControlCol2"))
+=======
+  if(is.null(first_header)){
+    first_header <- is.element(d_type, c("FOREX_daily", "GPW_daily"))
+  }
+  
+  # Nazwy kolumn w zależności od typu danych
+  if(is.null(file_col_names)){
+    file_col_names <- list(GPW_daily = c("Instrument", "Date", "Open", "High", "Low",
+                                         "Close", "Volume"),
+                           FOREX_daily = c("Instrument", "Date", "Open", "High", "Low",
+                                           "Close", "Volume"),
+                           FOREX_tick = c("Instrument", "Date", "Open", "Close"),
+                           GPW_tick = c("Instrument", "ControlCol", "Day", "Time",
+                                        "Open","High", "Low", "Close", "Volume",
+                                        "ControlCol2"))
+    
+  }else{
+    file_col_names <- list(d_type = file_col_names)
+  }
+>>>>>>> sakoe_chiba_window
   
   # Załadowanie danych z plików tekstowych do listy wypełnionej ramkami danych 
   data_list <- lapply(files_name, function(x, col_n, first_header, data_type,
@@ -227,7 +253,11 @@ GPWTickAggregateAndFillNA <- function(GPWTickData, patternDatesToAgg,
   
   timeSeriesAfterAggregate <- timeSeriesApply(timeSeriesToAggregate,
                                               funToApply = aggregate,
+<<<<<<< HEAD
                                               args = list(by = list(patternDatesToAgg),
+=======
+                                              args = list(by = list(timeDate(dfTimeParsed$timestamp)),
+>>>>>>> sakoe_chiba_window
                                                           FUN = funAggBy))
   
   dfTimeSeriesAfterAggregate <- data.frame(timestamp = time(timeSeriesAfterAggregate),
@@ -274,7 +304,13 @@ GPWDailyParse <- function(GPWDailyData){
 FXDailyParse <- function(FXDailyData){
   
   FXDailyData <- FXDailyData %>%
+<<<<<<< HEAD
     mutate(Variability = (Close - Open) / (High - Low)) %>%
+=======
+    mutate(Variability = ifelse(!is.nan((Close - Open) / (High - Low)),
+                                        (Close - Open) / (High - Low),
+                                        0)) %>%
+>>>>>>> sakoe_chiba_window
     dplyr::rename(closePrice = Close)
   
   results <- timeSeries(data = FXDailyData[,c("closePrice", "Variability")],

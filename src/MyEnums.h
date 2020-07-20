@@ -88,3 +88,8 @@ using namespace Rcpp;
       this->operator[]("Unitarization") = UNITARIZATION;
     }
   };
+<<<<<<< HEAD
+=======
+  
+
+>>>>>>> sakoe_chiba_window

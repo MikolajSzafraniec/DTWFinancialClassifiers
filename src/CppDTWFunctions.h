@@ -37,13 +37,19 @@ namespace CppDTW{
     }
   }
 
+<<<<<<< HEAD
   NumericMatrix AccumulatedCostMatrix(NumericMatrix distMatrix){
+=======
+  NumericMatrix AccumulatedCostMatrix(NumericMatrix distMatrix, 
+                                      Rcpp::Nullable<int> sakoeChibaWindow = R_NilValue){
+>>>>>>> sakoe_chiba_window
     
     int n_col = distMatrix.ncol();
     int n_row = distMatrix.nrow();
     
     NumericMatrix res(n_row, n_col);
     
+<<<<<<< HEAD
     res(0, 0) = distMatrix(0, 0);
     
     for(int i = 1; i < n_row; i++)
@@ -59,6 +65,61 @@ namespace CppDTW{
           res(i, j - 1),
           res(i - 1, j)
         });
+=======
+    if(sakoeChibaWindow == R_NilValue){
+      res(0, 0) = distMatrix(0, 0);
+      
+      for(int i = 1; i < n_row; i++)
+        res(i, 0) = distMatrix(i, 0) + res(i-1, 0);
+      
+      for(int j = 1; j < n_col; j++)
+        res(0, j) = distMatrix(0, j) + res(0, j-1);
+      
+      for(int i = 1; i < n_row; i++){
+        for(int j = 1; j < n_col; j++){
+          res(i, j) = distMatrix(i, j) + std::min({
+            res(i - 1, j - 1),
+            res(i, j - 1),
+            res(i - 1, j)
+          });
+        }
+      }
+    }else{
+      
+      for(int i = 0; i < n_row; i++){
+        for(int j = 0; j < n_col; j++){
+          res(i, j) = R_PosInf;
+        }
+      }
+      
+      int sakoeChibaWindowInt = Rcpp::as<int>(sakoeChibaWindow);
+      //sakoeChibaWindowInt = std::max(sakoeChibaWindowInt, std::abs(n_row - n_col));
+      if(sakoeChibaWindowInt < 0)
+        stop("Sakoe-chiba window must be positive value or zero");
+        
+      res(0, 0) = distMatrix(0, 0);
+      
+      for(int i = 1; i < std::min(n_row, sakoeChibaWindowInt+1); i++)
+        res(i, 0) = distMatrix(i, 0) + res(i-1, 0);
+      
+      for(int j = 1; j < std::min(n_col, sakoeChibaWindowInt+1); j++)
+        res(0, j) = distMatrix(0, j) + res(0, j-1);
+      
+      for(int i = 1; i < n_row; i++){
+        for(int j = std::max(1, i-sakoeChibaWindowInt); j < std::min(n_col, i+sakoeChibaWindowInt+1); j++){
+          res(i, j) = 0;
+        }
+      }
+      
+      for(int i = 1; i < n_row; i++){
+        for(int j = std::max(1, i-sakoeChibaWindowInt); j < std::min(n_col, i+sakoeChibaWindowInt+1); j++){
+          res(i, j) = distMatrix(i, j) + std::min({
+            res(i - 1, j - 1),
+            res(i, j - 1),
+            res(i - 1, j)
+          });
+        }
+>>>>>>> sakoe_chiba_window
       }
     }
     
@@ -66,9 +127,16 @@ namespace CppDTW{
   }
   
   
+<<<<<<< HEAD
   SimpleDTWResults DTWRcpp(NumericMatrix distMatrix){
     
     NumericMatrix accCostMatrix = AccumulatedCostMatrix(distMatrix);
+=======
+  SimpleDTWResults DTWRcpp(NumericMatrix distMatrix,
+                           Rcpp::Nullable<int> sakoeChibaWindow = R_NilValue){
+    
+    NumericMatrix accCostMatrix = AccumulatedCostMatrix(distMatrix, sakoeChibaWindow);
+>>>>>>> sakoe_chiba_window
     std::vector<IntegerVector> warpingPoints;
     
     int n_row = distMatrix.nrow();
@@ -145,7 +213,12 @@ namespace CppDTW{
     return res;
   }
   
+<<<<<<< HEAD
   DTWResults ComplexDTWRcpp(DistMatrices inputDistances){
+=======
+  DTWResults ComplexDTWRcpp(DistMatrices inputDistances,
+                            Rcpp::Nullable<int> sakoeChibaWindow = R_NilValue){
+>>>>>>> sakoe_chiba_window
     
     int rawSeries_len = inputDistances.RawSeriesDistMatrices.size();
     int shapeDesc_len = inputDistances.ShapeDesciptorDistMatrices.size();
@@ -157,7 +230,11 @@ namespace CppDTW{
     
     for(int i = 0; i < shapeDesc_len; i++){
       shapeDescDTWResults.push_back(
+<<<<<<< HEAD
         DTWRcpp(inputDistances.ShapeDesciptorDistMatrices[i])
+=======
+        DTWRcpp(inputDistances.ShapeDesciptorDistMatrices[i], sakoeChibaWindow)
+>>>>>>> sakoe_chiba_window
       );
     }
     

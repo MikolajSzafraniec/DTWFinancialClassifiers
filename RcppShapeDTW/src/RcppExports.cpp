@@ -86,24 +86,44 @@ BEGIN_RCPP
 END_RCPP
 }
 // RcppAccumulatedCostMatrix
+<<<<<<< HEAD
 NumericMatrix RcppAccumulatedCostMatrix(NumericMatrix x);
 RcppExport SEXP _RcppShapeDTW_RcppAccumulatedCostMatrix(SEXP xSEXP) {
+=======
+NumericMatrix RcppAccumulatedCostMatrix(NumericMatrix x, Rcpp::Nullable<int> sakoeChibaWindow);
+RcppExport SEXP _RcppShapeDTW_RcppAccumulatedCostMatrix(SEXP xSEXP, SEXP sakoeChibaWindowSEXP) {
+>>>>>>> sakoe_chiba_window
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
+<<<<<<< HEAD
     rcpp_result_gen = Rcpp::wrap(RcppAccumulatedCostMatrix(x));
+=======
+    Rcpp::traits::input_parameter< Rcpp::Nullable<int> >::type sakoeChibaWindow(sakoeChibaWindowSEXP);
+    rcpp_result_gen = Rcpp::wrap(RcppAccumulatedCostMatrix(x, sakoeChibaWindow));
+>>>>>>> sakoe_chiba_window
     return rcpp_result_gen;
 END_RCPP
 }
 // RcppSimpleDTW
+<<<<<<< HEAD
 List RcppSimpleDTW(NumericMatrix x);
 RcppExport SEXP _RcppShapeDTW_RcppSimpleDTW(SEXP xSEXP) {
+=======
+List RcppSimpleDTW(NumericMatrix x, Rcpp::Nullable<int> sakoeChibaWindow);
+RcppExport SEXP _RcppShapeDTW_RcppSimpleDTW(SEXP xSEXP, SEXP sakoeChibaWindowSEXP) {
+>>>>>>> sakoe_chiba_window
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
+<<<<<<< HEAD
     rcpp_result_gen = Rcpp::wrap(RcppSimpleDTW(x));
+=======
+    Rcpp::traits::input_parameter< Rcpp::Nullable<int> >::type sakoeChibaWindow(sakoeChibaWindowSEXP);
+    rcpp_result_gen = Rcpp::wrap(RcppSimpleDTW(x, sakoeChibaWindow));
+>>>>>>> sakoe_chiba_window
     return rcpp_result_gen;
 END_RCPP
 }
@@ -121,21 +141,36 @@ BEGIN_RCPP
 END_RCPP
 }
 // RcppComplexDTWResults
+<<<<<<< HEAD
 List RcppComplexDTWResults(ListOf<NumericMatrix> RawSeriesDistMat, ListOf<NumericMatrix> ShapeDescriptorMatrix, std::string DistanceType);
 RcppExport SEXP _RcppShapeDTW_RcppComplexDTWResults(SEXP RawSeriesDistMatSEXP, SEXP ShapeDescriptorMatrixSEXP, SEXP DistanceTypeSEXP) {
+=======
+List RcppComplexDTWResults(ListOf<NumericMatrix> RawSeriesDistMat, ListOf<NumericMatrix> ShapeDescriptorMatrix, std::string DistanceType, Rcpp::Nullable<int> sakoeChibaWindow);
+RcppExport SEXP _RcppShapeDTW_RcppComplexDTWResults(SEXP RawSeriesDistMatSEXP, SEXP ShapeDescriptorMatrixSEXP, SEXP DistanceTypeSEXP, SEXP sakoeChibaWindowSEXP) {
+>>>>>>> sakoe_chiba_window
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< ListOf<NumericMatrix> >::type RawSeriesDistMat(RawSeriesDistMatSEXP);
     Rcpp::traits::input_parameter< ListOf<NumericMatrix> >::type ShapeDescriptorMatrix(ShapeDescriptorMatrixSEXP);
     Rcpp::traits::input_parameter< std::string >::type DistanceType(DistanceTypeSEXP);
+<<<<<<< HEAD
     rcpp_result_gen = Rcpp::wrap(RcppComplexDTWResults(RawSeriesDistMat, ShapeDescriptorMatrix, DistanceType));
+=======
+    Rcpp::traits::input_parameter< Rcpp::Nullable<int> >::type sakoeChibaWindow(sakoeChibaWindowSEXP);
+    rcpp_result_gen = Rcpp::wrap(RcppComplexDTWResults(RawSeriesDistMat, ShapeDescriptorMatrix, DistanceType, sakoeChibaWindow));
+>>>>>>> sakoe_chiba_window
     return rcpp_result_gen;
 END_RCPP
 }
 // kNNShapeDTWCpp
+<<<<<<< HEAD
 List kNNShapeDTWCpp(NumericMatrix referenceSeries, NumericMatrix testSeries, int forecastHorizon, int subsequenceWidth, int subsequenceBreaks, S4 shapeDescriptorParams, std::string normalizationType, std::string distanceType, Rcpp::Nullable<S4> ttParams);
 RcppExport SEXP _RcppShapeDTW_kNNShapeDTWCpp(SEXP referenceSeriesSEXP, SEXP testSeriesSEXP, SEXP forecastHorizonSEXP, SEXP subsequenceWidthSEXP, SEXP subsequenceBreaksSEXP, SEXP shapeDescriptorParamsSEXP, SEXP normalizationTypeSEXP, SEXP distanceTypeSEXP, SEXP ttParamsSEXP) {
+=======
+List kNNShapeDTWCpp(NumericMatrix referenceSeries, NumericMatrix testSeries, int forecastHorizon, int subsequenceWidth, int subsequenceBreaks, S4 shapeDescriptorParams, std::string normalizationType, std::string distanceType, Rcpp::Nullable<S4> ttParams, Rcpp::Nullable<int> sakoeChibaWindow);
+RcppExport SEXP _RcppShapeDTW_kNNShapeDTWCpp(SEXP referenceSeriesSEXP, SEXP testSeriesSEXP, SEXP forecastHorizonSEXP, SEXP subsequenceWidthSEXP, SEXP subsequenceBreaksSEXP, SEXP shapeDescriptorParamsSEXP, SEXP normalizationTypeSEXP, SEXP distanceTypeSEXP, SEXP ttParamsSEXP, SEXP sakoeChibaWindowSEXP) {
+>>>>>>> sakoe_chiba_window
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -148,7 +183,38 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< std::string >::type normalizationType(normalizationTypeSEXP);
     Rcpp::traits::input_parameter< std::string >::type distanceType(distanceTypeSEXP);
     Rcpp::traits::input_parameter< Rcpp::Nullable<S4> >::type ttParams(ttParamsSEXP);
+<<<<<<< HEAD
     rcpp_result_gen = Rcpp::wrap(kNNShapeDTWCpp(referenceSeries, testSeries, forecastHorizon, subsequenceWidth, subsequenceBreaks, shapeDescriptorParams, normalizationType, distanceType, ttParams));
+=======
+    Rcpp::traits::input_parameter< Rcpp::Nullable<int> >::type sakoeChibaWindow(sakoeChibaWindowSEXP);
+    rcpp_result_gen = Rcpp::wrap(kNNShapeDTWCpp(referenceSeries, testSeries, forecastHorizon, subsequenceWidth, subsequenceBreaks, shapeDescriptorParams, normalizationType, distanceType, ttParams, sakoeChibaWindow));
+    return rcpp_result_gen;
+END_RCPP
+}
+// knnEuclideanCpp
+NumericMatrix knnEuclideanCpp(NumericMatrix refSeries, NumericMatrix testSeries, int nn, int forecastHorizon, int subsequenceBreaks, std::string normalizationType);
+RcppExport SEXP _RcppShapeDTW_knnEuclideanCpp(SEXP refSeriesSEXP, SEXP testSeriesSEXP, SEXP nnSEXP, SEXP forecastHorizonSEXP, SEXP subsequenceBreaksSEXP, SEXP normalizationTypeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type refSeries(refSeriesSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type testSeries(testSeriesSEXP);
+    Rcpp::traits::input_parameter< int >::type nn(nnSEXP);
+    Rcpp::traits::input_parameter< int >::type forecastHorizon(forecastHorizonSEXP);
+    Rcpp::traits::input_parameter< int >::type subsequenceBreaks(subsequenceBreaksSEXP);
+    Rcpp::traits::input_parameter< std::string >::type normalizationType(normalizationTypeSEXP);
+    rcpp_result_gen = Rcpp::wrap(knnEuclideanCpp(refSeries, testSeries, nn, forecastHorizon, subsequenceBreaks, normalizationType));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_hello_world
+List rcpp_hello_world();
+RcppExport SEXP _RcppShapeDTW_rcpp_hello_world() {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    rcpp_result_gen = Rcpp::wrap(rcpp_hello_world());
+>>>>>>> sakoe_chiba_window
     return rcpp_result_gen;
 END_RCPP
 }
@@ -160,11 +226,21 @@ static const R_CallMethodDef CallEntries[] = {
     {"_RcppShapeDTW_RcppTSNormalization", (DL_FUNC) &_RcppShapeDTW_RcppTSNormalization, 2},
     {"_RcppShapeDTW_RcpptsTransformation", (DL_FUNC) &_RcppShapeDTW_RcpptsTransformation, 5},
     {"_RcppShapeDTW_RcppDistanceMatrices", (DL_FUNC) &_RcppShapeDTW_RcppDistanceMatrices, 7},
+<<<<<<< HEAD
     {"_RcppShapeDTW_RcppAccumulatedCostMatrix", (DL_FUNC) &_RcppShapeDTW_RcppAccumulatedCostMatrix, 1},
     {"_RcppShapeDTW_RcppSimpleDTW", (DL_FUNC) &_RcppShapeDTW_RcppSimpleDTW, 1},
     {"_RcppShapeDTW_RcppdistanceFromWarpingPaths", (DL_FUNC) &_RcppShapeDTW_RcppdistanceFromWarpingPaths, 3},
     {"_RcppShapeDTW_RcppComplexDTWResults", (DL_FUNC) &_RcppShapeDTW_RcppComplexDTWResults, 3},
     {"_RcppShapeDTW_kNNShapeDTWCpp", (DL_FUNC) &_RcppShapeDTW_kNNShapeDTWCpp, 9},
+=======
+    {"_RcppShapeDTW_RcppAccumulatedCostMatrix", (DL_FUNC) &_RcppShapeDTW_RcppAccumulatedCostMatrix, 2},
+    {"_RcppShapeDTW_RcppSimpleDTW", (DL_FUNC) &_RcppShapeDTW_RcppSimpleDTW, 2},
+    {"_RcppShapeDTW_RcppdistanceFromWarpingPaths", (DL_FUNC) &_RcppShapeDTW_RcppdistanceFromWarpingPaths, 3},
+    {"_RcppShapeDTW_RcppComplexDTWResults", (DL_FUNC) &_RcppShapeDTW_RcppComplexDTWResults, 4},
+    {"_RcppShapeDTW_kNNShapeDTWCpp", (DL_FUNC) &_RcppShapeDTW_kNNShapeDTWCpp, 10},
+    {"_RcppShapeDTW_knnEuclideanCpp", (DL_FUNC) &_RcppShapeDTW_knnEuclideanCpp, 6},
+    {"_RcppShapeDTW_rcpp_hello_world", (DL_FUNC) &_RcppShapeDTW_rcpp_hello_world, 0},
+>>>>>>> sakoe_chiba_window
     {NULL, NULL, 0}
 };
 

@@ -23,7 +23,11 @@ namespace Iterators{
                                  int subsequenceBreaks){
     
     if(forecastHorizon < 0)
+<<<<<<< HEAD
       stop("Forecast horizon must be integer equl to or greater than 0");
+=======
+      stop("Forecast horizon must be integer equal to or greater than 0");
+>>>>>>> sakoe_chiba_window
     
     if(subsequenceBreaks < 1)
       stop("Subsequence breaks must be integer greater than 0");

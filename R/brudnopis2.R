@@ -626,3 +626,185 @@ classResultsToAccuracyMeasure(classResults_GPW_d5min_100_25, "acc")
 
 plot(classResults_GPW_d5min_100_25$dtw_type_Independent.shape_desc_type_compound.dims1_2_3$refSeriesReturn,
      classResults_GPW_d5min_100_25$dtw_type_Independent.shape_desc_type_simple.dims1_2_3$learnSeriesReturn)
+<<<<<<< HEAD
+=======
+
+require(Rcpp)
+Rcpp::sourceCpp("src/RcppDTWFunctions.cpp")
+
+a <- cumsum(rnorm(10, 1, 1))
+b <- cumsum(rnorm(10, 1, 1))
+distMat <- proxy::dist(a, b)
+RcppAccumulatedCostMatrix(distMat, sakoeChibaWindow = 2)
+
+RcppSimpleDTW(distMat, 4)$Dist
+DTW_res <- dtw::dtw(a, b, step.pattern = dtw::symmetric1, window.type = "sa", window.size = 4)
+DTW_res$distance
+
+gcm$costMatrix[1:10,1:10]
+RcppAccumulatedCostMatrix(distMat, sakoeChibaWindow = 1000)
+
+microbenchmark::microbenchmark(RcppAccumulatedCostMatrix(distMat, sakoeChibaWindow = 2),
+                               RcppAccumulatedCostMatrix(distMat, sakoeChibaWindow = 10),
+                               RcppAccumulatedCostMatrix(distMat, sakoeChibaWindow = NULL))
+
+test_res <- RknnShapeDTWParallel(refSeries = GPW_tick_agg$CCC,
+                                 testSeries = GPW_tick_agg[-1], 
+                                 refSeriesStart = 16400, shapeDTWParams = SDP_full, includeRefSeries = T,
+                                 targetDistance = "s", subsequenceWidth = 5, forecastHorizon = 50, 
+                                 sd_border = 2, refSeriesLength = 150, distanceType = "I")
+
+
+CCC_test_set <- list(FXtickAgg_Jan2020_d5min$`AUDUSD-2020-01`)
+names(CCC_test_set) <- "CCC_test"
+
+CCC_MACD <- MACD(CCC_test_set$CCC_test[,1])
+CCC_OBV <- OBV(CCC_test_set$CCC_test@.Data[,1], CCC_test_set$CCC_test@.Data[,2])
+
+CCC_test_set$CCC_test <- cbind(CCC_test_set$CCC_test,
+                               CCC_MACD[,1] / CCC_MACD[,2],
+                               CCC_OBV)
+CCC_test_set$CCC_test <- na.omit(CCC_test_set$CCC_test)
+
+future::plan(future::multiprocess)
+test_start <- Sys.time()
+test_CCC <- RknnShapeDTWParallel(refSeries = CCC_test_set$CCC_test, 
+                                 learnSeries = CCC_test_set, 
+                                 refSeriesStart = 5050, 
+                                 shapeDTWParams = SDP_compound, 
+                                 targetDistance = "r", 
+                                 distanceType = "D", 
+                                 normalizationType = "U", 
+                                 refSeriesLength = 100, 
+                                 forecastHorizon = 50, 
+                                 subsequenceWidth = 5, 
+                                 trigonometricTP = NULL, 
+                                 subsequenceBreaks = 1, 
+                                 includeRefSeries = F, 
+                                 sd_border = 1.5, 
+                                 sakoeChibaWindow = 5)
+test_stop <- Sys.time()
+test_stop-test_start
+future::plan(future::sequential)
+test_CCC
+plot(test_CCC,includeFrcstPart = T, add_wp = T, lift = 0)
+plot(test_CCC,includeFrcstPart = T, add_wp = F, lift = 0)
+
+ts1 <- matrix(cumsum(rnorm(100)), ncol = 1)
+ts2 <- matrix(cumsum(rnorm(100)), ncol = 1)              
+
+require(Rcpp)
+Rcpp::sourceCpp("RcppShapeDTW/src/RcppDTWFunctions.cpp")
+RcppShapeDTW::RcppSimpleDTW(proxy::dist(ts1, ts2), sakoeChibaWindow = 2)$Dist
+dtw::dtw(ts1, ts2, step.pattern = dtw::symmetric1, window.type = "sak",
+         window.size = 2)$distance              
+
+
+# 5 min horyzont 50, waluty, z-normalizacja, sakoe-chiba
+
+AUDUSD_test_set <- list(FXtickAgg_Jan2020_d5min$`EURGBP-2020-01`)
+names(AUDUSD_test_set) <- "AUDUSD_test"
+
+AUDUSD_MACD <- MACD(AUDUSD_test_set$AUDUSD_test[,1])
+AUDUSD_OBV <- OBV(AUDUSD_test_set$AUDUSD_test@.Data[,1], AUDUSD_test_set$AUDUSD_test@.Data[,2])
+
+AUDUSD_test_set$AUDUSD_test <- cbind(AUDUSD_test_set$AUDUSD_test,
+                                     AUDUSD_MACD[,1] / AUDUSD_MACD[,2],
+                                     AUDUSD_OBV)
+AUDUSD_test_set$AUDUSD_test <- na.omit(AUDUSD_test_set$AUDUSD_test)
+
+single_series_test_results_FX_5_min_AUDUSD <- RunMultipleShapeDTWkNN(refSeries = AUDUSD_test_set$AUDUSD_test, 
+                                                                     learnSeries = AUDUSD_test_set, 
+                                                                     indicesVector = seq(from = 2500, by = 5, length.out = 100), 
+                                                                     shapeDTWParams = SDP_compound, 
+                                                                     targetDistance = "r", 
+                                                                     distanceType = "D", 
+                                                                     normalizationType = "U", 
+                                                                     refSeriesLength = 100, 
+                                                                     forecastHorizon = 25, 
+                                                                     subsequenceBreaks = 1, 
+                                                                     includeRefSeries = F, 
+                                                                     switchBackToSequential = F,
+                                                                     sakoeChibaWindow = 5)
+
+sum(single_series_test_results_FX_5_min_AUDUSD$kNNSuccess)
+cor(single_series_test_results_FX_5_min_AUDUSD$refSeriesReturn,
+    single_series_test_results_FX_5_min_AUDUSD$learnSeriesReturn)
+
+table(classResults_GPW_d5min_100_50$dtw_type_Dependent.shape_desc_type_compound.dims1_2_3$kNNSuccess,
+      classResults_GPW_d5min_100_50$dtw_type_Dependent.shape_desc_type_compound.dims1_2_3$testTsSD)
+
+classResultsToAccuracyMeasure(classResults_GPW_d5min_100_100, "p", "Fl")
+
+
+sd_bord <- 2.5
+
+classResults_GPW_d5min_100_100_mod <- purrr::map(classResults_GPW_d5min_100_100, function(x, sdb){
+  x <- x %>%
+    dplyr::mutate(refReturnClass = 
+                    ifelse(x$refSeriesReturn > (x$refTsSD*sdb),
+                           "Growth", ifelse(x$refSeriesReturn < (x$refTsSD*-sdb),
+                                            "Fall", "Flat_move"))) %>%
+    dplyr::mutate(testReturnClass = 
+                    ifelse(x$learnSeriesReturn > (x$testTsSD*sdb),
+                           "Growth", ifelse(x$learnSeriesReturn < (x$testTsSD*-sdb),
+                                            "Fall", "Flat_move"))) %>%
+    dplyr::mutate(kNNSuccess = ifelse(refReturnClass == testReturnClass, 1, 0))
+}, sdb = sd_bord)
+
+classResults_GPW_d5min_100_25 <- readRDS("Data/Results/RDSFiles/classResults_GPW_d5min_100_25.rds")
+
+classResultsToAccuracyMeasure(classResults_GPW_d5min_100_25, "cor")
+classResultsToAccuracyMeasure(classResults_GPW_d5min_100_50, "cor")
+classResultsToAccuracyMeasure(classResults_GPW_d5min_100_100_mod, "acc")
+
+
+classResultsToAccuracyMeasure(classResults_GPW_d10min_100_100, "co", "G")
+table(classResults_GPW_d10min_100_100$dtw_type_Dependent.shape_desc_type_simple.dims1$refReturnClass)
+
+plot(classResults_GPW_d10min_100_100$dtw_type_Dependent.shape_desc_type_simple.dims1$refSeriesReturn,
+     classResults_GPW_d10min_100_100$dtw_type_Dependent.shape_desc_type_simple.dims1$learnSeriesReturn)
+
+
+classResultsToAccuracyMeasure(classResults_GPW_d60min_100_100_TTR_1_dim)
+
+
+
+
+input_params_GPW_d60min_100_50_mod <- buildParamsSetFinancialSeries(ts_list = GPW_tick_60min, 
+                                                                time_border = timeDate("2015-01-01 00:05:00", format = "%Y-%m-%d %H:%M:%S"), 
+                                                                shape_DTW_params = c(SDP_traditional, SDP_compound), 
+                                                                trigonometric_transform_params = TTR, 
+                                                                subsequenceWidth = 4, 
+                                                                learn_part_length = 100, 
+                                                                forecast_part_length = 50, 
+                                                                learn_set_n = 500, 
+                                                                test_set_n = 100)
+
+input_params_GPW_d60min_100_50_mod$params_table <- input_params_GPW_d60min_100_50_mod$params_table %>%
+  dplyr::filter(descr == "dtw_type_Independent.shape_desc_type_compound.dims1_2")
+
+classResults_GPW_d60min_100_50_mod <- runShapeDTWForDefinedParamsTable(input_params = input_params_GPW_d60min_100_50_mod, 
+                                                                   targetDistance = "raw", 
+                                                                   normalizationType = "Z", 
+                                                                   sd_border = 1.5)
+sum(classResults_GPW_d60min_100_50_mod$dtw_type_Independent.shape_desc_type_compound.dims1_2$kNNSuccess)
+
+
+
+
+### GPW daily wersja 100 / 50 ###
+
+input_params_GPW_daily_100_50_mod <- input_params_GPW_daily_100_50
+input_params_GPW_daily_100_50_mod$params_table <- input_params_GPW_daily_100_50_mod$params_table[6,]
+
+
+classResults_GPW_daily_100_50_mod <- runShapeDTWForDefinedParamsTable(input_params = input_params_GPW_daily_100_50_mod, 
+                                                                  targetDistance = "raw", 
+                                                                  normalizationType = "Z", 
+                                                                  sd_border = 1.5, sakoeChibaWindow = NULL)
+
+sum(classResults_GPW_daily_100_50_mod$dtw_type_Independent.shape_desc_type_simple.dims1_2_3$kNNSuccess)
+cor(classResults_GPW_daily_100_50_mod$dtw_type_Independent.shape_desc_type_simple.dims1_2_3$refSeriesReturn,
+    classResults_GPW_daily_100_50_mod$dtw_type_Independent.shape_desc_type_simple.dims1_2_3$learnSeriesReturn)
+>>>>>>> sakoe_chiba_window

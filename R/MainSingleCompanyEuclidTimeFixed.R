@@ -376,6 +376,27 @@ FX_tick_d1min_results_ref_200 <- purrr::map(FX_tick_d1min_filtered, function(dat
 
 saveRDS(FX_tick_d1min_results_ref_200, file = "Data/EuclidPreproSingleStock/ResultsEuclidTimeFixed/FX_tick_d1min_results_ref_200.rds")
 
+FX_tick_d1min_results_ref_400 <- purrr::map(FX_tick_d1min_filtered, function(data_set){
+  
+  res <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
+    refSeries = data_set, 
+    learnSeriesList = list(data_set), 
+    refSeriesStartIndices = seq(from = 9901, by = 10, length.out = 100), 
+    input_params = params_set, 
+    targetDistance = "r", 
+    normalizationType = "Z", 
+    knn = 25, 
+    refSeriesLength = 400, 
+    forecastHorizons = c(5, 10, 25, 50, 75, 100, 150, 200), 
+    sd_borders = c(0.5, 0.6, 1, 1.4, 1.7, 2, 2.4, 2.8),
+    includeRefSeries = F
+  )
+  
+  return(res)
+})
+
+saveRDS(FX_tick_d1min_results_ref_400, file = "Data/EuclidPreproSingleStock/ResultsEuclidTimeFixed/FX_tick_d1min_results_ref_400.rds")
+
 
 # GPW tick delta 1 min
 
@@ -1133,10 +1154,13 @@ saveRDS(FX_daily_results_ref_200, file = "Data/EuclidPreproSingleStock/ResultsEu
 
 GPW_daily_results_ref_25 <- purrr::map(GPW_daily_filtered, function(data_set){
   
+  starting_point <- sum(time(data_set) < timeDate(as.Date("2013-06-01"))) + 1
+  cat("Starting point: ", starting_point, "\n")
+  
   res <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
     refSeries = data_set, 
     learnSeriesList = list(data_set), 
-    refSeriesStartIndices = seq(from = 2000, by = 10, length.out = 100), 
+    refSeriesStartIndices = seq(from = starting_point, by = 10, length.out = 100), 
     input_params = params_set, 
     targetDistance = "r", 
     normalizationType = "Z", 
@@ -1154,10 +1178,13 @@ saveRDS(GPW_daily_results_ref_25, file = "Data/EuclidPreproSingleStock/ResultsEu
 
 GPW_daily_results_ref_50 <- purrr::map(GPW_daily_filtered, function(data_set){
   
+  starting_point <- sum(time(data_set) < timeDate(as.Date("2013-06-01"))) + 1
+  cat("Starting point: ", starting_point, "\n")
+  
   res <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
     refSeries = data_set, 
     learnSeriesList = list(data_set), 
-    refSeriesStartIndices = seq(from = 2000, by = 10, length.out = 100), 
+    refSeriesStartIndices = seq(from = starting_point, by = 10, length.out = 100), 
     input_params = params_set, 
     targetDistance = "r", 
     normalizationType = "Z", 
@@ -1174,11 +1201,14 @@ GPW_daily_results_ref_50 <- purrr::map(GPW_daily_filtered, function(data_set){
 saveRDS(GPW_daily_results_ref_50, file = "Data/EuclidPreproSingleStock/ResultsEuclidTimeFixed/GPW_daily_results_ref_50.rds")
 
 GPW_daily_results_ref_100 <- purrr::map(GPW_daily_filtered, function(data_set){
+
+  starting_point <- sum(time(data_set) < timeDate(as.Date("2013-06-01"))) + 1
+  cat("Starting point: ", starting_point, "\n")
   
   res <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
     refSeries = data_set, 
     learnSeriesList = list(data_set), 
-    refSeriesStartIndices = seq(from = 1900, by = 10, length.out = 100), 
+    refSeriesStartIndices = seq(from = starting_point, by = 10, length.out = 100), 
     input_params = params_set, 
     targetDistance = "r", 
     normalizationType = "Z", 
@@ -1197,10 +1227,13 @@ saveRDS(GPW_daily_results_ref_100, file = "Data/EuclidPreproSingleStock/ResultsE
 
 GPW_daily_results_ref_200 <- purrr::map(GPW_daily_filtered, function(data_set){
   
+  starting_point <- sum(time(data_set) < timeDate(as.Date("2013-06-01"))) + 1
+  cat("Starting point: ", starting_point, "\n")
+  
   res <- runShapeDTWForDefinedParamsTableWithEuclidPreprocessing(
     refSeries = data_set, 
     learnSeriesList = list(data_set), 
-    refSeriesStartIndices = seq(from = 1800, by = 10, length.out = 100), 
+    refSeriesStartIndices = seq(from = starting_point, by = 10, length.out = 100), 
     input_params = params_set, 
     targetDistance = "r", 
     normalizationType = "Z", 

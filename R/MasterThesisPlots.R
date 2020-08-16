@@ -143,3 +143,56 @@ WIG_info_plot_df <- WIG_info_parsed %>%
   mutate(date = as.Date(rownames(.))) %>%
   dplyr::filter(date < as.Date("2002-01-01"))
 
+# Plot 6: Delta airlaines after 11 September attacks
+require(quantmod)
+
+# source: https://www.macrotrends.net/stocks/charts/LUV/southwest-airlines/stock-price-history
+
+LUV_data <- read.csv("../Magisterka tekst/Ilustracje/MacroTrends_Data_Download_LUV.csv",
+                     stringsAsFactors = F)
+
+LUV_data <- LUV_data %>%
+  mutate(date = as.Date(date)) %>%
+  dplyr::filter(date >= as.Date("2001-08-15"), date < as.Date("2002-01-01"))
+
+LUV_xts <- xts(
+  x = as.matrix(LUV_data[,c("open", "high", "low", "close")]),
+  order.by = LUV_data$date
+)
+
+Sys.setlocale("LC_TIME", "English")
+
+quantmod::candleChart(
+  LUV_xts, name = "Southwest Airlines",
+  up.col = "white",
+  dn.col = "black",
+  theme = "white"
+)
+
+# Plot 7: WIG 20 after OFE reform
+
+WIG_20_data <- read.table(
+  file = "../Magisterka tekst/Ilustracje/WIG20.mst", 
+  header = T,
+  sep = ",",
+  stringsAsFactors = F
+)
+
+WIG_20_data <- WIG_20_data %>%
+  mutate(Date = as.POSIXct(strptime(X.DTYYYYMMDD., format = "%Y%m%d"))) %>%
+  dplyr::filter(Date > as.Date("2013-08-20"), Date < as.Date("2013-12-31"))
+
+WIG_20_xts <- xts(
+  x = as.matrix(WIG_20_data[,c("X.OPEN.", "X.HIGH.",  "X.LOW.", "X.CLOSE.")]),
+  order.by = WIG_20_data$Date
+)
+
+quantmod::candleChart(
+  WIG_20_xts, name = "WIG20",
+  up.col = "white",
+  dn.col = "black",
+  theme = "white"
+)
+
+abline(v = 31, col = "red")
+text("September 4th 2013", x = 72, y = 2520, col = "red", cex = 0.8)

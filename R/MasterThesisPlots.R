@@ -141,5 +141,64 @@ WIG_info_parsed <- GPWDailyParse(WIG_info)
 WIG_info_plot_df <- WIG_info_parsed %>%
   as.data.frame(.) %>%
   mutate(date = as.Date(rownames(.))) %>%
-  dplyr::filter(date < as.Date("2002-01-01"))
+  dplyr::filter(date < as.Date("2003-01-01"),
+                date > as.Date("1997-12-31"))
 
+WIG_info_plot <- ggplot(WIG_info_plot_df, aes(x = date, y = closePrice)) +
+  geom_line() +
+  labs(title = "WIG-informatyka", 
+       subtitle  = paste(
+         strftime(min(WIG_info_plot_df$date), "%d.%m.%Y"), " - ", 
+         strftime(max(WIG_info_plot_df$date), "%d.%m.%Y"))) +
+  ylab("Value") + xlab("Date")
+
+WIG_info_plot
+
+# Plot 6: Delta airlanes after 11 September 2011
+
+library(plotly)
+library(quantmod)
+
+DAL <- read.csv2("../MagisterkaTekst/Ilustracje/DeltaAirlines.csv", stringsAsFactors = F)
+Sys.setlocale("LC_TIME", "English")
+
+DAL <- DAL %>%
+  dplyr::mutate(Date = as.POSIXct(strptime(Date, format = "%B %d, %Y"))) #%>%
+ # filter(Date < as.Date("2001-11-01"))
+Sys.setlocale("LC_TIME", "Polish_Poland.1250")
+
+# fig <- DAL %>%
+#   plot_ly(x = ~Date, type = "candlestick",
+#           open = ~DAL$Open, close = ~DAL$Close,
+#           high = ~DAL$High, low = ~DAL$Low) %>%
+#   layout(title = "Delta Airlines prices",
+#          xaxis = list(rangeslider = list(visible = F)))
+# 
+# fig
+# PlotCandlestick(x=DAL$Date, y=as.matrix(DAL[,c("Open", "High", "Low", "Close")]), border=NA, las=1, ylab="")
+
+DAL_xts <- xts(
+  as.matrix(DAL[,c("Open", "High", "Low", "Close")]),
+  order.by = DAL$Date
+)
+
+candleChart(DAL_xts, multi.col=F,theme='white', up.col = "white", dn.col = "black",
+            name = "Delta Airlines")
+
+WIG_data <- read.table(file = "../MagisterkaTekst/Ilustracje/WIG20.mst",
+                       header = T, sep = ",", stringsAsFactors = F)
+
+WIG_data_to_plot <- WIG_data %>%
+  mutate(date = as.POSIXct(strptime(X.DTYYYYMMDD., format = "%Y%m%d"))) %>%
+  filter(date > as.Date("2013-04-25"), date < as.Date("2013-12-30"))
+
+WIG_xts <- xts(
+  as.matrix(WIG_data_to_plot[,c("X.OPEN.", "X.HIGH.", "X.LOW.", "X.CLOSE.")]),
+  order.by = WIG_data_to_plot$date
+)
+
+candleChart(WIG_xts, multi.col=F,theme='white', up.col = "white", dn.col = "black",
+            name = "WIG20 - OFE reform")
+
+abline(v = 22.1, col = "red", lwd = 1)
+text(x = 62, y = 2520, labels = "September 4th 2013", col = "red")

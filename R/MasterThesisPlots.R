@@ -144,7 +144,7 @@ WIG_info_plot_df <- WIG_info_parsed %>%
   dplyr::filter(date < as.Date("2003-01-01"),
                 date > as.Date("1997-12-31"))
 
-<<<<<<< HEAD
+
 WIG_info_plot <- ggplot(WIG_info_plot_df, aes(x = date, y = closePrice)) +
   geom_line() +
   labs(title = "WIG-informatyka", 
@@ -203,7 +203,7 @@ candleChart(WIG_xts, multi.col=F,theme='white', up.col = "white", dn.col = "blac
 
 abline(v = 22.1, col = "red", lwd = 1)
 text(x = 62, y = 2520, labels = "September 4th 2013", col = "red")
-=======
+
 # Plot 6: Delta airlaines after 11 September attacks
 require(quantmod)
 
@@ -257,4 +257,67 @@ quantmod::candleChart(
 
 abline(v = 31, col = "red")
 text("September 4th 2013", x = 72, y = 2520, col = "red", cex = 0.8)
->>>>>>> 826c0bec863ac547e71c3f62a98fb14aab800e81
+
+# Plot 10 classic candlestick plot
+library(plotly)
+library(quantmod)
+
+getSymbols("AAPL",src='yahoo')
+
+df <- data.frame(Date=index(AAPL),coredata(AAPL))
+df <- tail(df, 30)
+
+fig <- df %>% plot_ly(x = ~Date, type="candlestick",
+                      open = ~AAPL.Open, close = ~AAPL.Close,
+                      high = ~AAPL.High, low = ~AAPL.Low) 
+fig <- fig %>% layout(title = "Basic Candlestick Chart",
+                      xaxis = list(rangeslider = list(visible = F)))
+
+fig
+
+
+# Plot 11 time series with trends
+require(ggplot2)
+require(gridExtra)
+
+price_t0 <- 50
+returns_growth <- rnorm(100, 0.002, 0.01)
+returns_fall <- rnorm(100, -0.002, 0.01)
+
+ts_growth <- price_t0*cumprod(1+returns_growth)
+ts_fall <- price_t0*cumprod(1+returns_fall)
+
+plot(ts_growth, type = "l")
+plot(ts_fall, type = "l")
+
+df_plot <- data.frame(
+  ind = 1:100,
+  ts_growth = ts_growth,
+  ts_fall = ts_fall
+)
+
+plot_growth <- ggplot(df_plot, aes(x = ind, y = ts_growth)) +
+  geom_line() +
+  labs(title = "Rising trend",
+       subtitle = "Expected value = 0.2%, sd = 1%") +
+  ylab("Value") + xlab("Index") 
+
+plot_fall <- ggplot(df_plot, aes(x = ind, y = ts_fall)) +
+  geom_line() +
+  labs(title = "Downward trend",
+       subtitle = "Expected value = -0.2%, sd = 1%") +
+  ylab("Value") + xlab("Index")
+
+
+
+# Plot xx Point and figure plot
+library(rpnf) # Load rpnf library
+data(DOW) # (Offline) Load free available sample data from https://www.quandl.com/data/WIKI/DOW
+pnfdata <- pnfprocessor(
+  high=DOW$High,
+  low=DOW$Low,
+  date=DOW$Date,
+  boxsize=1L,
+  log=FALSE)
+pnfplottxt(pnfdata,boxsize=1L,log=FALSE)
+

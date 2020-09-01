@@ -143,7 +143,7 @@ WIG_info_plot_df <- WIG_info_parsed %>%
   mutate(date = as.Date(rownames(.))) %>%
   dplyr::filter(date < as.Date("2002-01-01"))
 
-# Plot 6: Delta airlaines after 11 September attacks
+# Plot 6: Southwest Airlines after 11 September attacks
 require(quantmod)
 
 # source: https://www.macrotrends.net/stocks/charts/LUV/southwest-airlines/stock-price-history
@@ -153,7 +153,7 @@ LUV_data <- read.csv("../Magisterka tekst/Ilustracje/MacroTrends_Data_Download_L
 
 LUV_data <- LUV_data %>%
   mutate(date = as.Date(date)) %>%
-  dplyr::filter(date >= as.Date("2001-08-15"), date < as.Date("2002-01-01"))
+  dplyr::filter(date >= as.Date("2001-01-15"), date < as.Date("2002-05-01"))
 
 LUV_xts <- xts(
   x = as.matrix(LUV_data[,c("open", "high", "low", "close")]),

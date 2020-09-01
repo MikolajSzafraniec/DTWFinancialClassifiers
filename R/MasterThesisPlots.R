@@ -141,7 +141,68 @@ WIG_info_parsed <- GPWDailyParse(WIG_info)
 WIG_info_plot_df <- WIG_info_parsed %>%
   as.data.frame(.) %>%
   mutate(date = as.Date(rownames(.))) %>%
-  dplyr::filter(date < as.Date("2002-01-01"))
+  dplyr::filter(date < as.Date("2003-01-01"),
+                date > as.Date("1997-12-31"))
+
+
+WIG_info_plot <- ggplot(WIG_info_plot_df, aes(x = date, y = closePrice)) +
+  geom_line() +
+  labs(title = "WIG-informatyka", 
+       subtitle  = paste(
+         strftime(min(WIG_info_plot_df$date), "%d.%m.%Y"), " - ", 
+         strftime(max(WIG_info_plot_df$date), "%d.%m.%Y"))) +
+  ylab("Value") + xlab("Date")
+
+WIG_info_plot
+
+# Plot 6: Delta airlanes after 11 September 2011
+
+library(plotly)
+library(quantmod)
+
+DAL <- read.csv2("../MagisterkaTekst/Ilustracje/DeltaAirlines.csv", stringsAsFactors = F)
+Sys.setlocale("LC_TIME", "English")
+
+DAL <- DAL %>%
+  dplyr::mutate(Date = as.POSIXct(strptime(Date, format = "%B %d, %Y"))) #%>%
+ # filter(Date < as.Date("2001-11-01"))
+Sys.setlocale("LC_TIME", "Polish_Poland.1250")
+
+# fig <- DAL %>%
+#   plot_ly(x = ~Date, type = "candlestick",
+#           open = ~DAL$Open, close = ~DAL$Close,
+#           high = ~DAL$High, low = ~DAL$Low) %>%
+#   layout(title = "Delta Airlines prices",
+#          xaxis = list(rangeslider = list(visible = F)))
+# 
+# fig
+# PlotCandlestick(x=DAL$Date, y=as.matrix(DAL[,c("Open", "High", "Low", "Close")]), border=NA, las=1, ylab="")
+
+DAL_xts <- xts(
+  as.matrix(DAL[,c("Open", "High", "Low", "Close")]),
+  order.by = DAL$Date
+)
+
+candleChart(DAL_xts, multi.col=F,theme='white', up.col = "white", dn.col = "black",
+            name = "Delta Airlines")
+
+WIG_data <- read.table(file = "../MagisterkaTekst/Ilustracje/WIG20.mst",
+                       header = T, sep = ",", stringsAsFactors = F)
+
+WIG_data_to_plot <- WIG_data %>%
+  mutate(date = as.POSIXct(strptime(X.DTYYYYMMDD., format = "%Y%m%d"))) %>%
+  filter(date > as.Date("2013-04-25"), date < as.Date("2013-12-30"))
+
+WIG_xts <- xts(
+  as.matrix(WIG_data_to_plot[,c("X.OPEN.", "X.HIGH.", "X.LOW.", "X.CLOSE.")]),
+  order.by = WIG_data_to_plot$date
+)
+
+candleChart(WIG_xts, multi.col=F,theme='white', up.col = "white", dn.col = "black",
+            name = "WIG20 - OFE reform")
+
+abline(v = 22.1, col = "red", lwd = 1)
+text(x = 62, y = 2520, labels = "September 4th 2013", col = "red")
 
 # Plot 6: Southwest Airlines after 11 September attacks
 require(quantmod)
@@ -196,3 +257,67 @@ quantmod::candleChart(
 
 abline(v = 31, col = "red")
 text("September 4th 2013", x = 72, y = 2520, col = "red", cex = 0.8)
+
+# Plot 10 classic candlestick plot
+library(plotly)
+library(quantmod)
+
+getSymbols("AAPL",src='yahoo')
+
+df <- data.frame(Date=index(AAPL),coredata(AAPL))
+df <- tail(df, 30)
+
+fig <- df %>% plot_ly(x = ~Date, type="candlestick",
+                      open = ~AAPL.Open, close = ~AAPL.Close,
+                      high = ~AAPL.High, low = ~AAPL.Low) 
+fig <- fig %>% layout(title = "Basic Candlestick Chart",
+                      xaxis = list(rangeslider = list(visible = F)))
+
+fig
+
+
+# Plot 11 time series with trends
+require(ggplot2)
+require(gridExtra)
+
+price_t0 <- 50
+returns_growth <- rnorm(100, 0.002, 0.01)
+returns_fall <- rnorm(100, -0.002, 0.01)
+
+ts_growth <- price_t0*cumprod(1+returns_growth)
+ts_fall <- price_t0*cumprod(1+returns_fall)
+
+plot(ts_growth, type = "l")
+plot(ts_fall, type = "l")
+
+df_plot <- data.frame(
+  ind = 1:100,
+  ts_growth = ts_growth,
+  ts_fall = ts_fall
+)
+
+plot_growth <- ggplot(df_plot, aes(x = ind, y = ts_growth)) +
+  geom_line() +
+  labs(title = "Rising trend",
+       subtitle = "Expected value = 0.2%, sd = 1%") +
+  ylab("Value") + xlab("Index") 
+
+plot_fall <- ggplot(df_plot, aes(x = ind, y = ts_fall)) +
+  geom_line() +
+  labs(title = "Downward trend",
+       subtitle = "Expected value = -0.2%, sd = 1%") +
+  ylab("Value") + xlab("Index")
+
+
+
+# Plot xx Point and figure plot
+library(rpnf) # Load rpnf library
+data(DOW) # (Offline) Load free available sample data from https://www.quandl.com/data/WIKI/DOW
+pnfdata <- pnfprocessor(
+  high=DOW$High,
+  low=DOW$Low,
+  date=DOW$Date,
+  boxsize=1L,
+  log=FALSE)
+pnfplottxt(pnfdata,boxsize=1L,log=FALSE)
+

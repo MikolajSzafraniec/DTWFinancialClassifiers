@@ -321,3 +321,311 @@ pnfdata <- pnfprocessor(
   log=FALSE)
 pnfplottxt(pnfdata,boxsize=1L,log=FALSE)
 
+# Plot 19: WIG 20 logarithmic and linear scale
+
+require(dplyr)
+require(ggplot2)
+require(gridExtra)
+
+CDPROJ_data <- read.table(
+  file = "../Magisterka tekst/Ilustracje/Dane/CDPROJEKT.mst", 
+  header = T,
+  sep = ",",
+  stringsAsFactors = F
+)
+
+CDP_data <- CDPROJ_data %>%
+  mutate(Date = as.POSIXct(strptime(X.DTYYYYMMDD., format = "%Y%m%d"))) %>%
+  dplyr::filter(Date > as.Date("2005-08-20"), Date < as.Date("2020-12-31"))
+
+CDP_standard_plot <- ggplot(CDP_data, aes(x = Date, y = X.CLOSE.)) +
+  geom_line() +
+  labs(title = "CD Projekt - standard scale", 
+       subtitle  = paste(
+         strftime(min((CDP_data$Date)), "%d.%m.%Y"), " - ", 
+         strftime(max((CDP_data$Date)), "%d.%m.%Y"))) +
+  ylab("") + xlab("Date") 
+
+CDP_log_plot <- ggplot(CDP_data, aes(x = Date, y = X.CLOSE.)) +
+  geom_line() +
+  labs(title = "CD Projekt - logarithmic scale", 
+       subtitle  = paste(
+         strftime(min((CDP_data$Date)), "%d.%m.%Y"), " - ", 
+         strftime(max((CDP_data$Date)), "%d.%m.%Y"))) +
+  ylab("") + xlab("Date") +
+  scale_y_log10()
+
+grid.arrange(grobs = list(CDP_standard_plot, CDP_log_plot), ncol = 2)
+
+# Plot 20: CCC glowa i ramiona
+
+require(dplyr)
+require(ggplot2)
+require(gridExtra)
+
+CCC_data <- read.table(
+  file = "../Magisterka tekst/Ilustracje/Dane/CCC.mst", 
+  header = T,
+  sep = ",",
+  stringsAsFactors = F
+)
+
+CCC_d <- CCC_data %>%
+  mutate(Date = as.POSIXct(strptime(X.DTYYYYMMDD., format = "%Y%m%d"))) %>%
+  dplyr::filter(Date > as.Date("2000-08-20"), Date < as.Date("2020-12-31"))
+
+CCC_plot <- ggplot(CCC_d, aes(x = Date, y = X.CLOSE.)) +
+  geom_line() +
+  labs(title = "CCC", 
+       subtitle  = paste(
+         strftime(min((CCC_d$Date)), "%d.%m.%Y"), " - ", 
+         strftime(max((CCC_d$Date)), "%d.%m.%Y"))) +
+  ylab("") + xlab("Date") +
+  scale_y_log10()
+
+CCC_plot
+
+# Plot 22: glowa i ramiona jako trend + sinusoida
+
+sinusoida <- sin(seq(from = 0, to = 7*pi, length.out = 100))*10
+trend <- c(1:36, 35:(-28))
+plot(sinusoida+trend, type = "l")
+
+plot(trend, type = "l", ylim = c(-50, 50), xlab = "", ylab = "")
+lines(sinusoida, lty = "dashed")
+lines(sinusoida+trend, col = "red", lwd = 2)
+
+# Plot 25 Formacja spodka JSW
+
+require(dplyr)
+require(ggplot2)
+require(gridExtra)
+
+JSW_data <- read.table(
+  file = "../Magisterka tekst/Ilustracje/Dane/JSW.mst", 
+  header = T,
+  sep = ",",
+  stringsAsFactors = F
+)
+
+JSW_d <- JSW_data %>%
+  mutate(Date = as.POSIXct(strptime(X.DTYYYYMMDD., format = "%Y%m%d"))) %>%
+  dplyr::filter(Date > as.Date("2010-08-20"), Date < as.Date("2017-01-01"))
+
+JSW_plot <- ggplot(JSW_d, aes(x = Date, y = X.CLOSE.)) +
+  geom_line() +
+  labs(title = "JSW", 
+       subtitle  = paste(
+         strftime(min((JSW_d$Date)), "%d.%m.%Y"), " - ", 
+         strftime(max((JSW_d$Date)), "%d.%m.%Y"))) +
+  ylab("") + xlab("Date")
+
+JSW_plot
+
+# Plot 28: CCC glowa i ramiona + wolumen
+
+require(dplyr)
+require(quantmod)
+require(xts)
+
+CCC_data <- read.table(
+  file = "../Magisterka tekst/Ilustracje/Dane/CCC.mst", 
+  header = T,
+  sep = ",",
+  stringsAsFactors = F
+)
+
+CCC_d <- CCC_data %>%
+  mutate(Date = as.POSIXct(strptime(X.DTYYYYMMDD., format = "%Y%m%d"))) %>%
+  dplyr::filter(Date > as.Date("2017-07-01"), Date < as.Date("2018-07-01"))
+
+CCC <- xts(x = 
+                 data.frame(
+                   open = CCC_d$X.OPEN.,
+                   high = CCC_d$X.HIGH.,
+                   low = CCC_d$X.LOW.,
+                   close = CCC_d$X.CLOSE.,
+                   volume = CCC_d$X.VOL.
+                 ), order.by = CCC_d$Date)
+
+Sys.setlocale("LC_TIME", "English")
+
+quantmod::chartSeries(PGNING, theme="white", TA="addVo();addBBands();addCCI()")
+
+Sys.setlocale("LC_TIME", "Polish_Poland.1250")
+
+# Plot 31: moving averages
+
+require(dplyr)
+require(quantmod)
+require(xts)
+
+PGNING_data <- read.table(
+  file = "../Magisterka tekst/Ilustracje/Dane/PGNIG.mst", 
+  header = T,
+  sep = ",",
+  stringsAsFactors = F
+)
+
+PGNING_d <- PGNING_data %>%
+  mutate(Date = as.POSIXct(strptime(X.DTYYYYMMDD., format = "%Y%m%d"))) %>%
+  dplyr::filter(Date > as.Date("2018-01-01"), Date < as.Date("2018-09-01"))
+
+PGNIG <- xts(x = 
+             data.frame(
+               Open = PGNING_d$X.OPEN.,
+               High = PGNING_d$X.HIGH.,
+               Low = PGNING_d$X.LOW.,
+               Close = PGNING_d$X.CLOSE.,
+               Volume = PGNING_d$X.VOL.
+             ), order.by = PGNING_d$Date)
+
+Sys.setlocale("LC_TIME", "English")
+quantmod::chartSeries(PGNIG, theme="white", type = "b")
+quantmod::addSMA(n = 5, col = "black")
+quantmod::addSMA(n = 20, col = "red")
+
+# Plot 32: RSI, OBV
+
+require(dplyr)
+require(quantmod)
+require(xts)
+
+AGORA_data <- read.table(
+  file = "../Magisterka tekst/Ilustracje/Dane/AGORA.mst", 
+  header = T,
+  sep = ",",
+  stringsAsFactors = F
+)
+
+AGORA_d <- AGORA_data %>%
+  mutate(Date = as.POSIXct(strptime(X.DTYYYYMMDD., format = "%Y%m%d"))) %>%
+  dplyr::filter(Date > as.Date("2019-01-01"), Date < as.Date("2020-09-01"))
+
+AGORA <- xts(x = 
+               data.frame(
+                 Open = AGORA_d$X.OPEN.,
+                 High = AGORA_d$X.HIGH.,
+                 Low = AGORA_d$X.LOW.,
+                 Close = AGORA_d$X.CLOSE.,
+                 Volume = AGORA_d$X.VOL.
+               ), order.by = AGORA_d$Date)
+
+Sys.setlocale("LC_TIME", "English")
+quantmod::chartSeries(AGORA, theme="white", type = "b")
+addRSI()
+addOBV(1)
+
+# Plot 35: Distorted time series
+
+ts_1 <- rep(10, times = 30)
+ts_2 <- rep(20, times = 30)
+
+ts_1[10] <- 15
+ts_2[15] <- 25
+
+ts_1[20] <- 12.5
+ts_2[25] <- 22.5
+
+df_to_plot <- data.frame(
+  index = 1:30,
+  ts_1 = ts_1, 
+  ts_2 = ts_2
+)
+
+df_pivoted <- df_to_plot %>%
+  tidyr::pivot_longer(cols = c("ts_1", "ts_2"), names_to = "ts")
+
+ggplot2::ggplot(data = df_pivoted,
+                aes(x=index, y=value, colour=ts)) +
+  geom_line() + ylab("")
+
+# Plot 36 - DTW i Euclid
+
+ts_1 <- rep(10, times = 30)
+ts_2 <- rep(20, times = 30)
+
+ts_1[10] <- 15
+ts_2[15] <- 25
+
+ts_1[20] <- 12.5
+ts_2[25] <- 22.5
+
+dtw_proper <- dtw::dtw(ts_1, ts_2 -10, step.pattern = symmetric1, keep.internals = T)
+dtw_standard <- dtw::dtw(ts_1, ts_2, step.pattern = symmetric1, keep.internals = T)
+
+
+dtwPlotTwoWay(d = dtw_proper, ts_1, ts_2, ylab = "")
+dtwPlotTwoWay(d = dtw_standard, ts_1, ts_2, ylab = "")
+
+dtwPlotThreeWay(d = dtw_proper, ylab = "")
+dtwPlotDensity(dtw_proper)
+
+
+# Plot 37 - Accumulated cost matrix visualization
+require(pheatmap)
+
+ts_1 <- sample(1:10,10, replace = T)
+ts_2 <- sample(1:10,10, replace = T)
+
+g_matrix <- proxy::dist(ts_1, ts_2)
+G_matrix <- RcppShapeDTW::RcppAccumulatedCostMatrix(g_matrix)
+a <- dtw::dtw(ts_1, ts_2, step.pattern = symmetric1, keep.internals = T, 
+              window.type = "sakoechiba", window.size = 2)
+
+pheatmap(G_matrix[10:1,], display_numbers = T, color = colorRampPalette(c('white','red'))(100), 
+         cluster_rows = F, cluster_cols = F, fontsize_number = 15,
+         xlab = "a")
+a$distance
+
+dtwPlotDensity(a)
+pheatmap(a$costMatrix[10:1,], display_numbers = T, color = colorRampPalette(c('white','red'))(100), 
+         cluster_rows = F, cluster_cols = F, fontsize_number = 15,
+         xlab = "a")
+
+a$index1
+a$index2
+
+a <- dtw::dtw(ts_1, ts_2, step.pattern = symmetric1, keep.internals = T, 
+              window.type = "sakoechiba", window.size = 2)
+b <- dtw::dtw(ts_1, ts_2, step.pattern = symmetric1, keep.internals = T, 
+              window.type = "sakoechiba", window.size = 100)
+
+dtwPlotTwoWay(a, xts = ts_1, yts = ts_2 +10, ylab = "")
+dtwPlotTwoWay(b, xts = ts_1, yts = ts_2 +10, ylab = "")
+
+# Plot 38 Shape Warping and normal warping
+SDP_traditional <- new("ShapeDescriptorParams")
+SDP_compound <- new("ShapeDescriptorParams",
+                    Type = "compound",
+                    Descriptors = c("PAADescriptor",
+                                    "slopeDescriptor"),
+                    Additional_params = list(
+                      Weights = c(1, 10),
+                      PAAWindow = 3L,
+                      slopeWindow = 3L
+                    ))
+
+set.seed(38)
+ts_ref <- cumsum(rnorm(1000, 0, 1))
+
+ts_1 <- ts_ref[1:150]
+ts_2 <- ts_ref[21:170] + rnorm(150, 0, 1)
+
+dtw_standard <- dtw(ts_1, ts_2, step.pattern = symmetric1, keep.internals = T)
+dtw_new_indices <- dtw(ts_1, ts_2, step.pattern = symmetric1, keep.internals = T)
+dtw_shape <- RcppShapeDTW::kNNShapeDTWCpp(referenceSeries = t(t(ts_1)), 
+                                          testSeries = t(t(ts_2)), 
+                                          forecastHorizon = 0, 
+                                          subsequenceWidth = 40, 
+                                          subsequenceBreaks = 1, 
+                                          shapeDescriptorParams = SDP_compound, 
+                                          normalizationType = "Zscore", 
+                                          distanceType = "Dependent")
+
+dtw_new_indices$index1 <- dtw_shape$ShapeDescriptorsDistanceResults$WarpingPaths$WarpingPaths_0[,1]
+dtw_new_indices$index2 <- dtw_shape$ShapeDescriptorsDistanceResults$WarpingPaths$WarpingPaths_0[,2]
+
+dtwPlotTwoWay(dtw_standard, ts_1, ts_2 + 30, ylab = "")
+dtwPlotTwoWay(dtw_new_indices, ts_1, ts_2 + 30, ylab = "")
+

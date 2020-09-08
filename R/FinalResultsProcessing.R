@@ -24,7 +24,7 @@ tableMerged <- combineTables(tables_list = resultsFile)
 oneTab <- accuracyResultsOneTable(tableMerged)
 oneTaboneCompany <- accuracyResultsOneTable(resultsFile$EURCHF)
 
-pheatmap(as.matrix(oneTaboneCompany$res_frcst_horizon_50[,-1]), display_numbers = T, color = colorRampPalette(c('white','red'))(100), 
+pheatmap(as.matrix(abc$dtw_type_Independent.shape_desc_type_compound.dims1_2), display_numbers = T, color = colorRampPalette(c('white','red'))(100), 
          cluster_rows = F, cluster_cols = F, fontsize_number = 15,
          xlab = "a")
 

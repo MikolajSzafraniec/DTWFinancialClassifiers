@@ -350,3 +350,113 @@ combineOneMeaseruDifferentSeriesTypes <- function(FX_set, GPW_small_comp, GPW_bi
   res
 }
 
+
+GatherAllResults <- function(files_folder, 
+                             measure = c("acc", "corr", "sign_acc", "balanced_acc"), 
+                             aggregation_lvl = c("daily",
+                                                 "tick_d1min",
+                                                 "tick_d5min",
+                                                 "tick_d10min",
+                                                 "tick_d30min")){
+  
+  measure <- match.arg(measure)
+  aggregation_lvl <- match.arg(aggregation_lvl)
+  
+  refsLengths <- c("25", "50", "100", "200", "400")
+  GPW_sets_names <- paste0(files_folder, "GPW_", aggregation_lvl, "_results_ref_",
+                           refsLengths, ".rds")
+  FX_sets_names <- paste0(files_folder, "FX_", aggregation_lvl, "_results_ref_",
+                           refsLengths, ".rds")
+  
+  GPW_sets_loaded <- purrr::map(GPW_sets_names, ~readRDS(.))
+  FX_sets_lodaed <- purrr::map(FX_sets_names, ~readRDS(.))
+  
+  combinedSets <- purrr::pmap(list(GPW_sets_loaded, FX_sets_lodaed), function(x, y){
+    combineTables(c(x, y))
+  })
+  
+  names(combinedSets) <- paste0("ref_length_",refsLengths)
+
+  forecast_horizons <- stringr::str_extract(colnames(combinedSets[[1]][[1]]), 
+                                            pattern = "[0-9]{1,3}") %>% 
+    .[!is.na(.)] %>%
+    unique(.)
+
+  
+  tst <- purrr::map(combinedSets, function(dataSet, frcst_h, .measure){
+    
+    tst2 <- purrr::map(dataSet, function(single_table, .frcst_h, .measure){
+      
+      names_ref_series_returns <- paste0("target_series_", .frcst_h, "_returns")
+      names_learn_series_returns <- paste0("learn_series_", .frcst_h, "_returns")
+      names_ref_series_class <- paste0("target_series_", .frcst_h, "_return_class")
+      names_learn_series_class <- paste0("learn_series_", .frcst_h, "_return_class")
+      
+      tst3 <- purrr::pmap(list(
+        names_ref_series_returns,
+        names_learn_series_returns,
+        names_ref_series_class,
+        names_learn_series_class
+      ), function(nrsr, nlsr, nrsc, nlsc, tbl, .measure){
+        
+        res <- switch (
+          .measure,
+          acc = sum(tbl[[nrsc]] == tbl[[nlsc]]) / nrow(tbl),
+          corr = cor(tbl[[nrsr]], tbl[[nlsr]]),
+          sign_acc = sum(sign(tbl[[nrsr]]) == sign(tbl[[nlsr]])) / nrow(tbl),
+          balanced_acc = 
+            {
+              acc_sell <- 
+                sum(tbl[[nrsc]] == "Sell" & (tbl[[nlsc]] == tbl[[nrsc]])) /
+                sum(tbl[[nrsc]] == "Sell")
+              
+              acc_buy <- 
+                sum(tbl[[nrsc]] == "Buy" & (tbl[[nlsc]] == tbl[[nrsc]])) /
+                sum(tbl[[nrsc]] == "Buy")
+              
+              acc_hold <- 
+                sum(tbl[[nrsc]] == "Hold" & (tbl[[nlsc]] == tbl[[nrsc]])) /
+                sum(tbl[[nrsc]] == "Hold")
+              
+              sum(acc_sell, acc_buy, acc_hold) / 3
+            }
+        )
+          
+        
+      }, tbl = single_table, .measure = .measure)
+
+      names(tst3) <- paste0("horizon_", .frcst_h)
+      
+      return(unlist(tst3))
+      
+    }, .frcst_h = frcst_h, .measure = .measure)
+    
+  }, frcst_h = forecast_horizons, .measure = measure)
+  
+  algorithms_list <- names(tst$ref_length_25)
+  
+  algo_tables <- purrr::map(algorithms_list, function(algo, data_set){
+    
+    algo_table <- do.call(cbind, (purrr::map(data_set, function(ds, .algo){
+      ds[[.algo]]
+    }, .algo = algo)))
+    
+    algo_table
+    
+  }, data_set = tst)
+  
+  names(algo_tables) <- algorithms_list
+  
+  algo_tables
+}
+
+abc <- GatherAllResults(files_folder = "../Magisterka tekst/Wyniki/DaneRDS/ResultsEuclidSingleStockTimeFixed/", 
+                        measure = "sign", 
+                        aggregation_lvl = "tick_d1min")
+
+plotHeatmapForGateredResults <- function(tab){
+  pheatmap(as.matrix(tab), display_numbers = T, color = colorRampPalette(c('white','red'))(100), 
+           cluster_rows = F, cluster_cols = F, fontsize_number = 15,
+           xlab = "a")
+}
+

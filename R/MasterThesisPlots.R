@@ -629,3 +629,50 @@ dtw_new_indices$index2 <- dtw_shape$ShapeDescriptorsDistanceResults$WarpingPaths
 dtwPlotTwoWay(dtw_standard, ts_1, ts_2 + 30, ylab = "")
 dtwPlotTwoWay(dtw_new_indices, ts_1, ts_2 + 30, ylab = "")
 
+##################################################################################
+###                                   CHAPTER 5                                ###
+##################################################################################
+
+# Plot 1 Simple Rcpp vs R comparison
+
+require(Rcpp)
+
+Rcpp::cppFunction(
+  code = 
+    "NumericMatrix RcppDistanceMatrix(NumericVector x, NumericVector y){
+      int len_x = x.length();
+      int len_y = y.length();
+      
+      NumericMatrix res(len_x, len_y);
+      
+      for(int i = 0; i < len_x; i++){
+        for(int j = 0; j < len_y; j++){
+          res(i, j) = pow(pow(x(i) - y(j), 2), 0.5);
+        }
+      }
+      
+      return(res);
+    }"
+)
+
+
+RDistMatrix <- function(x, y){
+  
+  len_x <- length(x)
+  len_y <- length(y)
+  
+  res <- matrix(0, nrow = len_x, ncol = len_y)
+  
+  for(i in 1:len_x){
+    for(j in 1:len_y){
+      res[i, j] <- sqrt((x[i]-y[j])^2)
+    }
+  }
+  
+  res
+}
+
+mcb <- microbenchmark::microbenchmark(RcppDistanceMatrix(1:100, 1:100),
+                               RDistMatrix(1:100, 1:100))
+
+

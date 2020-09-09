@@ -672,7 +672,380 @@ RDistMatrix <- function(x, y){
   res
 }
 
-mcb <- microbenchmark::microbenchmark(RcppDistanceMatrix(1:100, 1:100),
-                               RDistMatrix(1:100, 1:100))
+ts_example_1 <- purrr::map(2:100, rnorm)
+ts_example_2 <- purrr::map(2:100, rnorm)
+
+time_Rcpp <- numeric(99)
+time_R <- numeric(99)
+
+for(i in 1:99){
+  cat("Proceeding ts number ", i, "\n")
+  
+  mcb <- microbenchmark::microbenchmark(RcppDistanceMatrix(ts_example_1[[i]], ts_example_2[[i]]),
+                                        RDistMatrix(ts_example_1[[i]], ts_example_2[[i]]))
+  
+  median_runs <- aggregate(mcb$time ~ mcb$expr, FUN = median)
+  
+  time_Rcpp[i] <- median_runs$`mcb$time`[1]
+  time_R[i] <- median_runs$`mcb$time`[2]
+}
+
+
+
+df_to_plot <- data.frame(
+  index = 2:100,
+  time_rcpp = time_Rcpp / 100000,
+  time_r = time_R / 100000
+)
+
+ggplot(df_to_plot, aes(index)) + 
+  geom_line(aes(y = time_r, colour = "Standard R implementation")) + 
+  geom_line(aes(y = time_rcpp, colour = "Rcpp implementation")) +
+  ggplot2::ylab("Time in microseconds") +
+  ggplot2::xlab("Time series length") +
+  ggplot2::theme_classic() +
+  ggplot2::ggtitle("Distance matrix calculation time")
+
+# Plot 2 comparison of different methods time calculation
+
+SDP_traditional <- new("ShapeDescriptorParams")
+SDP_compound <- new("ShapeDescriptorParams",
+                    Type = "compound",
+                    Descriptors = c("PAADescriptor",
+                                    "slopeDescriptor"),
+                    Additional_params = list(
+                      Weights = c(1, 10),
+                      PAAWindow = 3L,
+                      slopeWindow = 3L
+                    ))
+
+euclidDistance <- function(x, y){
+  sqrt(sum((x-y)^2))
+}
+
+corMeasure <- function(x, y){
+  cor(x, y)
+}
+
+simpleDTWMeasure <- function(x, y){
+  dtw_shape <- RcppShapeDTW::kNNShapeDTWCpp(referenceSeries = x, 
+                                            testSeries = y, 
+                                            forecastHorizon = 0, 
+                                            subsequenceWidth = 0, 
+                                            subsequenceBreaks = 1, 
+                                            shapeDescriptorParams = SDP_traditional, 
+                                            normalizationType = "Unitarization", 
+                                            distanceType = "Dependent")
+  dtw_shape
+}
+
+shapeDTWMeasure <- function(x, y){
+  dtw_shape <- RcppShapeDTW::kNNShapeDTWCpp(referenceSeries = x, 
+                                            testSeries = y, 
+                                            forecastHorizon = 0, 
+                                            subsequenceWidth = 4, 
+                                            subsequenceBreaks = 1, 
+                                            shapeDescriptorParams = SDP_compound, 
+                                            normalizationType = "Unitarization", 
+                                            distanceType = "Dependent")
+  dtw_shape
+}
+
+shapeDTWmultidim <- function(x, y){
+  dtw_shape <- RcppShapeDTW::kNNShapeDTWCpp(referenceSeries = x, 
+                                            testSeries = y, 
+                                            forecastHorizon = 0, 
+                                            subsequenceWidth = 4, 
+                                            subsequenceBreaks = 1, 
+                                            shapeDescriptorParams = SDP_compound, 
+                                            normalizationType = "Unitarization", 
+                                            distanceType = "Dependent")
+  dtw_shape
+}
+
+time_series_test_1 <- purrr::map(10:100, function(x){
+  m <- matrix(rnorm(2*x), ncol = 2)
+  m[,1] <- Unitarization(m[,1])
+  m[,2] <- Unitarization(m[,2])
+  m
+})
+
+time_series_test_2 <- purrr::map(10:100, function(x){
+  m <- matrix(rnorm(2*x), ncol = 2)
+  m[,1] <- Unitarization(m[,1])
+  m[,2] <- Unitarization(m[,2])
+  m
+})
+
+time_series_for_DTW_1 <- purrr::map(time_series_test_1,
+                                    function(x){
+                                      t(t(x[,1]))
+                                    })
+
+time_series_for_DTW_2 <- purrr::map(time_series_test_2,
+                                    function(x){
+                                      t(t(x[,1]))
+                                    })
+
+
+euclid_time <- numeric(length(time_series_test_1))
+cor_time <- numeric(length(time_series_test_1))
+simpleDTW_time <- numeric(length(time_series_test_1))
+shapeDTW_time <- numeric(length(time_series_test_1))
+MTDshapeDTW_time <- numeric(length(time_series_test_1))
+
+for(i in 1:length(time_series_test_1)){
+  cat("Proceeding ts number ", i, "\n")
+  
+  mcb <- microbenchmark::microbenchmark(euclidDistance(time_series_for_DTW_1[[i]], time_series_for_DTW_2[[i]]),
+                                        corMeasure(time_series_for_DTW_1[[i]], time_series_for_DTW_2[[i]]),
+                                        simpleDTWMeasure(time_series_for_DTW_1[[i]], time_series_for_DTW_2[[i]]),
+                                        shapeDTWMeasure(time_series_for_DTW_1[[i]], time_series_for_DTW_2[[i]]),
+                                        shapeDTWmultidim(time_series_test_1[[i]], time_series_test_2[[i]]))
+  
+  median_runs <- aggregate(mcb$time ~ mcb$expr, FUN = median)
+  
+  time_Rcpp[i] <- median_runs$`mcb$time`[1]
+  time_R[i] <- median_runs$`mcb$time`[2]
+  
+  euclid_time[i] <- median_runs$`mcb$time`[1]
+  cor_time[i] <- median_runs$`mcb$time`[2]
+  simpleDTW_time[i] <- median_runs$`mcb$time`[3]
+  shapeDTW_time[i] <- median_runs$`mcb$time`[4]
+  MTDshapeDTW_time[i] <- median_runs$`mcb$time`[5]
+}
+
+df_to_plot <- data.frame(
+  index = 10:100,
+  euclid_time = euclid_time / 10000,
+  cor_time = cor_time / 10000,
+  simpleDTW_time = simpleDTW_time / 10000,
+  shapeDTW_time = shapeDTW_time / 10000,
+  MTDshapeDTW_time = MTDshapeDTW_time /10000
+)
+
+ggplot(df_to_plot, aes(index)) + 
+  geom_line(aes(y = euclid_time, colour = "Euclidean distance")) + 
+  geom_line(aes(y = cor_time, colour = "Correlation distance")) +
+  geom_line(aes(y = simpleDTW_time, colour = "Standard DTW distance")) +
+  geom_line(aes(y = shapeDTW_time, colour = "shapeDTW distance")) +
+  geom_line(aes(y = MTDshapeDTW_time, colour = "Multidimensional shapeDTW distance")) +
+  ggplot2::ylab("Time in microseconds") +
+  ggplot2::xlab("Time series length") +
+  ggplot2::theme_classic() +
+  ggplot2::ggtitle("Distance measures - calculation time")
+
+
+# Plot 3 descriptors examples
+require(dplyr)
+require(ggplot2)
+
+MBANK_data <- read.table(
+  file = "../Magisterka tekst/Ilustracje/Dane/MBANK.mst", 
+  header = T,
+  sep = ",",
+  stringsAsFactors = F
+)
+
+mbank_close_prices <- MBANK_data$X.CLOSE.
+mbank_subsequence <- mbank_close_prices[6000:6100]
+
+mbank_subsequence_matrix <- RcppShapeDTW::RcppsubsequencesMatrix(
+  mbank_subsequence, subsequenceWidth = 5
+)
+
+SDP_slope <- new("ShapeDescriptorParams",
+                 Type = "simple",
+                 Descriptors = c("slopeDescriptor"),
+                 Additional_params = list(
+                   slopeWindow = 3L
+                 ))
+SDP_PAA <- new("ShapeDescriptorParams",
+               Type = "simple",
+               Descriptors = c("PAADescriptor"),
+               Additional_params = list(
+                 PAAWindow = 3L
+               ))
+SDP_der <- new("ShapeDescriptorParams",
+               Type = "simple",
+               Descriptors = c("derivativeDescriptor"))
+
+slopeDescriptorsMatrix <- RcppShapeDTW::RcppasShapeDescriptor(
+  mbank_subsequence_matrix,
+  SDP_slope
+)
+
+PAADescriptorsMatrix <- RcppShapeDTW::RcppasShapeDescriptor(
+  mbank_subsequence_matrix,
+  SDP_PAA
+)
+
+derivativeDescriptorsMatrix <- RcppShapeDTW::RcppasShapeDescriptor(
+  mbank_subsequence_matrix,
+  SDP_der
+)
+
+par(mfrow = c(1, 4))
+plot(mbank_subsequence_matrix[50,], type = "l")
+plot(slopeDescriptorsMatrix[50,], type = "l")
+plot(PAADescriptorsMatrix[50,], type = "l")
+plot(derivativeDescriptorsMatrix[50,], type = "l")
+
+df_ind_11 <- data.frame(index = 1:11)
+df_ind_9 <- data.frame(index = 1:9)
+
+real_series_plot <- ggplot(df_ind_11, aes(index)) + 
+  geom_line(aes(y = mbank_subsequence_matrix[50,])) +
+  ggplot2::theme_minimal() + 
+  ggplot2::ylab("Price") +
+  ggplot2::ggtitle("Close prices")
+
+slope_desc_plot <- ggplot(df_ind_9, aes(index)) + 
+  geom_line(aes(y = slopeDescriptorsMatrix[50,])) +
+  ggplot2::theme_minimal() + 
+  ggplot2::ylab("value") +
+  ggplot2::ggtitle("Slope descriptor")
+
+paa_desc_plot <- ggplot(df_ind_9, aes(index)) + 
+  geom_line(aes(y = PAADescriptorsMatrix[50,])) +
+  ggplot2::theme_minimal() + 
+  ggplot2::ylab("value") +
+  ggplot2::ggtitle("PAA descriptor")
+
+der_desc_plot <- ggplot(df_ind_11, aes(index)) + 
+  geom_line(aes(y = derivativeDescriptorsMatrix[50,])) +
+  ggplot2::theme_minimal() + 
+  ggplot2::ylab("value") +
+  ggplot2::ggtitle("Derivative descriptor")
+
+gridExtra::grid.arrange(grobs = list(real_series_plot, 
+                                     slope_desc_plot,
+                                     paa_desc_plot,
+                                     der_desc_plot), nrow = 2)
+
+# Plot 4 time series and trigonometric transform
+
+JSW_data <- read.table(
+  file = "../Magisterka tekst/Ilustracje/Dane/JSW.mst", 
+  header = T,
+  sep = ",",
+  stringsAsFactors = F
+)
+
+JSW_d <- JSW_data %>%
+  mutate(date = as.POSIXct(strptime(X.DTYYYYMMDD., format = "%Y%m%d")),
+         closePrice = X.CLOSE., volume = X.VOL.) %>%
+  filter(date > as.Date("2018-04-25"), date < as.Date("2018-12-30"))%>%
+  dplyr::select(date, closePrice, volume) %>%
+  mutate(TTR_cos_volume = RcppShapeDTW::RcpptrigonometicTransform(volume, "cosinus"))
+
+real_series_plot <- ggplot2::ggplot(JSW_d, aes(date)) + 
+  geom_line(aes(y = closePrice)) +
+    ggplot2::theme_light() + 
+  ggplot2::ylab("Price") +
+  ggplot2::ggtitle("Close prices")
+
+volume_plot <- ggplot2::ggplot(JSW_d, aes(date)) + 
+  geom_line(aes(y = volume)) +
+  ggplot2::theme_light() + 
+  ggplot2::ylab("Volume") +
+  ggplot2::ggtitle("Volume")
+
+TTR_volume_plot <- ggplot2::ggplot(JSW_d, aes(1:nrow(JSW_d))) + 
+  geom_line(aes(y = TTR_cos_volume)) +
+  ggplot2::theme_light() + 
+  ggplot2::ylab("Value") +
+  ggplot2::ggtitle("Volume's cosine transform") +
+  ggplot2::xlab("")
+
+gridExtra::grid.arrange(grobs = list(real_series_plot, 
+                                     volume_plot,
+                                     TTR_volume_plot), nrow = 3)
+
+# Plot 5 time series, nearest neighbour and forecast
+GPW_tick_d30min <- readRDS("../Magisterka tekst/SeriesProcessed/GPW_tick_d30min.rds")
+GPW_30_min_results <- readRDS("../Magisterka tekst/Wyniki/DaneRDS/ResultsEuclidSingleStockTimeFixed/GPW_tick_d30min_results_ref_100.rds")
+GPW_30_min_results$PGNIG$dtw_type_Dependent.shape_desc_type_compound.dims1
+
+
+
+DTW_results_to_plot <- RknnShapeDTWParallel(refSeries = GPW_tick_d30min_filtered$KGHM,
+                                            learnSeries = GPW_tick_d30min_filtered[4], 
+                                            refSeriesStart = 9062, 
+                                            shapeDTWParams = SDP_compound, 
+                                            targetDistance = "r", 
+                                            distanceType = "D", 
+                                            normalizationType = "Z", 
+                                            refSeriesLength = 100, 
+                                            forecastHorizon = 100, 
+                                            subsequenceWidth = 4, 
+                                            subsequenceBreaks = 1)
+
+plot(DTW_results_to_plot, DTW_results_to_plot, lift = 0, includeFrcstPart = T, add_wp = F)
+
+sign(GPW_30_min_results$KGHM$dtw_type_Dependent.shape_desc_type_compound.dims1_2$target_series_100_returns)==
+sign(GPW_30_min_results$KGHM$dtw_type_Dependent.shape_desc_type_compound.dims1_2$learn_series_100_returns)
+GPW_30_min_results$KGHM$dtw_type_Dependent.shape_desc_type_compound.dims1_2$best_series_ind.Idx
+
+str(DTW_results_to_plot)
+seq(from = 9062, by = 10, length.out = 100)[97]
+
+DTW_results_to_plot_missed <- RknnShapeDTWParallel(refSeries = GPW_tick_d30min_filtered$KGHM,
+                                            learnSeries = GPW_tick_d30min_filtered[4], 
+                                            refSeriesStart = 10022, 
+                                            shapeDTWParams = SDP_compound, 
+                                            targetDistance = "r", 
+                                            distanceType = "D", 
+                                            normalizationType = "Z", 
+                                            refSeriesLength = 100, 
+                                            forecastHorizon = 100, 
+                                            subsequenceWidth = 4, 
+                                            subsequenceBreaks = 1)
+
+plot(DTW_results_to_plot_missed, DTW_results_to_plot, lift = 0, includeFrcstPart = T, add_wp = F)
+
+
+DTW_results_to_plot_showing_matching <- RknnShapeDTWParallel(refSeries = GPW_tick_d30min_filtered$KGHM,
+                                                   learnSeries = GPW_tick_d30min_filtered[4], 
+                                                   refSeriesStart = 9500, 
+                                                   shapeDTWParams = SDP_compound, 
+                                                   targetDistance = "r", 
+                                                   distanceType = "D", 
+                                                   normalizationType = "Z", 
+                                                   refSeriesLength = 100, 
+                                                   forecastHorizon = 100, 
+                                                   subsequenceWidth = 4, 
+                                                   subsequenceBreaks = 1)
+
+plot(DTW_results_to_plot_showing_matching, lift = 3, includeFrcstPart = F, add_wp = T)
+
+DTW_results_to_plot_showing_I_matching <- RknnShapeDTWParallel(refSeries = GPW_tick_d30min_filtered$KGHM,
+                                                             learnSeries = GPW_tick_d30min_filtered[4], 
+                                                             refSeriesStart = 9500, 
+                                                             shapeDTWParams = SDP_compound, 
+                                                             targetDistance = "r", 
+                                                             distanceType = "I", 
+                                                             normalizationType = "Z", 
+                                                             refSeriesLength = 100, 
+                                                             forecastHorizon = 100, 
+                                                             subsequenceWidth = 4, 
+                                                             subsequenceBreaks = 1)
+
+plot(DTW_results_to_plot_showing_I_matching, lift = 0, includeFrcstPart = T, add_wp = F)
+
+# Plot 6 learning and testing part division
+
+GPW_tick_d30min_filtered$PKOBP
+
+PKO_data_to_plot <- as.data.frame(GPW_tick_d30min_filtered$PKOBP) %>%
+  mutate(date = as.Date(time(GPW_tick_d30min_filtered$PKOBP)))
+
+ggplot2::ggplot(PKO_data_to_plot, aes(date)) +
+  ggplot2::geom_line(aes(y = ClosePrice)) +
+  labs(title = "PKO", 
+       subtitle  = paste(
+         strftime(min(PKO_data_to_plot$date), "%d.%m.%Y"), " - ", 
+         strftime(max(PKO_data_to_plot$date), "%d.%m.%Y"))) +
+  geom_vline(xintercept = as.Date("2019-06-03"), size = 1, col = "red")
 
 

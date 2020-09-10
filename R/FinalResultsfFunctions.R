@@ -447,16 +447,30 @@ GatherAllResults <- function(files_folder,
   
   names(algo_tables) <- algorithms_list
   
-  algo_tables
+  res <- purrr::map(algo_tables, function(x){
+    colnames(x) <- paste0("Ref ", c(25, 50, 100, 200, 400))
+    rownames(x) <- paste0("Horizon ", c(5, 10, 25, 50, 75, 100, 150, 200))
+    x
+  })
+  
+  res
 }
 
-abc <- GatherAllResults(files_folder = "../Magisterka tekst/Wyniki/DaneRDS/ResultsEuclidSingleStockTimeFixed/", 
-                        measure = "sign", 
-                        aggregation_lvl = "tick_d1min")
-
-plotHeatmapForGateredResults <- function(tab){
+plotHeatmapForGateredResults <- function(tab, main = "", fontsize = 15){
   pheatmap(as.matrix(tab), display_numbers = T, color = colorRampPalette(c('white','red'))(100), 
-           cluster_rows = F, cluster_cols = F, fontsize_number = 15,
-           xlab = "a")
+           cluster_rows = F, cluster_cols = F, fontsize_number = fontsize,
+           xlab = "a", main = main)
 }
+
+QPressPVal <- function(I, M, k){
+  
+  Q <- (M-I*k)^2/(M*(I-1))
+  1-pchisq(Q, I-1)
+}
+
+CorPval <- function(r, n){
+  tstat <- r*sqrt((n-2)/(1-r^2))
+  1-pt(q = tstat, n-2)
+}
+
 

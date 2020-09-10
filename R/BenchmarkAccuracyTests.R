@@ -15,7 +15,7 @@ SDP_standard <- new("ShapeDescriptorParams")
 SDP_shape <- new("ShapeDescriptorParams",
                  Type = "compound",
                  Descriptors = c("slopeDescriptor", "PAADescriptor"),
-                 Additional_params = list(Weights = c(1, 1), PAAWindow = 3L, slopeWindow = 3L))
+                 Additional_params = list(Weights = c(1, 10), PAAWindow = 3L, slopeWindow = 3L))
 
 ### Testing LIBRAS data set ###
 

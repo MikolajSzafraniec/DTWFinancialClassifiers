@@ -690,8 +690,6 @@ for(i in 1:99){
   time_R[i] <- median_runs$`mcb$time`[2]
 }
 
-
-
 df_to_plot <- data.frame(
   index = 2:100,
   time_rcpp = time_Rcpp / 100000,
@@ -725,6 +723,10 @@ euclidDistance <- function(x, y){
 
 corMeasure <- function(x, y){
   cor(x, y)
+}
+
+simpleDTWpackageDTW <- function(x, y){
+  dtw::dtw(x, y, step.pattern = dtw::symmetric1, keep.internals = F)
 }
 
 simpleDTWMeasure <- function(x, y){
@@ -791,6 +793,7 @@ time_series_for_DTW_2 <- purrr::map(time_series_test_2,
 euclid_time <- numeric(length(time_series_test_1))
 cor_time <- numeric(length(time_series_test_1))
 simpleDTW_time <- numeric(length(time_series_test_1))
+simpleDTW_packagedtw_time <- numeric(length(time_series_test_1))
 shapeDTW_time <- numeric(length(time_series_test_1))
 MTDshapeDTW_time <- numeric(length(time_series_test_1))
 
@@ -800,6 +803,7 @@ for(i in 1:length(time_series_test_1)){
   mcb <- microbenchmark::microbenchmark(euclidDistance(time_series_for_DTW_1[[i]], time_series_for_DTW_2[[i]]),
                                         corMeasure(time_series_for_DTW_1[[i]], time_series_for_DTW_2[[i]]),
                                         simpleDTWMeasure(time_series_for_DTW_1[[i]], time_series_for_DTW_2[[i]]),
+                                        simpleDTWpackageDTW(time_series_for_DTW_1[[i]], time_series_for_DTW_2[[i]]),
                                         shapeDTWMeasure(time_series_for_DTW_1[[i]], time_series_for_DTW_2[[i]]),
                                         shapeDTWmultidim(time_series_test_1[[i]], time_series_test_2[[i]]))
   
@@ -811,8 +815,9 @@ for(i in 1:length(time_series_test_1)){
   euclid_time[i] <- median_runs$`mcb$time`[1]
   cor_time[i] <- median_runs$`mcb$time`[2]
   simpleDTW_time[i] <- median_runs$`mcb$time`[3]
-  shapeDTW_time[i] <- median_runs$`mcb$time`[4]
-  MTDshapeDTW_time[i] <- median_runs$`mcb$time`[5]
+  simpleDTW_packagedtw_time[i] <- median_runs$`mcb$time`[4]
+  shapeDTW_time[i] <- median_runs$`mcb$time`[5]
+  MTDshapeDTW_time[i] <- median_runs$`mcb$time`[6]
 }
 
 df_to_plot <- data.frame(
@@ -820,6 +825,7 @@ df_to_plot <- data.frame(
   euclid_time = euclid_time / 10000,
   cor_time = cor_time / 10000,
   simpleDTW_time = simpleDTW_time / 10000,
+  simpleDTW_packagedtw_time = simpleDTW_packagedtw_time / 100000,
   shapeDTW_time = shapeDTW_time / 10000,
   MTDshapeDTW_time = MTDshapeDTW_time /10000
 )
@@ -827,6 +833,7 @@ df_to_plot <- data.frame(
 ggplot(df_to_plot, aes(index)) + 
   geom_line(aes(y = euclid_time, colour = "Euclidean distance")) + 
   geom_line(aes(y = cor_time, colour = "Correlation distance")) +
+  geom_line(aes(y = simpleDTW_packagedtw_time, colour = "Standard DTW from dtw package")) +
   geom_line(aes(y = simpleDTW_time, colour = "Standard DTW distance")) +
   geom_line(aes(y = shapeDTW_time, colour = "shapeDTW distance")) +
   geom_line(aes(y = MTDshapeDTW_time, colour = "Multidimensional shapeDTW distance")) +
@@ -835,6 +842,8 @@ ggplot(df_to_plot, aes(index)) +
   ggplot2::theme_classic() +
   ggplot2::ggtitle("Distance measures - calculation time")
 
+length(euclid_time)
+MTDshapeDTW_time[50]/shapeDTW_time[50]
 
 # Plot 3 descriptors examples
 require(dplyr)

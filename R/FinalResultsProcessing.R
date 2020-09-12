@@ -151,8 +151,158 @@ differentSeriesd10min <- combineOneMeaseruDifferentSeriesTypes(FX_set = combineT
 write.csv2(differentSeriesd10min$res_frcst_horizon_5, file = "../Magisterka tekst/Wyniki/Tabele rozdzial 5/CSV/groups_d10min_balanced_accuracy.csv")
 
 # Szacowanie 3 klasy 500 obserwacji
-QPressPVal(3, 500, 193)
+QPressPVal(3, 1500, 545)
 
 
 table(GPW_small_comp$dtw_type_Dependent.shape_desc_type_compound.dims1_2$target_series_5_return_class,
       GPW_small_comp$dtw_type_Dependent.shape_desc_type_compound.dims1_2$learn_series_5_return_class)
+
+################# Analiza dla agregacji na poziomie 1 minuty #################################
+Global_d1min_cor <- GatherAllResults(files_folder = "../Magisterka tekst/Wyniki/DaneRDS/ResultsEuclidSingleStockTimeFixed/", 
+                                           measure = "cor", 
+                                           aggregation_lvl = "tick_d1min")
+
+# Comparing global cor for DTW shape dependent 1 dim, 2 dim and 3 dim
+write.csv2(Global_d1min_cor$dtw_type_Dependent.shape_desc_type_compound.dims1, 
+           file = "../Magisterka tekst/Wyniki/Tabele rozdzial 5/CSV/Global_shape_1dim_1min.csv")
+write.csv2(Global_d1min_cor$dtw_type_Dependent.shape_desc_type_compound.dims1_2, 
+           file = "../Magisterka tekst/Wyniki/Tabele rozdzial 5/CSV/Global_shape_1_2_dim_1min.csv")
+write.csv2(Global_d1min_cor$dtw_type_Dependent.shape_desc_type_compound.dims1_2_3, 
+           file = "../Magisterka tekst/Wyniki/Tabele rozdzial 5/CSV/Global_shape_1_2_3dim_1min.csv")
+
+CorPval(0.0507, 1500)*2
+
+# różne typy danych
+GPW_d1min_400 <- readRDS("../Magisterka tekst/Wyniki/DaneRDS/ResultsEuclidSingleStockTimeFixed/GPW_tick_d1min_results_ref_400.rds")
+FX_d1min_400 <- readRDS("../Magisterka tekst/Wyniki/DaneRDS/ResultsEuclidSingleStockTimeFixed/FX_tick_d1min_results_ref_400.rds")
+
+
+differentSeriesd1min <- combineOneMeaseruDifferentSeriesTypes(FX_set = combineTables(FX_d1min_400), 
+                                                               GPW_small_comp = combineTables(GPW_d1min_400[c(1, 3, 5, 9, 10)]), 
+                                                               GPW_big_comp = combineTables(GPW_d1min_400[-c(1, 3, 5, 9, 10)]), 
+                                                               measure = "cor")
+
+
+write.csv2(differentSeriesd1min$res_frcst_horizon_75, file = "../Magisterka tekst/Wyniki/Tabele rozdzial 5/CSV/groups_d1min_cor.csv")
+
+CorPval(0.0507, 1500)*2
+CorPval(0.0878, 500)*2
+
+################# Analiza dla agregacji na poziomie 5 minut #################################
+Global_d5min_cor <- GatherAllResults(files_folder = "../Magisterka tekst/Wyniki/DaneRDS/ResultsEuclidSingleStockTimeFixed/", 
+                                     measure = "cor", 
+                                     aggregation_lvl = "tick_d5min")
+
+# Comparing global cor for DTW shape dependent 1 dim, 2 dim and 3 dim
+write.csv2(Global_d5min_cor$dtw_type_Dependent.shape_desc_type_compound.dims1, 
+           file = "../Magisterka tekst/Wyniki/Tabele rozdzial 5/CSV/Global_shape_1dim_5min.csv")
+write.csv2(Global_d5min_cor$dtw_type_Dependent.shape_desc_type_compound.dims1_2, 
+           file = "../Magisterka tekst/Wyniki/Tabele rozdzial 5/CSV/Global_shape_1_2_dim_5min.csv")
+write.csv2(Global_d5min_cor$dtw_type_Dependent.shape_desc_type_compound.dims1_2_3, 
+           file = "../Magisterka tekst/Wyniki/Tabele rozdzial 5/CSV/Global_shape_1_2_3dim_5min.csv")
+
+# różne typy danych
+GPW_d5min_200 <- readRDS("../Magisterka tekst/Wyniki/DaneRDS/ResultsEuclidSingleStockTimeFixed/GPW_tick_d5min_results_ref_200.rds")
+FX_d5min_200 <- readRDS("../Magisterka tekst/Wyniki/DaneRDS/ResultsEuclidSingleStockTimeFixed/FX_tick_d5min_results_ref_200.rds")
+
+differentSeriesd3min <- combineOneMeaseruDifferentSeriesTypes(FX_set = combineTables(FX_d5min_200), 
+                                                              GPW_small_comp = combineTables(GPW_d5min_200[c(1, 3, 5, 9, 10)]), 
+                                                              GPW_big_comp = combineTables(GPW_d5min_200[-c(1, 3, 5, 9, 10)]), 
+                                                              measure = "cor")
+
+
+write.csv2(differentSeriesd5min$res_frcst_horizon_150, file = "../Magisterka tekst/Wyniki/Tabele rozdzial 5/CSV/groups_d5min_cor.csv")
+
+
+################# Analiza dla agregacji na poziomie 30 minut #################################
+Global_d30min_ba <- GatherAllResults(files_folder = "../Magisterka tekst/Wyniki/DaneRDS/ResultsEuclidSingleStockTimeFixed/", 
+                                     measure = "balan", 
+                                     aggregation_lvl = "tick_d30min")
+
+# Comparing global BA for DTW shape dependent 1 dim, 2 dim and 3 dim
+write.csv2(Global_d30min_ba$dtw_type_Dependent.shape_desc_type_compound.dims1, 
+           file = "../Magisterka tekst/Wyniki/Tabele rozdzial 5/CSV/Global_shape_1dim_30min.csv")
+write.csv2(Global_d30min_ba$dtw_type_Dependent.shape_desc_type_compound.dims1_2, 
+           file = "../Magisterka tekst/Wyniki/Tabele rozdzial 5/CSV/Global_shape_1_2_dim_30min.csv")
+write.csv2(Global_d30min_ba$dtw_type_Dependent.shape_desc_type_compound.dims1_2_3, 
+           file = "../Magisterka tekst/Wyniki/Tabele rozdzial 5/CSV/Global_shape_1_2_3dim_30min.csv")
+
+QPressPVal(3, 1500, 545)
+
+# różne typy danych
+GPW_d30min_400 <- readRDS("../Magisterka tekst/Wyniki/DaneRDS/ResultsEuclidSingleStockTimeFixed/GPW_tick_d30min_results_ref_400.rds")
+FX_d30min_400 <- readRDS("../Magisterka tekst/Wyniki/DaneRDS/ResultsEuclidSingleStockTimeFixed/FX_tick_d30min_results_ref_400.rds")
+
+differentSeriesd30min <- combineOneMeaseruDifferentSeriesTypes(FX_set = combineTables(FX_d30min_400), 
+                                                              GPW_small_comp = combineTables(GPW_d30min_400[c(1, 3, 5, 9, 10)]), 
+                                                              GPW_big_comp = combineTables(GPW_d30min_400[-c(1, 3, 5, 9, 10)]), 
+                                                              measure = "bal")
+
+
+write.csv2(differentSeriesd30min$res_frcst_horizon_200, file = "../Magisterka tekst/Wyniki/Tabele rozdzial 5/CSV/groups_d30min_balanced.csv")
+
+QPressPVal(3, 1500, 545)
+QPressPVal(3, 500, 193)
+
+# Dzienne niezwyczajne korelacje
+GPWDaily400 <- readRDS("../Magisterka tekst/Wyniki/DaneRDS/ResultsEuclidSingleStockTimeFixed/GPW_daily_results_ref_400.rds")
+PGNIGNDaily400 <- classResultsToAccuracyMeasureEuclidPreprocessing(GPWDaily400$PGNIG, "cor")
+
+write.csv2(PGNIGNDaily400$res_frcst_horizon_200, file = "../Magisterka tekst/Wyniki/Tabele rozdzial 5/HighCorPGNIG.csv")
+
+CorPval(0.23, 100)*2
+
+# scatterplot
+ggplot(GPWDaily400$PGNIG$dtw_type_Independent.shape_desc_type_compound.dims1_2, aes(x = target_series_200_returns, y = learn_series_200_returns)) +
+  geom_point() +
+  xlab("Real return") +
+  ylab("Forecasted return") + ggtitle("PGNIG") +
+  geom_hline(yintercept = 0) +
+  geom_vline(xintercept = 0)
+  
+classResultsToAccuracyMeasureEuclidPreprocessing(GPWDaily400$PKOBP, "cor")
+
+# plot czesc uczaca testowa
+
+PGNIG_data_to_plot <- as.data.frame(GPW_daily_filtered$PGNIG) %>%
+  mutate(date = as.Date(time(GPW_daily_filtered$PGNIG)))
+
+
+ggplot2::ggplot(PGNIG_data_to_plot, aes(date)) +
+  ggplot2::geom_line(aes(y = closePrice)) +
+  labs(title = "PGNiG", 
+       subtitle  = paste(
+         strftime(min(PGNIG_data_to_plot$date), "%d.%m.%Y"), " - ", 
+         strftime(max(PGNIG_data_to_plot$date), "%d.%m.%Y"))) +
+  geom_vline(xintercept = as.Date("2013-06-01"), size = 1, col = "red")
+
+# Ujemna korelacja
+PKOBPDaily400 <- classResultsToAccuracyMeasureEuclidPreprocessing(GPWDaily400$PKOBP, "cor")
+
+write.csv2(PKOBPDaily400$res_frcst_horizon_150, file = "../Magisterka tekst/Wyniki/Tabele rozdzial 5/LowCorPKOBP.csv")
+
+cor(GPWDaily400$PKOBP$dtw_type_Independent.shape_desc_type_compound.dims1_2$target_series_150_returns[30:100],
+    GPWDaily400$PKOBP$dtw_type_Independent.shape_desc_type_compound.dims1_2$learn_series_150_returns[30:100])
+
+# scatterplot
+ggplot(GPWDaily400$PKOBP$dtw_type_Independent.shape_desc_type_compound.dims1_2[30:100,], 
+       aes(x = target_series_200_returns, y = learn_series_200_returns)) +
+  geom_point() +
+  xlab("Real return") +
+  ylab("Forecasted return") + ggtitle("PKOBP") +
+  geom_hline(yintercept = 0) +
+  geom_vline(xintercept = 0)
+
+# plot czesc uczaca testowa
+
+PKOBP_data_to_plot <- as.data.frame(GPW_daily_filtered$PKOBP) %>%
+  mutate(date = as.Date(time(GPW_daily_filtered$PKOBP)))
+
+
+ggplot2::ggplot(PKOBP_data_to_plot, aes(date)) +
+  ggplot2::geom_line(aes(y = closePrice)) +
+  labs(title = "PKOBP", 
+       subtitle  = paste(
+         strftime(min(PKOBP_data_to_plot$date), "%d.%m.%Y"), " - ", 
+         strftime(max(PKOBP_data_to_plot$date), "%d.%m.%Y"))) +
+  geom_vline(xintercept = as.Date("2013-06-01"), size = 1, col = "red")

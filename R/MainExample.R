@@ -73,3 +73,4 @@ GPW_tick_d30min_results_ref_200 <- purrr::map(GPW_tick_d30min_filtered, function
   
   return(res)
 })
+

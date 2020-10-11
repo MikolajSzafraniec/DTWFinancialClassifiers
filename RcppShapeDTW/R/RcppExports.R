@@ -25,35 +25,18 @@ RcppDistanceMatrices <- function(timeSeriesRef, timeSeriesTest, shapeDescriptorP
     .Call(`_RcppShapeDTW_RcppDistanceMatrices`, timeSeriesRef, timeSeriesTest, shapeDescriptorParams, subsequenceWidth, normalizationType, trigonometricTransformParams, distanceType)
 }
 
-<<<<<<< HEAD
-RcppAccumulatedCostMatrix <- function(x) {
-    .Call(`_RcppShapeDTW_RcppAccumulatedCostMatrix`, x)
-}
-
-RcppSimpleDTW <- function(x) {
-    .Call(`_RcppShapeDTW_RcppSimpleDTW`, x)
-=======
 RcppAccumulatedCostMatrix <- function(x, sakoeChibaWindow = NULL) {
     .Call(`_RcppShapeDTW_RcppAccumulatedCostMatrix`, x, sakoeChibaWindow)
 }
 
 RcppSimpleDTW <- function(x, sakoeChibaWindow = NULL) {
     .Call(`_RcppShapeDTW_RcppSimpleDTW`, x, sakoeChibaWindow)
->>>>>>> sakoe_chiba_window
 }
 
 RcppdistanceFromWarpingPaths <- function(distMatrix, path1, path2) {
     .Call(`_RcppShapeDTW_RcppdistanceFromWarpingPaths`, distMatrix, path1, path2)
 }
 
-<<<<<<< HEAD
-RcppComplexDTWResults <- function(RawSeriesDistMat, ShapeDescriptorMatrix, DistanceType = "Dependent") {
-    .Call(`_RcppShapeDTW_RcppComplexDTWResults`, RawSeriesDistMat, ShapeDescriptorMatrix, DistanceType)
-}
-
-kNNShapeDTWCpp <- function(referenceSeries, testSeries, forecastHorizon, subsequenceWidth, subsequenceBreaks, shapeDescriptorParams, normalizationType = "Unitarization", distanceType = "Dependent", ttParams = NULL) {
-    .Call(`_RcppShapeDTW_kNNShapeDTWCpp`, referenceSeries, testSeries, forecastHorizon, subsequenceWidth, subsequenceBreaks, shapeDescriptorParams, normalizationType, distanceType, ttParams)
-=======
 RcppComplexDTWResults <- function(RawSeriesDistMat, ShapeDescriptorMatrix, DistanceType = "Dependent", sakoeChibaWindow = NULL) {
     .Call(`_RcppShapeDTW_RcppComplexDTWResults`, RawSeriesDistMat, ShapeDescriptorMatrix, DistanceType, sakoeChibaWindow)
 }
@@ -68,6 +51,4 @@ knnEuclideanCpp <- function(refSeries, testSeries, nn, forecastHorizon, subseque
 
 rcpp_hello_world <- function() {
     .Call(`_RcppShapeDTW_rcpp_hello_world`)
->>>>>>> sakoe_chiba_window
 }
-

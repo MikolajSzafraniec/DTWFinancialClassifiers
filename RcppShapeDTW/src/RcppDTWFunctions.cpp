@@ -2,10 +2,7 @@
 #include <math.h>
 #include "Iterators.h"
 #include "CppDTWFunctions.h"
-<<<<<<< HEAD
-=======
 #include <bits/stdc++.h>
->>>>>>> sakoe_chiba_window
 #ifndef TimeSeriesTransformation
 #define TimeSeriesTransformation
 #endif
@@ -52,8 +49,8 @@ NumericMatrix RcppasShapeDescriptor(NumericMatrix subsequenceSeries, S4 shapeDes
 }
 
 /* Funkcja przekształcająca szereg czasowy w jego wybraną transformatę trygonometryczną.
-* WYbrana może zostać transformata kosinusowa, sinusowa oraz Hilberta.
-*/
+ * WYbrana może zostać transformata kosinusowa, sinusowa oraz Hilberta.
+ */
 
 //[[Rcpp::export]]
 NumericVector RcpptrigonometicTransform(NumericVector input, std::string transformType){
@@ -61,9 +58,9 @@ NumericVector RcpptrigonometicTransform(NumericVector input, std::string transfo
 }
 
 /*
-* Function to normalize time series with usage of Unitarization method
-* or Z-score normalization (x-mean(x)) / sd(x)
-*/
+ * Function to normalize time series with usage of Unitarization method
+ * or Z-score normalization (x-mean(x)) / sd(x)
+ */
 
 //[[Rcpp::export]]
 NumericVector RcppTSNormalization(NumericVector input, std::string normType){
@@ -71,11 +68,11 @@ NumericVector RcppTSNormalization(NumericVector input, std::string normType){
 }
 
 /*
-* This function conducts normalization of multidimensional time series and transforms
-* each dimension to the matrix of its shape descriptors. There is possiblity to add
-* trigonometric transform of chosen dimensions before transformation. It will be
-* transformed to the shape descriptors as well.
-*/
+ * This function conducts normalization of multidimensional time series and transforms
+ * each dimension to the matrix of its shape descriptors. There is possiblity to add
+ * trigonometric transform of chosen dimensions before transformation. It will be
+ * transformed to the shape descriptors as well.
+ */
 
 //[[Rcpp::export]]
 List RcpptsTransformation(NumericMatrix timeSeries, S4 shapeDescriptorParams,
@@ -95,15 +92,9 @@ List RcpptsTransformation(NumericMatrix timeSeries, S4 shapeDescriptorParams,
 }
 
 /*
-<<<<<<< HEAD
-* This function generate distance matrices between raw series and series transformed
-* to their shape descriptors.
-*/
-=======
  * This function generate distance matrices between raw series and series transformed
  * to their shape descriptors.
  */
->>>>>>> sakoe_chiba_window
 
 //[[Rcpp::export]]
 List RcppDistanceMatrices(NumericMatrix timeSeriesRef, NumericMatrix timeSeriesTest,
@@ -137,25 +128,6 @@ List RcppDistanceMatrices(NumericMatrix timeSeriesRef, NumericMatrix timeSeriesT
 }
 
 /*
-<<<<<<< HEAD
-* This function transforms distance matrix to the accumulated cost matrix
-* used by the DTW algorithm.
-*/
-
-//[[Rcpp::export]]
-NumericMatrix RcppAccumulatedCostMatrix(NumericMatrix x){
-  return AccumulatedCostMatrix(x);
-}
-
-/*
-* This function returns DTW results (distance and warping paths)
-* calculated based on the singular distance matrix
-*/
-
-//[[Rcpp::export]]
-List RcppSimpleDTW(NumericMatrix x){
-  SimpleDTWResults dtwRes = DTWRcpp(x);
-=======
  * This function transforms distance matrix to the accumulated cost matrix
  * used by the DTW algorithm.
  */
@@ -175,7 +147,6 @@ NumericMatrix RcppAccumulatedCostMatrix(NumericMatrix x,
 List RcppSimpleDTW(NumericMatrix x,
                    Rcpp::Nullable<int> sakoeChibaWindow = R_NilValue){
   SimpleDTWResults dtwRes = DTWRcpp(x, sakoeChibaWindow);
->>>>>>> sakoe_chiba_window
   
   List res = List::create(
     dtwRes.Distance,
@@ -189,19 +160,11 @@ List RcppSimpleDTW(NumericMatrix x,
 }
 
 /*
-<<<<<<< HEAD
-* This function calculate distance betweem time series based on the given distance
-* matrix and warping paths calculated with DTW algorithm. It is useful to calculate
-* distance between raw time series based on the warping paths determinated by shape
-* descriptors of these series. 
-*/
-=======
  * This function calculate distance betweem time series based on the given distance
  * matrix and warping paths calculated with DTW algorithm. It is useful to calculate
  * distance between raw time series based on the warping paths determinated by shape
  * descriptors of these series. 
  */
->>>>>>> sakoe_chiba_window
 
 //[[Rcpp::export]]
 double RcppdistanceFromWarpingPaths(NumericMatrix distMatrix,
@@ -211,25 +174,15 @@ double RcppdistanceFromWarpingPaths(NumericMatrix distMatrix,
 }
 
 /*
-<<<<<<< HEAD
-* This function return results of the complex DTW algorithm applied to the
-* raw series and their shape descriptors.
-*/
-=======
  * This function return results of the complex DTW algorithm applied to the
  * raw series and their shape descriptors.
  */
->>>>>>> sakoe_chiba_window
 
 //[[Rcpp::export]]
 List RcppComplexDTWResults(ListOf<NumericMatrix> RawSeriesDistMat,
                            ListOf<NumericMatrix> ShapeDescriptorMatrix,
-<<<<<<< HEAD
-                           std::string DistanceType = "Dependent"){
-=======
                            std::string DistanceType = "Dependent",
                            Rcpp::Nullable<int> sakoeChibaWindow = R_NilValue){
->>>>>>> sakoe_chiba_window
   
   std::vector<NumericMatrix> rawSeries;
   std::vector<NumericMatrix> shapeSeries;
@@ -249,12 +202,8 @@ List RcppComplexDTWResults(ListOf<NumericMatrix> RawSeriesDistMat,
   input.ShapeDesciptorDistMatrices = shapeSeries;
   input.DistanceType = distType;
   
-<<<<<<< HEAD
-  DTWResults resCpp = ComplexDTWRcpp(input);
-=======
   DTWResults resCpp = ComplexDTWRcpp(input,
                                      sakoeChibaWindow);
->>>>>>> sakoe_chiba_window
   
   List rRes;
   
@@ -274,11 +223,11 @@ List RcppComplexDTWResults(ListOf<NumericMatrix> RawSeriesDistMat,
 }
 
 /*
-* General workflow for the shape DTW kNN algorithm implemented in the Rcpp.
-* It takes two matrices as the input which represents two multidimensional
-* time series - reference series and test series - and find nearest neighbour
-* for the reference series among the several subsequences of the test series.
-*/
+ * General workflow for the shape DTW kNN algorithm implemented in the Rcpp.
+ * It takes two matrices as the input which represents two multidimensional
+ * time series - reference series and test series - and find nearest neighbour
+ * for the reference series among the several subsequences of the test series.
+ */
 
 //[[Rcpp::export]]
 List kNNShapeDTWCpp(NumericMatrix referenceSeries,
@@ -289,12 +238,8 @@ List kNNShapeDTWCpp(NumericMatrix referenceSeries,
                     S4 shapeDescriptorParams,
                     std::string normalizationType = "Unitarization",
                     std::string distanceType = "Dependent",
-<<<<<<< HEAD
-                    Rcpp::Nullable<S4> ttParams = R_NilValue){
-=======
                     Rcpp::Nullable<S4> ttParams = R_NilValue,
                     Rcpp::Nullable<int> sakoeChibaWindow = R_NilValue){
->>>>>>> sakoe_chiba_window
   
   int refSeriesLength = referenceSeries.nrow();
   int testSeriesLengt = testSeries.nrow();
@@ -351,12 +296,8 @@ List kNNShapeDTWCpp(NumericMatrix referenceSeries,
       distanceTypeEnum
     );
     
-<<<<<<< HEAD
-    tempRes = ComplexDTWRcpp(tempDistMat);
-=======
     tempRes = ComplexDTWRcpp(tempDistMat,
                              sakoeChibaWindow);
->>>>>>> sakoe_chiba_window
     
     if(i == 0){
       //finalResRawDist = Rcpp::clone(tempRes);
@@ -418,8 +359,6 @@ List kNNShapeDTWCpp(NumericMatrix referenceSeries,
   
   return res;
 }
-<<<<<<< HEAD
-=======
 
 /*
  * Class which represents index - value (distance) pair
@@ -518,7 +457,7 @@ NumericMatrix knnEuclideanCpp(NumericMatrix refSeries,
     
     distancesObj.push_back(IndDistPair(iteratorsSet[i] + 1, currentDist));
   }
-    
+  
   if(nn >= iteratorsSetLength){
     NumericMatrix res(iteratorsSetLength, 2);
     colnames(res) = CharacterVector::create("Idx", "Distance");
@@ -537,4 +476,3 @@ NumericMatrix knnEuclideanCpp(NumericMatrix refSeries,
   }
   return(res);
 }
->>>>>>> sakoe_chiba_window

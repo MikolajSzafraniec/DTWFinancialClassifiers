@@ -4,92 +4,89 @@
  */
 using namespace Rcpp;
 
-  /*
-   * Types of trigonometric transforms
-   */
+/*
+ * Types of trigonometric transforms
+ */
 
-  enum TrigonometricTransformTypes
-  {
-    SINUS = 0,
-    COSINUS = 1,
-    HILBERT = 2
-  };
-  
-  struct TrigonometricTransformTypeMap : public std::map<std::string, TrigonometricTransformTypes>
-  {
-    TrigonometricTransformTypeMap()
-    {
-      this->operator[]("sinus") = SINUS;
-      this->operator[]("cosinus") = COSINUS;
-      this->operator[]("hilbert") = HILBERT;
-    };
-    
-    ~TrigonometricTransformTypeMap() {}
-  };
+enum TrigonometricTransformTypes
+{
+  SINUS = 0,
+  COSINUS = 1,
+  HILBERT = 2
+};
 
-  /*
-   * Types of shape descriptors
-   */
+struct TrigonometricTransformTypeMap : public std::map<std::string, TrigonometricTransformTypes>
+{
+  TrigonometricTransformTypeMap()
+  {
+    this->operator[]("sinus") = SINUS;
+    this->operator[]("cosinus") = COSINUS;
+    this->operator[]("hilbert") = HILBERT;
+  };
+  
+  ~TrigonometricTransformTypeMap() {}
+};
 
-  enum ShapeDescriptorTypes
-  {
-    RAWSUBSEQUENCE = 0, 
-    PAADESCRIPTOR = 1, 
-    DERIVATIVEDESCRIPTOR = 2,
-    SLOPEDESCRIPTOR = 3
-  };
+/*
+ * Types of shape descriptors
+ */
 
-  struct ShapeDescriptorTypeMap : public std::map<std::string, ShapeDescriptorTypes>
-  {
-    ShapeDescriptorTypeMap()
-    {
-      this->operator[]("RawSubsequence") = RAWSUBSEQUENCE;
-      this->operator[]("PAADescriptor") = PAADESCRIPTOR;
-      this->operator[]("derivativeDescriptor") = DERIVATIVEDESCRIPTOR;
-      this->operator[]("slopeDescriptor") = SLOPEDESCRIPTOR;
-    };
-    
-    ~ShapeDescriptorTypeMap() {}
-  };
-  
-  /*
-   * Types of multidimensional DTW (dependent / independent)
-   */
-  
-  enum MultidimensionalDTWTypes
-  {
-    DEPENDENT = 0,
-    INDEPENDENT = 1
-  };
-  
-  struct MultidimensionalDTWTypeMap : public std::map<std::string, MultidimensionalDTWTypes>
-  {
-    MultidimensionalDTWTypeMap()
-    {
-      this->operator[]("Dependent") = DEPENDENT;
-      this->operator[]("Independent") = INDEPENDENT;
-    }
-  };
-  
-  /*
-   * Types of time series normalization methods
-   */
-  
-  enum TSNormalizationMethods{
-    ZSCORE = 0,
-    UNITARIZATION = 1
-  };
-  
-  struct TSNormalizationMethodMap : public std::map<std::string, TSNormalizationMethods>
-  {
-    TSNormalizationMethodMap()
-    {
-      this->operator[]("Zscore") = ZSCORE;
-      this->operator[]("Unitarization") = UNITARIZATION;
-    }
-  };
-<<<<<<< HEAD
-=======
-  
+enum ShapeDescriptorTypes
+{
+  RAWSUBSEQUENCE = 0, 
+  PAADESCRIPTOR = 1, 
+  DERIVATIVEDESCRIPTOR = 2,
+  SLOPEDESCRIPTOR = 3
+};
 
->>>>>>> sakoe_chiba_window
+struct ShapeDescriptorTypeMap : public std::map<std::string, ShapeDescriptorTypes>
+{
+  ShapeDescriptorTypeMap()
+  {
+    this->operator[]("RawSubsequence") = RAWSUBSEQUENCE;
+    this->operator[]("PAADescriptor") = PAADESCRIPTOR;
+    this->operator[]("derivativeDescriptor") = DERIVATIVEDESCRIPTOR;
+    this->operator[]("slopeDescriptor") = SLOPEDESCRIPTOR;
+  };
+  
+  ~ShapeDescriptorTypeMap() {}
+};
+
+/*
+ * Types of multidimensional DTW (dependent / independent)
+ */
+
+enum MultidimensionalDTWTypes
+{
+  DEPENDENT = 0,
+  INDEPENDENT = 1
+};
+
+struct MultidimensionalDTWTypeMap : public std::map<std::string, MultidimensionalDTWTypes>
+{
+  MultidimensionalDTWTypeMap()
+  {
+    this->operator[]("Dependent") = DEPENDENT;
+    this->operator[]("Independent") = INDEPENDENT;
+  }
+};
+
+/*
+ * Types of time series normalization methods
+ */
+
+enum TSNormalizationMethods{
+  ZSCORE = 0,
+  UNITARIZATION = 1
+};
+
+struct TSNormalizationMethodMap : public std::map<std::string, TSNormalizationMethods>
+{
+  TSNormalizationMethodMap()
+  {
+    this->operator[]("Zscore") = ZSCORE;
+    this->operator[]("Unitarization") = UNITARIZATION;
+  }
+};
+
+
